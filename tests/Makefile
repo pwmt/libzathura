@@ -8,6 +8,8 @@ include config.mk
 PROJECT = tests
 SOURCE  = $(wildcard *.c)
 OBJECTS = ${SOURCE:.c=.o}
+GCDA    = ${SOURCE:.c=.gcda}
+GCNO    = ${SOURCE:.c=.gcno}
 
 all: ${PROJECT}
 
@@ -30,7 +32,8 @@ valgrind: ${PROJECT}
 	 $(QUIET)${VALGRIND} ${VALGRIND_ARGUMENTS} ./${PROJECT}
 
 clean:
-	$(QUIET)rm -rf ${PROJECT} ${OBJECTS} .depend ${PROJECT}.info
+	$(QUIET)rm -rf ${PROJECT} ${OBJECTS} .depend ${PROJECT}.info \
+		${GCDA} ${GCNO}
 
 .PHONY: all options clean debug run
 
