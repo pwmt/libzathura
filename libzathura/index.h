@@ -3,6 +3,9 @@
 #ifndef INDEX_H
 #define INDEX_H
 
-zathura_error_t zathura_index_free(girara_tree_node_t* index);
+#include "error.h"
+#include "index.h"
+
+zathura_error_t zathura_index_free(zathura_node_t* index);
 
 #endif /* INDEX_H */

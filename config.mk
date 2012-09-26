@@ -23,16 +23,12 @@ PREFIX ?= /usr
 LIBDIR ?= ${PREFIX}/lib
 INCLUDEDIR ?= ${PREFIX}/include
 
-# girara
-GIRARA_MIN_VERSION = 0.1.4
-GIRARA_VERSION_CHECK ?= $(shell pkg-config --atleast-version=$(GIRARA_MIN_VERSION) girara-gtk2; echo $$?)
-
 # libs
-GIRARA_INC ?= $(shell pkg-config --cflags girara-gtk2)
-GIRARA_LIB ?= $(shell pkg-config --libs girara-gtk2)
+GLIB_INC ?= $(shell pkg-config --cflags glib-2.0)
+GLIB_LIB ?= $(shell pkg-config --libs glib-2.0)
 
-INCS = ${GIRARA_INC}
-LIBS = ${GIRARA_LIB} -lm
+INCS = ${GLIB_INC}
+LIBS = ${GLIB_LIB} -lm
 
 # flags
 CFLAGS += -std=c99 -pedantic -Wall -Wextra -fPIC $(INCS)
