@@ -29,7 +29,14 @@ START_TEST(test_image_buffer_get_data) {
   zathura_image_buffer_t* buffer;
   unsigned char* data;
 
+  /* invalid arguments  */
+  fail_unless(zathura_image_buffer_get_data(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_image_buffer_get_data(NULL, &data) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
   fail_unless(zathura_image_buffer_new(&buffer, 1, 1) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_image_buffer_get_data(buffer, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments  */
   fail_unless(zathura_image_buffer_get_data(buffer, &data) == ZATHURA_ERROR_OK);
   fail_unless(data != NULL);
   fail_unless(zathura_image_buffer_free(buffer) == ZATHURA_ERROR_OK);
@@ -39,7 +46,14 @@ START_TEST(test_image_buffer_get_width) {
   zathura_image_buffer_t* buffer;
   unsigned int width;
 
+  /* invalid arguments  */
+  fail_unless(zathura_image_buffer_get_width(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_image_buffer_get_width(NULL, &width) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
   fail_unless(zathura_image_buffer_new(&buffer, 1, 1) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_image_buffer_get_width(buffer, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments  */
   fail_unless(zathura_image_buffer_get_width(buffer, &width) == ZATHURA_ERROR_OK);
   fail_unless(width == 1);
   fail_unless(zathura_image_buffer_free(buffer) == ZATHURA_ERROR_OK);
@@ -49,7 +63,14 @@ START_TEST(test_image_buffer_get_height) {
   zathura_image_buffer_t* buffer;
   unsigned int height;
 
+  /* invalid arguments  */
+  fail_unless(zathura_image_buffer_get_height(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_image_buffer_get_height(NULL, &height) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
   fail_unless(zathura_image_buffer_new(&buffer, 1, 1) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_image_buffer_get_height(buffer, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments  */
   fail_unless(zathura_image_buffer_get_height(buffer, &height) == ZATHURA_ERROR_OK);
   fail_unless(height == 1);
   fail_unless(zathura_image_buffer_free(buffer) == ZATHURA_ERROR_OK);
@@ -59,7 +80,14 @@ START_TEST(test_image_buffer_get_rowstride) {
   zathura_image_buffer_t* buffer;
   unsigned int rowstride;
 
+  /* invalid arguments  */
+  fail_unless(zathura_image_buffer_get_rowstride(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_image_buffer_get_rowstride(NULL, &rowstride) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
   fail_unless(zathura_image_buffer_new(&buffer, 1, 1) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_image_buffer_get_rowstride(buffer, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments  */
   fail_unless(zathura_image_buffer_get_rowstride(buffer, &rowstride) == ZATHURA_ERROR_OK);
   fail_unless(rowstride == ZATHURA_IMAGE_BUFFER_ROWSTRIDE);
   fail_unless(zathura_image_buffer_free(buffer) == ZATHURA_ERROR_OK);
