@@ -1,0 +1,20 @@
+libzathura - document library
+=============================
+
+Requirements
+------------
+girara (>= 0.1.4)
+check (for tests)
+python-docutils (for man pages)
+
+Installation
+------------
+To build and install libzathura:
+
+  make install
+
+Uninstall:
+----------
+To delete libzathura from your system, just type:
+
+  make uninstall

@@ -1,0 +1,11 @@
+/* See LICENSE file for license and copyright information */
+
+#ifndef ZATHURA_VERSION_H
+#define ZATHURA_VERSION_H
+
+#define ZATHURA_VERSION_MAJOR ZVMAJOR
+#define ZATHURA_VERSION_MINOR ZVMINOR
+#define ZATHURA_VERSION_REV ZVREV
+#define ZATHURA_VERSION "ZVMAJOR.ZVMINOR.ZVREV"
+
+#endif
