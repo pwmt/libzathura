@@ -3,7 +3,12 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
+#if HAVE_CAIRO
+#include <cairo.h>
+#endif
+
 #include "error.h"
+#include "image-buffer.h"
 
 zathura_error_t zathura_image_get_buffer(zathura_image_t* image, zathura_image_buffer_t** buffer);
 

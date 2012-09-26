@@ -79,8 +79,8 @@ test: ${PROJECT}
 
 gcov: clean
 	$(QUIET)env CFLAGS="-fprofile-arcs -ftest-coverage" LDFLAGS="-fprofile-arcs" ${MAKE} debug
-	$(QUIET)${MAKE} -C tests run || true
-	$(QUIET)lcov --directory ${PROJECT} --capture --output-file $(PROJECT).info
+	$(QUIET)env CFLAGS="-fprofile-arcs -ftest-coverage" LDFLAGS="-fprofile-arcs" ${MAKE} test
+	$(QUIET)lcov --base-directory . --directory ${PROJECT} --capture --output-file $(PROJECT).info
 	$(QUIET)genhtml --output-directory gcov $(PROJECT).info
 
 ${PROJECT}.pc: ${PROJECTNV}.pc.in config.mk
