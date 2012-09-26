@@ -62,7 +62,7 @@ zathura_error_t zathura_image_buffer_get_height(zathura_image_buffer_t* buffer, 
  * Retrieves the width of the image buffer
  *
  * @param[in] buffer The image buffer
- * @param[out] height The height of the buffer
+ * @param[out] width The height of the buffer
  *
  * @return ZATHURA_ERROR_OK No error occured
  * @return @ref ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been
@@ -74,7 +74,7 @@ zathura_error_t zathura_image_buffer_get_width(zathura_image_buffer_t* buffer, u
  * Retrieves the rowstride of the image buffer
  *
  * @param[in] buffer The image buffer
- * @param[out] height The height of the buffer
+ * @param[out] rowstride The rowstride of the buffer
  *
  * @return ZATHURA_ERROR_OK No error occured
  * @return @ref ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been
