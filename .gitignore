@@ -1,0 +1,14 @@
+*.o
+*.do
+*.a
+*.so*
+*.gcda
+*.gcno
+*.info
+*.pc
+*.swp
+.depend
+doc/
+gcov/
+tests/tests
+libzathura/version.h
