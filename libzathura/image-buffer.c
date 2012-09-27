@@ -12,8 +12,9 @@ typedef struct zathura_image_buffer_s {
   unsigned int rowstride; /**< Rowstride of the buffer */
 } image_buffer_t;
 
-zathura_error_t zathura_image_buffer_new(zathura_image_buffer_t** buffer,
-    unsigned int width, unsigned int height)
+zathura_error_t
+zathura_image_buffer_new(zathura_image_buffer_t** buffer, unsigned int width,
+    unsigned int height)
 {
   if (buffer == NULL || width == 0 || height == 0) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
@@ -41,8 +42,9 @@ zathura_error_t zathura_image_buffer_new(zathura_image_buffer_t** buffer,
   return ZATHURA_ERROR_OK;
 }
 
-zathura_error_t zathura_image_buffer_get_data(zathura_image_buffer_t* buffer,
-    unsigned char** data)
+zathura_error_t
+zathura_image_buffer_get_data(zathura_image_buffer_t* buffer, unsigned char**
+    data)
 {
   if (buffer == NULL || data == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
@@ -53,8 +55,9 @@ zathura_error_t zathura_image_buffer_get_data(zathura_image_buffer_t* buffer,
   return ZATHURA_ERROR_OK;
 }
 
-zathura_error_t zathura_image_buffer_get_height(zathura_image_buffer_t* buffer,
-    unsigned int* height)
+zathura_error_t
+zathura_image_buffer_get_height(zathura_image_buffer_t* buffer, unsigned int*
+    height)
 {
   if (buffer == NULL || height == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
@@ -65,8 +68,9 @@ zathura_error_t zathura_image_buffer_get_height(zathura_image_buffer_t* buffer,
   return ZATHURA_ERROR_OK;
 }
 
-zathura_error_t zathura_image_buffer_get_width(zathura_image_buffer_t* buffer,
-    unsigned int* width)
+zathura_error_t
+zathura_image_buffer_get_width(zathura_image_buffer_t* buffer, unsigned int*
+    width)
 {
   if (buffer == NULL || width == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
@@ -77,8 +81,9 @@ zathura_error_t zathura_image_buffer_get_width(zathura_image_buffer_t* buffer,
   return ZATHURA_ERROR_OK;
 }
 
-zathura_error_t zathura_image_buffer_get_rowstride(zathura_image_buffer_t*
-    buffer, unsigned int* rowstride)
+zathura_error_t
+zathura_image_buffer_get_rowstride(zathura_image_buffer_t* buffer, unsigned int*
+    rowstride)
 {
   if (buffer == NULL || rowstride == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
@@ -89,7 +94,8 @@ zathura_error_t zathura_image_buffer_get_rowstride(zathura_image_buffer_t*
   return ZATHURA_ERROR_OK;
 }
 
-zathura_error_t zathura_image_buffer_free(zathura_image_buffer_t* buffer)
+zathura_error_t
+zathura_image_buffer_free(zathura_image_buffer_t* buffer)
 {
   if (buffer == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
