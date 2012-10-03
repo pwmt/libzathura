@@ -30,8 +30,8 @@ zathura_image_buffer_new(zathura_image_buffer_t** buffer, unsigned int width,
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
 
-  if (((*buffer)->data = calloc(1, sizeof(width * height *
-            ZATHURA_IMAGE_BUFFER_ROWSTRIDE * sizeof(unsigned char)))) == NULL) {
+  if (((*buffer)->data = calloc(1, width * height *
+          ZATHURA_IMAGE_BUFFER_ROWSTRIDE * sizeof(unsigned char))) == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
 
