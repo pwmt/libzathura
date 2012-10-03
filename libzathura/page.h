@@ -4,7 +4,10 @@
 #define PAGE_H
 
 #include "error.h"
-#include "list.h"
+#include "types.h"
+#include "image-buffer.h"
+
+typedef struct zathura_page_s zathura_page_t;
 
 zathura_error_t zathura_page_get_index(zathura_page_t* page, unsigned int* index);
 zathura_error_t zathura_page_get_width(zathura_page_t* page, double* width);

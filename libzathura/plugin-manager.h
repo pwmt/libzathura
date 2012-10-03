@@ -6,7 +6,7 @@
 #include "error.h"
 #include "list.h"
 
-typedef zathura_plugin_manager_t;
+typedef struct zathura_plugin_manager_s zathura_plugin_manager_t;
 
 zathura_error_t zathura_plugin_manager_new(zathura_plugin_manager_t** plugin_manager);
 zathura_error_t zathura_plugin_manager_free(zathura_plugin_manager_t* plugin_manager);

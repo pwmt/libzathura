@@ -7,6 +7,8 @@
 #include "list.h"
 #include "node.h"
 
+typedef struct zathura_document_s zathura_document_t;
+
 zathura_error_t zathura_document_free(zathura_document_t* document);
 zathura_error_t zathura_document_save_as(zathura_document_t* document, const char* path);
 
