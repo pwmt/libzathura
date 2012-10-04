@@ -24,7 +24,9 @@ options:
 ${PROJECT}/version.h: version.h.in config.mk
 	$(QUIET)sed 's/ZVMAJOR/${LIBZATHURA_VERSION_MAJOR}/' < version.h.in | \
 		sed 's/ZVMINOR/${LIBZATHURA_VERSION_MINOR}/' | \
-		sed 's/ZVREV/${LIBZATHURA_VERSION_REV}/' > ${PROJECT}/version.h
+		sed 's/ZVREV/${LIBZATHURA_VERSION_REV}/' | \
+		sed 's/ZVAPI/${LIBZATHURA_VERSION_API}/' | \
+		sed 's/ZVABI/${LIBZATHURA_VERSION_ABI}/' > ${PROJECT}/version.h
 
 %.o: %.c
 	@mkdir -p .depend/$(dir $(abspath $@))
