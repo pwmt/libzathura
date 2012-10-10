@@ -10,6 +10,8 @@
 #include "error.h"
 #include "image-buffer.h"
 
+typedef struct zathura_image_s zathura_image_t;
+
 zathura_error_t zathura_image_get_buffer(zathura_image_t* image, zathura_image_buffer_t** buffer);
 
 #if HAVE_CAIRO

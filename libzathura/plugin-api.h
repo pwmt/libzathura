@@ -48,5 +48,6 @@ zathura_error_t zathura_plugin_add_mimetype(zathura_plugin_t* plugin, const char
 
 /* page */
 zathura_error_t zathura_page_new(zathura_page_t** page);
+zathura_error_t zathura_page_free(zathura_page_t* page);
 
 #endif /* PLUGIN_API_H */

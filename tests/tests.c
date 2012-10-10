@@ -4,6 +4,7 @@
 
 Suite* suite_image_buffer(void);
 Suite* suite_plugin_manager(void);
+Suite* suite_page(void);
 
 int main(void)
 {
@@ -12,6 +13,7 @@ int main(void)
 
   srunner_add_suite(suite_runner, suite_image_buffer());
   srunner_add_suite(suite_runner, suite_plugin_manager());
+  srunner_add_suite(suite_runner, suite_page());
 
   srunner_run_all(suite_runner, CK_ENV);
   number_failed += srunner_ntests_failed(suite_runner);
