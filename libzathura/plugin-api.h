@@ -49,5 +49,9 @@ zathura_error_t zathura_plugin_add_mimetype(zathura_plugin_t* plugin, const char
 /* page */
 zathura_error_t zathura_page_new(zathura_page_t** page);
 zathura_error_t zathura_page_free(zathura_page_t* page);
+zathura_error_t zathura_page_set_index(zathura_page_t* page, unsigned int index);
+zathura_error_t zathura_page_set_width(zathura_page_t* page, unsigned int width);
+zathura_error_t zathura_page_set_height(zathura_page_t* page, unsigned int height);
+zathura_error_t zathura_page_set_label(zathura_page_t* page, const char* label);
 
 #endif /* PLUGIN_API_H */

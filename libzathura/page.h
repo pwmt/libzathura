@@ -10,12 +10,14 @@
 typedef struct zathura_page_s zathura_page_t;
 
 zathura_error_t zathura_page_get_index(zathura_page_t* page, unsigned int* index);
-zathura_error_t zathura_page_get_width(zathura_page_t* page, double* width);
-zathura_error_t zathura_page_get_height(zathura_page_t* page, double* height);
-zathura_error_t zathura_page_get_label(zathura_page_t* page, char** label);
+zathura_error_t zathura_page_get_width(zathura_page_t* page, unsigned int* width);
+zathura_error_t zathura_page_get_height(zathura_page_t* page, unsigned int* height);
+zathura_error_t zathura_page_get_label(zathura_page_t* page, const char** label);
 
-zathura_error_t zathura_page_search_text(zathura_page_t* page, const char* text, zathura_list_t** results);
-zathura_error_t zathura_page_get_text(zathura_page_t* page, zathura_rectangle_t rectangle, char** text);
+zathura_error_t zathura_page_search_text(zathura_page_t* page, zathura_list_t** results, const
+    char* text);
+zathura_error_t zathura_page_get_text(zathura_page_t* page, char** text,
+    zathura_rectangle_t rectangle);
 zathura_error_t zathura_page_get_links(zathura_page_t* page, zathura_list_t** links);
 zathura_error_t zathura_page_get_form_fields(zathura_page_t* page, zathura_list_t** form_fields);
 zathura_error_t zathura_page_get_images(zathura_page_t* page, zathura_list_t** images);

@@ -7,6 +7,9 @@
 
 struct zathura_page_s {
   zathura_document_t* document;
+  unsigned int width;
+  unsigned int height;
+  char* label;
 };
 
 #endif /* INTERNAL_H */
