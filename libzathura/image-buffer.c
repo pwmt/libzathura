@@ -43,6 +43,18 @@ zathura_image_buffer_new(zathura_image_buffer_t** buffer, unsigned int width,
 }
 
 zathura_error_t
+zathura_image_buffer_free(zathura_image_buffer_t* buffer)
+{
+  if (buffer == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  free(buffer);
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
 zathura_image_buffer_get_data(zathura_image_buffer_t* buffer, unsigned char**
     data)
 {
@@ -90,18 +102,6 @@ zathura_image_buffer_get_rowstride(zathura_image_buffer_t* buffer, unsigned int*
   }
 
   *rowstride = buffer->rowstride;
-
-  return ZATHURA_ERROR_OK;
-}
-
-zathura_error_t
-zathura_image_buffer_free(zathura_image_buffer_t* buffer)
-{
-  if (buffer == NULL) {
-    return ZATHURA_ERROR_INVALID_ARGUMENTS;
-  }
-
-  free(buffer);
 
   return ZATHURA_ERROR_OK;
 }

@@ -158,5 +158,11 @@ zathura_plugin_manager_get_plugins(zathura_plugin_manager_t* plugin_manager,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  *plugins = plugin_manager->plugins;
+
+  if (plugin_manager->plugins == NULL) {
+    return ZATHURA_ERROR_UNKNOWN;
+  }
+
   return ZATHURA_ERROR_OK;
 }
