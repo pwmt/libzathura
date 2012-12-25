@@ -11,6 +11,10 @@ typedef enum zathura_error_e {
 
   ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL, /**< Could not resolve symbol */
   ZATHURA_ERROR_PLUGIN_VERSION, /**< Miss-matching version number */
+  ZATHURA_ERROR_PLUGIN_NOT_IMPLEMENTED, /**< The requested feature is not implemented by the plugin */
+
+  ZATHURA_ERROR_DOCUMENT_INVALID_INDEX, /**< Invalid index */
+  ZATHURA_ERROR_DOCUMENT_INVALID_LABEL, /**< Invalid label */
 } zathura_error_t;
 
 #endif /* ERROR_H */
