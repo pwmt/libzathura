@@ -16,7 +16,7 @@ typedef struct zathura_image_buffer_s zathura_image_buffer_t;
  * @param[in] width The width of the image
  * @param[in] height The height of the image
  *
- * @return @ref ZATHURA_ERROR_OK No error occured
+ * @return @ref ZATHURA_ERROR_OK No error occurred
  * @return @ref ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been
  *  passed
  * @return @ref ZATHURA_ERROR_OUT_OF_MEMORY Out of memory
@@ -28,7 +28,7 @@ zathura_error_t zathura_image_buffer_new(zathura_image_buffer_t** buffer, unsign
  *
  * @param[in] buffer The image buffer
  *
- * @return ZATHURA_ERROR_OK No error occured
+ * @return ZATHURA_ERROR_OK No error occurred
  * @return @ref ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been
  *  passed
  */
@@ -40,7 +40,7 @@ zathura_error_t zathura_image_buffer_free(zathura_image_buffer_t* buffer);
  * @param[in] buffer The image buffer
  * @param[out] data The data of the buffer
  *
- * @return ZATHURA_ERROR_OK No error occured
+ * @return ZATHURA_ERROR_OK No error occurred
  * @return @ref ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been
  *  passed
  */
@@ -52,7 +52,7 @@ zathura_error_t zathura_image_buffer_get_data(zathura_image_buffer_t* buffer, un
  * @param[in] buffer The image buffer
  * @param[out] height The height of the buffer
  *
- * @return ZATHURA_ERROR_OK No error occured
+ * @return ZATHURA_ERROR_OK No error occurred
  * @return @ref ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been
  *  passed
  */
@@ -64,7 +64,7 @@ zathura_error_t zathura_image_buffer_get_height(zathura_image_buffer_t* buffer, 
  * @param[in] buffer The image buffer
  * @param[out] width The height of the buffer
  *
- * @return ZATHURA_ERROR_OK No error occured
+ * @return ZATHURA_ERROR_OK No error occurred
  * @return @ref ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been
  *  passed
  */
@@ -76,7 +76,7 @@ zathura_error_t zathura_image_buffer_get_width(zathura_image_buffer_t* buffer, u
  * @param[in] buffer The image buffer
  * @param[out] rowstride The rowstride of the buffer
  *
- * @return ZATHURA_ERROR_OK No error occured
+ * @return ZATHURA_ERROR_OK No error occurred
  * @return @ref ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been
  *  passed
  */
