@@ -1,6 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
 #include <check.h>
+#include <stdio.h>
 
 #include "plugin-manager.h"
 
@@ -62,9 +63,15 @@ START_TEST(test_plugin_manager_get_plugins) {
   fail_unless(zathura_plugin_manager_get_plugins(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_plugin_manager_get_plugins(plugin_manager, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
-  /* valid parameter */
+  /* empty list */
+  fail_unless(zathura_plugin_manager_get_plugins(plugin_manager, &list) == ZATHURA_ERROR_OK);
+  fail_unless(list == NULL);
+
+  /* load plugins */
+  fail_unless(zathura_plugin_manager_load_dir(plugin_manager, "./plugin/") == ZATHURA_ERROR_OK);
   fail_unless(zathura_plugin_manager_get_plugins(plugin_manager, &list) == ZATHURA_ERROR_OK);
   fail_unless(list != NULL);
+  fail_unless(zathura_list_length(list) == 1);
 
   fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);
 } END_TEST

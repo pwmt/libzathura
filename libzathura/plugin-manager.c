@@ -1,7 +1,6 @@
 /* See LICENSE file for license and copyright information */
 
 #include <string.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <glib.h>
 #include <gmodule.h>
@@ -30,11 +29,6 @@ zathura_plugin_manager_new(zathura_plugin_manager_t** plugin_manager)
   }
 
   if ((*plugin_manager = calloc(1, sizeof(zathura_plugin_manager_t))) == NULL) {
-    error = ZATHURA_ERROR_OUT_OF_MEMORY;
-    goto error_free;
-  }
-
-  if (((*plugin_manager)->plugins = zathura_list_alloc()) == NULL) {
     error = ZATHURA_ERROR_OUT_OF_MEMORY;
     goto error_free;
   }
@@ -72,6 +66,9 @@ zathura_error_t
 zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char* path)
 {
   zathura_error_t error;
+  char* real_path = NULL;
+  GModule* handle = NULL;
+  zathura_plugin_t* plugin = NULL;
 
   if (plugin_manager == NULL || path == NULL || strlen(path) == 0) {
     error = ZATHURA_ERROR_INVALID_ARGUMENTS;
@@ -79,21 +76,18 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
   }
 
   /* generate real path of file path */
-  char* real_path;
   if (zathura_realpath(path, &real_path) != ZATHURA_ERROR_OK) {
     error = ZATHURA_ERROR_UNKNOWN;
     goto error_ret;
   }
 
   /* load module */
-  GModule* handle = g_module_open(real_path, G_MODULE_BIND_LOCAL);
+  handle = g_module_open(real_path, G_MODULE_BIND_LOCAL);
   if (handle == NULL) {
     free(real_path);
     error = ZATHURA_ERROR_INVALID_ARGUMENTS;
     goto error_ret;
   }
-
-  free(real_path);
 
   /* resolve symbols and check API and ABI version*/
   zathura_plugin_api_version_t api_version = NULL;
@@ -120,19 +114,28 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
     goto error_free;
   }
 
-  /* create and register plugin */
-  zathura_plugin_t* plugin = calloc(1, sizeof(zathura_plugin_t));
-  if (plugin == NULL) {
-    error = ZATHURA_ERROR_OUT_OF_MEMORY;
-    goto error_free;
-  }
-
   zathura_plugin_register_function_t register_function = NULL;
   if (g_module_symbol(handle, PLUGIN_REGISTER_FUNCTION, (gpointer*)
         &register_function) == FALSE || register_function == NULL) {
     error = ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL;
     goto error_free;
   }
+
+  /* create and register plugin */
+  plugin = calloc(1, sizeof(zathura_plugin_t));
+  if (plugin == NULL) {
+    error = ZATHURA_ERROR_OUT_OF_MEMORY;
+    goto error_free;
+  }
+
+  plugin->functions = calloc(1, sizeof(zathura_plugin_functions_t));
+  if (plugin->functions == NULL) {
+    error = ZATHURA_ERROR_OUT_OF_MEMORY;
+    goto error_free;
+  }
+
+  plugin->path = real_path;
+  register_function(plugin->functions);
 
   /* add plugin to the list */
   plugin_manager->plugins = zathura_list_append(plugin_manager->plugins, plugin);
@@ -145,7 +148,17 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
 
 error_free:
 
-  g_module_close(handle);
+  if (plugin != NULL) {
+    free(plugin);
+  }
+
+  if (real_path != NULL) {
+    free(real_path);
+  }
+
+  if (handle != NULL) {
+    g_module_close(handle);
+  }
 
 error_ret:
 
@@ -193,10 +206,6 @@ zathura_plugin_manager_get_plugins(zathura_plugin_manager_t* plugin_manager,
   }
 
   *plugins = plugin_manager->plugins;
-
-  if (plugin_manager->plugins == NULL) {
-    return ZATHURA_ERROR_UNKNOWN;
-  }
 
   return ZATHURA_ERROR_OK;
 }

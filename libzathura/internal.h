@@ -4,9 +4,11 @@
 #define INTERNAL_H
 
 #include "document.h"
+#include "plugin-api.h"
 #include "error.h"
 
 struct zathura_plugin_s {
+  zathura_plugin_functions_t* functions;
   char* path;
 };
 
