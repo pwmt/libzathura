@@ -21,8 +21,8 @@ options:
 	@echo "DFLAGS  = ${DFLAGS}"
 	@echo "CC      = ${CC}"
 
-${PROJECT}/version.h: version.h.in config.mk
-	$(QUIET)sed 's/ZVMAJOR/${LIBZATHURA_VERSION_MAJOR}/' < version.h.in | \
+${PROJECT}/version.h: ${PROJECT}/version.h.in config.mk
+	$(QUIET)sed 's/ZVMAJOR/${LIBZATHURA_VERSION_MAJOR}/' < ${PROJECT}/version.h.in | \
 		sed 's/ZVMINOR/${LIBZATHURA_VERSION_MINOR}/' | \
 		sed 's/ZVREV/${LIBZATHURA_VERSION_REV}/' | \
 		sed 's/ZVAPI/${LIBZATHURA_VERSION_API}/' | \
