@@ -78,6 +78,7 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
     goto error_ret;
   }
 
+  /* generate real path of file path */
   char* real_path;
   if (zathura_realpath(path, &real_path) != ZATHURA_ERROR_OK) {
     error = ZATHURA_ERROR_UNKNOWN;
@@ -119,6 +120,27 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
     goto error_free;
   }
 
+  /* create and register plugin */
+  zathura_plugin_t* plugin = calloc(1, sizeof(zathura_plugin_t));
+  if (plugin == NULL) {
+    error = ZATHURA_ERROR_OUT_OF_MEMORY;
+    goto error_free;
+  }
+
+  zathura_plugin_register_function_t register_function = NULL;
+  if (g_module_symbol(handle, PLUGIN_REGISTER_FUNCTION, (gpointer*)
+        &register_function) == FALSE || register_function == NULL) {
+    error = ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL;
+    goto error_free;
+  }
+
+  /* add plugin to the list */
+  plugin_manager->plugins = zathura_list_append(plugin_manager->plugins, plugin);
+  if (plugin_manager->plugins == NULL) {
+    error = ZATHURA_ERROR_OUT_OF_MEMORY;
+    goto error_free;
+  }
+
   return ZATHURA_ERROR_OK;
 
 error_free:
@@ -153,6 +175,7 @@ zathura_plugin_manager_load_dir(zathura_plugin_manager_t* plugin_manager, const
       continue;
     }
 
+    zathura_plugin_manager_load(plugin_manager, path);
   }
 
   g_dir_close(dir);
