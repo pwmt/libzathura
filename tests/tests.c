@@ -2,6 +2,7 @@
 
 #include <check.h>
 
+Suite* suite_internal(void);
 Suite* suite_image_buffer(void);
 Suite* suite_plugin_manager(void);
 Suite* suite_page(void);
@@ -11,6 +12,7 @@ int main(void)
   SRunner* suite_runner = srunner_create(NULL);
   int number_failed     = 0;
 
+  srunner_add_suite(suite_runner, suite_internal());
   srunner_add_suite(suite_runner, suite_image_buffer());
   srunner_add_suite(suite_runner, suite_plugin_manager());
   srunner_add_suite(suite_runner, suite_page());
