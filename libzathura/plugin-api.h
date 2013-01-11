@@ -28,7 +28,7 @@
     if (plugin == NULL) { \
       return; \
     } \
-    zathura_plugin_set_register_functions_function(plugin, register_functions); \
+    zathura_plugin_set_register_function(plugin, register_functions); \
     zathura_plugin_set_name(plugin, plugin_name); \
     static const char* mime_types[] = mimetypes; \
     for (size_t s = 0; s != sizeof(mime_types) / sizeof(const char*); ++s) { \
