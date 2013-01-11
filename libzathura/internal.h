@@ -5,6 +5,10 @@
 
 #include "document.h"
 
+struct zathura_plugin_s {
+  char* path;
+};
+
 struct zathura_page_s {
   zathura_document_t* document;
   unsigned int width;
