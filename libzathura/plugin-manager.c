@@ -1,6 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <glib.h>
 #include <gmodule.h>
@@ -9,6 +10,7 @@
 #include "plugin-api.h"
 #include "types.h"
 #include "version.h"
+#include "internal.h"
 
 struct zathura_plugin_manager_s {
   zathura_list_t* plugins; /**< List of pluins */
@@ -76,12 +78,21 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
     goto error_ret;
   }
 
+  char* real_path;
+  if (zathura_realpath(path, &real_path) != ZATHURA_ERROR_OK) {
+    error = ZATHURA_ERROR_UNKNOWN;
+    goto error_ret;
+  }
+
   /* load module */
-  GModule* handle = g_module_open(path, G_MODULE_BIND_LOCAL);
+  GModule* handle = g_module_open(real_path, G_MODULE_BIND_LOCAL);
   if (handle == NULL) {
+    free(real_path);
     error = ZATHURA_ERROR_INVALID_ARGUMENTS;
     goto error_ret;
   }
+
+  free(real_path);
 
   /* resolve symbols and check API and ABI version*/
   zathura_plugin_api_version_t api_version = NULL;

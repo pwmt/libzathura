@@ -6,6 +6,7 @@
 #include "error.h"
 #include "list.h"
 #include "node.h"
+#include "page.h"
 
 typedef struct zathura_document_s zathura_document_t;
 

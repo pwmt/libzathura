@@ -4,6 +4,7 @@
 #define INTERNAL_H
 
 #include "document.h"
+#include "error.h"
 
 struct zathura_plugin_s {
   char* path;
@@ -15,5 +16,7 @@ struct zathura_page_s {
   unsigned int height;
   char* label;
 };
+
+zathura_error_t zathura_realpath(const char* path, char** realpath);
 
 #endif /* INTERNAL_H */

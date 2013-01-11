@@ -31,7 +31,7 @@ START_TEST(test_plugin_manager_load) {
   fail_unless(zathura_plugin_manager_load(plugin_manager, "")   == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid parameter */
-  fail_unless(zathura_plugin_manager_load(plugin_manager, "pdf.so") == ZATHURA_ERROR_INVALID_ARGUMENTS); // TODO: fix path
+  fail_unless(zathura_plugin_manager_load(plugin_manager, "./plugin/plugin.so") == ZATHURA_ERROR_OK);
 
   fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);
 } END_TEST
@@ -47,7 +47,7 @@ START_TEST(test_plugin_manager_load_dir) {
   fail_unless(zathura_plugin_manager_load_dir(plugin_manager, "")   == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid parameter */
-  fail_unless(zathura_plugin_manager_load_dir(plugin_manager, "/usr/lib") == ZATHURA_ERROR_OK); // TODO: fix path
+  fail_unless(zathura_plugin_manager_load_dir(plugin_manager, "./plugin/") == ZATHURA_ERROR_OK);
 
   fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);
 } END_TEST
