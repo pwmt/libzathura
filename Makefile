@@ -41,7 +41,7 @@ ${PROJECT}/version.h: ${PROJECT}/version.h.in config.mk
 ${OBJECTS}:  config.mk ${PROJECT}/version.h
 ${DOBJECTS}: config.mk ${PROJECT}/version.h
 
-${PROJECT}: static shared
+${PROJECT}: ${PROJECT}/version.h static shared
 
 static: ${PROJECT}.a
 shared: ${PROJECT}.so.${SOVERSION}
