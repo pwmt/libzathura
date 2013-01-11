@@ -9,8 +9,8 @@ OBJECTS   = ${SOURCE:.c=.o}
 DOBJECTS  = ${SOURCE:.c=.do}
 GCDA  		= ${SOURCE:.c=.gcda}
 GCNO 			= ${SOURCE:.c=.gcno}
-HEADERS   = $(filter-out version.h, $(filter-out internal.h, $(wildcard *.h)))
-HEADERS_INSTALL = ${HEADERS} version.h
+HEADERS   = $(filter-out ${PROJECT}/version.h, $(filter-out ${PROJECT/}internal.h, $(wildcard *.h)))
+HEADERS_INSTALL = ${HEADERS} ${PROJECT}/version.h
 
 all: options ${PROJECT}
 
