@@ -16,9 +16,9 @@ typedef struct zathura_plugin_version_s {
   unsigned int rev; /**< Revision of the plugin */
 } zathura_plugin_version_t;
 
-zathura_error_t zathura_plugin_get_name(zathura_plugin_t* plugin);
-zathura_error_t zathura_plugin_get_path(zathura_plugin_t* plugin);
+zathura_error_t zathura_plugin_get_name(zathura_plugin_t* plugin, const char** name);
+zathura_error_t zathura_plugin_get_path(zathura_plugin_t* plugin, const char** path);
 zathura_error_t zathura_plugin_get_version(zathura_plugin_t* plugin, zathura_plugin_version_t* version);
-zathura_error_t zathura_plugin_get_functions(zathura_plugin_t* plugin, zathura_plugin_functions_t* functions);
+zathura_error_t zathura_plugin_get_functions(zathura_plugin_t* plugin, zathura_plugin_functions_t** functions);
 
 #endif /* PLUGIN_H */

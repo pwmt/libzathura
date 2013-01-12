@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <glib.h>
 #include <gmodule.h>
 
@@ -15,8 +16,12 @@ struct zathura_plugin_manager_s {
   zathura_list_t* plugins; /**< List of pluins */
 };
 
+typedef void (*zathura_plugin_register_service_t)(zathura_plugin_t*);
 typedef unsigned int (*zathura_plugin_api_version_t)(void);
 typedef unsigned int (*zathura_plugin_abi_version_t)(void);
+typedef unsigned int (*zathura_plugin_major_version_t)(void);
+typedef unsigned int (*zathura_plugin_minor_version_t)(void);
+typedef unsigned int (*zathura_plugin_rev_version_t)(void);
 
 zathura_error_t
 zathura_plugin_manager_new(zathura_plugin_manager_t** plugin_manager)
@@ -114,9 +119,30 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
     goto error_free;
   }
 
-  zathura_plugin_register_function_t register_function = NULL;
+  zathura_plugin_major_version_t major_version = NULL;
+  if (g_module_symbol(handle, PLUGIN_VERSION_MAJOR_FUNCTION, (gpointer*) &major_version) == FALSE ||
+      major_version == NULL) {
+    error = ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL;
+    goto error_free;
+  }
+
+  zathura_plugin_minor_version_t minor_version = NULL;
+  if (g_module_symbol(handle, PLUGIN_VERSION_MINOR_FUNCTION, (gpointer*) &minor_version) == FALSE ||
+      minor_version == NULL) {
+    error = ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL;
+    goto error_free;
+  }
+
+  zathura_plugin_rev_version_t rev_version = NULL;
+  if (g_module_symbol(handle, PLUGIN_VERSION_REVISION_FUNCTION, (gpointer*) &rev_version) == FALSE ||
+      rev_version == NULL) {
+    error = ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL;
+    goto error_free;
+  }
+
+  zathura_plugin_register_service_t register_service = NULL;
   if (g_module_symbol(handle, PLUGIN_REGISTER_FUNCTION, (gpointer*)
-        &register_function) == FALSE || register_function == NULL) {
+        &register_service) == FALSE || register_service == NULL) {
     error = ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL;
     goto error_free;
   }
@@ -134,8 +160,23 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
     goto error_free;
   }
 
-  plugin->path = real_path;
-  register_function(plugin->functions);
+  /* setup plugin */
+  plugin->path          = real_path;
+  plugin->version.major = major_version();
+  plugin->version.minor = minor_version();
+  plugin->version.rev   = rev_version();
+
+  register_service(plugin);
+
+  if (plugin->register_function == NULL || plugin->name == NULL) {
+    free(plugin->path);
+    free(plugin->functions);
+    free(plugin);
+    return ZATHURA_ERROR_UNKNOWN;
+  }
+
+  /* register functions */
+  plugin->register_function(plugin->functions);
 
   /* add plugin to the list */
   plugin_manager->plugins = zathura_list_append(plugin_manager->plugins, plugin);

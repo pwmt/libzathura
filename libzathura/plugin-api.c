@@ -13,6 +13,8 @@ zathura_plugin_set_name(zathura_plugin_t* plugin, const char* name)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  plugin->name = name;
+
   return ZATHURA_ERROR_OK;
 }
 
@@ -23,6 +25,8 @@ zathura_plugin_set_register_function(zathura_plugin_t* plugin,
   if (plugin == NULL || function == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
+
+  plugin->register_function = function;
 
   return ZATHURA_ERROR_OK;
 }
