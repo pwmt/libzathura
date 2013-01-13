@@ -6,6 +6,7 @@
 #include "error.h"
 #include "plugin.h"
 #include "page.h"
+#include "version.h"
 
 #define PLUGIN_REGISTER_FUNCTION         "zathura_plugin_register"
 #define PLUGIN_VERSION_MAJOR_FUNCTION    "zathura_plugin_version_major"

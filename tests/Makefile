@@ -27,7 +27,10 @@ ${PROJECT}: options ${OBJECTS}
 	$(ECHO) CC -o $@
 	$(QUIET)${CC} ${SFLAGS} ${LDFLAGS} -o $@ ${OBJECTS} ${LIBS}
 
-${OBJECTS}: ../config.mk
+../libzathura/version.h:
+	$(MAKE) -C .. libzathura/version.h
+
+${OBJECTS}: ../config.mk ../libzathura/version.h
 
 valgrind: ${PROJECT}
 	 $(QUIET)${VALGRIND} ${VALGRIND_ARGUMENTS} ./${PROJECT}
