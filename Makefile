@@ -65,11 +65,12 @@ ${PROJECT}-debug: ${PROJECT}-debug.a ${PROJECT}-debug.so.${SOVERSION}
 
 ${PROJECT}-debug.a: ${DOBJECTS}
 	$(ECHO) AR rcs $@
-	$(QUIET)ar rc $@ ${DOBJECTS}
+	$(QUIET)ar rc ${PROJECT}.a ${DOBJECTS}
 
 ${PROJECT}-debug.so.${SOVERSION}: ${DOBJECTS}
 	$(ECHO) LD $@
-	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} -o $@ ${DOBJECTS} ${LIBS}
+	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} \
+		-o ${PROJECT}.so.${SOVERSION} ${DOBJECTS} ${LIBS}
 
 debug: options ${PROJECT}-debug
 
