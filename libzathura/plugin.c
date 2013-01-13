@@ -6,6 +6,7 @@
 #include "plugin.h"
 #include "error.h"
 #include "internal.h"
+#include "version.h"
 
 zathura_error_t
 zathura_plugin_get_name(zathura_plugin_t* plugin, const char** name)
