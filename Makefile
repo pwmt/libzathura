@@ -47,6 +47,7 @@ static: ${PROJECT}.a
 shared: ${PROJECT}.so.${SOVERSION}
 
 ${PROJECT}.a: ${OBJECTS}
+	$(QUIET)rm -f ${PROJECT}.a
 	$(ECHO) AR rcs $@
 	$(QUIET)ar rcs $@ ${OBJECTS}
 
@@ -64,11 +65,12 @@ clean:
 ${PROJECT}-debug: ${PROJECT}-debug.a ${PROJECT}-debug.so.${SOVERSION}
 
 ${PROJECT}-debug.a: ${DOBJECTS}
-	$(ECHO) AR rcs $@
+	$(QUIET)rm -f ${PROJECT}.a
+	$(ECHO) AR rcs ${PROJECT}.a
 	$(QUIET)ar rc ${PROJECT}.a ${DOBJECTS}
 
 ${PROJECT}-debug.so.${SOVERSION}: ${DOBJECTS}
-	$(ECHO) LD $@
+	$(ECHO) LD ${PROJECT}.so.${SOMAJOR}
 	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} \
 		-o ${PROJECT}.so.${SOVERSION} ${DOBJECTS} ${LIBS}
 
