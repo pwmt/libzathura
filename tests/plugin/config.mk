@@ -1,4 +1,4 @@
 # See LICENSE file for license and copyright information
 
-LIBS += ../../libzathura.a
+LIBZATHURA = ../../libzathura.a
 INCS += -I../../

@@ -22,11 +22,14 @@ options:
 	@mkdir -p .depend/$(dir $@)
 	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} -o $@ $< -MMD -MF .depend/$@.dep
 
-${PROJECT}.so: options ${OBJECTS}
+${PROJECT}.so: options ${OBJECTS} ${LIBZATHURA}
 	$(ECHO) LD $@
 	$(QUIET)${CC} -shared ${LDFLAGS} -o $@ $(OBJECTS) ${LIBS}
 
-${OBJECTS}: ../config.mk
+${LIBZATHURA}:
+	$(QUIET)${MAKE} -C ../..
+
+${OBJECTS}: ../../config.mk config.mk
 
 clean:
 	$(QUIET)rm -rf ${PROJECT}.so ${OBJECTS} .depend

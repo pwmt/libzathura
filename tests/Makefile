@@ -22,6 +22,7 @@ run: ${PROJECT}
 	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} -o $@ $< -MMD -MF .depend/$@.dep
 
 ${PROJECT}: options ${OBJECTS}
+	$(QUIET)${MAKE} -C ..
 	$(QUIET)${MAKE} -C plugin
 	$(ECHO) CC -o $@
 	$(QUIET)${CC} ${SFLAGS} ${LDFLAGS} -o $@ ${OBJECTS} ${LIBS}
