@@ -30,6 +30,8 @@ struct zathura_page_s {
   char* label;
 };
 
+zathura_error_t zathura_page_free(zathura_page_t* page);
+
 zathura_error_t zathura_realpath(const char* path, char** realpath);
 zathura_error_t zathura_guess_type(const char* path, char** type);
 

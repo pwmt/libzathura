@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "internal.h"
 #include "document.h"
 
 zathura_error_t
@@ -11,6 +12,18 @@ zathura_document_free(zathura_document_t* document)
   if (document == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
+
+  /* free pages */
+  if (document->pages != NULL) {
+    for (unsigned int pid = 0; pid < document->number_of_pages; pid++) {
+      zathura_page_free(document->pages[pid]);
+    }
+
+    free(document->pages);
+  }
+
+  free(document->password);
+  free(document->path);
 
   return ZATHURA_ERROR_OK;
 }
