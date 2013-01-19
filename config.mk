@@ -33,11 +33,14 @@ INCLUDEDIR ?= ${PREFIX}/include
 GLIB_INC ?= $(shell pkg-config --cflags glib-2.0)
 GLIB_LIB ?= $(shell pkg-config --libs glib-2.0)
 
+GTK_INC ?= $(shell pkg-config --cflags gtk+-2.0)
+GTK_LIB ?= $(shell pkg-config --libs gtk+-2.0)
+
 GMODULE_INC ?= $(shell pkg-config --cflags gmodule-no-export-2.0)
 GMODULE_LIB ?= $(shell pkg-config --libs gmodule-no-export-2.0)
 
-INCS = ${GLIB_INC} ${GMODULE_INC}
-LIBS = ${GLIB_LIB} ${GMODULE_LIB} -lm
+INCS = ${GLIB_INC} ${GMODULE_INC} ${GTK_INC}
+LIBS = ${GLIB_LIB} ${GMODULE_LIB} ${GTK_LIB} -lm
 
 # flags
 CFLAGS += -std=c99 -pedantic -Wall -Wextra -fPIC $(INCS)

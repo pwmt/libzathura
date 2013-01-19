@@ -250,3 +250,8 @@ zathura_plugin_manager_get_plugins(zathura_plugin_manager_t* plugin_manager,
 
   return ZATHURA_ERROR_OK;
 }
+
+zathura_error_t
+zathura_plugin_manager_get_plugin(zathura_plugin_manager_t* plugin_manager, const char* mime_type)
+{
+}

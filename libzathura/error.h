@@ -13,6 +13,10 @@ typedef enum zathura_error_e {
   ZATHURA_ERROR_PLUGIN_VERSION, /**< Miss-matching version number */
   ZATHURA_ERROR_PLUGIN_NOT_IMPLEMENTED, /**< The requested feature is not implemented by the plugin */
 
+  ZATHURA_ERROR_DOCUMENT_DOES_NOT_EXIST, /**< The file does not exist */
+  ZATHURA_ERROR_DOCUMENT_OPEN, /**< Could not open document */
+  ZATHURA_ERROR_DOCUMENT_WRONG_PASSWORD, /**< Wrong or none password has been passed */
+  ZATHURA_ERROR_DOCUMENT_UNKNOWN_TYPE, /**< Document type is unknown */
   ZATHURA_ERROR_DOCUMENT_INVALID_INDEX, /**< Invalid index */
   ZATHURA_ERROR_DOCUMENT_INVALID_LABEL, /**< Invalid label */
 } zathura_error_t;

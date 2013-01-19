@@ -5,6 +5,7 @@
 
 #include "error.h"
 #include "list.h"
+#include "document.h"
 
 typedef struct zathura_plugin_manager_s zathura_plugin_manager_t;
 
@@ -14,5 +15,7 @@ zathura_error_t zathura_plugin_manager_free(zathura_plugin_manager_t* plugin_man
 zathura_error_t zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char* path);
 zathura_error_t zathura_plugin_manager_load_dir(zathura_plugin_manager_t* plugin_manager, const char* directory);
 zathura_error_t zathura_plugin_manager_get_plugins(zathura_plugin_manager_t* plugin_manager, zathura_list_t** plugins);
+
+zathura_error_t zathura_plugin_manager_get_plugin(zathura_plugin_manager_t* plugin_manager, const char* mime_type);
 
 #endif /* PLUGIN_MANAGER_H */

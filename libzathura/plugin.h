@@ -3,11 +3,12 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
+#include "document.h"
 #include "error.h"
 
 typedef struct zathura_plugin_s zathura_plugin_t;
 typedef struct zathura_plugin_functions_s {
-  int x;
+  zathura_error_t (*document_open)(zathura_document_t* document);
 } zathura_plugin_functions_t;
 
 typedef struct zathura_plugin_version_s {
@@ -20,5 +21,8 @@ zathura_error_t zathura_plugin_get_name(zathura_plugin_t* plugin, const char** n
 zathura_error_t zathura_plugin_get_path(zathura_plugin_t* plugin, const char** path);
 zathura_error_t zathura_plugin_get_version(zathura_plugin_t* plugin, zathura_plugin_version_t* version);
 zathura_error_t zathura_plugin_get_functions(zathura_plugin_t* plugin, zathura_plugin_functions_t** functions);
+
+zathura_error_t zathura_plugin_open_document(zathura_plugin_t* plugin_manager, const
+    char* path, const char* password, zathura_document_t** document);
 
 #endif /* PLUGIN_H */

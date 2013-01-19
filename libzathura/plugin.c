@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "plugin.h"
 #include "error.h"
@@ -61,6 +62,69 @@ zathura_plugin_get_functions(zathura_plugin_t* plugin,
 {
   if (plugin == NULL || functions == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_plugin_open_document(zathura_plugin_t* plugin, const char* path,
+    const char* password, zathura_document_t** document)
+{
+  if (plugin == NULL || path == NULL || strlen(path) == 0 || document == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  /* Check if open document function is set */
+  if (plugin->functions.document_open == NULL) {
+    return ZATHURA_ERROR_PLUGIN_NOT_IMPLEMENTED;
+  }
+
+  /* Check if file exists */
+  if (g_file_test(path, G_FILE_TEST_EXISTS) == FALSE) {
+    return ZATHURA_ERROR_DOCUMENT_DOES_NOT_EXIST;
+  }
+
+  /* Determine real path */
+  char* real_path;
+  if (zathura_realpath(path, &real_path) != ZATHURA_ERROR_OK) {
+    return ZATHURA_ERROR_UNKNOWN;
+  }
+
+  /* Create document */
+  *document = calloc(1, sizeof(zathura_document_t));
+  if (*document == NULL) {
+    free(real_path);
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
+
+  /* Initialize document */
+  (*document)->path     = real_path;
+  (*document)->password = (password != NULL) ? g_strdup(password) : NULL;
+
+  /* Open document */
+  zathura_error_t error = plugin->functions.document_open(*document);
+  if (error != ZATHURA_ERROR_OK) {
+    zathura_document_free(*document);
+    *document = NULL;
+    return error;
+  }
+
+  /* Allocate pages */
+  (*document)->pages = calloc((*document)->number_of_pages, sizeof(zathura_page_t*));
+  if ((*document)->pages == NULL) {
+    zathura_document_free(*document);
+    *document = NULL;
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
+
+  for (unsigned int pid = 0; pid < (*document)->number_of_pages; pid++) {
+    zathura_error_t error = zathura_document_get_page(*document, pid, &((*document)->pages[pid]));
+    if (error != ZATHURA_ERROR_OK) {
+      zathura_document_free(*document);
+      *document = NULL;
+      return error;
+    }
   }
 
   return ZATHURA_ERROR_OK;
