@@ -11,6 +11,7 @@ struct zathura_plugin_s {
   zathura_plugin_register_function_t register_function;
   zathura_plugin_functions_t functions;
   zathura_plugin_version_t version;
+  zathura_list_t* mimetypes;
   char* name;
   char* path;
 };

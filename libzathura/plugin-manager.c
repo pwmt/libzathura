@@ -44,7 +44,7 @@ error_free:
 
   if (*plugin_manager != NULL) {
     if ((*plugin_manager)->plugins != NULL) {
-      zathura_list_free((*plugin_manager)->plugins);
+      zathura_list_free_full((*plugin_manager)->plugins, free);
     }
 
     free(*plugin_manager);
@@ -62,6 +62,22 @@ zathura_plugin_manager_free(zathura_plugin_manager_t* plugin_manager)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  /* free plugins */
+  if (plugin_manager->plugins != NULL) {
+    for (unsigned int i = 0; i < zathura_list_length(plugin_manager->plugins); i++) {
+      zathura_plugin_t* plugin = (zathura_plugin_t*) zathura_list_nth(plugin_manager->plugins, i);
+      if (plugin != NULL) {
+        if (plugin->mimetypes != NULL) {
+          zathura_list_free_full(plugin->mimetypes, g_free);
+          plugin->mimetypes = NULL;
+        }
+      }
+    }
+
+    zathura_list_free_full(plugin_manager->plugins, free);
+  }
+
+  /* free plugin manager */
   free(plugin_manager);
 
   return ZATHURA_ERROR_OK;
@@ -252,5 +268,28 @@ zathura_plugin_manager_get_plugin(zathura_plugin_manager_t* plugin_manager,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  return ZATHURA_ERROR_OK;
+  if (plugin_manager->plugins == NULL) {
+    return ZATHURA_ERROR_UNKNOWN;
+  }
+
+  for (unsigned int i = 0; i < zathura_list_length(plugin_manager->plugins); i++) {
+    zathura_plugin_t* tmp_plugin = (zathura_plugin_t*) zathura_list_nth(plugin_manager->plugins, i);
+    if (tmp_plugin == NULL || tmp_plugin->mimetypes == NULL) {
+      continue;
+    }
+
+    for (unsigned int j = 0; j < zathura_list_length(tmp_plugin->mimetypes); j++) {
+      char* tmp_mime_type = (char*) zathura_list_nth(tmp_plugin->mimetypes, j);
+      if (tmp_mime_type == NULL) {
+        continue;
+      }
+
+      if (strcmp(mime_type, tmp_mime_type) == 0) {
+        *plugin = tmp_plugin;
+        return ZATHURA_ERROR_OK;
+      }
+    }
+  }
+
+  return ZATHURA_ERROR_UNKNOWN;
 }

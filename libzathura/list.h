@@ -9,6 +9,7 @@ typedef GList zathura_list_t;
 
 #define zathura_list_alloc g_list_alloc
 #define zathura_list_free(list) g_list_free((list))
+#define zathura_list_free_full(list, free_func) g_list_free_full((list), (free_func))
 #define zathura_list_append(list, data) (zathura_list_t*) g_list_append((list), (data))
 #define zathura_list_prepend(list, data) (zathura_list_t*) g_list_prepend((list), (data))
 #define zathura_list_nth(list, n) (zathura_list_t*) g_list_nth((list), (n))

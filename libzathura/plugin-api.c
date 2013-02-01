@@ -38,5 +38,12 @@ zathura_plugin_add_mimetype(zathura_plugin_t* plugin, const char* mime_type)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  char* cpy_mime_type = g_strdup(mime_type);
+  if (cpy_mime_type == NULL) {
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
+
+  plugin->mimetypes = zathura_list_append(plugin->mimetypes, cpy_mime_type);
+
   return ZATHURA_ERROR_OK;
 }
