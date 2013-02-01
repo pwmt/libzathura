@@ -6,6 +6,7 @@
 
 #include "error.h"
 #include "plugin.h"
+#include "plugin-api.h"
 #include "plugin-manager.h"
 
 zathura_plugin_manager_t* plugin_manager;
@@ -32,6 +33,21 @@ static void teardown(void) {
   plugin_manager = NULL;
   plugin = NULL;
 }
+
+START_TEST(test_plugin_set_name) {
+  const char* name = "plugin";
+
+  /* invalid parameter */
+  fail_unless(zathura_plugin_set_name(NULL,   NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_set_name(plugin, NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_set_name(NULL,   name)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_set_name(plugin, "")    == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid parameter */
+  fail_unless(zathura_plugin_set_name(plugin,  name) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_plugin_get_name(plugin, &name) == ZATHURA_ERROR_OK);
+  fail_unless(strcmp(name, "plugin") == 0);
+} END_TEST
 
 START_TEST(test_plugin_get_name) {
   const char* name;
@@ -74,6 +90,19 @@ START_TEST(test_plugin_get_version) {
   fail_unless(version.rev == 0);
 } END_TEST
 
+START_TEST(test_plugin_set_register_function) {
+  zathura_plugin_register_function_t function = (zathura_plugin_register_function_t) 0x1;
+
+  /* invalid parameter */
+  fail_unless(zathura_plugin_set_register_function(NULL,   NULL)     == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_set_register_function(plugin, NULL)     == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_set_register_function(NULL,   function) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid parameter */
+  fail_unless(zathura_plugin_set_register_function(plugin, function) == ZATHURA_ERROR_OK);
+} END_TEST
+
+
 START_TEST(test_plugin_get_functions) {
   zathura_plugin_functions_t* functions;
 
@@ -87,6 +116,17 @@ START_TEST(test_plugin_get_functions) {
   fail_unless(functions != NULL);
 } END_TEST
 
+START_TEST(test_plugin_add_mime_type) {
+  /* invalid parameter */
+  fail_unless(zathura_plugin_add_mimetype(NULL,   NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_add_mimetype(plugin, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_add_mimetype(NULL,   "xx") == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_add_mimetype(plugin, "")   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid parameter */
+  fail_unless(zathura_plugin_add_mimetype(plugin, "application/pdf") == ZATHURA_ERROR_OK);
+} END_TEST
+
 Suite*
 suite_plugin(void)
 {
@@ -95,10 +135,13 @@ suite_plugin(void)
 
   tcase = tcase_create("basic");
   tcase_add_checked_fixture(tcase, setup, teardown);
+  tcase_add_test(tcase, test_plugin_set_name);
   tcase_add_test(tcase, test_plugin_get_name);
   tcase_add_test(tcase, test_plugin_get_path);
   tcase_add_test(tcase, test_plugin_get_version);
+  tcase_add_test(tcase, test_plugin_set_register_function);
   tcase_add_test(tcase, test_plugin_get_functions);
+  tcase_add_test(tcase, test_plugin_add_mime_type);
   suite_add_tcase(suite, tcase);
 
   return suite;

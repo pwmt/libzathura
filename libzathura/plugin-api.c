@@ -13,7 +13,7 @@ zathura_plugin_set_name(zathura_plugin_t* plugin, const char* name)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  plugin->name = name;
+  plugin->name = (char*) name;
 
   return ZATHURA_ERROR_OK;
 }

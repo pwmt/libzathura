@@ -154,12 +154,6 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
     goto error_free;
   }
 
-  plugin->functions = calloc(1, sizeof(zathura_plugin_functions_t));
-  if (plugin->functions == NULL) {
-    error = ZATHURA_ERROR_OUT_OF_MEMORY;
-    goto error_free;
-  }
-
   /* setup plugin */
   plugin->path          = real_path;
   plugin->version.major = major_version();
@@ -170,13 +164,12 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
 
   if (plugin->register_function == NULL || plugin->name == NULL) {
     free(plugin->path);
-    free(plugin->functions);
     free(plugin);
     return ZATHURA_ERROR_UNKNOWN;
   }
 
   /* register functions */
-  plugin->register_function(plugin->functions);
+  plugin->register_function(&(plugin->functions));
 
   /* add plugin to the list */
   plugin_manager->plugins = zathura_list_append(plugin_manager->plugins, plugin);
@@ -252,6 +245,12 @@ zathura_plugin_manager_get_plugins(zathura_plugin_manager_t* plugin_manager,
 }
 
 zathura_error_t
-zathura_plugin_manager_get_plugin(zathura_plugin_manager_t* plugin_manager, const char* mime_type)
+zathura_plugin_manager_get_plugin(zathura_plugin_manager_t* plugin_manager,
+    const char* mime_type, zathura_plugin_t** plugin)
 {
+  if (plugin_manager == NULL || mime_type == NULL || strlen(mime_type) == 0 || plugin == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  return ZATHURA_ERROR_OK;
 }
