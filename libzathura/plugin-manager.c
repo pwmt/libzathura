@@ -239,6 +239,7 @@ zathura_plugin_manager_load_dir(zathura_plugin_manager_t* plugin_manager, const
     }
 
     zathura_plugin_manager_load(plugin_manager, path);
+    g_free(path);
   }
 
   g_dir_close(dir);
