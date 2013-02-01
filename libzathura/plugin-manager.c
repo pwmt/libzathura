@@ -23,6 +23,20 @@ typedef unsigned int (*zathura_plugin_major_version_t)(void);
 typedef unsigned int (*zathura_plugin_minor_version_t)(void);
 typedef unsigned int (*zathura_plugin_rev_version_t)(void);
 
+static void
+zathura_plugin_free(zathura_plugin_t* plugin)
+{
+  if (plugin == NULL) {
+    return ;
+  }
+
+  if (plugin->mimetypes == NULL) {
+    zathura_list_free_full(plugin->mimetypes, g_free);
+  }
+  free(plugin->path);
+  free(plugin);
+}
+
 zathura_error_t
 zathura_plugin_manager_new(zathura_plugin_manager_t** plugin_manager)
 {
@@ -64,17 +78,7 @@ zathura_plugin_manager_free(zathura_plugin_manager_t* plugin_manager)
 
   /* free plugins */
   if (plugin_manager->plugins != NULL) {
-    for (unsigned int i = 0; i < zathura_list_length(plugin_manager->plugins); i++) {
-      zathura_plugin_t* plugin = (zathura_plugin_t*) zathura_list_nth(plugin_manager->plugins, i);
-      if (plugin != NULL) {
-        if (plugin->mimetypes != NULL) {
-          zathura_list_free_full(plugin->mimetypes, g_free);
-          plugin->mimetypes = NULL;
-        }
-      }
-    }
-
-    zathura_list_free_full(plugin_manager->plugins, free);
+    zathura_list_free_full(plugin_manager->plugins, (GDestroyNotify) zathura_plugin_free);
   }
 
   /* free plugin manager */
