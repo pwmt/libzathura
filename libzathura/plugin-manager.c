@@ -278,13 +278,13 @@ zathura_plugin_manager_get_plugin(zathura_plugin_manager_t* plugin_manager,
   }
 
   for (unsigned int i = 0; i < zathura_list_length(plugin_manager->plugins); i++) {
-    zathura_plugin_t* tmp_plugin = (zathura_plugin_t*) zathura_list_nth(plugin_manager->plugins, i);
+    zathura_plugin_t* tmp_plugin = (zathura_plugin_t*) zathura_list_nth_data(plugin_manager->plugins, i);
     if (tmp_plugin == NULL || tmp_plugin->mimetypes == NULL) {
       continue;
     }
 
     for (unsigned int j = 0; j < zathura_list_length(tmp_plugin->mimetypes); j++) {
-      char* tmp_mime_type = (char*) zathura_list_nth(tmp_plugin->mimetypes, j);
+      char* tmp_mime_type = (char*) zathura_list_nth_data(tmp_plugin->mimetypes, j);
       if (tmp_mime_type == NULL) {
         continue;
       }
