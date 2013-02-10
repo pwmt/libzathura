@@ -12,7 +12,7 @@ START_TEST(test_document_free) {
 
 START_TEST(test_document_save_as) {
   zathura_document_t* document;
-  const char* path;
+  const char* path = "abc";
 
   /* basic invalid arguments */
   fail_unless(zathura_document_save_as(NULL,     NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -57,10 +57,11 @@ START_TEST(test_document_get_page_by_label) {
   const char* path;
 
   /* basic invalid arguments */
-  fail_unless(zathura_document_get_page_by_label(NULL,     NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_document_get_page_by_label(document, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_document_get_page_by_label(document, "", NULL)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_document_get_page_by_label(document, "", &page)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_page_by_label(NULL,     NULL,  NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_page_by_label(document, NULL,  NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_page_by_label(document, "",    NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_page_by_label(document, "abc", NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_page_by_label(document, "",    &page) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
 START_TEST(test_document_get_index) {
@@ -101,13 +102,28 @@ suite_document(void)
 
   tcase = tcase_create("basic");
   tcase_add_test(tcase, test_document_free);
-  tcase_add_test(tcase, test_document_save_as);
   tcase_add_test(tcase, test_document_get_path);
   tcase_add_test(tcase, test_document_get_number_of_pages);
+  suite_add_tcase(suite, tcase);
+
+  tcase = tcase_create("save-as");
+  tcase_add_test(tcase, test_document_save_as);
+  suite_add_tcase(suite, tcase);
+
+  tcase = tcase_create("pages");
   tcase_add_test(tcase, test_document_get_page);
   tcase_add_test(tcase, test_document_get_page_by_label);
+  suite_add_tcase(suite, tcase);
+
+  tcase = tcase_create("index");
   tcase_add_test(tcase, test_document_get_index);
+  suite_add_tcase(suite, tcase);
+
+  tcase = tcase_create("attachments");
   tcase_add_test(tcase, test_document_get_attachments);
+  suite_add_tcase(suite, tcase);
+
+  tcase = tcase_create("meta");
   tcase_add_test(tcase, test_document_get_information);
   suite_add_tcase(suite, tcase);
 
