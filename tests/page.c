@@ -31,6 +31,13 @@ START_TEST(test_page_get_index) {
   fail_unless(zathura_page_get_index(NULL, &index) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
+START_TEST(test_page_set_width) {
+  zathura_page_t* page;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_set_width(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+} END_TEST
+
 START_TEST(test_page_get_width) {
   zathura_page_t* page;
   unsigned int width;
@@ -39,6 +46,13 @@ START_TEST(test_page_get_width) {
   fail_unless(zathura_page_get_width(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_width(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_width(NULL, &width) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+} END_TEST
+
+START_TEST(test_page_set_height) {
+  zathura_page_t* page;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_set_height(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
 START_TEST(test_page_get_height) {
@@ -127,23 +141,23 @@ START_TEST(test_page_search_text) {
 
 START_TEST(test_page_render) {
   zathura_page_t* page;
-  unsigned int index;
+  zathura_image_buffer_t* buffer;
 
   /* basic invalid arguments */
-  fail_unless(zathura_page_get_index(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_get_index(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_get_index(NULL, &index) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_render(NULL, NULL, 0, 0, 0)     == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_render(page, NULL, 0, 0, 0)     == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_render(page, &buffer, -1, 0, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
 #ifdef HAVE_CAIRO
 START_TEST(test_page_render_cairo) {
   zathura_page_t* page;
-  unsigned int index;
+  cairo_t* cairo;
 
   /* basic invalid arguments */
-  fail_unless(zathura_page_get_index(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_get_index(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_get_index(NULL, &index) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_render(NULL, NULL, 0, 0, 0)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_render(page, NULL, 0, 0, 0)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_render(page, cairo, -1, 0, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 #endif
 
@@ -157,7 +171,9 @@ suite_page(void)
   tcase_add_test(tcase, test_page_new);
   tcase_add_test(tcase, test_page_free);
   tcase_add_test(tcase, test_page_get_index);
+  tcase_add_test(tcase, test_page_set_width);
   tcase_add_test(tcase, test_page_get_width);
+  tcase_add_test(tcase, test_page_set_height);
   tcase_add_test(tcase, test_page_get_height);
   suite_add_tcase(suite, tcase);
 

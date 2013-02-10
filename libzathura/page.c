@@ -188,7 +188,7 @@ zathura_error_t
 zathura_page_render(zathura_page_t* page, zathura_image_buffer_t** buffer,
     double scale, int rotation, int flags)
 {
-  if (page == NULL || buffer == NULL) {
+  if (page == NULL || buffer == NULL || scale <= 0.0) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
@@ -200,7 +200,7 @@ zathura_error_t
 zathura_page_render_cairo(zathura_page_t* page, cairo_t* cairo, double scale,
     int rotation, int flags)
 {
-  if (page == NULL || cairo == NULL) {
+  if (page == NULL || cairo == NULL || scale <= 0.0) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 

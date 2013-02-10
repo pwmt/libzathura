@@ -127,6 +127,17 @@ START_TEST(test_plugin_add_mime_type) {
   fail_unless(zathura_plugin_add_mimetype(plugin, "application/pdf") == ZATHURA_ERROR_OK);
 } END_TEST
 
+START_TEST(test_plugin_open_document) {
+  zathura_document_t* document;
+
+  /* invalid parameter */
+  fail_unless(zathura_plugin_open_document(NULL,   NULL, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_open_document(plugin, NULL, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_open_document(plugin, "",   NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_open_document(plugin, "ab", "",   NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+} END_TEST
+
+
 Suite*
 suite_plugin(void)
 {
@@ -142,6 +153,7 @@ suite_plugin(void)
   tcase_add_test(tcase, test_plugin_set_register_function);
   tcase_add_test(tcase, test_plugin_get_functions);
   tcase_add_test(tcase, test_plugin_add_mime_type);
+  tcase_add_test(tcase, test_plugin_open_document);
   suite_add_tcase(suite, tcase);
 
   return suite;
