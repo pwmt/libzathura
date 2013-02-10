@@ -14,8 +14,8 @@ zathura_error_t zathura_page_get_width(zathura_page_t* page, unsigned int* width
 zathura_error_t zathura_page_get_height(zathura_page_t* page, unsigned int* height);
 zathura_error_t zathura_page_get_label(zathura_page_t* page, const char** label);
 
-zathura_error_t zathura_page_search_text(zathura_page_t* page, zathura_list_t** results, const
-    char* text);
+zathura_error_t zathura_page_search_text(zathura_page_t* page, const char* text,
+    zathura_list_t** results);
 zathura_error_t zathura_page_get_text(zathura_page_t* page, char** text,
     zathura_rectangle_t rectangle);
 zathura_error_t zathura_page_get_links(zathura_page_t* page, zathura_list_t** links);

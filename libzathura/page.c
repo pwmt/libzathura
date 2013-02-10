@@ -133,8 +133,8 @@ zathura_page_set_label(zathura_page_t* page, const char* label)
 }
 
 zathura_error_t
-zathura_page_search_text(zathura_page_t* page, zathura_list_t** results, const
-    char* text)
+zathura_page_search_text(zathura_page_t* page, const char* text,
+    zathura_list_t** results)
 {
   if (page == NULL || results == NULL || text == NULL || strlen(text) == 0) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
