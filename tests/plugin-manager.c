@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
 #include <check.h>
-#include <stdio.h>
+#include <fiu.h>
 
 #include "plugin-manager.h"
 
@@ -15,6 +15,11 @@ START_TEST(test_plugin_manager_new) {
   fail_unless(zathura_plugin_manager_new(&plugin_manager) == ZATHURA_ERROR_OK);
   fail_unless(plugin_manager != NULL);
   fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);
+
+  /* fault injection */
+  fiu_enable("libc/mm/calloc", 1, NULL, 0);
+  fail_unless(zathura_plugin_manager_new(&plugin_manager) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fiu_disable("libc/mm/calloc");
 } END_TEST
 
 START_TEST(test_plugin_manager_free) {

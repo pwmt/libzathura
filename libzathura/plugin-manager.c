@@ -30,9 +30,10 @@ zathura_plugin_free(zathura_plugin_t* plugin)
     return ;
   }
 
-  if (plugin->mimetypes == NULL) {
+  if (plugin->mimetypes != NULL) {
     zathura_list_free_full(plugin->mimetypes, g_free);
   }
+
   free(plugin->path);
   free(plugin);
 }
@@ -49,20 +50,10 @@ zathura_plugin_manager_new(zathura_plugin_manager_t** plugin_manager)
 
   if ((*plugin_manager = calloc(1, sizeof(zathura_plugin_manager_t))) == NULL) {
     error = ZATHURA_ERROR_OUT_OF_MEMORY;
-    goto error_free;
+    goto error_ret;
   }
 
   return ZATHURA_ERROR_OK;
-
-error_free:
-
-  if (*plugin_manager != NULL) {
-    if ((*plugin_manager)->plugins != NULL) {
-      zathura_list_free_full((*plugin_manager)->plugins, free);
-    }
-
-    free(*plugin_manager);
-  }
 
 error_ret:
 
