@@ -32,7 +32,6 @@ zathura_realpath(const char* path, char** real_path)
   }
 #endif
 
-  /*fiu_return_on("zathura_realpath_1", ZATHURA_ERROR_OUT_OF_MEMORY);*/
   *real_path = calloc(sizeof(char), path_max);
   if (*real_path == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
@@ -57,9 +56,12 @@ zathura_guess_type(const char* path, char** type)
   /* guess by path */
   gboolean uncertain;
   char* content_type = g_content_type_guess(path, NULL, 0, &uncertain);
+  fiu_do_on("zathura_guess_type_g_content_type_guess", g_free(content_type); content_type = NULL);
   if (content_type == NULL) {
     return ZATHURA_ERROR_UNKNOWN;
   }
+
+  fiu_do_on("zathura_guess_type_uncertain_1", uncertain = TRUE);
 
   if (uncertain == FALSE) {
     *type = content_type;

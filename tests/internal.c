@@ -45,6 +45,15 @@ START_TEST(test_zathura_guess_type) {
   fail_unless(zathura_guess_type("file.djvu", &type) == ZATHURA_ERROR_OK);
   fail_unless(strcmp(type, "image/vnd.djvu") == 0);
   free(type);
+
+  /* fault injection */
+  fiu_enable("zathura_guess_type_g_content_type_guess", 1, NULL, 0);
+  fail_unless(zathura_guess_type("file.pdf", &type) == ZATHURA_ERROR_UNKNOWN);
+  fiu_disable("zathura_guess_type_g_content_type_guess");
+
+  fiu_enable("zathura_guess_type_uncertain_1", 1, NULL, 0);
+  fail_unless(zathura_guess_type("file.pdf", &type) == ZATHURA_ERROR_UNKNOWN);
+  fiu_disable("zathura_guess_type_uncertain_1");
 } END_TEST
 
 Suite*
