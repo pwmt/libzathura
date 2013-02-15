@@ -11,8 +11,10 @@ static int cb_test_image_buffer_new_calloc(const char* name, int *failnum,
   static int i = 0;
   i++;
 
-  if (i == 1 || i == 3) {
-    return 1;
+  switch (i++) {
+    case 1:
+    case 3:
+      return 1;
   }
 
   return 0;

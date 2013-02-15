@@ -127,6 +127,20 @@ START_TEST(test_plugin_add_mime_type) {
   fail_unless(zathura_plugin_add_mimetype(plugin, "application/pdf") == ZATHURA_ERROR_OK);
 } END_TEST
 
+static int cb_test_plugin_document_open_calloc(const char* name, int *failnum,
+    void**failinfo, unsigned int flags)
+{
+  static int i = 0;
+
+  switch (i++) {
+    case 1:
+    case 4:
+      return 1;
+  }
+
+  return 0;
+}
+
 START_TEST(test_plugin_open_document) {
   zathura_document_t* document;
 
@@ -135,6 +149,16 @@ START_TEST(test_plugin_open_document) {
   fail_unless(zathura_plugin_open_document(plugin, NULL, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_plugin_open_document(plugin, "",   NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_plugin_open_document(plugin, "ab", "",   NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid parameter */
+  fail_unless(zathura_plugin_open_document(plugin, "Makefile", NULL, &document) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_document_free(document) == ZATHURA_ERROR_OK);
+
+  /* fault injection */
+  fiu_enable_external("libc/mm/calloc", 1, NULL, 0, cb_test_plugin_document_open_calloc);
+  fail_unless(zathura_plugin_open_document(plugin, "Makefile", NULL, &document) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_plugin_open_document(plugin, "Makefile", NULL, &document) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fiu_disable("libc/mm/calloc");
 } END_TEST
 
 
