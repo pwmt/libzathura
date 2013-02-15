@@ -11,6 +11,7 @@
 #include <gio/gio.h>
 
 #include "internal.h"
+#include "fiu-local.h"
 
 static const size_t GT_MAX_READ = 1 << 16;
 
@@ -31,6 +32,7 @@ zathura_realpath(const char* path, char** real_path)
   }
 #endif
 
+  /*fiu_return_on("zathura_realpath_1", ZATHURA_ERROR_OUT_OF_MEMORY);*/
   *real_path = calloc(sizeof(char), path_max);
   if (*real_path == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;

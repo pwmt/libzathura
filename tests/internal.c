@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fiu.h>
 
 #include "internal.h"
 
@@ -20,6 +21,11 @@ START_TEST(test_zathura_realpath) {
   /* valid arguments */
   fail_unless(zathura_realpath("./plugin", &real_path) == ZATHURA_ERROR_OK);
   free(real_path);
+
+  /* fault injection */
+  fiu_enable("libc/mm/calloc", 1, NULL, 0);
+  fail_unless(zathura_realpath("./plugin", &real_path) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fiu_disable("libc/mm/calloc");
 } END_TEST
 
 START_TEST(test_zathura_guess_type) {
@@ -29,6 +35,7 @@ START_TEST(test_zathura_guess_type) {
   fail_unless(zathura_guess_type(NULL, NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_guess_type(NULL, &type) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_guess_type("",   NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_guess_type("a",  NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
   fail_unless(zathura_guess_type("file.pdf", &type) == ZATHURA_ERROR_OK);

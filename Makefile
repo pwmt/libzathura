@@ -12,6 +12,12 @@ GCNO 			= ${SOURCE:.c=.gcno}
 HEADERS   = $(filter-out ${PROJECT}/version.h, $(filter-out ${PROJECT/}internal.h, $(wildcard *.h)))
 HEADERS_INSTALL = ${HEADERS} ${PROJECT}/version.h
 
+ifneq (${WITH_LIBFIU},0)
+INCS += ${FIU_INC}
+LIBS += ${FIU_LIB}
+CFLAGS += "-DFIU_ENABLE"
+endif
+
 all: options ${PROJECT}
 
 options:
@@ -83,7 +89,7 @@ test: ${PROJECT}
 	$(QUIET)${MAKE} -C tests run
 
 gcov: clean
-	$(QUIET)env CFLAGS="-fprofile-arcs -ftest-coverage" LDFLAGS="-fprofile-arcs" ${MAKE} debug
+	$(QUIET)env CFLAGS="-fprofile-arcs -ftest-coverage" LDFLAGS="-fprofile-arcs" WITH_LIBFIU=1 ${MAKE} debug
 	$(QUIET)env CFLAGS="-fprofile-arcs -ftest-coverage" LDFLAGS="-fprofile-arcs" ${MAKE} test
 	$(QUIET)lcov --base-directory . --directory ${PROJECT} --capture --output-file $(PROJECT).info
 	$(QUIET)genhtml --output-directory gcov $(PROJECT).info

@@ -1,6 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
 #include <check.h>
+#include <fiu.h>
 
 Suite* suite_internal(void);
 Suite* suite_image_buffer(void);
@@ -12,6 +13,10 @@ Suite* suite_image(void);
 
 int main(void)
 {
+  /* initialize libfiu */
+  fiu_init(0);
+
+  /* setup test suite */
   SRunner* suite_runner = srunner_create(NULL);
   int number_failed     = 0;
 

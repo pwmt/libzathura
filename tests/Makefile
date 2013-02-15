@@ -12,12 +12,16 @@ DOBJECTS = ${SOURCE:.c=.do}
 GCDA     = ${SOURCE:.c=.gcda}
 GCNO     = ${SOURCE:.c=.gcno}
 
+ifneq (${WITH_LIBFIU},0)
+FIU_EXEC += ${FIU_RUN}
+endif
+
 all: ${PROJECT}
 
 debug: options ${PROJECT}-debug
 
 run: ${PROJECT}
-	$(QUIET)./${PROJECT}
+	$(QUIET)${FIU_EXEC} ./${PROJECT}
 
 %.o: %.c
 	$(ECHO) CC $<
@@ -30,13 +34,13 @@ run: ${PROJECT}
 	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} ${DFLAGS} -o $@ $< -MMD -MF .depend/$(abspath $@).dep
 
 ${PROJECT}: options ${OBJECTS}
-	$(QUIET)${MAKE} -C ..
+	$(QUIET)${MAKE} WITH_LIBFIU=1 -C ..
 	$(QUIET)${MAKE} -C plugin
 	$(ECHO) CC -o $@
 	$(QUIET)${CC} ${SFLAGS} ${LDFLAGS} -o $@ ${OBJECTS} ${LIBS}
 
 ${PROJECT}-debug: options ${DOBJECTS}
-	$(QUIET)${MAKE} -C .. debug
+	$(QUIET)${MAKE} WITH_LIBFIU=1 -C .. debug
 	$(QUIET)${MAKE} -C plugin
 	$(ECHO) CC -o $@
 	$(QUIET)${CC} ${LDFLAGS} -o ${PROJECT} ${DOBJECTS} ${LIBS}

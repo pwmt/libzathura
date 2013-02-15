@@ -1,8 +1,22 @@
 /* See LICENSE file for license and copyright information */
 
 #include <check.h>
+#include <fiu.h>
 
 #include "image-buffer.h"
+
+static int cb_test_image_buffer_new_calloc(const char* name, int *failnum,
+    void**failinfo, unsigned int flags)
+{
+  static int i = 0;
+  i++;
+
+  if (i == 1 || i == 3) {
+    return 1;
+  }
+
+  return 0;
+}
 
 START_TEST(test_image_buffer_new) {
   zathura_image_buffer_t* buffer;
@@ -19,6 +33,12 @@ START_TEST(test_image_buffer_new) {
   /* valid arguments */
   fail_unless(zathura_image_buffer_new(&buffer, 1, 1) == ZATHURA_ERROR_OK);
   fail_unless(zathura_image_buffer_free(buffer) == ZATHURA_ERROR_OK);
+
+  /* fault injection */
+  fiu_enable_external("libc/mm/calloc", 1, NULL, 0, cb_test_image_buffer_new_calloc);
+  fail_unless(zathura_image_buffer_new(&buffer, 1, 1) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_image_buffer_new(&buffer, 1, 1) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fiu_disable("libc/mm/calloc");
 } END_TEST
 
 START_TEST(test_image_buffer_free) {

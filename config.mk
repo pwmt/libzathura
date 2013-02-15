@@ -39,6 +39,9 @@ GTK_LIB ?= $(shell pkg-config --libs gtk+-2.0)
 GMODULE_INC ?= $(shell pkg-config --cflags gmodule-no-export-2.0)
 GMODULE_LIB ?= $(shell pkg-config --libs gmodule-no-export-2.0)
 
+FIU_INC ?= $(shell pkg-config --cflags libfiu)
+FIU_LIB ?= $(shell pkg-config --libs libfiu)
+
 INCS = ${GLIB_INC} ${GMODULE_INC} ${GTK_INC}
 LIBS = ${GLIB_LIB} ${GMODULE_LIB} ${GTK_LIB} -lm
 
@@ -56,6 +59,10 @@ CC ?= gcc
 
 # strip
 SFLAGS ?= -s
+
+# libfiu
+WITH_LIBFIU ?= 1
+FIU_RUN ?= fiu-run -x
 
 # set to something != 0 if you want verbose build output
 VERBOSE ?= 0

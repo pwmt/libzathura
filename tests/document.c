@@ -11,7 +11,7 @@ START_TEST(test_document_free) {
 } END_TEST
 
 START_TEST(test_document_save_as) {
-  zathura_document_t* document;
+  zathura_document_t* document = (zathura_document_t*) 0xCAFE;
   const char* path = "abc";
 
   /* basic invalid arguments */
