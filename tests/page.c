@@ -7,7 +7,7 @@
 #include "internal.h"
 
 START_TEST(test_page_new) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_new(NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -22,7 +22,7 @@ START_TEST(test_page_free) {
 } END_TEST
 
 START_TEST(test_page_get_index) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
   unsigned int index;
 
   /* basic invalid arguments */
@@ -32,14 +32,14 @@ START_TEST(test_page_get_index) {
 } END_TEST
 
 START_TEST(test_page_set_width) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_set_width(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
 START_TEST(test_page_get_width) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
   unsigned int width;
 
   /* basic invalid arguments */
@@ -49,14 +49,14 @@ START_TEST(test_page_get_width) {
 } END_TEST
 
 START_TEST(test_page_set_height) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_set_height(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
 START_TEST(test_page_get_height) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
   unsigned int height;
 
   /* basic invalid arguments */
@@ -66,7 +66,7 @@ START_TEST(test_page_get_height) {
 } END_TEST
 
 START_TEST(test_page_set_label) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_set_label(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -76,7 +76,7 @@ START_TEST(test_page_set_label) {
 } END_TEST
 
 START_TEST(test_page_get_label) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
   const char* label;
 
   /* basic invalid arguments */
@@ -86,7 +86,7 @@ START_TEST(test_page_get_label) {
 } END_TEST
 
 START_TEST(test_page_get_text) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
   char* text;
   zathura_rectangle_t rectangle = { 0, 0, 0, 0};
 
@@ -97,7 +97,7 @@ START_TEST(test_page_get_text) {
 } END_TEST
 
 START_TEST(test_page_get_links) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
   zathura_list_t* links;;
 
   /* basic invalid arguments */
@@ -107,7 +107,7 @@ START_TEST(test_page_get_links) {
 } END_TEST
 
 START_TEST(test_page_get_form_fields) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
   zathura_list_t* form_fields;
 
   /* basic invalid arguments */
@@ -117,7 +117,7 @@ START_TEST(test_page_get_form_fields) {
 } END_TEST
 
 START_TEST(test_page_get_images) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
   zathura_list_t* images;
 
   /* basic invalid arguments */
@@ -127,7 +127,7 @@ START_TEST(test_page_get_images) {
 } END_TEST
 
 START_TEST(test_page_search_text) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
   zathura_list_t* results;
   const char* text;
 
@@ -140,7 +140,7 @@ START_TEST(test_page_search_text) {
 } END_TEST
 
 START_TEST(test_page_render) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
   zathura_image_buffer_t* buffer;
 
   /* basic invalid arguments */
@@ -151,7 +151,7 @@ START_TEST(test_page_render) {
 
 #ifdef HAVE_CAIRO
 START_TEST(test_page_render_cairo) {
-  zathura_page_t* page;
+  zathura_page_t* page = NULL;
   cairo_t* cairo;
 
   /* basic invalid arguments */
