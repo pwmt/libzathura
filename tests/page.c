@@ -65,6 +65,16 @@ START_TEST(test_page_get_height) {
   fail_unless(zathura_page_get_height(NULL, &height) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
+START_TEST(test_page_get_transition) {
+  zathura_page_t* page = NULL;
+  zathura_page_transition_t transition;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_get_transition(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_transition(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_transition(NULL, &transition) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+} END_TEST
+
 START_TEST(test_page_set_label) {
   zathura_page_t* page = NULL;
 
@@ -175,6 +185,7 @@ suite_page(void)
   tcase_add_test(tcase, test_page_get_width);
   tcase_add_test(tcase, test_page_set_height);
   tcase_add_test(tcase, test_page_get_height);
+  tcase_add_test(tcase, test_page_get_transition);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("label");

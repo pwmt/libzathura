@@ -104,6 +104,28 @@ zathura_page_get_label(zathura_page_t* page, const char** label)
 }
 
 zathura_error_t
+zathura_page_set_transition(zathura_page_t* page, zathura_page_transition_t* transition)
+{
+  if (page == NULL || transition == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  memcpy(&(page->transition), transition, sizeof(zathura_page_transition_t));
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_page_get_transition(zathura_page_t* page, zathura_page_transition_t* transition)
+{
+  if (page == NULL || transition == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  return ZATHURA_ERROR_UNKNOWN;
+}
+
+zathura_error_t
 zathura_page_set_label(zathura_page_t* page, const char* label)
 {
   if (page == NULL || label == NULL || strlen(label) == 0) {

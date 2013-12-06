@@ -6,6 +6,7 @@
 #include "document.h"
 #include "plugin-api.h"
 #include "error.h"
+#include "transition.h"
 
 struct zathura_plugin_s {
   zathura_plugin_register_function_t register_function;
@@ -29,6 +30,7 @@ struct zathura_page_s {
   unsigned int width;
   unsigned int height;
   char* label;
+  zathura_page_transition_t transition;
 };
 
 zathura_error_t zathura_page_free(zathura_page_t* page);

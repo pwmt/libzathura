@@ -6,6 +6,7 @@
 #include "error.h"
 #include "types.h"
 #include "image-buffer.h"
+#include "transition.h"
 
 typedef struct zathura_page_s zathura_page_t;
 
@@ -13,6 +14,7 @@ zathura_error_t zathura_page_get_index(zathura_page_t* page, unsigned int* index
 zathura_error_t zathura_page_get_width(zathura_page_t* page, unsigned int* width);
 zathura_error_t zathura_page_get_height(zathura_page_t* page, unsigned int* height);
 zathura_error_t zathura_page_get_label(zathura_page_t* page, const char** label);
+zathura_error_t zathura_paget_get_transition(zathura_page_t* page, zathura_page_transition_t* transition);
 
 zathura_error_t zathura_page_search_text(zathura_page_t* page, const char* text,
     zathura_list_t** results);
