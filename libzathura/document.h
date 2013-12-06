@@ -87,8 +87,40 @@ zathura_error_t zathura_document_get_page(zathura_document_t* document, unsigned
  */
 zathura_error_t zathura_document_get_page_by_label(zathura_document_t* document, const char* label, zathura_page_t** page);
 
+/**
+ * Returns the index of the document
+ *
+ * @param[in] document The zathura document object
+ * @param[out] index The index of the document
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
 zathura_error_t zathura_document_get_index(zathura_document_t* document, zathura_node_t** index);
+
+/**
+ * Returns the list of the attached files of this document
+ *
+ * @param[in] document The zathura document object
+ * @param[out] index List of files attached to this document
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
 zathura_error_t zathura_document_get_attachments(zathura_document_t* document, zathura_list_t** attachments);
+
+/**
+ * Returns the list of the meta data information of this document
+ *
+ * @param[in] document The zathura document object
+ * @param[out] index List of meta data information
+ * *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
 zathura_error_t zathura_document_get_information(zathura_document_t* document, zathura_list_t** information);
 
 #endif /* DOCUMENT_H */
