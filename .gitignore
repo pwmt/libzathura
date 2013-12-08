@@ -7,8 +7,11 @@
 *.info
 *.pc
 *.swp
+*.swo
 .depend
 doc/
 gcov/
 tests/tests
 libzathura/version.h
+.clang_complete
+.lvimrc
