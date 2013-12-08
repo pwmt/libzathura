@@ -10,6 +10,7 @@ Suite* suite_plugin(void);
 Suite* suite_page(void);
 Suite* suite_document(void);
 Suite* suite_image(void);
+Suite* suite_attachment(void);
 
 int main(void)
 {
@@ -18,7 +19,7 @@ int main(void)
 
   /* setup test suite */
   SRunner* suite_runner = srunner_create(NULL);
-  int number_failed     = 0;
+  /* srunner_set_fork_status(suite_runner, CK_NOFORK); */
 
   srunner_add_suite(suite_runner, suite_internal());
   srunner_add_suite(suite_runner, suite_image_buffer());
@@ -27,7 +28,9 @@ int main(void)
   srunner_add_suite(suite_runner, suite_page());
   srunner_add_suite(suite_runner, suite_document());
   srunner_add_suite(suite_runner, suite_image());
+  srunner_add_suite(suite_runner, suite_attachment());
 
+  int number_failed = 0;
   srunner_run_all(suite_runner, CK_ENV);
   number_failed += srunner_ntests_failed(suite_runner);
   srunner_free(suite_runner);

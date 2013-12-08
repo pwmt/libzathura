@@ -7,6 +7,7 @@
 #include "plugin.h"
 #include "page.h"
 #include "version.h"
+#include "attachment.h"
 
 #define PLUGIN_REGISTER_FUNCTION         "zathura_plugin_register"
 #define PLUGIN_VERSION_MAJOR_FUNCTION    "zathura_plugin_version_major"
@@ -84,5 +85,17 @@ zathura_error_t zathura_page_set_width(zathura_page_t* page, unsigned int width)
 zathura_error_t zathura_page_set_height(zathura_page_t* page, unsigned int height);
 zathura_error_t zathura_page_set_label(zathura_page_t* page, const char* label);
 zathura_error_t zathura_page_set_transition(zathura_page_t* page, zathura_page_transition_t* transition);
+
+/* attachment */
+zathura_error_t zathura_attachment_new(zathura_attachment_t** attachment);
+zathura_error_t zathura_attachment_free(zathura_attachment_t* attachment);
+zathura_error_t zathura_attachment_set_data(zathura_attachment_t* attachment, void* data);
+zathura_error_t zathura_attachment_get_data(zathura_attachment_t* attachment, void** data);
+zathura_error_t zathura_attachment_set_name(zathura_attachment_t* attachment, const char* name);
+zathura_error_t zathura_attachment_set_description(zathura_attachment_t* attachment, const char* description);
+zathura_error_t zathura_attachment_set_size(zathura_attachment_t* attachment, unsigned int size);
+zathura_error_t zathura_attachment_set_creation_time(zathura_attachment_t* attachment, time_t creation_time);
+zathura_error_t zathura_attachment_set_modification_time(zathura_attachment_t* attachment, time_t modification_time);
+zathura_error_t zathura_attachment_set_checksum(zathura_attachment_t* attachment, const char* checksum);
 
 #endif /* PLUGIN_API_H */
