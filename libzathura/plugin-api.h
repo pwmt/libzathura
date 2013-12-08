@@ -68,34 +68,12 @@ typedef zathura_error_t (*zathura_plugin_page_clear_t)(zathura_page_t* page, voi
 //typedef zathura_image_buffer_t* (*zathura_plugin_page_render_t)(zathura_page_t* page, void* data, zathura_error_t* error);
 //typedef zathura_error_t (*zathura_plugin_page_render_cairo_t)(zathura_page_t* page, void* data, cairo_t* cairo, bool printing);
 
-/* plugin */
 zathura_error_t zathura_plugin_set_name(zathura_plugin_t* plugin, const char* name);
 zathura_error_t zathura_plugin_set_register_function(zathura_plugin_t* plugin, zathura_plugin_register_function_t function);
 zathura_error_t zathura_plugin_add_mimetype(zathura_plugin_t* plugin, const char* mime_type);
 
-/* document */
-zathura_error_t zathura_document_set_number_of_pages(zathura_document_t* document, unsigned int number_of_pages);
-
-/* page */
-zathura_error_t zathura_page_new(zathura_page_t** page);
-zathura_error_t zathura_page_set_data(zathura_page_t* page, void* data);
-zathura_error_t zathura_page_get_data(zathura_page_t* page, void** data);
-zathura_error_t zathura_page_set_index(zathura_page_t* page, unsigned int index);
-zathura_error_t zathura_page_set_width(zathura_page_t* page, unsigned int width);
-zathura_error_t zathura_page_set_height(zathura_page_t* page, unsigned int height);
-zathura_error_t zathura_page_set_label(zathura_page_t* page, const char* label);
-zathura_error_t zathura_page_set_transition(zathura_page_t* page, zathura_page_transition_t* transition);
-
-/* attachment */
-zathura_error_t zathura_attachment_new(zathura_attachment_t** attachment);
-zathura_error_t zathura_attachment_free(zathura_attachment_t* attachment);
-zathura_error_t zathura_attachment_set_data(zathura_attachment_t* attachment, void* data);
-zathura_error_t zathura_attachment_get_data(zathura_attachment_t* attachment, void** data);
-zathura_error_t zathura_attachment_set_name(zathura_attachment_t* attachment, const char* name);
-zathura_error_t zathura_attachment_set_description(zathura_attachment_t* attachment, const char* description);
-zathura_error_t zathura_attachment_set_size(zathura_attachment_t* attachment, unsigned int size);
-zathura_error_t zathura_attachment_set_creation_time(zathura_attachment_t* attachment, time_t creation_time);
-zathura_error_t zathura_attachment_set_modification_time(zathura_attachment_t* attachment, time_t modification_time);
-zathura_error_t zathura_attachment_set_checksum(zathura_attachment_t* attachment, const char* checksum);
+#include "plugin-api/attachment.h"
+#include "plugin-api/document.h"
+#include "plugin-api/page.h"
 
 #endif /* PLUGIN_API_H */
