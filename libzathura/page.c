@@ -219,7 +219,7 @@ zathura_page_get_annotations(zathura_page_t* page, zathura_list_t** annotations)
 zathura_error_t
 zathura_page_get_crop_box(zathura_page_t* page, zathura_rectangle_t* crop_box)
 {
-  if (page == NULL || rectangle == NULL) {
+  if (page == NULL || crop_box == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 

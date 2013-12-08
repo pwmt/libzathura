@@ -64,14 +64,34 @@ START_TEST(test_document_get_page_by_label) {
   fail_unless(zathura_document_get_page_by_label(document, "",    &page) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
-START_TEST(test_document_get_index) {
+START_TEST(test_document_get_page_mode) {
   zathura_document_t* document;
-  zathura_node_t* index;
+  zathura_page_mode_t page_mode;
 
   /* basic invalid arguments */
-  fail_unless(zathura_document_get_index(NULL,     NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_document_get_index(document, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_document_get_index(NULL, &index)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_page_mode(NULL,     NULL)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_page_mode(document, NULL)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_page_mode(NULL, &page_mode) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+} END_TEST
+
+START_TEST(test_document_get_page_layout) {
+  zathura_document_t* document;
+  zathura_page_layout_t page_layout;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_document_get_page_layout(NULL,     NULL)     == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_page_layout(document, NULL)     == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_page_layout(NULL, &page_layout) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+} END_TEST
+
+START_TEST(test_document_get_outline) {
+  zathura_document_t* document;
+  zathura_node_t* outline;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_document_get_outline(NULL,     NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_outline(document, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_outline(NULL, &outline) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
 START_TEST(test_document_get_attachments) {
@@ -84,14 +104,14 @@ START_TEST(test_document_get_attachments) {
   fail_unless(zathura_document_get_attachments(NULL, &attachments) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
-START_TEST(test_document_get_information) {
+START_TEST(test_document_get_meta_data) {
   zathura_document_t* document;
-  zathura_list_t* information;
+  zathura_list_t* meta_data;
 
   /* basic invalid arguments */
-  fail_unless(zathura_document_get_information(NULL,     NULL)     == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_document_get_information(document, NULL)     == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_document_get_information(NULL, &information) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_meta_data(NULL,     NULL)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_meta_data(document, NULL)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_meta_data(NULL, &meta_data) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
 Suite*
@@ -104,6 +124,8 @@ suite_document(void)
   tcase_add_test(tcase, test_document_free);
   tcase_add_test(tcase, test_document_get_path);
   tcase_add_test(tcase, test_document_get_number_of_pages);
+  tcase_add_test(tcase, test_document_get_page_mode);
+  tcase_add_test(tcase, test_document_get_page_layout);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("save-as");
@@ -115,16 +137,16 @@ suite_document(void)
   tcase_add_test(tcase, test_document_get_page_by_label);
   suite_add_tcase(suite, tcase);
 
-  tcase = tcase_create("index");
-  tcase_add_test(tcase, test_document_get_index);
+  tcase = tcase_create("outline");
+  tcase_add_test(tcase, test_document_get_outline);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("attachments");
   tcase_add_test(tcase, test_document_get_attachments);
   suite_add_tcase(suite, tcase);
 
-  tcase = tcase_create("meta");
-  tcase_add_test(tcase, test_document_get_information);
+  tcase = tcase_create("meta data");
+  tcase_add_test(tcase, test_document_get_meta_data);
   suite_add_tcase(suite, tcase);
 
   return suite;
