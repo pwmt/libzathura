@@ -62,7 +62,6 @@ zathura_guess_type(const char* path, char** type)
   }
 
   fiu_do_on("zathura_guess_type_uncertain_1", uncertain = TRUE);
-
   if (uncertain == FALSE) {
     *type = content_type;
     return ZATHURA_ERROR_OK;

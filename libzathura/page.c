@@ -207,6 +207,36 @@ zathura_page_get_images(zathura_page_t* page, zathura_list_t** images)
 }
 
 zathura_error_t
+zathura_page_get_annotations(zathura_page_t* page, zathura_list_t** annotations)
+{
+  if (page == NULL || annotations == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_page_get_crop_box(zathura_page_t* page, zathura_rectangle_t* crop_box)
+{
+  if (page == NULL || rectangle == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_page_get_duration(zathura_page_t* page, unsigned int* duration)
+{
+  if (page == NULL || duration == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
 zathura_page_render(zathura_page_t* page, zathura_image_buffer_t** buffer,
     double scale, int rotation, int flags)
 {

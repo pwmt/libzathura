@@ -75,6 +75,26 @@ START_TEST(test_page_get_transition) {
   fail_unless(zathura_page_get_transition(NULL, &transition) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
+START_TEST(test_page_get_duration) {
+  zathura_page_t* page = NULL;
+  unsigned int duration;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_get_duration(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_duration(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_duration(NULL, &duration) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+} END_TEST
+
+START_TEST(test_page_get_crop_box) {
+  zathura_page_t* page = NULL;
+  zathura_rectangle_t crop_box;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_get_crop_box(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_crop_box(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_crop_box(NULL, &crop_box) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+} END_TEST
+
 START_TEST(test_page_set_label) {
   zathura_page_t* page = NULL;
 
@@ -149,6 +169,16 @@ START_TEST(test_page_search_text) {
   fail_unless(zathura_page_search_text(page, "",   &results) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
+START_TEST(test_page_get_annotations) {
+  zathura_page_t* page = NULL;
+  zathura_list_t* annotations;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_get_annotations(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_annotations(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_annotations(NULL, &annotations) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+} END_TEST
+
 START_TEST(test_page_render) {
   zathura_page_t* page = NULL;
   zathura_image_buffer_t* buffer;
@@ -186,6 +216,8 @@ suite_page(void)
   tcase_add_test(tcase, test_page_set_height);
   tcase_add_test(tcase, test_page_get_height);
   tcase_add_test(tcase, test_page_get_transition);
+  tcase_add_test(tcase, test_page_get_duration);
+  tcase_add_test(tcase, test_page_get_crop_box);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("label");
@@ -196,6 +228,10 @@ suite_page(void)
   tcase = tcase_create("text");
   tcase_add_test(tcase, test_page_get_text);
   tcase_add_test(tcase, test_page_search_text);
+  suite_add_tcase(suite, tcase);
+
+  tcase = tcase_create("annotations");
+  tcase_add_test(tcase, test_page_get_annotations);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("links");
