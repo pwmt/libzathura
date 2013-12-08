@@ -196,13 +196,13 @@ zathura_error_t zathura_document_get_page_layout(zathura_document_t* document,
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_document_get_outline(zathura_document_t* document,
-    zathura_node_t** index);
+    zathura_node_t** outline);
 
 /**
  * Returns the list of the attached files of this document
  *
  * @param[in] document The zathura document object
- * @param[out] index List of files attached to this document
+ * @param[out] attachments List of files attached to this document
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
