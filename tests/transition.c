@@ -284,7 +284,7 @@ START_TEST(test_split_transition_set_angle) {
 } END_TEST
 
 START_TEST(test_split_transition_get_angle) {
-  unsigned int angle;
+  zathura_page_transition_angle_t angle;
   fail_unless(zathura_page_transition_get_angle(transition, &angle) == ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION);
 } END_TEST
 
@@ -333,7 +333,7 @@ START_TEST(test_blinds_transition_set_angle) {
 } END_TEST
 
 START_TEST(test_blinds_transition_get_angle) {
-  unsigned int angle;
+  zathura_page_transition_angle_t angle;
   fail_unless(zathura_page_transition_get_angle(transition, &angle) == ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION);
 } END_TEST
 
@@ -382,7 +382,7 @@ START_TEST(test_box_transition_set_angle) {
 } END_TEST
 
 START_TEST(test_box_transition_get_angle) {
-  unsigned int angle;
+  zathura_page_transition_angle_t angle;
   fail_unless(zathura_page_transition_get_angle(transition, &angle) == ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION);
 } END_TEST
 
@@ -436,7 +436,7 @@ START_TEST(test_wipe_transition_set_angle) {
 } END_TEST
 
 START_TEST(test_wipe_transition_get_angle) {
-  unsigned int angle;
+  zathura_page_transition_angle_t angle;
   fail_unless(zathura_page_transition_get_angle(transition, &angle) == ZATHURA_ERROR_OK);
 } END_TEST
 
@@ -485,7 +485,7 @@ START_TEST(test_dissolve_transition_set_angle) {
 } END_TEST
 
 START_TEST(test_dissolve_transition_get_angle) {
-  unsigned int angle;
+  zathura_page_transition_angle_t angle;
   fail_unless(zathura_page_transition_get_angle(transition, &angle) == ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION);
 } END_TEST
 
@@ -539,7 +539,7 @@ START_TEST(test_glitter_transition_set_angle) {
 } END_TEST
 
 START_TEST(test_glitter_transition_get_angle) {
-  unsigned int angle;
+  zathura_page_transition_angle_t angle;
   fail_unless(zathura_page_transition_get_angle(transition, &angle) == ZATHURA_ERROR_OK);
 } END_TEST
 
@@ -588,7 +588,7 @@ START_TEST(test_replace_transition_set_angle) {
 } END_TEST
 
 START_TEST(test_replace_transition_get_angle) {
-  unsigned int angle;
+  zathura_page_transition_angle_t angle;
   fail_unless(zathura_page_transition_get_angle(transition, &angle) == ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION);
 } END_TEST
 
@@ -646,12 +646,17 @@ START_TEST(test_fly_transition_set_angle) {
 } END_TEST
 
 START_TEST(test_fly_transition_get_angle) {
-  unsigned int angle;
+  zathura_page_transition_angle_t angle;
   fail_unless(zathura_page_transition_get_angle(transition, &angle) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_fly_transition_set_scale) {
-  fail_unless(zathura_page_transition_set_scale(transition, 0) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_page_transition_set_scale(transition, 2.0) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_page_transition_set_angle(transition, ZATHURA_PAGE_TRANSITION_ANGLE_NONE) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_page_transition_set_scale(transition, 1.0) == ZATHURA_ERROR_OK);
+  zathura_page_transition_angle_t angle;
+  fail_unless(zathura_page_transition_get_angle(transition, &angle) == ZATHURA_ERROR_OK);
+  fail_unless(angle == ZATHURA_PAGE_TRANSITION_ANGLE_LEFT_TO_RIGHT);
 } END_TEST
 
 START_TEST(test_fly_transition_get_scale) {
@@ -700,7 +705,7 @@ START_TEST(test_push_transition_set_angle) {
 } END_TEST
 
 START_TEST(test_push_transition_get_angle) {
-  unsigned int angle;
+  zathura_page_transition_angle_t angle;
   fail_unless(zathura_page_transition_get_angle(transition, &angle) == ZATHURA_ERROR_OK);
 } END_TEST
 
@@ -754,7 +759,7 @@ START_TEST(test_cover_transition_set_angle) {
 } END_TEST
 
 START_TEST(test_cover_transition_get_angle) {
-  unsigned int angle;
+  zathura_page_transition_angle_t angle;
   fail_unless(zathura_page_transition_get_angle(transition, &angle) == ZATHURA_ERROR_OK);
 } END_TEST
 
@@ -808,7 +813,7 @@ START_TEST(test_uncover_transition_set_angle) {
 } END_TEST
 
 START_TEST(test_uncover_transition_get_angle) {
-  unsigned int angle;
+  zathura_page_transition_angle_t angle;
   fail_unless(zathura_page_transition_get_angle(transition, &angle) == ZATHURA_ERROR_OK);
 } END_TEST
 
@@ -857,7 +862,7 @@ START_TEST(test_fade_transition_set_angle) {
 } END_TEST
 
 START_TEST(test_fade_transition_get_angle) {
-  unsigned int angle;
+  zathura_page_transition_angle_t angle;
   fail_unless(zathura_page_transition_get_angle(transition, &angle) == ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION);
 } END_TEST
 

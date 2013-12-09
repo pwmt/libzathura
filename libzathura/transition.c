@@ -341,6 +341,8 @@ zathura_page_transition_set_scale(zathura_page_transition_t*
 
   switch (transition->style) {
     case ZATHURA_PAGE_TRANSITION_FLY:
+      if (scale == 1.0)
+        transition->angle = ZATHURA_PAGE_TRANSITION_ANGLE_LEFT_TO_RIGHT;
       break;
     default:
       return ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION;
