@@ -68,7 +68,7 @@ zathura_error_t zathura_page_get_label(zathura_page_t* page, const char** label)
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_page_get_transition(zathura_page_t* page, zathura_page_transition_t* transition);
+zathura_error_t zathura_page_get_transition(zathura_page_t* page, zathura_page_transition_t** transition);
 
 /**
  * Returns the duration of the page.

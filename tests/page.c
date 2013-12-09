@@ -67,7 +67,7 @@ START_TEST(test_page_get_height) {
 
 START_TEST(test_page_get_transition) {
   zathura_page_t* page = NULL;
-  zathura_page_transition_t transition;
+  zathura_page_transition_t* transition;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_get_transition(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);

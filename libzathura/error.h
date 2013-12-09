@@ -19,6 +19,8 @@ typedef enum zathura_error_e {
   ZATHURA_ERROR_DOCUMENT_UNKNOWN_TYPE, /**< Document type is unknown */
   ZATHURA_ERROR_DOCUMENT_INVALID_INDEX, /**< Invalid index */
   ZATHURA_ERROR_DOCUMENT_INVALID_LABEL, /**< Invalid label */
+
+  ZATHURA_PAGE_TRANSITION_STYLE_INVALID_ACTION, /**< The style of the transition is not valid for this action */
 } zathura_error_t;
 
 #endif /* ERROR_H */

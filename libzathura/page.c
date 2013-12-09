@@ -110,17 +110,19 @@ zathura_page_set_transition(zathura_page_t* page, zathura_page_transition_t* tra
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  memcpy(&(page->transition), transition, sizeof(zathura_page_transition_t));
+  page->transition = transition;
 
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_page_get_transition(zathura_page_t* page, zathura_page_transition_t* transition)
+zathura_page_get_transition(zathura_page_t* page, zathura_page_transition_t** transition)
 {
   if (page == NULL || transition == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
+
+  *transition = page->transition;
 
   return ZATHURA_ERROR_UNKNOWN;
 }
