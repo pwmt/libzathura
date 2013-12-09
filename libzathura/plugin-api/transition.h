@@ -75,7 +75,7 @@ zathura_error_t zathura_page_transition_set_motion(zathura_page_transition_t* tr
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_page_transition_set_angle(zathura_page_transition_t* transition, unsigned int angle);
+zathura_error_t zathura_page_transition_set_angle(zathura_page_transition_t* transition, zathura_page_transition_angle_t angle);
 
 /**
  * Sets the scale of the transition

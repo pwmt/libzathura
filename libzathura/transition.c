@@ -64,7 +64,7 @@ struct zathura_page_transition_s {
    * ::ZATHURA_PAGE_TRANSITION_COVER, @a ::ZATHURA_PAGE_TRANSITION_UNCOVER and
    * @a ::ZATHURA_PAGE_TRANSITION_PUSH transition styles.
    */
-  unsigned int angle;
+  zathura_page_transition_angle_t angle;
 
   /**
    * scale
@@ -157,7 +157,7 @@ zathura_error_t
 zathura_page_transition_get_duration(zathura_page_transition_t*
     transition, unsigned int* duration)
 {
-  if (transition == NULL) {
+  if (transition == NULL || duration == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
@@ -174,6 +174,14 @@ zathura_page_transition_set_dimension(zathura_page_transition_t*
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  switch (transition->style) {
+    case ZATHURA_PAGE_TRANSITION_SPLIT:
+    case ZATHURA_PAGE_TRANSITION_BLINDS:
+      break;
+    default:
+      return ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION;
+  }
+
   transition->dimension = dimension;
 
   return ZATHURA_ERROR_OK;
@@ -183,8 +191,16 @@ zathura_error_t
 zathura_page_transition_get_dimension(zathura_page_transition_t*
     transition, zathura_page_transition_dimension_t* dimension)
 {
-  if (transition == NULL) {
+  if (transition == NULL || dimension == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  switch (transition->style) {
+    case ZATHURA_PAGE_TRANSITION_SPLIT:
+    case ZATHURA_PAGE_TRANSITION_BLINDS:
+      break;
+    default:
+      return ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION;
   }
 
   *dimension = transition->dimension;
@@ -200,6 +216,15 @@ zathura_page_transition_set_motion(zathura_page_transition_t*
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  switch (transition->style) {
+    case ZATHURA_PAGE_TRANSITION_SPLIT:
+    case ZATHURA_PAGE_TRANSITION_BOX:
+    case ZATHURA_PAGE_TRANSITION_FLY:
+      break;
+    default:
+      return ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION;
+  }
+
   transition->motion = motion;
 
   return ZATHURA_ERROR_OK;
@@ -209,8 +234,17 @@ zathura_error_t
 zathura_page_transition_get_motion(zathura_page_transition_t*
     transition, zathura_page_transition_motion_t* motion)
 {
-  if (transition == NULL) {
+  if (transition == NULL || motion == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  switch (transition->style) {
+    case ZATHURA_PAGE_TRANSITION_SPLIT:
+    case ZATHURA_PAGE_TRANSITION_BOX:
+    case ZATHURA_PAGE_TRANSITION_FLY:
+      break;
+    default:
+      return ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION;
   }
 
   *motion = transition->motion;
@@ -220,23 +254,76 @@ zathura_page_transition_get_motion(zathura_page_transition_t*
 
 zathura_error_t
 zathura_page_transition_set_angle(zathura_page_transition_t*
-    transition, unsigned int angle)
+    transition, zathura_page_transition_angle_t angle)
 {
   if (transition == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  switch (transition->style) {
+    case ZATHURA_PAGE_TRANSITION_WIPE:
+    case ZATHURA_PAGE_TRANSITION_GLITTER:
+    case ZATHURA_PAGE_TRANSITION_FLY:
+    case ZATHURA_PAGE_TRANSITION_COVER:
+    case ZATHURA_PAGE_TRANSITION_UNCOVER:
+    case ZATHURA_PAGE_TRANSITION_PUSH:
+      break;
+    default:
+      return ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION;
+  }
+
+  switch (angle) {
+    case ZATHURA_PAGE_TRANSITION_ANGLE_LEFT_TO_RIGHT:
+      break;
+    case ZATHURA_PAGE_TRANSITION_ANGLE_NONE:
+      if (transition->style != ZATHURA_PAGE_TRANSITION_FLY || transition->scale == 1.0)
+        goto error_out;
+      break;
+    case ZATHURA_PAGE_TRANSITION_ANGLE_BOTTOM_TO_TOP:
+      if (transition->style != ZATHURA_PAGE_TRANSITION_WIPE)
+        goto error_out;
+      break;
+    case ZATHURA_PAGE_TRANSITION_ANGLE_RIGHT_TO_LEFT:
+      if (transition->style != ZATHURA_PAGE_TRANSITION_WIPE)
+        goto error_out;
+      break;
+    case ZATHURA_PAGE_TRANSITION_ANGLE_TOP_TO_BOTTOM:
+      break;
+    case ZATHURA_PAGE_TRANSITION_ANGLE_TOP_LEFT_TO_BOTTOM_RIGHT:
+      if (transition->style != ZATHURA_PAGE_TRANSITION_GLITTER)
+        goto error_out;
+      break;
+    default:
+      return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
   transition->angle = angle;
 
   return ZATHURA_ERROR_OK;
+
+error_out:
+
+  return ZATHURA_ERROR_INVALID_ARGUMENTS;
 }
 
 zathura_error_t
 zathura_page_transition_get_angle(zathura_page_transition_t*
-    transition, unsigned int* angle)
+    transition, zathura_page_transition_angle_t* angle)
 {
-  if (transition == NULL) {
+  if (transition == NULL || angle == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  switch (transition->style) {
+    case ZATHURA_PAGE_TRANSITION_WIPE:
+    case ZATHURA_PAGE_TRANSITION_GLITTER:
+    case ZATHURA_PAGE_TRANSITION_FLY:
+    case ZATHURA_PAGE_TRANSITION_COVER:
+    case ZATHURA_PAGE_TRANSITION_UNCOVER:
+    case ZATHURA_PAGE_TRANSITION_PUSH:
+      break;
+    default:
+      return ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION;
   }
 
   *angle = transition->angle;
@@ -252,6 +339,13 @@ zathura_page_transition_set_scale(zathura_page_transition_t*
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  switch (transition->style) {
+    case ZATHURA_PAGE_TRANSITION_FLY:
+      break;
+    default:
+      return ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION;
+  }
+
   transition->scale = scale;
 
   return ZATHURA_ERROR_OK;
@@ -261,8 +355,15 @@ zathura_error_t
 zathura_page_transition_get_scale(zathura_page_transition_t*
     transition, double* scale)
 {
-  if (transition == NULL) {
+  if (transition == NULL || scale == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  switch (transition->style) {
+    case ZATHURA_PAGE_TRANSITION_FLY:
+      break;
+    default:
+      return ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION;
   }
 
   *scale = transition->scale;
@@ -278,6 +379,13 @@ zathura_page_transition_set_rectangular(zathura_page_transition_t* transition,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  switch (transition->style) {
+    case ZATHURA_PAGE_TRANSITION_FLY:
+      break;
+    default:
+      return ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION;
+  }
+
   transition->rectangular = is_rectangular;
 
   return ZATHURA_ERROR_OK;
@@ -287,8 +395,15 @@ zathura_error_t
 zathura_page_transition_is_rectangular(zathura_page_transition_t* transition,
     bool* is_rectangular)
 {
-  if (transition == NULL) {
+  if (transition == NULL || is_rectangular == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  switch (transition->style) {
+    case ZATHURA_PAGE_TRANSITION_FLY:
+      break;
+    default:
+      return ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION;
   }
 
   *is_rectangular = transition->rectangular;

@@ -106,6 +106,15 @@ typedef enum zathura_page_transition_motion_e {
   ZATHURA_PAGE_TRANSITION_OUTWARD /**< From the center of the page */
 } zathura_page_transition_motion_t;
 
+typedef enum zathura_page_transition_angle_e {
+  ZATHURA_PAGE_TRANSITION_ANGLE_LEFT_TO_RIGHT = 0,
+  ZATHURA_PAGE_TRANSITION_ANGLE_NONE = 1,
+  ZATHURA_PAGE_TRANSITION_ANGLE_BOTTOM_TO_TOP = 90,
+  ZATHURA_PAGE_TRANSITION_ANGLE_RIGHT_TO_LEFT = 180,
+  ZATHURA_PAGE_TRANSITION_ANGLE_TOP_TO_BOTTOM = 270,
+  ZATHURA_PAGE_TRANSITION_ANGLE_TOP_LEFT_TO_BOTTOM_RIGHT = 315
+} zathura_page_transition_angle_t;
+
 /* forward declaration */
 typedef struct zathura_page_transition_s zathura_page_transition_t;
 
@@ -172,7 +181,7 @@ zathura_error_t zathura_page_transition_get_motion(zathura_page_transition_t*
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_page_transition_get_angle(zathura_page_transition_t*
-    transition, unsigned int* angle);
+    transition, zathura_page_transition_angle_t* angle);
 
 /**
  * Returns the scale of the transition
