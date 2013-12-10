@@ -6,11 +6,20 @@
 #include "list.h"
 #include "node.h"
 
+typedef struct zathura_point_s {
+  float x;
+  float y;
+} zathura_point_t;
+
 typedef struct zathura_rectangle_s {
-  int x1;
-  int x2;
-  int y1;
-  int y2;
+  zathura_point_t p1;
+  zathura_point_t p2;
 } zathura_rectangle_t;
 
+typedef struct zathura_quad_point_s {
+  zathura_point_t p1;
+  zathura_point_t p2;
+  zathura_point_t p3;
+  zathura_point_t p4;
+} zathura_quad_point_t;
 #endif /* TYPES_H */
