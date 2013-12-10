@@ -224,7 +224,7 @@ typedef enum zathura_annotation_markup_intent_e {
    */
   ZATHURA_ANNOTATION_MARKUP_INTENT_LINE_POLYGON_DIMENSION,
 
-  /**.
+  /**
    * The polyline annotation is intended to function as a dimension
    */
   ZATHURA_ANNOTATION_MARKUP_INTENT_LINE_POLYLINE_DIMENSION,
