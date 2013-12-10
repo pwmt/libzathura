@@ -6,7 +6,11 @@
 #include <time.h>
 #include <stdbool.h>
 
+#include "action.h"
+#include "attachment.h"
+#include "movie.h"
 #include "page.h"
+#include "sound.h"
 #include "types.h"
 
 // TODO: Should we map this to the name field of a text annotation?
@@ -22,6 +26,21 @@ typedef enum zathura_annotation_text_icon_s {
   ZATHURA_ANNOTATION_TEXT_ICON_CROSS,
   ZATHURA_ANNOTATION_TEXT_ICON_CIRCLE
 } zathura_annotation_text_icon_t;
+
+/**
+ * Specifying a symbol to be associated with the caret.
+ */
+typedef enum zathura_annotation_caret_symbol_e {
+  /**
+   * No symbol should be associated with the caret.
+   */
+  ZATHURA_ANNOTATION_CARET_SYMBOL_NONE,
+
+  /**
+   * A new paragraph symbol (¶) should be associated with the caret.
+   */
+  ZATHURA_ANNOTATION_CARET_SYMBOL_PARAGRAPH,
+} zathura_annotation_caret_symbol_t;
 
 /**
  * An annotation associates an object such as a note, sound, or movie with a
@@ -298,6 +317,45 @@ typedef enum zathura_annotation_border_effect_e {
 } zathura_annotation_border_effect_t;
 
 /**
+ * The line dash pattern controls the pattern of dashes and gaps used to stroke
+ * paths. It is specified by a dash array and a dash phase. The dash array’s
+ * elements are numbers that specify the lengths of alternating dashes and gaps;
+ * the numbers must be nonnegative and not all zero. The dash phase specifies
+ * the distance intohe dash pattern at which to start the dash. The elements of
+ * both the dash array and the dash phase are expressed in user space units.
+ *
+ * Before beginning to stroke a path, the dash array is cycled through, adding
+ * up the lengths of dashes and gaps. When the accumulated length equals the
+ * value specified by the dash phase, stroking of the path begins, and the dash
+ * array is used cyclically from that point onward. An empty dash array and zero
+ * phase can be used to restore the dash pattern to a solid line.
+ *
+ * Dashed lines wrap around curves and corners just as solid stroked lines do.
+ * The ends of each dash are treated with the current line cap style, and
+ * corners within dashes are treated with the current line join style. A
+ * stroking operation takes no measures to coordinate the dash pattern with
+ * features of the path; it simply dispenses dashes and gaps along the path in
+ * the pattern defined by the dash array. When a path consisting of several
+ * subpaths is stroked, each subpath is treated independently - that is, the
+ * dash pattern is restarted and the dash phase is reapplied to it at the
+ * beginning of each subpath.
+ */
+typedef struct zathura_annotation_line_dash_pattern_s {
+  /**
+   * The dash array’s elements are numbers that specify the lengths of
+   * alternating dashes and gaps; the numbers must be nonnegative and not all
+   * zero.
+   */
+  zathura_list_t* dash_array;
+
+  /**
+   * The dash phase specifies the distance into the dash pattern at which to
+   * start the dash.
+   */
+  unsigned int dash_phase;
+} zathura_annotation_line_dash_pattern_t;
+
+/**
  * An annotation may optionally be surrounded by a border when displayed or
  * printed. If present, the border is drawn completely inside the annotation
  * rectangle.
@@ -305,6 +363,7 @@ typedef enum zathura_annotation_border_effect_e {
 typedef struct zathura_annotation_border_s {
   unsigned int width;
   zathura_annotation_border_style_t style;
+  zathura_annotation_line_dash_pattern_t dash_pattern;
   zathura_annotation_border_effect_t effect;
   float intensity;
 } zathura_annotation_border_t;
@@ -490,6 +549,11 @@ typedef enum zathura_annotation_highlighting_mode_e {
    */
   ZATHURA_ANNOTATION_HIGHLIGHTING_PUSH = 'P'
 } zathura_annotation_highlighting_mode_t;
+
+typedef enum zathura_annotation_caption_position_e {
+  ZATHURA_ANNOTATION_CAPTION_POSITION_INLINE,
+  ZATHURA_ANNOTATION_CAPTION_POSITION_TOP,
+} zathura_annotation_caption_position_t;
 
 zathura_error_t zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_type_t type);
 zathura_error_t zathura_annotation_free(zathura_annotation_t* annotation);

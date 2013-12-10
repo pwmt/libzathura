@@ -22,4 +22,8 @@ typedef struct zathura_quad_point_s {
   zathura_point_t p3;
   zathura_point_t p4;
 } zathura_quad_point_t;
+
+typedef struct zathura_path_s {
+  zathura_list_t* points;
+} zathura_path_t;
 #endif /* TYPES_H */
