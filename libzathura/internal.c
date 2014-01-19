@@ -90,7 +90,11 @@ zathura_guess_type(const char* path, char** type)
     g_free((void*)content_type);
     content_type = NULL;
 
-    content = g_realloc(content, length + BUFSIZ);
+    content = g_try_realloc(content, length + BUFSIZ);
+    if (content == NULL) {
+      continue;
+    }
+
     const ssize_t r = read(fd, content + length, BUFSIZ);
     if (r == -1) {
       break;
