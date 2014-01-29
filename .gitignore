@@ -9,9 +9,10 @@
 *.swp
 *.swo
 .depend
-doc/
 gcov/
 tests/tests
 libzathura/version.h
 .clang_complete
 .lvimrc
+doc/_build
+doc/doxygen/xml

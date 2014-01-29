@@ -2,7 +2,7 @@
 
 # General information
 PROJECT_NAME          = libzathura
-OUTPUT_DIRECTORY      = ./doc/
+OUTPUT_DIRECTORY      = ./
 OUTPUT_LANGUAGE       = English
 TAB_SIZE              = 2
 EXTRACT_ALL           = YES
@@ -16,15 +16,13 @@ WARNINGS             = YES
 WARN_IF_UNDOCUMENTED = YES
 
 # Input files
-INPUT         =
-EXCLUDE       = ./tests
+INPUT         = ../../
+EXCLUDE       = ../../tests
 FILE_PATTERNS = *.h *.c
 RECURSIVE     = YES
 
 # Output files
-GENERATE_HTML  = YES
+GENERATE_HTML  = NO
 GENERATE_LATEX = NO
 GENERATE_RTF   = NO
-GENERATE_XML   = NO
-
-SOURCE_BROWSER = YES
+GENERATE_XML   = YES
