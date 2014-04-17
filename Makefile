@@ -63,10 +63,11 @@ ${PROJECT}.so.${SOVERSION}: ${OBJECTS}
 
 clean:
 	$(QUIET)rm -rf ${OBJECTS} ${PROJECT}-${VERSION}.tar.gz gcov \
-		${DOBJECTS} ${PROJECT}.a ${PROJECT}-debug.a ${PROJECT}.pc doc \
+		${DOBJECTS} ${PROJECT}.a ${PROJECT}-debug.a ${PROJECT}.pc \
 		$(PROJECT).so.${SOVERSION} ${PROJECT}-debug.so.${SOVERSION} .depend \
 		${PROJECT}-${VERSION}.tar.gz ${PROJECT}/version.h ${GCDA} ${GCNO} $(PROJECT).info
 	$(QUIET)${MAKE} -C tests clean
+	$(QUIET)${MAKE} -C doc
 
 ${PROJECT}-debug: ${PROJECT}-debug.a ${PROJECT}-debug.so.${SOVERSION}
 
@@ -83,7 +84,7 @@ ${PROJECT}-debug.so.${SOVERSION}: ${DOBJECTS}
 debug: options ${PROJECT}-debug
 
 doc:
-	$(QUIET)doxygen Doxyfile
+	$(QUIET)${MAKE} -C doc
 
 test: ${PROJECT}
 	$(QUIET)${MAKE} -C tests run

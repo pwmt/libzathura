@@ -16,3 +16,5 @@ libzathura/version.h
 .lvimrc
 doc/_build
 doc/doxygen/xml
+.ropeproject
+compile_commands.json

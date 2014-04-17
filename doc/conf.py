@@ -1,52 +1,55 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#
 # See LICENSE file for license and copyright information
 
-import sys
+import sphinx_rtd_theme
 
-extensions = [
-    'sphinx.ext.intersphinx',
+# -- General configuration ------------------------------------------------
+
+extensions     = [
     'sphinx.ext.todo',
-    'sphinx.ext.pngmath',
-    'sphinx.ext.ifconfig',
     'breathe'
 ]
-
+source_suffix  = '.rst'
+master_doc     = 'index'
 templates_path = ['_templates']
-
-source_suffix = '.rst'
-
-source_encoding = 'utf-8-sig'
-
-master_doc = 'index'
-
-project = 'libzathura'
-copyright = '2014, pwmt.org'
-
-version = '0.0.1'
-release = '0.0.1'
-
 exclude_patterns = ['_build']
 
 pygments_style = 'sphinx'
 
-# html
-html_theme = 'sphinx_rtd_theme'
-html_theme_path = ['_themes']
-html_static_path = ['_static']
-htmlhelp_basename = 'libzathuradoc'
 
-# breathe
-breathe_projects = {
-    "libzathura": "./doxygen/xml"
-}
+# -- Project configuration ------------------------------------------------
 
-breathe_projects_source = {
-    "libzathura": "../libzathura"
-}
+project   = 'libzathura'
+copyright = '2014, pwmt.org'
+version   = '0.0.0'
+release   = '0.0.0'
 
+
+# -- Options for HTML output ----------------------------------------------
+
+html_theme        = 'sphinx_rtd_theme'
+html_theme_path   = [sphinx_rtd_theme.get_html_theme_path()]
+html_static_path  = ['_static']
+htmlhelp_basename = 'zathuradoc'
+
+
+# -- Options for manual page output ---------------------------------------
+
+man_pages = [
+]
+
+
+# -- Options for breathe ---------------------------------------
+
+breathe_projects = { "libzathura": "_build/doxygen/xml" }
 breathe_default_project = "libzathura"
-
+breathe_build_directory = "_build"
+breathe_projects_source = {
+    "libzathura": "../"
+}
 breathe_domain_by_extension = {
-    "h": "c",
+    "h" : "c",
+    "c" : "c"
 }

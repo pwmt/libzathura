@@ -1,18 +1,28 @@
 # See LICENSE file for license and copyright information
-
-include ../common.mk
+#
 include ../config.mk
-
+include ../common.mk
 include config.mk
 
-ALLSPHINXOPTS = -d $(BUILDDIR)/doctrees $(SPHINXOPTS) .
+ifeq ($(shell which $(SPHINX_BIN) >/dev/null 2>&1; echo $$?), 1)
+	$(error The '$(SPHINX_BIN)' command was not found.)
+endif
 
-all: html 
+all: init html man
+
+init:
+	$(QUIET)mkdir -p $(SPHINX_BUILDDIR)/
 
 clean:
-	$(QUIET)make -C doxygen clean
-	$(QUIET)rm -rf $(BUILDDIR)
+	$(QUIET)rm -rf $(SPHINX_BUILDDIR)/
 
-html:
-	$(QUIET)make -C . doxygen
-	$(QUIET)$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+html: doxygen
+	$(QUIET)$(SPHINX_BIN) -b html $(SPHINX_OPTS) $(SPHINX_BUILDDIR)/html
+
+man: doxygen
+	$(QUIET)$(SPHINX_BIN) -b man $(SPHINX_OPTS) $(SPHINX_BUILDDIR)/man
+
+doxygen:
+	$(QUIET)$(DOXYGEN_BIN) Doxyfile
+
+.PHONY: clean html man
