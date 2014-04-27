@@ -12,6 +12,7 @@ Suite* suite_document(void);
 Suite* suite_image(void);
 Suite* suite_attachment(void);
 Suite* suite_transition(void);
+Suite* suite_form_fields(void);
 
 int main(void)
 {
@@ -31,6 +32,7 @@ int main(void)
   srunner_add_suite(suite_runner, suite_image());
   srunner_add_suite(suite_runner, suite_attachment());
   srunner_add_suite(suite_runner, suite_transition());
+  srunner_add_suite(suite_runner, suite_form_fields());
 
   int number_failed = 0;
   srunner_run_all(suite_runner, CK_ENV);

@@ -15,14 +15,41 @@ struct zathura_form_field_s {
 };
 
 zathura_error_t
-zathura_form_field_new(zathura_form_field_t** form_field, int type)
+zathura_form_field_new(zathura_form_field_t** form_field, zathura_form_field_type_t type)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  switch (type) {
+    case ZATHURA_FORM_FIELD_BUTTON:
+    case ZATHURA_FORM_FIELD_TEXT:
+    case ZATHURA_FORM_FIELD_CHOICE:
+    case ZATHURA_FORM_FIELD_SIGNATURE:
+      break;
+    default:
+      return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *form_field = calloc(1, sizeof(zathura_form_field_t));
+  if (*form_field == NULL) {
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
+
+  (*form_field)->type = type;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
 zathura_form_field_free(zathura_form_field_t* form_field)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  free(form_field);
+
   return ZATHURA_ERROR_OK;
 }
 

@@ -4,7 +4,7 @@
 #define PLUGIN_API_FORM_FIELDS_H
 
 #include "../error.h"
-#include "../form-field.h"
+#include "../form-fields.h"
 
 /**
  * Creates a new form field of the given type.
