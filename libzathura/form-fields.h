@@ -148,6 +148,33 @@ zathura_error_t zathura_form_field_text_get_type(zathura_form_field_t*
     form_field, zathura_form_field_text_type_t* type);
 
 /**
+ * Returns the text of the text form field.
+ *
+ * @param[in] form_field The form field
+ * @param[out] text The text of the field
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_OUT_OF_MEMORY Out of memory
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_text_get_text(zathura_form_field_t*
+    form_field, char** text);
+
+/**
+ * Sets the text of the text form field.
+ *
+ * @param[in] form_field The form field
+ * @param[in] text The text of the field
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_text_set_text(zathura_form_field_t*
+    form_field, const char* text);
+
+/**
  * Returns the maximal length of the text field. If length is unlimited, the
  * value stored in length is 0.
  *
