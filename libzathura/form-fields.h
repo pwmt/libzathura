@@ -109,6 +109,19 @@ typedef enum zathura_form_field_choice_type_e {
 } zathura_form_field_choice_type_t;
 
 /**
+ * Returns the type of the form field
+ *
+ * @param[in] form_field
+ * @param[out] type The type of the form field
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_get_type(zathura_form_field_t* form_field,
+    zathura_form_field_type_t* type);
+
+/**
  * Returns the button type of the button form field.
  *
  * @param[in] form_field The form field

@@ -4,6 +4,15 @@
 
 #include "form-fields.h"
 
+#define CHECK_FORM_FIELD_TYPE(form_field, type) \
+  zathura_form_field_type_t form_field_type; \
+  if (zathura_form_field_get_type((form_field), &form_field_type) != ZATHURA_ERROR_OK) { \
+    return ZATHURA_ERROR_INVALID_ARGUMENTS; \
+  } \
+  if (form_field_type != (type)) { \
+    return ZATHURA_ERROR_INVALID_ARGUMENTS; \
+  } \
+
 /**
  * Describes the form field
  */
@@ -12,6 +21,18 @@ struct zathura_form_field_s {
    * The type of the form field
    */
   zathura_form_field_type_t type;
+
+  union {
+    /**
+     * Button form field
+     */
+    struct {
+      /**
+       * The type of the button field
+       */
+      zathura_form_field_button_type_t type;
+    } button;
+  } data;
 };
 
 zathura_error_t
@@ -54,8 +75,30 @@ zathura_form_field_free(zathura_form_field_t* form_field)
 }
 
 zathura_error_t
-zathura_form_field_button_set_type(zathura_form_field_t* form_field, int type)
+zathura_form_field_get_type(zathura_form_field_t* form_field,
+    zathura_form_field_type_t* type)
 {
+  if (form_field == NULL || type == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *type = form_field->type;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_form_field_button_set_type(zathura_form_field_t* form_field,
+    zathura_form_field_button_type_t type)
+{
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_BUTTON)
+
+  form_field->data.button.type = type;
+
   return ZATHURA_ERROR_OK;
 }
 
@@ -63,6 +106,14 @@ zathura_error_t
 zathura_form_field_button_get_type(zathura_form_field_t* form_field,
     zathura_form_field_button_type_t * type)
 {
+  if (form_field == NULL || type == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_BUTTON)
+
+  *type = form_field->data.button.type;
+
   return ZATHURA_ERROR_OK;
 }
 
