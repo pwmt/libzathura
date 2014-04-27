@@ -46,42 +46,42 @@ zathura_error_t zathura_form_field_choice_get_type(zathura_form_field_t*
  * Returns if the choice form field is editable or not.
  *
  * @param[in] form_field The form field
- * @param[out] value If the choice form field is editable
+ * @param[out] editable If the choice form field is editable
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_form_field_choice_is_editable(zathura_form_field_t*
-    form_field, bool* value);
+    form_field, bool* is_editable);
 
 /**
  * Returns if the choices should be sorted alphabetically and is indented for
  * use by form authoring tools, not by viewer applications.
  *
  * @param[in] form_field The form field
- * @param[out] value If the choice form field is sorted or not
+ * @param[out] sorted If the choice form field is sorted or not
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_form_field_choice_is_sorted(zathura_form_field_t*
-    form_field, bool* value);
+    form_field, bool* is_sorted);
 
 /**
  * Returns if more than one of the field's options items may be selected
  * simultaneously. If false, no more than one item at a time may be selected.
  *
  * @param[in] form_field The form field
- * @param[out] value If the choice form field is a multi-select choice
+ * @param[out] multiselect If the choice form field is a multi-select choice
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_form_field_choice_is_multiselect(zathura_form_field_t*
-    form_field, bool* value);
+    form_field, bool* is_multiselect);
 
 /**
  * Returns if spell-checking should be performed on the entered value or not.
@@ -89,14 +89,14 @@ zathura_error_t zathura_form_field_choice_is_multiselect(zathura_form_field_t*
  * ZATHURA_FORM_FIELD_CHOICE_TYPE_COMBO and editable is set to true.
  *
  * @param[in] form_field The form field
- * @param[out] value If spell-checking should be performed on the text field
+ * @param[out] do_spell_check If spell-checking should be performed on the text field
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_form_field_choice_do_spell_check(zathura_form_field_t*
-    form_field, bool* value);
+    form_field, bool* do_spell_check);
 
 /**
  * Returns the list of options of the choice form field.

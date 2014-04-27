@@ -57,6 +57,31 @@ struct zathura_form_field_s {
        * The type of the choice field
        */
       zathura_form_field_choice_type_t type;
+
+      /**
+       * If the choice form is editable
+       */
+      bool is_editable;
+
+      /**
+       * If the options should be sorted alphabetically
+       */
+      bool is_sorted;
+
+      /**
+       * If multiple selections are allowed
+       */
+      bool is_multiselect;
+
+      /**
+       * If spell-checking should be performed
+       */
+      bool do_spell_check;
+
+      /**
+       * List of choices
+       */
+      zathura_list_t* items;
     } choice;
   } data;
 };
@@ -352,6 +377,14 @@ zathura_form_field_choice_get_type(zathura_form_field_t* form_field,
 zathura_error_t
 zathura_form_field_choice_set_items(zathura_form_field_t* form_field, zathura_list_t* items)
 {
+  if (form_field == NULL || items == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
+  form_field->data.choice.items = items;
+
   return ZATHURA_ERROR_OK;
 }
 
@@ -359,6 +392,14 @@ zathura_error_t
 zathura_form_field_choice_get_items(zathura_form_field_t* form_field, zathura_list_t**
     items)
 {
+  if (form_field == NULL || items == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
+  *items = form_field->data.choice.items;
+
   return ZATHURA_ERROR_OK;
 }
 
@@ -366,6 +407,12 @@ zathura_error_t
 zathura_form_field_choice_item_is_selected(zathura_form_field_t* form_field,
     unsigned int index, bool* selected)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
   return ZATHURA_ERROR_OK;
 }
 
@@ -373,6 +420,12 @@ zathura_error_t
 zathura_form_field_choice_select_item(zathura_form_field_t* form_field, unsigned
     int index)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
   return ZATHURA_ERROR_OK;
 }
 
@@ -380,57 +433,132 @@ zathura_error_t
 zathura_form_field_choice_deselect_item(zathura_form_field_t* form_field,
     unsigned int index)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_form_field_choice_set_editable(zathura_form_field_t* form_field, bool value)
+zathura_form_field_choice_set_editable(zathura_form_field_t* form_field, bool
+    is_editable)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
+
+  form_field->data.choice.is_editable = is_editable;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
 zathura_form_field_choice_is_editable(zathura_form_field_t* form_field, bool*
-    value)
+    is_editable)
 {
+  if (form_field == NULL || is_editable == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
+  *is_editable = form_field->data.choice.is_editable;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_form_field_choice_set_sorted(zathura_form_field_t* form_field, bool value)
+zathura_form_field_choice_set_sorted(zathura_form_field_t* form_field, bool
+    is_sorted)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
+  form_field->data.choice.is_sorted = is_sorted;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
 zathura_form_field_choice_is_sorted(zathura_form_field_t* form_field, bool*
-    value)
+    is_sorted)
 {
+  if (form_field == NULL || is_sorted == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
+  *is_sorted = form_field->data.choice.is_sorted;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_form_field_choice_set_multiselect(zathura_form_field_t* form_field, bool value)
+zathura_form_field_choice_set_multiselect(zathura_form_field_t* form_field, bool
+    is_multiselect)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
+  form_field->data.choice.is_multiselect = is_multiselect;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
 zathura_form_field_choice_is_multiselect(zathura_form_field_t* form_field, bool*
-    value)
+    is_multiselect)
 {
+  if (form_field == NULL || is_multiselect == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
+  *is_multiselect = form_field->data.choice.is_multiselect;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_form_field_choice_set_spell_check(zathura_form_field_t* form_field, bool value)
+zathura_form_field_choice_set_spell_check(zathura_form_field_t* form_field, bool
+    do_spell_check)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
+  form_field->data.choice.do_spell_check = do_spell_check;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
 zathura_form_field_choice_do_spell_check(zathura_form_field_t* form_field, bool*
-    value)
+    do_spell_check)
 {
+  if (form_field == NULL || do_spell_check == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
+  *do_spell_check =form_field->data.choice.do_spell_check;
+
   return ZATHURA_ERROR_OK;
 }

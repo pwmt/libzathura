@@ -93,6 +93,16 @@ suite_form_fields(void)
   tcase_add_checked_fixture(tcase, setup_form_field_choice, teardown);
   tcase_add_test(tcase, test_form_field_choice_set_type);
   tcase_add_test(tcase, test_form_field_choice_get_type);
+  tcase_add_test(tcase, test_form_field_choice_set_editable);
+  tcase_add_test(tcase, test_form_field_choice_is_editable);
+  tcase_add_test(tcase, test_form_field_choice_set_sorted);
+  tcase_add_test(tcase, test_form_field_choice_is_sorted);
+  tcase_add_test(tcase, test_form_field_choice_set_multiselect);
+  tcase_add_test(tcase, test_form_field_choice_is_multiselect);
+  tcase_add_test(tcase, test_form_field_choice_set_spell_check);
+  tcase_add_test(tcase, test_form_field_choice_do_spell_check);
+  tcase_add_test(tcase, test_form_field_choice_set_items);
+  tcase_add_test(tcase, test_form_field_choice_get_items);
   suite_add_tcase(suite, tcase);
 
   return suite;
