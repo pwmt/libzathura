@@ -3,6 +3,19 @@
 #ifndef FORM_FIELDS_H
 #define FORM_FIELDS_H
 
+#include <stdbool.h>
+
+#include "error.h"
+#include "list.h"
+
+/**
+ * An interactive form is a collection of fields for gathering information
+ * interactively from the user. A document may contain any number of fields
+ * appearing on any combination of pages, all of which make up a single, global
+ * interactive form spanning the entire document.
+ */
+typedef struct zathura_form_field_s zathura_form_field_t;
+
 /**
  * Interactive forms support the following field types:
  */
@@ -93,7 +106,7 @@ typedef enum zathura_form_field_choice_type_e {
    * predefined.
    */
   ZATHURA_FORM_FIELD_CHOICE_TYPE_COMBO
-} zathura_form_field_choice_t;
+} zathura_form_field_choice_type_t;
 
 /**
  * Returns the button type of the button form field.
@@ -212,6 +225,7 @@ zathura_error_t zathura_form_field_text_is_password(zathura_form_field_t*
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_form_field_text_is_rich_text(zathura_form_field_t*
+    form_field, bool* value);
 
 /**
  * Returns if the text field does scroll (horizontally for single-line fields,
