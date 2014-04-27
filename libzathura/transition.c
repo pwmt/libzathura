@@ -87,11 +87,6 @@ zathura_page_transition_new(zathura_page_transition_t** transition,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  *transition = calloc(1, sizeof(zathura_page_transition_t));
-  if (*transition == NULL) {
-    return ZATHURA_ERROR_OUT_OF_MEMORY;
-  }
-
   switch (style) {
     case ZATHURA_PAGE_TRANSITION_SPLIT:
     case ZATHURA_PAGE_TRANSITION_BLINDS:
@@ -108,6 +103,11 @@ zathura_page_transition_new(zathura_page_transition_t** transition,
       break;
     default:
       return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *transition = calloc(1, sizeof(zathura_page_transition_t));
+  if (*transition == NULL) {
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
 
   (*transition)->style = style;
