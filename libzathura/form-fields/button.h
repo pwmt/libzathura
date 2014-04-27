@@ -49,26 +49,26 @@ zathura_error_t zathura_form_field_button_get_type(zathura_form_field_t*
  * Returns the state of the button form field.
  *
  * @param[in] form_field The form field
- * @param[out] value The state of the form field
+ * @param[out] state The state of the form field
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_form_field_button_get_state(zathura_form_field_t*
-    form_field, bool* value);
+    form_field, bool* state);
 
 /**
  * Sets the state of the button form field.
  *
  * @param[in] form_field The form field
- * @param[in] value The state of the form field
+ * @param[in] state The state of the form field
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_form_field_button_set_state(zathura_form_field_t*
-    form_field, bool value);
+    form_field, bool state);
 
 #endif /* FORM_FIELD_BUTTON_H */

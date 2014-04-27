@@ -32,6 +32,11 @@ struct zathura_form_field_s {
        * The type of the button field
        */
       zathura_form_field_button_type_t type;
+
+      /**
+       * The state of the button
+       */
+      bool state;
     } button;
 
     /**
@@ -81,6 +86,7 @@ zathura_form_field_new(zathura_form_field_t** form_field, zathura_form_field_typ
   switch (type) {
     case ZATHURA_FORM_FIELD_BUTTON:
       (*form_field)->data.button.type = ZATHURA_FORM_FIELD_BUTTON_TYPE_PUSH;
+      (*form_field)->data.button.state = false;
       break;
     case ZATHURA_FORM_FIELD_TEXT:
       (*form_field)->data.text.type = ZATHURA_FORM_FIELD_TEXT_TYPE_NORMAL;
@@ -163,13 +169,30 @@ zathura_form_field_button_get_type(zathura_form_field_t* form_field,
 
 zathura_error_t
 zathura_form_field_button_get_state(zathura_form_field_t* form_field, bool*
-    value) {
+    state) {
+  if (form_field == NULL || state == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_BUTTON)
+
+  *state = form_field->data.button.state;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_form_field_button_set_state(zathura_form_field_t* form_field, bool value)
+zathura_form_field_button_set_state(zathura_form_field_t* form_field, bool
+    state)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_BUTTON)
+
+  form_field->data.button.state = state;
+
   return ZATHURA_ERROR_OK;
 }
 

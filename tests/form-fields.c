@@ -77,20 +77,22 @@ suite_form_fields(void)
 
   tcase = tcase_create("button");
   tcase_add_checked_fixture(tcase, setup_form_field_button, teardown);
-  tcase_add_test(tcase, test_form_field_button_get_type);
   tcase_add_test(tcase, test_form_field_button_set_type);
+  tcase_add_test(tcase, test_form_field_button_get_type);
+  tcase_add_test(tcase, test_form_field_button_set_state);
+  tcase_add_test(tcase, test_form_field_button_get_state);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("text");
   tcase_add_checked_fixture(tcase, setup_form_field_text, teardown);
-  tcase_add_test(tcase, test_form_field_text_get_type);
   tcase_add_test(tcase, test_form_field_text_set_type);
+  tcase_add_test(tcase, test_form_field_text_get_type);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("choice");
   tcase_add_checked_fixture(tcase, setup_form_field_choice, teardown);
-  tcase_add_test(tcase, test_form_field_choice_get_type);
   tcase_add_test(tcase, test_form_field_choice_set_type);
+  tcase_add_test(tcase, test_form_field_choice_get_type);
   suite_add_tcase(suite, tcase);
 
   return suite;
