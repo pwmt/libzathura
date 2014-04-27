@@ -87,6 +87,18 @@ suite_form_fields(void)
   tcase_add_checked_fixture(tcase, setup_form_field_text, teardown);
   tcase_add_test(tcase, test_form_field_text_set_type);
   tcase_add_test(tcase, test_form_field_text_get_type);
+  tcase_add_test(tcase, test_form_field_text_set_max_length);
+  tcase_add_test(tcase, test_form_field_text_get_max_length);
+  tcase_add_test(tcase, test_form_field_text_set_text);
+  tcase_add_test(tcase, test_form_field_text_get_text);
+  tcase_add_test(tcase, test_form_field_text_is_password);
+  tcase_add_test(tcase, test_form_field_text_set_password);
+  tcase_add_test(tcase, test_form_field_text_is_rich_text);
+  tcase_add_test(tcase, test_form_field_text_set_rich_text);
+  tcase_add_test(tcase, test_form_field_text_do_scroll);
+  tcase_add_test(tcase, test_form_field_text_set_scroll);
+  tcase_add_test(tcase, test_form_field_text_do_spell_check);
+  tcase_add_test(tcase, test_form_field_text_set_spell_check);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("choice");

@@ -47,6 +47,36 @@ struct zathura_form_field_s {
        * The type of the text field
        */
       zathura_form_field_text_type_t type;
+
+      /**
+       * Maximal length
+       */
+      unsigned int max_length;
+
+      /**
+       * If the text form is a password
+       */
+      bool is_password;
+
+      /**
+       * If text is a rich text
+       */
+      bool is_rich_text;
+
+      /**
+       * If scrolling is allowed
+       */
+      bool do_scroll;
+
+      /**
+       * If spell-checking should be performed
+       */
+      bool do_spell_check;
+
+      /**
+       * The text
+       */
+      char* text;
     } text;
 
     /**
@@ -115,9 +145,19 @@ zathura_form_field_new(zathura_form_field_t** form_field, zathura_form_field_typ
       break;
     case ZATHURA_FORM_FIELD_TEXT:
       (*form_field)->data.text.type = ZATHURA_FORM_FIELD_TEXT_TYPE_NORMAL;
+      (*form_field)->data.text.max_length = 0;
+      (*form_field)->data.text.is_password = false;
+      (*form_field)->data.text.is_rich_text = false;
+      (*form_field)->data.text.do_scroll = false;
+      (*form_field)->data.text.do_spell_check = false;
       break;
     case ZATHURA_FORM_FIELD_CHOICE:
       (*form_field)->data.choice.type = ZATHURA_FORM_FIELD_CHOICE_TYPE_LIST;
+      (*form_field)->data.choice.is_editable = false;
+      (*form_field)->data.choice.is_sorted = false;
+      (*form_field)->data.choice.is_multiselect = false;
+      (*form_field)->data.choice.do_spell_check = false;
+      (*form_field)->data.choice.items = NULL;
       break;
     case ZATHURA_FORM_FIELD_SIGNATURE:
       break;
@@ -134,6 +174,15 @@ zathura_form_field_free(zathura_form_field_t* form_field)
   if (form_field == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
+
+  if (form_field->data.text.text != NULL) {
+    g_free(form_field->data.text.text);
+  }
+
+  if (form_field->data.choice.items != NULL) {
+    zathura_list_free(form_field->data.choice.items);
+  }
+
 
   free(form_field);
 
@@ -260,66 +309,147 @@ zathura_form_field_text_get_type(zathura_form_field_t* form_field,
 }
 
 zathura_error_t
-zathura_form_field_text_set_max_length(zathura_form_field_t* form_field, unsigned int length)
+zathura_form_field_text_set_max_length(zathura_form_field_t* form_field,
+    unsigned int max_length)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_TEXT)
+
+  form_field->data.text.max_length = max_length;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
 zathura_form_field_text_get_max_length(zathura_form_field_t* form_field,
-    unsigned int* length)
+    unsigned int* max_length)
 {
+  if (form_field == NULL || max_length == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_TEXT)
+
+  *max_length = form_field->data.text.max_length;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_form_field_text_set_password(zathura_form_field_t* form_field, bool value)
+zathura_form_field_text_set_password(zathura_form_field_t* form_field, bool is_password)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_TEXT)
+
+  form_field->data.text.is_password = is_password;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
 zathura_form_field_text_is_password(zathura_form_field_t* form_field, bool*
-    value)
+    is_password)
 {
+  if (form_field == NULL || is_password == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_TEXT)
+
+  *is_password = form_field->data.text.is_password;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_form_field_text_set_rich_text(zathura_form_field_t* form_field, bool value)
+zathura_form_field_text_set_rich_text(zathura_form_field_t* form_field, bool is_rich_text)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_TEXT)
+
+  form_field->data.text.is_rich_text = is_rich_text;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_form_field_text_is_rich_text(zathura_form_field_t* zathura_error_t, bool*
-    value)
+zathura_form_field_text_is_rich_text(zathura_form_field_t* form_field, bool*
+    is_rich_text)
 {
+  if (form_field == NULL || is_rich_text == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_TEXT)
+
+  *is_rich_text = form_field->data.text.is_rich_text;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_form_field_text_set_scroll(zathura_form_field_t* form_field, bool value)
+zathura_form_field_text_set_scroll(zathura_form_field_t* form_field, bool do_scroll)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_TEXT)
+
+  form_field->data.text.do_scroll = do_scroll;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_form_field_text_do_scroll(zathura_form_field_t* form_field, bool* value)
+zathura_form_field_text_do_scroll(zathura_form_field_t* form_field, bool* do_scroll)
 {
+  if (form_field == NULL || do_scroll == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_TEXT)
+
+  *do_scroll = form_field->data.text.do_scroll;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_form_field_text_set_spell_check(zathura_form_field_t* form_field, bool value)
+zathura_form_field_text_set_spell_check(zathura_form_field_t* form_field, bool do_spell_check)
 {
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_TEXT)
+
+  form_field->data.text.do_spell_check = do_spell_check;
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
 zathura_form_field_text_do_spell_check(zathura_form_field_t* form_field, bool*
-    value)
+    do_spell_check)
 {
+  if (form_field == NULL || do_spell_check == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_TEXT)
+
+  *do_spell_check = form_field->data.text.do_spell_check;
+
   return ZATHURA_ERROR_OK;
 }
 
@@ -327,12 +457,42 @@ zathura_error_t
 zathura_form_field_text_set_text(zathura_form_field_t* form_field, const char*
     text)
 {
+  if (form_field == NULL || text == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_TEXT)
+
+  unsigned int max_length = 0;
+  if (zathura_form_field_text_get_max_length(form_field, &max_length) != ZATHURA_ERROR_OK) {
+    return ZATHURA_ERROR_UNKNOWN;
+  }
+
+  /* Given text is longer than allowed */
+  if (max_length != 0 && strlen(text) > max_length) {
+    return ZATHURA_ERROR_UNKNOWN;
+  }
+
+  if (form_field->data.text.text != NULL) {
+    g_free(form_field->data.text.text);
+  }
+
+  form_field->data.text.text = g_strdup(text);
+
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
 zathura_form_field_text_get_text(zathura_form_field_t* form_field, char** text)
 {
+  if (form_field == NULL || text == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_TEXT)
+
+  *text = form_field->data.text.text;
+
   return ZATHURA_ERROR_OK;
 }
 

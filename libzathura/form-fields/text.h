@@ -90,7 +90,7 @@ zathura_error_t zathura_form_field_text_get_max_length(zathura_form_field_t*
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_form_field_text_is_password(zathura_form_field_t*
-    form_field, bool* value);
+    form_field, bool* is_password);
 
 /**
  * Returns if the text field is a rich text string or not.
@@ -103,7 +103,7 @@ zathura_error_t zathura_form_field_text_is_password(zathura_form_field_t*
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_form_field_text_is_rich_text(zathura_form_field_t*
-    form_field, bool* value);
+    form_field, bool* is_rich_text);
 
 /**
  * Returns if the text field does scroll (horizontally for single-line fields,
@@ -117,7 +117,7 @@ zathura_error_t zathura_form_field_text_is_rich_text(zathura_form_field_t*
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_form_field_text_do_scroll(zathura_form_field_t*
-    form_field, bool* value);
+    form_field, bool* do_scroll);
 
 /**
  * Returns if spell-checking should be performed on the entered text or not.
@@ -130,6 +130,6 @@ zathura_error_t zathura_form_field_text_do_scroll(zathura_form_field_t*
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_form_field_text_do_spell_check(zathura_form_field_t*
-    form_field, bool* value);
+    form_field, bool* do_spell_check);
 
 #endif /* FORM_FIELD_TEXT_H */
