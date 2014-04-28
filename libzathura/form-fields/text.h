@@ -83,7 +83,7 @@ zathura_error_t zathura_form_field_text_get_max_length(zathura_form_field_t*
  * Returns if the text field is a password or not.
  *
  * @param[in] form_field The form field
- * @param[out] value If the text field is a password
+ * @param[out] is_password If the text field is a password
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -96,7 +96,7 @@ zathura_error_t zathura_form_field_text_is_password(zathura_form_field_t*
  * Returns if the text field is a rich text string or not.
  *
  * @param[in] form_field The form field
- * @param[out] value If the text field is a rich text string
+ * @param[out] is_rich_text If the text field is a rich text string
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -110,7 +110,7 @@ zathura_error_t zathura_form_field_text_is_rich_text(zathura_form_field_t*
  * vertically for multiple-line fields).
  *
  * @param[in] form_field The form field
- * @param[out] value If the text field scrolls or not
+ * @param[out] do_scroll If the text field scrolls or not
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -123,7 +123,7 @@ zathura_error_t zathura_form_field_text_do_scroll(zathura_form_field_t*
  * Returns if spell-checking should be performed on the entered text or not.
  *
  * @param[in] form_field The form field
- * @param[out] value If spell-checking should be performed on the text field
+ * @param[out] do_spell_check If spell-checking should be performed on the text field
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed

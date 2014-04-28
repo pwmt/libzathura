@@ -51,7 +51,7 @@ zathura_error_t zathura_form_field_choice_get_type(zathura_form_field_t*
  * Returns if the choice form field is editable or not.
  *
  * @param[in] form_field The form field
- * @param[out] editable If the choice form field is editable
+ * @param[out] is_editable If the choice form field is editable
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -65,7 +65,7 @@ zathura_error_t zathura_form_field_choice_is_editable(zathura_form_field_t*
  * use by form authoring tools, not by viewer applications.
  *
  * @param[in] form_field The form field
- * @param[out] sorted If the choice form field is sorted or not
+ * @param[out] is_sorted If the choice form field is sorted or not
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -79,7 +79,7 @@ zathura_error_t zathura_form_field_choice_is_sorted(zathura_form_field_t*
  * simultaneously. If false, no more than one item at a time may be selected.
  *
  * @param[in] form_field The form field
- * @param[out] multiselect If the choice form field is a multi-select choice
+ * @param[out] is_multiselect If the choice form field is a multi-select choice
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -120,7 +120,7 @@ zathura_error_t zathura_form_field_choice_get_items(zathura_form_field_t*
 /**
  * Selects the option
  *
- * @param[in] The choice item
+ * @param[in] choice_item The choice item
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -133,8 +133,7 @@ zathura_form_field_choice_deselect_item(zathura_form_field_choice_item_t*
 /**
  * Deselects the option
  *
- * @param[in] form_field The form field
- * @param[out] items Returns the list of options
+ * @param[in] choice_item The choice item
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -148,7 +147,7 @@ zathura_error_t zathura_form_field_choice_deselect_item(zathura_form_field_choic
  * not.
  *
  * @param[in] choice_item The choice item
- * @param[out] selected If the index is selected
+ * @param[out] is_selected If the index is selected
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed

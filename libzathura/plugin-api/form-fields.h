@@ -211,7 +211,7 @@ zathura_error_t zathura_form_field_choice_set_items(zathura_form_field_t*
  * Creates a new form field choice item
  *
  * @param[in] item The new form field choice item
- * @param[name] item The name of the choice item
+ * @param[in] name The name of the choice item
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
