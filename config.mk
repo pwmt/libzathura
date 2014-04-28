@@ -66,3 +66,6 @@ FIU_RUN ?= fiu-run -x
 
 # set to something != 0 if you want verbose build output
 VERBOSE ?= 0
+
+# enable colors
+COLOR ?= 1

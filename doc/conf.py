@@ -35,12 +35,6 @@ html_static_path  = ['_static']
 htmlhelp_basename = 'zathuradoc'
 
 
-# -- Options for manual page output ---------------------------------------
-
-man_pages = [
-]
-
-
 # -- Options for breathe ---------------------------------------
 
 breathe_projects = { "libzathura": "_build/doxygen/xml" }

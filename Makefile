@@ -1,6 +1,7 @@
 # See LICENSE file for license and copyright information
 
 include config.mk
+include colors.mk
 include common.mk
 
 PROJECT   = libzathura
@@ -35,13 +36,13 @@ ${PROJECT}/version.h: ${PROJECT}/version.h.in config.mk
 		sed 's/ZVABI/${LIBZATHURA_VERSION_ABI}/' > ${PROJECT}/version.h
 
 %.o: %.c
+	$(call colorecho,CC,$<)
 	@mkdir -p .depend/$(dir $(abspath $@))
-	$(ECHO) CC $<
 	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} -o $@ $< -MMD -MF .depend/$(abspath $@).dep
 
 %.do: %.c
+	$(call colorecho,CC,$<)
 	@mkdir -p .depend/$(dir $(abspath $@))
-	$(ECHO) CC $<
 	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} ${DFLAGS} -o $@ $< -MMD -MF .depend/$(abspath $@).dep
 
 ${OBJECTS}:  config.mk ${PROJECT}/version.h
@@ -54,11 +55,11 @@ shared: ${PROJECT}.so.${SOVERSION}
 
 ${PROJECT}.a: ${OBJECTS}
 	$(QUIET)rm -f ${PROJECT}.a
-	$(ECHO) AR rcs $@
+	$(call colorecho,AR,$@)
 	$(QUIET)ar rcs $@ ${OBJECTS}
 
 ${PROJECT}.so.${SOVERSION}: ${OBJECTS}
-	$(ECHO) LD $@
+	$(call colorecho,LD,$@)
 	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} -o $@ ${OBJECTS} ${LIBS}
 
 clean:
@@ -73,11 +74,11 @@ ${PROJECT}-debug: ${PROJECT}-debug.a ${PROJECT}-debug.so.${SOVERSION}
 
 ${PROJECT}-debug.a: ${DOBJECTS}
 	$(QUIET)rm -f ${PROJECT}.a
-	$(ECHO) AR rcs ${PROJECT}.a
+	$(call colorecho,AR,${PROJECT}.a)
 	$(QUIET)ar rc ${PROJECT}.a ${DOBJECTS}
 
 ${PROJECT}-debug.so.${SOVERSION}: ${DOBJECTS}
-	$(ECHO) LD ${PROJECT}.so.${SOMAJOR}
+	$(call colorecho,LD,${PROJECT}.so.${SOMAJOR})
 	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} \
 		-o ${PROJECT}.so.${SOVERSION} ${DOBJECTS} ${LIBS}
 
@@ -103,12 +104,12 @@ ${PROJECT}.pc: ${PROJECTNV}.pc.in config.mk
 	$(QUIET)cat ${PROJECTNV}.pc.in >> ${PROJECT}.pc
 
 install-static: static
-	$(ECHO) installing static library
+	$(call colorecho,INSTALL,"Install static library")
 	$(QUIET)mkdir -m 755 -p ${DESTDIR}${LIBDIR}
 	$(QUIET)install -m 644 ${PROJECT}.a ${DESTDIR}${LIBDIR}
 
 install-shared: shared
-	$(ECHO) installing shared library
+	$(call colorecho,INSTALL,"Install shared library")
 	$(QUIET)mkdir -m 755 -p ${DESTDIR}${LIBDIR}
 	$(QUIET)install -m 644 ${PROJECT}.so.${SOVERSION} ${DESTDIR}${LIBDIR}
 	$(QUIET)ln -s ${PROJECT}.so.${SOVERSION} ${DESTDIR}${LIBDIR}/${PROJECT}.so.${SOMAJOR} || \
@@ -120,23 +121,23 @@ install: options install-static install-shared install-headers
 		$(QUIET)${MAKE} -C po install
 
 install-headers: ${PROJECT}/version.h ${PROJECT}.pc
-	$(ECHO) installing pkgconfig file
+	$(call colorecho,INSTALL,"Install pkg-config file")
 	$(QUIET)mkdir -m 755 -p ${DESTDIR}${LIBDIR}/pkgconfig
 	$(QUIET)install -m 644 ${PROJECT}.pc ${DESTDIR}${LIBDIR}/pkgconfig
-	$(ECHO) installing header files
+	$(call colorecho,INSTALL,"Install header files")
 	$(QUIET)mkdir -m 755 -p ${DESTDIR}${INCLUDEDIR}/zathura
 	$(QUIET)install -m 644 ${HEADERS_INSTALL} ${DESTDIR}${INCLUDEDIR}/zathura
 
 uninstall: uninstall-headers
-	$(ECHO) removing library file
+	$(call colorecho,UNINSTALL,"Remove library files")
 	$(QUIET)rm -f ${LIBDIR}/${PROJECT}.a ${LIBDIR}/${PROJECT}.so.${SOVERSION} \
 		${LIBDIR}/${PROJECT}.so.${SOMAJOR} ${LIBDIR}/${PROJECT}.so
 	$(QUIET)${MAKE} -C po uninstall
 
 uninstall-headers:
-	$(ECHO) removing header files
+	$(call colorecho,UNINSTALL,"Remove header files")
 	$(QUIET)rm -rf ${INCLUDEDIR}/zathura
-	$(ECHO) removing pkgconfig file
+	$(call colorecho,UNINSTALL,"Remove pkg-config file")
 	$(QUIET)rm -f ${LIBDIR}/pkgconfig/${PROJECT}.pc
 
 .PHONY: all options clean debug doc test dist install install-headers \
