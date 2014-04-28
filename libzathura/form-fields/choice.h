@@ -30,6 +30,11 @@ typedef enum zathura_form_field_choice_type_e {
 } zathura_form_field_choice_type_t;
 
 /**
+ * An item of the choice form field
+ */
+typedef struct zathura_form_field_choice_item_s zathura_form_field_choice_item_t;
+
+/**
  * Returns the choice type of the choice form field.
  *
  * @param[in] form_field The form field
@@ -113,45 +118,43 @@ zathura_error_t zathura_form_field_choice_get_items(zathura_form_field_t*
     form_field, zathura_list_t** items);
 
 /**
- * Selects the option at the given index of the form field
+ * Selects the option
  *
- * @param[in] form_field The form field
- * @param[in] index The index of the option
+ * @param[in] The choice item
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_form_field_choice_select_item(zathura_form_field_t*
-    form_field, unsigned int index);
+zathura_error_t
+zathura_form_field_choice_deselect_item(zathura_form_field_choice_item_t*
+  choice_item);
 
 /**
- * Deselects the option at the given index of the form field
+ * Deselects the option
  *
  * @param[in] form_field The form field
- * @param[in] index The index of the option
+ * @param[out] items Returns the list of options
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_form_field_choice_deselect_item(zathura_form_field_t*
-    form_field, unsigned int index);
+zathura_error_t zathura_form_field_choice_deselect_item(zathura_form_field_choice_item_t*
+    choice_item);
 
 /**
  * Returns if the option at the given index of the form field is selected or
  * not.
  *
- * @param[in] form_field The form field
- * @param[in] index The index of the option
+ * @param[in] choice_item The choice item
  * @param[out] selected If the index is selected
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_form_field_choice_item_is_selected(zathura_form_field_t*
-    form_field, unsigned int index, bool* selected);
-
+zathura_error_t zathura_form_field_choice_item_is_selected(zathura_form_field_choice_item_t*
+    choice_item, bool* is_selected);
 
 #endif /* FORM_FIELD_CHOICE_H */

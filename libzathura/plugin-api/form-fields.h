@@ -207,4 +207,31 @@ zathura_error_t zathura_form_field_choice_set_spell_check(zathura_form_field_t*
 zathura_error_t zathura_form_field_choice_set_items(zathura_form_field_t*
     form_field, zathura_list_t* items);
 
+/**
+ * Creates a new form field choice item
+ *
+ * @param[in] item The new form field choice item
+ * @param[name] item The name of the choice item
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_OUT_OF_MEMORY Out of memory
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t
+zathura_form_field_choice_item_new(zathura_form_field_choice_item_t** item,
+    const char* name);
+
+/**
+ * Frees the form field choice item
+ *
+ * @param[in] item The form field choice item
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t
+zathura_form_field_choice_item_free(zathura_form_field_choice_item_t* item);
+
 #endif /* PLUGIN_API_FORM_FIELDS_H */

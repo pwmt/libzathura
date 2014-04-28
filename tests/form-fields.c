@@ -62,6 +62,7 @@ START_TEST(test_form_field_get_type) {
 #include "form-fields/button.c"
 #include "form-fields/text.c"
 #include "form-fields/choice.c"
+#include "form-fields/choice-item.c"
 
 Suite*
 suite_form_fields(void)
@@ -101,6 +102,15 @@ suite_form_fields(void)
   tcase_add_test(tcase, test_form_field_text_set_spell_check);
   suite_add_tcase(suite, tcase);
 
+  tcase = tcase_create("choice-item");
+  tcase_add_checked_fixture(tcase, setup_form_field_choice_item, teardown_form_field_choice_item);
+  tcase_add_test(tcase, test_form_field_choice_item_new);
+  tcase_add_test(tcase, test_form_field_choice_item_free);
+  tcase_add_test(tcase, test_form_field_choice_item_select);
+  tcase_add_test(tcase, test_form_field_choice_item_deselect);
+  tcase_add_test(tcase, test_form_field_choice_item_is_selected);
+  suite_add_tcase(suite, tcase);
+
   tcase = tcase_create("choice");
   tcase_add_checked_fixture(tcase, setup_form_field_choice, teardown);
   tcase_add_test(tcase, test_form_field_choice_set_type);
@@ -115,9 +125,6 @@ suite_form_fields(void)
   tcase_add_test(tcase, test_form_field_choice_do_spell_check);
   tcase_add_test(tcase, test_form_field_choice_set_items);
   tcase_add_test(tcase, test_form_field_choice_get_items);
-  tcase_add_test(tcase, test_form_field_choice_select_item);
-  tcase_add_test(tcase, test_form_field_choice_deselect_item);
-  tcase_add_test(tcase, test_form_field_choice_item_is_selected);
   suite_add_tcase(suite, tcase);
 
   return suite;
