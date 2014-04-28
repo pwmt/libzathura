@@ -88,6 +88,7 @@ TEST_FORM_FIELD_CHOICE_BOOLEAN(
 
 START_TEST(test_form_field_choice_set_items) {
   zathura_list_t* list = zathura_list_alloc();
+  fail_unless(list != NULL);
 
   /* invalid arguments */
   fail_unless(zathura_form_field_choice_set_items(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -103,6 +104,7 @@ START_TEST(test_form_field_choice_set_items) {
 START_TEST(test_form_field_choice_get_items) {
   zathura_list_t* get_list = NULL;
   zathura_list_t* list = zathura_list_alloc();
+  fail_unless(list != NULL);
 
   /* invalid arguments */
   fail_unless(zathura_form_field_choice_get_items(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -112,7 +114,7 @@ START_TEST(test_form_field_choice_get_items) {
   /* valid arguments */
   fail_unless(zathura_form_field_choice_set_items(form_field, list) == ZATHURA_ERROR_OK);
   fail_unless(zathura_form_field_choice_get_items(form_field, &get_list) == ZATHURA_ERROR_OK);
-  fail_unless(get_list != NULL);
+  fail_unless(get_list == list);
 
   zathura_list_free(list);
 } END_TEST
