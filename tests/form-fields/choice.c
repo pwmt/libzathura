@@ -1,6 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
 #include <check.h>
+#include <stdio.h>
 
 #include "form-fields.h"
 #include "list.h"
@@ -114,4 +115,65 @@ START_TEST(test_form_field_choice_get_items) {
   fail_unless(get_list != NULL);
 
   zathura_list_free(list);
+} END_TEST
+
+START_TEST(test_form_field_choice_select_item) {
+  zathura_list_t* list = zathura_list_alloc();
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_choice_select_item(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_select_item(form_field, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_choice_set_items(form_field, list) == ZATHURA_ERROR_OK);
+
+  zathura_list_append(list, "Choice 1");
+  zathura_list_append(list, "Choice 2");
+
+  fail_unless(zathura_form_field_choice_set_items(form_field, list) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_select_item(form_field, 5) == ZATHURA_ERROR_FORM_FIELD_CHOICE_INVALID_INDEX);
+  fail_unless(zathura_form_field_choice_select_item(form_field, 0) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_form_field_choice_deselect_item) {
+  zathura_list_t* list = zathura_list_alloc();
+  zathura_list_append(list, "Choice 1");
+  zathura_list_append(list, "Choice 2");
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_choice_deselect_item(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_choice_set_items(form_field, list) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_deselect_item(form_field, 5) == ZATHURA_ERROR_FORM_FIELD_CHOICE_INVALID_INDEX);
+  fail_unless(zathura_form_field_choice_deselect_item(form_field, 0) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_form_field_choice_item_is_selected) {
+  zathura_list_t* list = zathura_list_alloc();
+  bool is_selected;
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_choice_item_is_selected(NULL, NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_item_is_selected(form_field, NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_item_is_selected(NULL, &is_selected, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_item_is_selected(form_field, &is_selected, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  fail_unless(zathura_form_field_choice_set_items(form_field, list) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_item_is_selected(form_field, &is_selected, 5) == ZATHURA_ERROR_FORM_FIELD_CHOICE_INVALID_INDEX);
+
+  /* valid arguments */
+  zathura_list_append(list, "Choice 1");
+  zathura_list_append(list, "Choice 2");
+  fail_unless(zathura_form_field_choice_set_items(form_field, list) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_item_is_selected(form_field, &is_selected, 0) == ZATHURA_ERROR_OK);
+  fail_unless(is_selected == false);
+
+  fail_unless(zathura_form_field_choice_select_item(form_field, 0) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_item_is_selected(form_field, &is_selected, 0) == ZATHURA_ERROR_OK);
+  fail_unless(is_selected == true);
+
+  fail_unless(zathura_form_field_choice_deselect_item(form_field, 0) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_item_is_selected(form_field, &is_selected, 0) == ZATHURA_ERROR_OK);
+  fail_unless(is_selected == false);
 } END_TEST

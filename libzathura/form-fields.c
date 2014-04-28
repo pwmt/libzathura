@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "form-fields.h"
 
@@ -182,7 +183,6 @@ zathura_form_field_free(zathura_form_field_t* form_field)
   if (form_field->data.choice.items != NULL) {
     zathura_list_free(form_field->data.choice.items);
   }
-
 
   free(form_field);
 
@@ -543,7 +543,11 @@ zathura_form_field_choice_set_items(zathura_form_field_t* form_field, zathura_li
 
   CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
 
-  form_field->data.choice.items = items;
+  if (form_field->data.choice.items != NULL) {
+    zathura_list_free(form_field->data.choice.items);
+  }
+
+  form_field->data.choice.items = zathura_list_copy(items);
 
   return ZATHURA_ERROR_OK;
 }
@@ -565,13 +569,24 @@ zathura_form_field_choice_get_items(zathura_form_field_t* form_field, zathura_li
 
 zathura_error_t
 zathura_form_field_choice_item_is_selected(zathura_form_field_t* form_field,
-    unsigned int index, bool* selected)
+    unsigned int index, bool* is_selected)
 {
-  if (form_field == NULL) {
+  if (form_field == NULL || is_selected == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
   CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
+
+  if (form_field->data.choice.items == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  unsigned int list_length = zathura_list_length(form_field->data.choice.items);
+  if (list_length == 0 || list_length < index) {
+    return ZATHURA_ERROR_FORM_FIELD_CHOICE_INVALID_INDEX;
+  }
+
+  *is_selected = true;
 
   return ZATHURA_ERROR_OK;
 }
@@ -580,8 +595,13 @@ zathura_error_t
 zathura_form_field_choice_select_item(zathura_form_field_t* form_field, unsigned
     int index)
 {
-  if (form_field == NULL) {
+  if (form_field == NULL || form_field->data.choice.items == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  unsigned int list_length = g_list_length(form_field->data.choice.items);
+  if (list_length == 0 || list_length < index) {
+    return ZATHURA_ERROR_FORM_FIELD_CHOICE_INVALID_INDEX;;
   }
 
   CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
@@ -593,8 +613,13 @@ zathura_error_t
 zathura_form_field_choice_deselect_item(zathura_form_field_t* form_field,
     unsigned int index)
 {
-  if (form_field == NULL) {
+  if (form_field == NULL || form_field->data.choice.items == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  unsigned int list_length = g_list_length(form_field->data.choice.items);
+  if (list_length == 0 || list_length < index) {
+    return ZATHURA_ERROR_FORM_FIELD_CHOICE_INVALID_INDEX;;
   }
 
   CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)

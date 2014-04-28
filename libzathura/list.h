@@ -15,5 +15,6 @@ typedef GList zathura_list_t;
 #define zathura_list_nth(list, n) (zathura_list_t*) g_list_nth((list), (n))
 #define zathura_list_nth_data(list, n) g_list_nth_data((list), (n))
 #define zathura_list_length(list) g_list_length((list))
+#define zathura_list_copy(list) g_list_copy((list))
 
 #endif /* LIST_H */

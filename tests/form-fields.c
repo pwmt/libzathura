@@ -115,6 +115,9 @@ suite_form_fields(void)
   tcase_add_test(tcase, test_form_field_choice_do_spell_check);
   tcase_add_test(tcase, test_form_field_choice_set_items);
   tcase_add_test(tcase, test_form_field_choice_get_items);
+  tcase_add_test(tcase, test_form_field_choice_select_item);
+  tcase_add_test(tcase, test_form_field_choice_deselect_item);
+  tcase_add_test(tcase, test_form_field_choice_item_is_selected);
   suite_add_tcase(suite, tcase);
 
   return suite;
