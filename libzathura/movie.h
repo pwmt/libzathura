@@ -4,6 +4,7 @@
 #define MOVIE_H
 
 #include "image.h"
+#include "attachment.h"
 
 /**
  * Some documents includes the ability to embed movies within a document by
@@ -42,7 +43,7 @@ typedef struct zathura_movie_s {
   struct {
     zathura_image_t* image; /**< The image */
     bool display; /**< Display the poster */
-  }
+  } poster;
 } zathura_movie_t;
 
 /**

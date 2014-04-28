@@ -5,7 +5,7 @@ include colors.mk
 include common.mk
 
 PROJECT   = libzathura
-SOURCE    = $(wildcard ${PROJECT}/*.c)
+SOURCE    = $(wildcard ${PROJECT}/*.c ${PROJECT}/**/*.c)
 OBJECTS   = ${SOURCE:.c=.o}
 DOBJECTS  = ${SOURCE:.c=.do}
 GCDA  		= ${SOURCE:.c=.gcda}

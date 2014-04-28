@@ -3,6 +3,8 @@
 #ifndef ANNOTATION_FREE_TEXT_H
 #define ANNOTATION_FREE_TEXT_H
 
+#include "../types.h"
+
 /**
  * Describes a callout line.
  */

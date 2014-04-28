@@ -3,6 +3,8 @@
 #ifndef ANNOTATION_BORDER_H
 #define ANNOTATION_BORDER_H
 
+#include "../list.h"
+
 /**
  * The border style.
  */

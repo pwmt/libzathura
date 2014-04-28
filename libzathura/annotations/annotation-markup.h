@@ -71,4 +71,6 @@ typedef enum zathura_annotation_markup_reply_type_e {
   ZATHURA_ANNOTATION_REPLY_TYPE_GROUP
 } zathura_annotation_markup_reply_type_t;
 
+typedef struct zathura_annotation_markup_s zathura_annotation_markup_t;
+
 #endif // ANOTATION_MARKUP_H
