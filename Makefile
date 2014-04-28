@@ -67,7 +67,7 @@ clean:
 		$(PROJECT).so.${SOVERSION} ${PROJECT}-debug.so.${SOVERSION} .depend \
 		${PROJECT}-${VERSION}.tar.gz ${PROJECT}/version.h ${GCDA} ${GCNO} $(PROJECT).info
 	$(QUIET)${MAKE} -C tests clean
-	$(QUIET)${MAKE} -C doc
+	$(QUIET)${MAKE} -C doc clean
 
 ${PROJECT}-debug: ${PROJECT}-debug.a ${PROJECT}-debug.so.${SOVERSION}
 
