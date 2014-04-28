@@ -100,7 +100,7 @@ struct zathura_annotation_s {
        * A type specifying the relationship (the “reply type”) between this
        * annotation and one specified by @a ::reply_type.
        */
-      zathura_annotation_reply_type_t reply_type;
+      zathura_annotation_markup_reply_type_t reply_type;
     } markup;
 
     /**
@@ -156,7 +156,7 @@ struct zathura_annotation_s {
        * The annotation’s highlighting mode, the visual effect to be used when
        * the mouse button is pressed or held down inside its active area.
        */
-      zathura_annotation_highlighting_mode_t highlighting_mode;
+      zathura_annotation_link_highlighting_mode_t highlighting_mode;
 
       /**
        * An list of n @a zathura_quad_point_t objects specifying the coordinates
@@ -332,7 +332,7 @@ struct zathura_annotation_s {
        * ZATHURA_ANNOTATION_CAPTION_POSITION_TOP , meaning the caption will be
        * on top of the line.
        */
-      zathura_annotation_caption_position_t caption_position;
+      zathura_annotation_line_caption_position_t caption_position;
     } line;
 
     /**
