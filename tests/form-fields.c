@@ -3,6 +3,7 @@
 #include <check.h>
 #include <limits.h>
 #include <fiu.h>
+#include <fiu-control.h>
 
 #include "form-fields.h"
 #include "plugin-api.h"

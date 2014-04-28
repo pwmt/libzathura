@@ -2,11 +2,12 @@
 
 #include <check.h>
 #include <fiu.h>
+#include <fiu-control.h>
 
 #include "image-buffer.h"
 
 static int cb_test_image_buffer_new_calloc(const char* name, int *failnum,
-    void**failinfo, unsigned int flags)
+    void** failinfo, unsigned int* flags)
 {
   static int i = 0;
 

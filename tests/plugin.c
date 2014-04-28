@@ -3,6 +3,8 @@
 #include <check.h>
 #include <stdio.h>
 #include <string.h>
+#include <fiu.h>
+#include <fiu-control.h>
 
 #include "error.h"
 #include "plugin.h"
@@ -128,7 +130,7 @@ START_TEST(test_plugin_add_mime_type) {
 } END_TEST
 
 static int cb_test_plugin_document_open_calloc(const char* name, int *failnum,
-    void**failinfo, unsigned int flags)
+    void**failinfo, unsigned int* flags)
 {
   static int i = 0;
 

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fiu.h>
+#include <fiu-control.h>
 
 #include "internal.h"
 

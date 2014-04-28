@@ -2,6 +2,7 @@
 
 #include <check.h>
 #include <fiu.h>
+#include <fiu-control.h>
 
 #include "plugin-manager.h"
 
