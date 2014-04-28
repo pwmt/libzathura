@@ -1,6 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
 #include "../annotations.h"
+#include "internal.h"
 
 /**
  * Many annotation types are defined as markup annotations because they are
@@ -46,3 +47,49 @@ struct zathura_annotation_markup_s {
    */
   zathura_annotation_markup_reply_type_t reply_type;
 };
+
+zathura_error_t
+zathura_annotation_is_markup_annotation(zathura_annotation_t* annotation, bool*
+    is_markup_annotation)
+{
+  if (annotation == NULL || is_markup_annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+  
+  switch (annotation->type) {
+    case ZATHURA_ANNOTATION_UNKNOWN:
+    case ZATHURA_ANNOTATION_LINK:
+    case ZATHURA_ANNOTATION_POPUP:
+    case ZATHURA_ANNOTATION_MOVIE:
+    case ZATHURA_ANNOTATION_WIDGET:
+    case ZATHURA_ANNOTATION_SCREEN:
+    case ZATHURA_ANNOTATION_PRINTER_MARK:
+    case ZATHURA_ANNOTATION_TRAP_NET:
+    case ZATHURA_ANNOTATION_WATERMARK:
+    case ZATHURA_ANNOTATION_3D:
+      *is_markup_annotation = false;
+      break;
+    case ZATHURA_ANNOTATION_TEXT:
+    case ZATHURA_ANNOTATION_FREE_TEXT:
+    case ZATHURA_ANNOTATION_LINE:
+    case ZATHURA_ANNOTATION_SQUARE:
+    case ZATHURA_ANNOTATION_CIRCLE:
+    case ZATHURA_ANNOTATION_POLYGON:
+    case ZATHURA_ANNOTATION_POLY_LINE:
+    case ZATHURA_ANNOTATION_HIGHLIGHT:
+    case ZATHURA_ANNOTATION_UNDERLINE:
+    case ZATHURA_ANNOTATION_SQUIGGLY:
+    case ZATHURA_ANNOTATION_STRIKE_OUT:
+    case ZATHURA_ANNOTATION_STAMP:
+    case ZATHURA_ANNOTATION_CARET:
+    case ZATHURA_ANNOTATION_INK:
+    case ZATHURA_ANNOTATION_FILE_ATTACHMENT:
+    case ZATHURA_ANNOTATION_SOUND:
+      *is_markup_annotation = true;
+      break;
+    default:
+      return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  return ZATHURA_ERROR_OK;
+}

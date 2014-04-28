@@ -3,6 +3,8 @@
 #ifndef ANNOTATION_MARKUP_H
 #define ANNOTATION_MARKUP_H
 
+#include "../annotations.h"
+
 /**
  * Describing the intent of the markup annotation. Intents allow viewer
  * applications to distinguish between different uses and behaviors of a single
@@ -72,5 +74,8 @@ typedef enum zathura_annotation_markup_reply_type_e {
 } zathura_annotation_markup_reply_type_t;
 
 typedef struct zathura_annotation_markup_s zathura_annotation_markup_t;
+
+zathura_error_t zathura_annotation_is_markup_annotation(zathura_annotation_t*
+    annotation, bool* is_markup_annotation);
 
 #endif // ANOTATION_MARKUP_H
