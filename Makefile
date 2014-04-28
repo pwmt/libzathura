@@ -63,10 +63,32 @@ ${PROJECT}.so.${SOVERSION}: ${OBJECTS}
 	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} -o $@ ${OBJECTS} ${LIBS}
 
 clean:
-	$(QUIET)rm -rf ${OBJECTS} ${PROJECT}-${VERSION}.tar.gz gcov \
-		${DOBJECTS} ${PROJECT}.a ${PROJECT}-debug.a ${PROJECT}.pc \
-		$(PROJECT).so.${SOVERSION} ${PROJECT}-debug.so.${SOVERSION} .depend \
-		${PROJECT}-${VERSION}.tar.gz ${PROJECT}/version.h ${GCDA} ${GCNO} $(PROJECT).info
+	$(call colorecho,RM, "Clean objects and builds")
+	$(QUIET)rm -rf ${OBJECTS}
+	$(QUIET)rm -rf ${PROJECT}.a
+	$(QUIET)rm -rf ${PROJECT}.so
+
+	$(call colorecho,RM, "Clean debug objects and builds")
+	$(QUIET)rm -rf ${DOBJECTS}
+	$(QUIET)rm -rf ${PROJECT}-debug.a
+	$(QUIET)rm -rf ${PROJECT}-debug.so
+
+	$(call colorecho,RM, "Clean pkg-config files")
+	$(QUIET)rm -rf ${PROJECT}.pc
+
+	$(call colorecho,RM, "Clean dependencies")
+	$(QUIET)rm -rf .depend
+
+	$(call colorecho,RM, "Clean distributionfiles")
+	$(QUIET)rm -rf ${PROJECT}-${VERSION}.tar.gz
+	$(QUIET)rm -rf ${PROJECT}.info
+	$(QUIET)rm -rf ${PROJECT}/version.h
+
+	$(call colorecho,RM, "Clean code analysis")
+	$(QUIET)rm -rf gcov
+	$(QUIET)rm -rf ${GCDA}
+	$(QUIET)rm -rf ${GCNO}
+
 	$(QUIET)${MAKE} -C tests clean
 	$(QUIET)${MAKE} -C doc clean
 
@@ -93,7 +115,9 @@ test: ${PROJECT}
 gcov: clean
 	$(QUIET)env CFLAGS="-fprofile-arcs -ftest-coverage" LDFLAGS="-fprofile-arcs" WITH_LIBFIU=1 ${MAKE} debug
 	$(QUIET)env CFLAGS="-fprofile-arcs -ftest-coverage" LDFLAGS="-fprofile-arcs" ${MAKE} test
+	$(call colorecho,LCOV,"Analyse data")
 	$(QUIET)lcov --base-directory . --directory ${PROJECT} --capture --output-file $(PROJECT).info
+	$(call colorecho,LCOV,"Generate report")
 	$(QUIET)genhtml --output-directory gcov $(PROJECT).info
 
 ${PROJECT}.pc: ${PROJECTNV}.pc.in config.mk

@@ -18,7 +18,7 @@ endif
 all: man html
 
 clean:
-	$(call colorecho,RM,doc/$(SPHINX_BUILDDIR))
+	$(call colorecho,RM,"Clean documentation")
 	$(QUIET)rm -rf $(SPHINX_BUILDDIR)/
 
 $(SPHINX_BUILDDIR)/html/index.html: $(HTML_SOURCES) $(SPHINX_BUILDDIR)/doxygen/xml/index.xml
