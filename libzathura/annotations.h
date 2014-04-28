@@ -68,10 +68,20 @@ zathura_error_t zathura_annotation_is_markup_annotation(zathura_annotation_t* an
 #include "annotations/flags.h"
 
 #include "annotations/annotation-caret.h"
+#include "annotations/annotation-circle.h"
+#include "annotations/annotation-file.h"
 #include "annotations/annotation-free-text.h"
+#include "annotations/annotation-ink.h"
 #include "annotations/annotation-line.h"
 #include "annotations/annotation-link.h"
 #include "annotations/annotation-markup.h"
+#include "annotations/annotation-movie.h"
+#include "annotations/annotation-popup.h"
+#include "annotations/annotation-screen.h"
+#include "annotations/annotation-sound.h"
+#include "annotations/annotation-square.h"
+#include "annotations/annotation-stamp.h"
 #include "annotations/annotation-text.h"
+#include "annotations/annotation-text-markup.h"
 
 #endif /* ANNOTATIONS_H */
