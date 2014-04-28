@@ -2,6 +2,7 @@
 
 #include <check.h>
 #include <stdio.h>
+#include <fiu.h>
 
 #include "form-fields.h"
 #include "list.h"
@@ -29,6 +30,10 @@ START_TEST(test_form_field_choice_item_new) {
   fail_unless(zathura_form_field_choice_item_new(&item, "name") == ZATHURA_ERROR_OK);
   fail_unless(item != NULL);
   fail_unless(zathura_form_field_choice_item_free(item) == ZATHURA_ERROR_OK);
+
+  fiu_enable("libc/mm/calloc", 1, NULL, 0);
+  fail_unless(zathura_form_field_choice_item_new(&item, "name") == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fiu_disable("libc/mm/calloc");
 } END_TEST
 
 START_TEST(test_form_field_choice_item_free) {

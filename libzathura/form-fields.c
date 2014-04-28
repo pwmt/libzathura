@@ -474,12 +474,8 @@ zathura_form_field_text_set_text(zathura_form_field_t* form_field, const char*
 
   CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_TEXT)
 
-  unsigned int max_length = 0;
-  if (zathura_form_field_text_get_max_length(form_field, &max_length) != ZATHURA_ERROR_OK) {
-    return ZATHURA_ERROR_UNKNOWN;
-  }
-
   /* Given text is longer than allowed */
+  unsigned int max_length = form_field->data.text.max_length;
   if (max_length != 0 && strlen(text) > max_length) {
     return ZATHURA_ERROR_UNKNOWN;
   }

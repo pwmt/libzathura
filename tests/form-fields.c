@@ -2,6 +2,7 @@
 
 #include <check.h>
 #include <limits.h>
+#include <fiu.h>
 
 #include "form-fields.h"
 #include "plugin-api.h"
@@ -37,6 +38,14 @@ START_TEST(test_form_field_new) {
 
   fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_SIGNATURE) == ZATHURA_ERROR_OK);
   fail_unless(zathura_form_field_free(form_field) == ZATHURA_ERROR_OK);
+
+  /* fault injection */
+  fiu_enable("libc/mm/calloc", 1, NULL, 0);
+  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_BUTTON) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_TEXT) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_CHOICE) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_SIGNATURE) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fiu_disable("libc/mm/calloc");
 } END_TEST
 
 #define TEST_FORM_FIELD_GET_TYPE(form_field_var, type_var, type) \
