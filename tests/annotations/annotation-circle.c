@@ -1,0 +1,19 @@
+/* See LICENSE file for license and copyright information */
+
+#include <check.h>
+
+#include "annotations.h"
+
+static void setup_annotation_circle(void) {
+  fail_unless(zathura_annotation_new(&annotation, ZATHURA_ANNOTATION_CIRCLE) == ZATHURA_ERROR_OK);
+  fail_unless(annotation != NULL);
+}
+
+START_TEST(test_annotation_circle_new) {
+} END_TEST
+
+START_TEST(test_annotation_circle_get_type) {
+  zathura_annotation_type_t type;
+  fail_unless(zathura_annotation_get_type(annotation, &type) == ZATHURA_ERROR_OK);
+  fail_unless(type == ZATHURA_ANNOTATION_CIRCLE);
+} END_TEST

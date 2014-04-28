@@ -35,6 +35,7 @@ typedef enum zathura_annotation_type_s {
   ZATHURA_ANNOTATION_TEXT,
   ZATHURA_ANNOTATION_LINK,
   ZATHURA_ANNOTATION_FREE_TEXT,
+  ZATHURA_ANNOTATION_TEXT_MARKUP,
   ZATHURA_ANNOTATION_LINE,
   ZATHURA_ANNOTATION_SQUARE,
   ZATHURA_ANNOTATION_CIRCLE,
@@ -62,6 +63,8 @@ typedef enum zathura_annotation_type_s {
 zathura_error_t zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_type_t type);
 zathura_error_t zathura_annotation_free(zathura_annotation_t* annotation);
 zathura_error_t zathura_annotation_is_markup_annotation(zathura_annotation_t* annotation, bool* is_markup_annotation);
+zathura_error_t
+zathura_annotation_get_type(zathura_annotation_t* annotation, zathura_annotation_type_t* type);
 
 #include "annotations/border.h"
 #include "annotations/color.h"
