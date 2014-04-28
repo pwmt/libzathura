@@ -35,6 +35,11 @@ START_TEST(test_attachment_new) {
   zathura_attachment_t* tmp;
   fail_unless(zathura_attachment_new(&tmp) == ZATHURA_ERROR_OK);
   fail_unless(zathura_attachment_free(tmp) == ZATHURA_ERROR_OK);
+
+  /* fault injection */
+  fiu_enable("libc/mm/calloc", 1, NULL, 0);
+  fail_unless(zathura_attachment_new(&tmp) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fiu_disable("libc/mm/calloc");
 } END_TEST
 
 START_TEST(test_attachment_set_data) {
@@ -73,6 +78,11 @@ START_TEST(test_attachment_set_name) {
   /* valid arguments */
   fail_unless(zathura_attachment_set_name(attachment, NULL)   == ZATHURA_ERROR_OK);
   fail_unless(zathura_attachment_set_name(attachment, NAME) == ZATHURA_ERROR_OK);
+
+  /* fault injection */
+  fiu_enable("libc/str/strdup", 1, NULL, 0);
+  fail_unless(zathura_attachment_set_name(attachment, NAME) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fiu_disable("libc/str/strdup");
 } END_TEST
 
 START_TEST(test_attachment_get_name) {
@@ -208,6 +218,11 @@ START_TEST(test_attachment_set_checksum) {
   /* valid arguments */
   fail_unless(zathura_attachment_set_checksum(attachment, NULL)     == ZATHURA_ERROR_OK);
   fail_unless(zathura_attachment_set_checksum(attachment, CHECKSUM) == ZATHURA_ERROR_OK);
+
+  /* fault injection */
+  fiu_enable("libc/str/strdup", 1, NULL, 0);
+  fail_unless(zathura_attachment_set_checksum(attachment, CHECKSUM) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fiu_disable("libc/str/strdup");
 } END_TEST
 
 START_TEST(test_attachment_get_checksum) {
