@@ -9,9 +9,8 @@ static int cb_test_image_buffer_new_calloc(const char* name, int *failnum,
     void**failinfo, unsigned int flags)
 {
   static int i = 0;
-  i++;
 
-  switch (i++) {
+  switch (++i) {
     case 1:
     case 3:
       return 1;
