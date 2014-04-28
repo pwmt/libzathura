@@ -63,6 +63,11 @@ START_TEST(test_transition_new) {
 
   fail_unless(zathura_page_transition_new(&transition, ZATHURA_PAGE_TRANSITION_FADE) == ZATHURA_ERROR_OK);
   fail_unless(zathura_page_transition_free(transition) == ZATHURA_ERROR_OK);
+
+  /* fault injection */
+  fiu_enable("libc/mm/calloc", 1, NULL, 0);
+  fail_unless(zathura_page_transition_new(&transition, ZATHURA_PAGE_TRANSITION_SPLIT) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fiu_disable("libc/mm/calloc");
 } END_TEST
 
 START_TEST(test_transition_get_style) {
