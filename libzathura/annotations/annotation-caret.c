@@ -1,34 +1,138 @@
 /* See LICENSE file for license and copyright information */
 
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "annotation-caret.h"
+#include "../annotations.h"
+#include "internal.h"
 
-/**
- * A caret annotation is a visual symbol that indicates the presence of text
- * edits.
- */
-struct zathura_annotation_caret_s {
-  /**
-   * A set of four numbers describing the numerical differences between two
-   * rectangles: the Rect entry of the annotation and the actual boundaries
-   * of the underlying caret. Such a difference can occur, for example, when
-   * a paragraph symbol specified by @a symbol is displayed along with the caret.
-   *
-   * The four numbers correspond to the differences in default user space
-   * between the left, top, right, and bottom coordinates of Rect and those
-   * of the caret, respectively. Each value must be greater than or equal
-   * to 0. The sum of the top and bottom differences must be less than the
-   * height of Rect, and the sum of the left and right differences must be
-   * less than the width of Rect.
-   */
-  struct {
-    unsigned int left;
-    unsigned int top;
-    unsigned int right;
-    unsigned int bottom;
-  } padding;
+#define ANNOTATION_CARET_CHECK_TYPE() \
+  if (annotation->type != ZATHURA_ANNOTATION_CARET) { \
+    return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE; \
+  }
 
-  /**
-   * A name specifying a symbol to be associated with the caret
-   */
-  zathura_annotation_caret_symbol_t symbol;
-};
+#define ANNOTATION_CARET_CHECK_DATA() \
+  if (annotation->data.caret == NULL) { \
+    return ZATHURA_ERROR_UNKNOWN; \
+  }
+
+#define ANNOTATION_CARET_CHECK_TYPE_AND_DATA() \
+  ANNOTATION_CARET_CHECK_TYPE() \
+  ANNOTATION_CARET_CHECK_DATA()
+
+zathura_error_t
+zathura_annotation_caret_init(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_CARET_CHECK_TYPE()
+
+  if (annotation->data.caret != NULL) {
+    free(annotation->data.caret);
+  }
+
+  annotation->data.caret = calloc(1, sizeof(zathura_annotation_caret_t));
+  if (annotation->data.caret == NULL) {
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
+
+  annotation->data.caret->symbol = ZATHURA_ANNOTATION_CARET_SYMBOL_NONE;
+
+  annotation->data.caret->padding.left   = 0;
+  annotation->data.caret->padding.top    = 0;
+  annotation->data.caret->padding.right  = 0;
+  annotation->data.caret->padding.bottom = 0;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_caret_clear(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_CARET_CHECK_TYPE()
+
+  free(annotation->data.caret);
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_caret_get_symbol(zathura_annotation_t* annotation,
+    zathura_annotation_caret_symbol_t* symbol)
+{
+  if (annotation == NULL || symbol == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_CARET_CHECK_TYPE_AND_DATA()
+
+  *symbol = annotation->data.caret->symbol;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_caret_set_symbol(zathura_annotation_t* annotation,
+    zathura_annotation_caret_symbol_t symbol)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  switch (symbol) {
+    case ZATHURA_ANNOTATION_CARET_SYMBOL_NONE:
+    case ZATHURA_ANNOTATION_CARET_SYMBOL_PARAGRAPH:
+      break;
+    default:
+      return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_CARET_CHECK_TYPE_AND_DATA()
+
+  annotation->data.caret->symbol = symbol;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_caret_get_padding(zathura_annotation_t* annotation,
+    zathura_annotation_caret_padding_t* padding)
+{
+  if (annotation == NULL || padding == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_CARET_CHECK_TYPE_AND_DATA()
+
+  padding->left   = annotation->data.caret->padding.left;
+  padding->top    = annotation->data.caret->padding.top;
+  padding->right  = annotation->data.caret->padding.right;
+  padding->bottom = annotation->data.caret->padding.bottom;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_caret_set_padding(zathura_annotation_t* annotation,
+    zathura_annotation_caret_padding_t padding)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_CARET_CHECK_TYPE_AND_DATA()
+
+  annotation->data.caret->padding.left   = padding.left;
+  annotation->data.caret->padding.top    = padding.top;
+  annotation->data.caret->padding.right  = padding.right;
+  annotation->data.caret->padding.bottom = padding.bottom;
+
+  return ZATHURA_ERROR_OK;
+}

@@ -137,4 +137,6 @@ struct zathura_annotation_s {
   } data;
 };
 
+#include "internal/annotation-caret.h"
+
 #endif // ZATHURA_ANNOTATION_INTERNAL_H

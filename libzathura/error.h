@@ -23,6 +23,10 @@ typedef enum zathura_error_e {
   ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION, /**< The style of the transition is not valid for this action */
 
   ZATHURA_ERROR_FORM_FIELD_CHOICE_INVALID_INDEX, /**< The given index does not exist */
+
+  ZATHURA_ERROR_ANNOTATION_INVALID_TYPE, /**< The given annotation does not
+                                           match the type that this function
+                                           equires */
 } zathura_error_t;
 
 #endif /* ERROR_H */

@@ -161,6 +161,12 @@ suite_annotations(void)
   tcase_add_checked_fixture(tcase, setup_annotation_caret, teardown);
   tcase_add_test(tcase, test_annotation_caret_new);
   tcase_add_test(tcase, test_annotation_caret_get_type);
+  tcase_add_test(tcase, test_annotation_caret_init);
+  tcase_add_test(tcase, test_annotation_caret_clear);
+  tcase_add_test(tcase, test_annotation_caret_set_symbol);
+  tcase_add_test(tcase, test_annotation_caret_get_symbol);
+  tcase_add_test(tcase, test_annotation_caret_set_padding);
+  tcase_add_test(tcase, test_annotation_caret_get_padding);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("ink");
