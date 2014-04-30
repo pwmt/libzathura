@@ -62,8 +62,11 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
       case ZATHURA_ANNOTATION_LINK:
       case ZATHURA_ANNOTATION_FREE_TEXT:
       case ZATHURA_ANNOTATION_LINE:
+        break;
       case ZATHURA_ANNOTATION_SQUARE:
       case ZATHURA_ANNOTATION_CIRCLE:
+        error = zathura_annotation_square_and_circle_init(*annotation);
+        break;
       case ZATHURA_ANNOTATION_POLYGON:
       case ZATHURA_ANNOTATION_POLY_LINE:
       case ZATHURA_ANNOTATION_HIGHLIGHT:
@@ -115,8 +118,11 @@ zathura_annotation_free(zathura_annotation_t* annotation)
       case ZATHURA_ANNOTATION_LINK:
       case ZATHURA_ANNOTATION_FREE_TEXT:
       case ZATHURA_ANNOTATION_LINE:
+        break;
       case ZATHURA_ANNOTATION_SQUARE:
       case ZATHURA_ANNOTATION_CIRCLE:
+        error = zathura_annotation_square_and_circle_init(annotation);
+        break;
       case ZATHURA_ANNOTATION_POLYGON:
       case ZATHURA_ANNOTATION_POLY_LINE:
       case ZATHURA_ANNOTATION_HIGHLIGHT:

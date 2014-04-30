@@ -59,6 +59,7 @@ zathura_annotation_caret_clear(zathura_annotation_t* annotation)
   ANNOTATION_CARET_CHECK_TYPE()
 
   free(annotation->data.caret);
+  annotation->data.caret = NULL;
 
   return ZATHURA_ERROR_OK;
 }

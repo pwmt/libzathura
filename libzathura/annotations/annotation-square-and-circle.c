@@ -1,45 +1,61 @@
 /* See LICENSE file for license and copyright information */
 
-#include "border.h"
-#include "color.h"
+#include <stdlib.h>
 
-/**
- * Square and circle annotations display, respectively, a rectangle or an
- * ellipse on the page. When opened, they display a pop-up window containing
- * the text of the associated note. The rectangle or ellipse is inscribed
- * within the annotation rectangle defined by the annotation position entry.
- * Despite the names square and circle, the width and height of the
- * annotation rectangle need not be equal.
- */
-struct zathura_annotation_square_and_circle_s {
-  /**
-   * The border
-   */
-  zathura_annotation_border_t border;
+#include "../annotations.h"
+#include "annotation-caret.h"
+#include "annotation-square.h"
+#include "annotation-circle.h"
+#include "internal/annotation-square-and-circle.h"
+#include "internal.h"
 
-  /**
-   * The color
-   */
-  zathura_annotation_color_t color;
+#define ANNOTATION_SQUARE_AND_CIRCLE_CHECK_TYPE() \
+  if (annotation->type != ZATHURA_ANNOTATION_SQUARE && \
+      annotation->type != ZATHURA_ANNOTATION_CIRCLE ) { \
+    return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE; \
+  }
 
-  /**
-   * A set of four numbers describing the numerical differences between two
-   * rectangles: the position entry of the annotation and the actual
-   * boundaries of the underlying square or circle. Such a difference can
-   * occur in situations where a border effect causes the size of the
-   * position to increase beyond that of the square or circle.
-   *
-   * The four numbers correspond to the differences in default user space
-   * between the left, top, right, and bottom coordinates of the position
-   * and those of the square or circle, respectively. Each value must be
-   * greater than or equal to 0. The sum of the top and bottom differences
-   * must be less than the height of the position, and the sum of the left
-   * and right differences must be less than the width of the position.
-   */
-  struct {
-    unsigned int left;
-    unsigned int top;
-    unsigned int right;
-    unsigned int bottom;
-  } padding;
-};
+#define ANNOTATION_SQUARE_AND_CIRCLE_CHECK_DATA() \
+  if (annotation->data.square_and_circle == NULL) { \
+    return ZATHURA_ERROR_UNKNOWN; \
+  }
+
+#define ANNOTATION_SQUARE_AND_CIRCLE_CHECK_TYPE_AND_DATA() \
+  ANNOTATION_SQUARE_AND_CIRCLE_CHECK_TYPE() \
+  ANNOTATION_SQUARE_AND_CIRCLE_CHECK_DATA()
+
+zathura_error_t
+zathura_annotation_square_and_circle_init(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_SQUARE_AND_CIRCLE_CHECK_TYPE()
+
+  if (annotation->data.square_and_circle != NULL) {
+    free(annotation->data.square_and_circle);
+  }
+
+  annotation->data.square_and_circle = calloc(1, sizeof(zathura_annotation_square_and_circle_t));
+  if (annotation->data.square_and_circle == NULL) {
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_square_and_circle_clear(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_SQUARE_AND_CIRCLE_CHECK_TYPE()
+
+  free(annotation->data.square_and_circle);
+  annotation->data.square_and_circle = NULL;
+
+  return ZATHURA_ERROR_OK;
+}

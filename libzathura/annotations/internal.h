@@ -138,5 +138,6 @@ struct zathura_annotation_s {
 };
 
 #include "internal/annotation-caret.h"
+#include "internal/annotation-square-and-circle.h"
 
 #endif // ZATHURA_ANNOTATION_INTERNAL_H
