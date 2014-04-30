@@ -107,12 +107,24 @@ suite_annotations(void)
   tcase_add_checked_fixture(tcase, setup_annotation_square, teardown);
   tcase_add_test(tcase, test_annotation_square_new);
   tcase_add_test(tcase, test_annotation_square_get_type);
+  tcase_add_test(tcase, test_annotation_square_set_rectangle);
+  tcase_add_test(tcase, test_annotation_square_get_rectangle);
+  tcase_add_test(tcase, test_annotation_square_set_color);
+  tcase_add_test(tcase, test_annotation_square_get_color);
+  tcase_add_test(tcase, test_annotation_square_set_border);
+  tcase_add_test(tcase, test_annotation_square_get_border);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("circle");
   tcase_add_checked_fixture(tcase, setup_annotation_circle, teardown);
   tcase_add_test(tcase, test_annotation_circle_new);
   tcase_add_test(tcase, test_annotation_circle_get_type);
+  tcase_add_test(tcase, test_annotation_circle_set_rectangle);
+  tcase_add_test(tcase, test_annotation_circle_get_rectangle);
+  tcase_add_test(tcase, test_annotation_circle_set_color);
+  tcase_add_test(tcase, test_annotation_circle_get_color);
+  tcase_add_test(tcase, test_annotation_circle_set_border);
+  tcase_add_test(tcase, test_annotation_circle_get_border);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("polygon");

@@ -39,12 +39,7 @@ typedef struct zathura_annotation_square_and_circle_s {
    * must be less than the height of the position, and the sum of the left
    * and right differences must be less than the width of the position.
    */
-  struct {
-    unsigned int left;
-    unsigned int top;
-    unsigned int right;
-    unsigned int bottom;
-  } padding;
+  zathura_rectangle_t rectangle;
 } zathura_annotation_square_and_circle_t;
 
 /**

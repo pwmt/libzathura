@@ -121,7 +121,7 @@ zathura_annotation_free(zathura_annotation_t* annotation)
         break;
       case ZATHURA_ANNOTATION_SQUARE:
       case ZATHURA_ANNOTATION_CIRCLE:
-        error = zathura_annotation_square_and_circle_init(annotation);
+        error = zathura_annotation_square_and_circle_clear(annotation);
         break;
       case ZATHURA_ANNOTATION_POLYGON:
       case ZATHURA_ANNOTATION_POLY_LINE:
