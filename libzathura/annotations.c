@@ -80,7 +80,10 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
         break;
       case ZATHURA_ANNOTATION_INK:
       case ZATHURA_ANNOTATION_POPUP:
+        break;
       case ZATHURA_ANNOTATION_FILE_ATTACHMENT:
+        error = zathura_annotation_file_init(*annotation);
+        break;
       case ZATHURA_ANNOTATION_SOUND:
       case ZATHURA_ANNOTATION_MOVIE:
       case ZATHURA_ANNOTATION_WIDGET:
@@ -136,7 +139,10 @@ zathura_annotation_free(zathura_annotation_t* annotation)
         break;
       case ZATHURA_ANNOTATION_INK:
       case ZATHURA_ANNOTATION_POPUP:
+        break;
       case ZATHURA_ANNOTATION_FILE_ATTACHMENT:
+        error = zathura_annotation_file_clear(annotation);
+        break;
       case ZATHURA_ANNOTATION_SOUND:
       case ZATHURA_ANNOTATION_MOVIE:
       case ZATHURA_ANNOTATION_WIDGET:

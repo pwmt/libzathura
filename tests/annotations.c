@@ -197,6 +197,12 @@ suite_annotations(void)
   tcase_add_checked_fixture(tcase, setup_annotation_file, teardown);
   tcase_add_test(tcase, test_annotation_file_new);
   tcase_add_test(tcase, test_annotation_file_get_type);
+  tcase_add_test(tcase, test_annotation_file_init);
+  tcase_add_test(tcase, test_annotation_file_clear);
+  tcase_add_test(tcase, test_annotation_file_set_attachment);
+  tcase_add_test(tcase, test_annotation_file_get_attachment);
+  tcase_add_test(tcase, test_annotation_file_set_icon_name);
+  tcase_add_test(tcase, test_annotation_file_get_icon_name);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("sound");
