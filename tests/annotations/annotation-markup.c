@@ -1,8 +1,10 @@
 /* See LICENSE file for license and copyright information */
 
 #include <check.h>
+#include <limits.h>
 
 #include "annotations.h"
+#include "annotations/internal.h"
 
 static void setup_annotation_markup(void) {
   fail_unless(zathura_annotation_new(&annotation, ZATHURA_ANNOTATION_TEXT) == ZATHURA_ERROR_OK);
@@ -23,6 +25,16 @@ START_TEST(test_annotation_is_markup_annotation) {
       == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_annotation_is_markup_annotation(NULL, &is_markup_annotation)
       == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* corrupted data */
+  fail_unless(zathura_annotation_new(&markup_annotation, ZATHURA_ANNOTATION_TEXT)
+      == ZATHURA_ERROR_OK);
+  markup_annotation->type = INT_MAX;
+  fail_unless(zathura_annotation_is_markup_annotation(markup_annotation, &is_markup_annotation)
+      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  markup_annotation->type = ZATHURA_ANNOTATION_TEXT;
+  fail_unless(zathura_annotation_free(markup_annotation) == ZATHURA_ERROR_OK);
+  markup_annotation = NULL;
 
   /* valid arguments */
 #define TEST_IS_MARKUP_ANNOTATION(type, result) \
