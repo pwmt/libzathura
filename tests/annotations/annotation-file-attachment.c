@@ -43,6 +43,7 @@ START_TEST(test_annotation_file_clear) {
 
 START_TEST(test_annotation_file_set_attachment) {
   zathura_attachment_t* attachment;
+  fail_unless(zathura_attachment_new(&attachment) == ZATHURA_ERROR_OK);
 
   /* invalid arguments */
   fail_unless(zathura_annotation_file_set_attachment(NULL, NULL)
@@ -59,7 +60,7 @@ START_TEST(test_annotation_file_set_attachment) {
 
 START_TEST(test_annotation_file_get_attachment) {
   zathura_attachment_t* attachment;
-  zathura_attachment_t* attachment_tmp = 0xCAFEBABE;
+  zathura_attachment_t* attachment_tmp;
 
   /* invalid arguments */
   fail_unless(zathura_annotation_file_get_attachment(NULL, NULL)
@@ -70,11 +71,13 @@ START_TEST(test_annotation_file_get_attachment) {
       == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
+  fail_unless(zathura_attachment_new(&attachment_tmp) == ZATHURA_ERROR_OK);
+
   fail_unless(zathura_annotation_file_set_attachment(annotation, attachment_tmp)
       == ZATHURA_ERROR_OK);
   fail_unless(zathura_annotation_file_get_attachment(annotation, &attachment)
       == ZATHURA_ERROR_OK);
-  fail_unless(attachment == 0xCAFEBABE);
+  fail_unless(attachment == attachment_tmp);
 } END_TEST
 
 START_TEST(test_annotation_file_set_icon_name) {
