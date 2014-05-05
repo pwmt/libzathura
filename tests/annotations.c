@@ -106,6 +106,8 @@ suite_annotations(void)
   tcase = tcase_create("square");
   tcase_add_checked_fixture(tcase, setup_annotation_square, teardown);
   tcase_add_test(tcase, test_annotation_square_new);
+  tcase_add_test(tcase, test_annotation_square_and_circle_init);
+  tcase_add_test(tcase, test_annotation_square_and_circle_clear);
   tcase_add_test(tcase, test_annotation_square_get_type);
   tcase_add_test(tcase, test_annotation_square_set_rectangle);
   tcase_add_test(tcase, test_annotation_square_get_rectangle);

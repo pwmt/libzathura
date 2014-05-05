@@ -18,6 +18,28 @@ START_TEST(test_annotation_square_get_type) {
   fail_unless(type == ZATHURA_ANNOTATION_SQUARE);
 } END_TEST
 
+START_TEST(test_annotation_square_and_circle_init) {
+  /* invalid arguments */
+  fail_unless(zathura_annotation_square_and_circle_init(NULL)
+      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_square_and_circle_init(annotation)
+      == ZATHURA_ERROR_OK); // double initialization
+
+  /* fault injection */
+  fiu_enable("libc/mm/calloc", 1, NULL, 0);
+  fail_unless(zathura_annotation_square_and_circle_init(annotation)
+      == ZATHURA_ERROR_OUT_OF_MEMORY); // double initialization
+  fiu_disable("libc/mm/calloc");
+} END_TEST
+
+START_TEST(test_annotation_square_and_circle_clear) {
+  /* invalid arguments */
+  fail_unless(zathura_annotation_square_and_circle_clear(NULL)
+      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+} END_TEST
+
 START_TEST(test_annotation_square_set_rectangle) {
   zathura_rectangle_t rectangle = { 0, 0, 0, 0 };
 
