@@ -56,13 +56,15 @@ START_TEST(test_form_field_new) {
   fail_unless(zathura_form_field_free((form_field_var)) == ZATHURA_ERROR_OK);
 
 START_TEST(test_form_field_get_type) {
-  /* invalid arguments */
-  fail_unless(zathura_form_field_get_type(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-
-  /* valid arguments */
   zathura_form_field_t* form_field;
   zathura_form_field_type_t type;
 
+  /* invalid arguments */
+  fail_unless(zathura_form_field_get_type(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_type(&form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_type(NULL, &type) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
   TEST_FORM_FIELD_GET_TYPE(form_field, type, ZATHURA_FORM_FIELD_BUTTON)
   TEST_FORM_FIELD_GET_TYPE(form_field, type, ZATHURA_FORM_FIELD_TEXT)
   TEST_FORM_FIELD_GET_TYPE(form_field, type, ZATHURA_FORM_FIELD_CHOICE)

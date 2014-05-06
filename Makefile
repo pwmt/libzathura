@@ -116,9 +116,9 @@ gcov: clean
 	$(QUIET)env CFLAGS="-fprofile-arcs -ftest-coverage" LDFLAGS="-fprofile-arcs" WITH_LIBFIU=1 ${MAKE} debug
 	$(QUIET)env CFLAGS="-fprofile-arcs -ftest-coverage" LDFLAGS="-fprofile-arcs" ${MAKE} test
 	$(call colorecho,LCOV,"Analyse data")
-	$(QUIET)lcov --base-directory . --directory ${PROJECT} --capture --output-file $(PROJECT).info
+	$(QUIET)lcov --base-directory . --directory ${PROJECT} --capture --rc lcov_branch_coverage=1 --output-file $(PROJECT).info
 	$(call colorecho,LCOV,"Generate report")
-	$(QUIET)genhtml --output-directory gcov $(PROJECT).info
+	$(QUIET)genhtml --rc lcov_branch_coverage=1 --output-directory gcov $(PROJECT).info
 
 ${PROJECT}.pc: ${PROJECTNV}.pc.in config.mk
 	$(QUIET)echo project=${PROJECT} > ${PROJECT}.pc
