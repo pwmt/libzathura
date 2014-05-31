@@ -5,6 +5,7 @@
 
 #include "internal.h"
 #include "document.h"
+#include "macros.h"
 
 zathura_error_t
 zathura_document_free(zathura_document_t* document)
@@ -59,7 +60,8 @@ zathura_document_get_number_of_pages(zathura_document_t* document, unsigned int 
 }
 
 zathura_error_t
-zathura_document_get_page(zathura_document_t* document, unsigned int index, zathura_page_t** page)
+zathura_document_get_page(zathura_document_t* document, unsigned int
+    UNUSED(index), zathura_page_t** page)
 {
   if (document == NULL || page == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;

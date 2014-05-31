@@ -6,14 +6,12 @@
 #include "plugin-api.h"
 
 START_TEST(test_image_free) {
-  zathura_image_t* image;
-
   /* basic invalid arguments */
   fail_unless(zathura_image_free(NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
 START_TEST(test_image_get_buffer) {
-  zathura_image_t* image;
+  zathura_image_t* image = NULL;
   zathura_image_buffer_t* buffer;
 
   /* basic invalid arguments */

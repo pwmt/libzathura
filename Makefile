@@ -22,11 +22,13 @@ endif
 all: options ${PROJECT}
 
 options:
-	@echo ${PROJECT} build options:
-	@echo "CFLAGS  = ${CFLAGS}"
-	@echo "LDFLAGS = ${LDFLAGS}"
-	@echo "DFLAGS  = ${DFLAGS}"
-	@echo "CC      = ${CC}"
+ifeq "$(VERBOSE)" "1"
+	$(ECHO) ${PROJECT} build options:
+	$(ECHO) "CFLAGS  = ${CFLAGS}"
+	$(ECHO) "LDFLAGS = ${LDFLAGS}"
+	$(ECHO) "DFLAGS  = ${DFLAGS}"
+	$(ECHO) "CC      = ${CC}"
+endif
 
 ${PROJECT}/version.h: ${PROJECT}/version.h.in config.mk
 	$(QUIET)sed 's/ZVMAJOR/${LIBZATHURA_VERSION_MAJOR}/' < ${PROJECT}/version.h.in | \

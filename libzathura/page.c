@@ -6,6 +6,7 @@
 #include "page.h"
 #include "plugin-api.h"
 #include "internal.h"
+#include "macros.h"
 
 zathura_error_t
 zathura_page_new(zathura_page_t** page)
@@ -168,8 +169,8 @@ zathura_page_search_text(zathura_page_t* page, const char* text,
 }
 
 zathura_error_t
-zathura_page_get_text(zathura_page_t* page, char** text, zathura_rectangle_t
-    rectangle)
+zathura_page_get_text(zathura_page_t* page, char** text,
+    zathura_rectangle_t UNUSED(rectangle))
 {
   if (page == NULL || text == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
@@ -240,7 +241,7 @@ zathura_page_get_duration(zathura_page_t* page, unsigned int* duration)
 
 zathura_error_t
 zathura_page_render(zathura_page_t* page, zathura_image_buffer_t** buffer,
-    double scale, int rotation, int flags)
+    double scale, int UNUSED(rotation), int UNUSED(flags))
 {
   if (page == NULL || buffer == NULL || scale <= 0.0) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;

@@ -747,6 +747,7 @@ zathura_form_field_choice_item_select(zathura_form_field_choice_item_t* choice_i
   return ZATHURA_ERROR_OK;
 }
 
+zathura_error_t
 zathura_form_field_choice_item_deselect(zathura_form_field_choice_item_t*
   choice_item)
 {

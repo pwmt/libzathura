@@ -124,7 +124,7 @@ zathura_annotation_free(zathura_annotation_t* annotation)
       case ZATHURA_ANNOTATION_LINK:
         break;
       case ZATHURA_ANNOTATION_FREE_TEXT:
-        error = zathura_annotation_free_text_init(*annotation);
+        error = zathura_annotation_free_text_clear(annotation);
         break;
       case ZATHURA_ANNOTATION_LINE:
         break;
