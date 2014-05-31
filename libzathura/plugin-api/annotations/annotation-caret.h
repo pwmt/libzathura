@@ -31,7 +31,7 @@ zathura_error_t zathura_annotation_caret_set_symbol(zathura_annotation_t*
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_caret_set_padding(zathura_annotation_t*
-    annotation, zathura_annotation_caret_padding_t padding);
+    annotation, zathura_annotation_padding_t padding);
 
 #endif // ZATHURA_PLUGIN_API_ANNOTATION_CARET_H
 

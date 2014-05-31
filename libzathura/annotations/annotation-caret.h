@@ -4,13 +4,7 @@
 #define ANNOTATION_CARET_H
 
 #include "../annotations.h"
-
-typedef struct zathura_padding_s {
-  unsigned int left;
-  unsigned int top;
-  unsigned int right;
-  unsigned int bottom;
-} zathura_annotation_caret_padding_t;
+#include "types.h"
 
 /**
  * Specifying a symbol to be associated with the caret.
@@ -53,6 +47,6 @@ zathura_error_t zathura_annotation_caret_get_symbol(zathura_annotation_t*
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_caret_get_padding(zathura_annotation_t*
-    annotation, zathura_annotation_caret_padding_t* padding);
+    annotation, zathura_annotation_padding_t* padding);
 
 #endif // ANNOTATION_CARET_H

@@ -79,7 +79,7 @@ START_TEST(test_annotation_caret_get_symbol) {
 } END_TEST
 
 START_TEST(test_annotation_caret_set_padding) {
-  zathura_annotation_caret_padding_t padding = { 0, 0, 0, 0 };
+  zathura_annotation_padding_t padding = { 0, 0, 0, 0 };
 
   /* invalid arguments */
   fail_unless(zathura_annotation_caret_set_padding(NULL, padding)
@@ -91,7 +91,7 @@ START_TEST(test_annotation_caret_set_padding) {
 } END_TEST
 
 START_TEST(test_annotation_caret_get_padding) {
-  zathura_annotation_caret_padding_t padding = { 1, 1, 1, 1 };
+  zathura_annotation_padding_t padding = { 1, 1, 1, 1 };
 
   /* invalid arguments */
   fail_unless(zathura_annotation_caret_get_padding(NULL, NULL)
@@ -109,7 +109,7 @@ START_TEST(test_annotation_caret_get_padding) {
   fail_unless(padding.right == 0);
   fail_unless(padding.bottom == 0);
 
-  zathura_annotation_caret_padding_t padding_in = { 1, 2, 3, 4 };
+  zathura_annotation_padding_t padding_in = { 1, 2, 3, 4 };
 
   fail_unless(zathura_annotation_caret_set_padding(annotation, padding_in)
       == ZATHURA_ERROR_OK);

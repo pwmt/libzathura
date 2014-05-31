@@ -1,86 +1,296 @@
 /* See LICENSE file for license and copyright information */
 
+#include <stdlib.h>
+
+#include "../annotations.h"
 #include "annotation-free-text.h"
 #include "annotation-markup.h"
 #include "annotation-line.h"
 #include "border.h"
+#include "internal.h"
+#include "internal/annotation-free-text.h"
 
-/**
- * A free text annotation displays text directly on the page. Unlike an
- * ordinary text annotation , a free text annotation has no open or closed
- * state; instead of being displayed in a pop-up window, the text is always
- * visible.
- */
-struct zathura_annotation_free_text_s {
-  /**
-   * The default appearance string to be used in formatting the text.
-   */
-  char* text;
+#define ANNOTATION_FREE_TEXT_CHECK_TYPE() \
+  if (annotation->type != ZATHURA_ANNOTATION_FREE_TEXT) { \
+    return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE; \
+  }
 
-  /**
-   * Specifying the form of quadding (justification) to be
-   * used in displaying the annotation’s text:
-   */
-  zathura_annotation_justification_t justification;
+#define ANNOTATION_FREE_TEXT_CHECK_DATA() \
+  if (annotation->data.free_text == NULL) { \
+    return ZATHURA_ERROR_UNKNOWN; \
+  }
 
-  /**
-   * A rich text string.
-   */
-  char* rich_text;
+#define ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA() \
+  ANNOTATION_FREE_TEXT_CHECK_TYPE() \
+  ANNOTATION_FREE_TEXT_CHECK_DATA()
 
-  /**
-   * A default style string,
-   */
-  char* style_string;
+zathura_error_t
+zathura_annotation_free_text_init(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
 
-  /**
-   * Specifying a call-out line attached to the free
-   * text annotation.
-   */
-  zathura_callout_line_t callout_line;
+  ANNOTATION_FREE_TEXT_CHECK_TYPE()
 
-  /**
-   * Border of the annotation.
-   */
-  zathura_annotation_border_t border;
+  if (annotation->data.free_text != NULL) {
+    free(annotation->data.free_text);
+  }
 
-  /**
-   * A name describing the intent of the markup annotation. Intents allow
-   * viewer applications to distinguish between different uses and behaviors
-   * of a single markup annotation type. If this entry is not present or its
-   * value is the same as the annotation type, the annotation has no
-   * explicit intent and should behave in a generic manner in a viewer
-   * application.
-   */
-  zathura_annotation_markup_intent_t intent;
+  annotation->data.free_text = calloc(1, sizeof(zathura_annotation_free_text_t));
+  if (annotation->data.free_text == NULL) {
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
 
-  /**
-   * A set of four numbers describing the numerical differences between two
-   * rectangles: the position entry of the annotation and a rectangle
-   * contained within that rectangle. The inner rectangle is where the
-   * annotation’s text should be displayed. Any border styles and/or border
-   * effects specified by the border entry, respectively, are applied to the
-   * border of the inner rectangle. The four numbers correspond to the
-   * differences in default user space between the left, top, right, and
-   * bottom coordinates of the position and those of the inner rectangle,
-   * respectively. Each value must be greater than or equal to 0. The sum of
-   * the top and bottom differences must be less than the height of
-   * position, and the sum of the left and right differences must be less
-   * than the width of position.
-   */
-  struct {
-    unsigned int left;
-    unsigned int top;
-    unsigned int right;
-    unsigned int bottom;
-  } padding;
+  return ZATHURA_ERROR_OK;
+}
 
-  /**
-   * An array of two names specifying the line ending styles to be used in
-   * drawing the annotation’s border. The first and second elements of the
-   * array specify the line ending styles for the endpoints defined,
-   * respectively, by the first and second pairs of coordinates, (x1, y1)
-   * and (x2, y2), in the L array.
-   */
-  zathura_annotation_line_ending_t line_endings[2];
-};
+zathura_error_t
+zathura_annotation_free_text_clear(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE()
+
+  free(annotation->data.free_text);
+  annotation->data.free_text = NULL;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_set_text(zathura_annotation_t*
+    annotation, const char* text)
+{
+  if (annotation == NULL || text == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_get_text(zathura_annotation_t*
+    annotation, char** text)
+{
+  if (annotation == NULL || text == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_set_justification(zathura_annotation_t*
+    annotation, zathura_annotation_justification_t justification)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_get_justification(zathura_annotation_t*
+    annotation, zathura_annotation_justification_t* justification)
+{
+  if (annotation == NULL || justification == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_set_rich_text(zathura_annotation_t*
+    annotation, const char* rich_text)
+{
+  if (annotation == NULL || rich_text == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_get_rich_text(zathura_annotation_t*
+    annotation, char** rich_text)
+{
+  if (annotation == NULL || rich_text == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_set_style_string(zathura_annotation_t*
+    annotation, const char* style_string)
+{
+  if (annotation == NULL || style_string == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_get_style_string(zathura_annotation_t*
+    annotation, char** style_string)
+{
+  if (annotation == NULL || style_string == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_set_callout_line(zathura_annotation_t*
+    annotation, zathura_annotation_callout_line_t callout_line)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_get_callout_line(zathura_annotation_t*
+    annotation, zathura_annotation_callout_line_t* callout_line)
+{
+  if (annotation == NULL || callout_line == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_set_border(zathura_annotation_t*
+    annotation, zathura_annotation_border_t border)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_get_border(zathura_annotation_t*
+    annotation, zathura_annotation_border_t* border)
+{
+  if (annotation == NULL || border == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_set_intent(zathura_annotation_t*
+    annotation, zathura_annotation_markup_intent_t intent)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_get_intent(zathura_annotation_t*
+    annotation, zathura_annotation_markup_intent_t* intent)
+{
+  if (annotation == NULL || intent == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_set_padding(zathura_annotation_t*
+    annotation, zathura_annotation_padding_t padding)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_get_padding(zathura_annotation_t*
+    annotation, zathura_annotation_padding_t* padding)
+{
+  if (annotation == NULL || padding == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_set_line_ending(zathura_annotation_t*
+    annotation, zathura_annotation_line_ending_t line_ending[2])
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_free_text_get_line_ending(zathura_annotation_t*
+    annotation, zathura_annotation_line_ending_t* line_ending[2])
+{
+  if (annotation == NULL || line_ending == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_FREE_TEXT_CHECK_TYPE_AND_DATA()
+
+  return ZATHURA_ERROR_OK;
+}
+

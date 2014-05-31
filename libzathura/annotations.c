@@ -60,7 +60,10 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
       case ZATHURA_ANNOTATION_UNKNOWN:
       case ZATHURA_ANNOTATION_TEXT:
       case ZATHURA_ANNOTATION_LINK:
+        break;
       case ZATHURA_ANNOTATION_FREE_TEXT:
+        error = zathura_annotation_free_text_init(*annotation);
+        break;
       case ZATHURA_ANNOTATION_LINE:
         break;
       case ZATHURA_ANNOTATION_SQUARE:
@@ -119,7 +122,10 @@ zathura_annotation_free(zathura_annotation_t* annotation)
       case ZATHURA_ANNOTATION_UNKNOWN:
       case ZATHURA_ANNOTATION_TEXT:
       case ZATHURA_ANNOTATION_LINK:
+        break;
       case ZATHURA_ANNOTATION_FREE_TEXT:
+        error = zathura_annotation_free_text_init(*annotation);
+        break;
       case ZATHURA_ANNOTATION_LINE:
         break;
       case ZATHURA_ANNOTATION_SQUARE:

@@ -61,8 +61,7 @@ typedef enum zathura_annotation_type_s {
 
 zathura_error_t zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_type_t type);
 zathura_error_t zathura_annotation_free(zathura_annotation_t* annotation);
-zathura_error_t
-zathura_annotation_get_type(zathura_annotation_t* annotation, zathura_annotation_type_t* type);
+zathura_error_t zathura_annotation_get_type(zathura_annotation_t* annotation, zathura_annotation_type_t* type);
 
 #include "annotations/border.h"
 #include "annotations/color.h"

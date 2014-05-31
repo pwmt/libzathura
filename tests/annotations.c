@@ -101,6 +101,26 @@ suite_annotations(void)
   tcase_add_checked_fixture(tcase, setup_annotation_free_text, teardown);
   tcase_add_test(tcase, test_annotation_free_text_new);
   tcase_add_test(tcase, test_annotation_free_text_get_type);
+  tcase_add_test(tcase, test_annotation_free_text_init);
+  tcase_add_test(tcase, test_annotation_free_text_clear);
+  tcase_add_test(tcase, test_annotation_free_text_set_text);
+  tcase_add_test(tcase, test_annotation_free_text_get_text);
+  tcase_add_test(tcase, test_annotation_free_text_set_justification);
+  tcase_add_test(tcase, test_annotation_free_text_get_justification);
+  tcase_add_test(tcase, test_annotation_free_text_set_rich_text);
+  tcase_add_test(tcase, test_annotation_free_text_get_rich_text);
+  tcase_add_test(tcase, test_annotation_free_text_set_style_string);
+  tcase_add_test(tcase, test_annotation_free_text_get_style_string);
+  tcase_add_test(tcase, test_annotation_free_text_set_callout_line);
+  tcase_add_test(tcase, test_annotation_free_text_get_callout_line);
+  tcase_add_test(tcase, test_annotation_free_text_set_border);
+  tcase_add_test(tcase, test_annotation_free_text_get_border);
+  tcase_add_test(tcase, test_annotation_free_text_set_intent);
+  tcase_add_test(tcase, test_annotation_free_text_get_intent);
+  tcase_add_test(tcase, test_annotation_free_text_set_padding);
+  tcase_add_test(tcase, test_annotation_free_text_get_padding);
+  tcase_add_test(tcase, test_annotation_free_text_set_line_ending);
+  tcase_add_test(tcase, test_annotation_free_text_get_line_ending);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("square");

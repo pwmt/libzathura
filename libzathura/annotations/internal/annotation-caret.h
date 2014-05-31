@@ -21,7 +21,7 @@ typedef struct zathura_annotation_caret_s {
    * height of Rect, and the sum of the left and right differences must be
    * less than the width of Rect.
    */
-  zathura_annotation_caret_padding_t padding;
+  zathura_annotation_padding_t padding;
 
   /**
    * A name specifying a symbol to be associated with the caret

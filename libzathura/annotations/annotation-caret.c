@@ -104,7 +104,7 @@ zathura_annotation_caret_set_symbol(zathura_annotation_t* annotation,
 
 zathura_error_t
 zathura_annotation_caret_get_padding(zathura_annotation_t* annotation,
-    zathura_annotation_caret_padding_t* padding)
+    zathura_annotation_padding_t* padding)
 {
   if (annotation == NULL || padding == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
@@ -122,7 +122,7 @@ zathura_annotation_caret_get_padding(zathura_annotation_t* annotation,
 
 zathura_error_t
 zathura_annotation_caret_set_padding(zathura_annotation_t* annotation,
-    zathura_annotation_caret_padding_t padding)
+    zathura_annotation_padding_t padding)
 {
   if (annotation == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
