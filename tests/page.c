@@ -32,8 +32,6 @@ START_TEST(test_page_get_index) {
 } END_TEST
 
 START_TEST(test_page_set_width) {
-  zathura_page_t* page = NULL;
-
   /* basic invalid arguments */
   fail_unless(zathura_page_set_width(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
@@ -49,8 +47,6 @@ START_TEST(test_page_get_width) {
 } END_TEST
 
 START_TEST(test_page_set_height) {
-  zathura_page_t* page = NULL;
-
   /* basic invalid arguments */
   fail_unless(zathura_page_set_height(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
@@ -118,7 +114,7 @@ START_TEST(test_page_get_label) {
 START_TEST(test_page_get_text) {
   zathura_page_t* page = NULL;
   char* text;
-  zathura_rectangle_t rectangle = { 0, 0, 0, 0};
+  zathura_rectangle_t rectangle = { {0, 0}, {0, 0}};
 
   /* basic invalid arguments */
   fail_unless(zathura_page_get_text(NULL, NULL, rectangle) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -159,7 +155,6 @@ START_TEST(test_page_get_images) {
 START_TEST(test_page_search_text) {
   zathura_page_t* page = NULL;
   zathura_list_t* results;
-  const char* text;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_search_text(NULL, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);

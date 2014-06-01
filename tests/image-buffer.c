@@ -5,9 +5,10 @@
 #include <fiu-control.h>
 
 #include "image-buffer.h"
+#include "macros.h"
 
-static int cb_test_image_buffer_new_calloc(const char* name, int *failnum,
-    void** failinfo, unsigned int* flags)
+static int cb_test_image_buffer_new_calloc(const char* UNUSED(name), int *UNUSED(failnum),
+    void** UNUSED(failinfo), unsigned int* UNUSED(flags))
 {
   static int i = 0;
 

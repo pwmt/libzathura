@@ -114,7 +114,7 @@ doc:
 test: ${PROJECT}
 	$(QUIET)${MAKE} -C tests run
 
-gcov: clean
+gcov:
 	$(QUIET)env CFLAGS="-fprofile-arcs -ftest-coverage" LDFLAGS="-fprofile-arcs" WITH_LIBFIU=1 ${MAKE} debug
 	$(QUIET)env CFLAGS="-fprofile-arcs -ftest-coverage" LDFLAGS="-fprofile-arcs" ${MAKE} test
 	$(call colorecho,LCOV,"Analyse data")

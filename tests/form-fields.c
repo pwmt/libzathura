@@ -61,7 +61,7 @@ START_TEST(test_form_field_get_type) {
 
   /* invalid arguments */
   fail_unless(zathura_form_field_get_type(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_form_field_get_type(&form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_type(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_form_field_get_type(NULL, &type) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */

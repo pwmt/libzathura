@@ -72,7 +72,6 @@ zathura_error_t zathura_plugin_set_name(zathura_plugin_t* plugin, const char* na
 zathura_error_t zathura_plugin_set_register_function(zathura_plugin_t* plugin, zathura_plugin_register_function_t function);
 zathura_error_t zathura_plugin_add_mimetype(zathura_plugin_t* plugin, const char* mime_type);
 
-#include "plugin-api/attachment.h"
 #include "plugin-api/document.h"
 #include "plugin-api/page.h"
 #include "plugin-api/transition.h"

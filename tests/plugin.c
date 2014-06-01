@@ -7,6 +7,7 @@
 #include <fiu-control.h>
 
 #include "error.h"
+#include "macros.h"
 #include "plugin.h"
 #include "plugin-api.h"
 #include "plugin-manager.h"
@@ -129,8 +130,8 @@ START_TEST(test_plugin_add_mime_type) {
   fail_unless(zathura_plugin_add_mimetype(plugin, "application/pdf") == ZATHURA_ERROR_OK);
 } END_TEST
 
-static int cb_test_plugin_document_open_calloc(const char* name, int *failnum,
-    void**failinfo, unsigned int* flags)
+static int cb_test_plugin_document_open_calloc(const char* UNUSED(name), int *UNUSED(failnum),
+    void** UNUSED(failinfo), unsigned int* UNUSED(flags))
 {
   static int i = 0;
 

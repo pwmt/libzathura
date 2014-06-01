@@ -6,7 +6,6 @@
 #include "../attachment.h"
 #include "../annotations.h"
 #include "../error.h"
-#include "../plugin-api/attachment.h"
 
 #include "internal.h"
 

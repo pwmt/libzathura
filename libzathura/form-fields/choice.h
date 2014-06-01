@@ -126,8 +126,7 @@ zathura_error_t zathura_form_field_choice_get_items(zathura_form_field_t*
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t
-zathura_form_field_choice_deselect_item(zathura_form_field_choice_item_t*
+zathura_error_t zathura_form_field_choice_item_deselect(zathura_form_field_choice_item_t*
   choice_item);
 
 /**
@@ -139,7 +138,7 @@ zathura_form_field_choice_deselect_item(zathura_form_field_choice_item_t*
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_form_field_choice_deselect_item(zathura_form_field_choice_item_t*
+zathura_error_t zathura_form_field_choice_item_select(zathura_form_field_choice_item_t*
     choice_item);
 
 /**

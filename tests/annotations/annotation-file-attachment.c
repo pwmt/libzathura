@@ -3,6 +3,7 @@
 #include <check.h>
 #include <glib.h>
 
+#include "attachment.h"
 #include "annotations.h"
 
 static void setup_annotation_file(void) {

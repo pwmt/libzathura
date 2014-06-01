@@ -1,6 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
 #include "libzathura/plugin-api.h"
+#include "libzathura/macros.h"
 #include <stdio.h>
 
 /* forward declarations */
@@ -27,7 +28,7 @@ register_functions(zathura_plugin_functions_t* functions)
 }
 
 zathura_error_t
-document_open(zathura_document_t* document)
+document_open(zathura_document_t* UNUSED(document))
 {
   return ZATHURA_ERROR_OK;
 }

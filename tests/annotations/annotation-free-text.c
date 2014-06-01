@@ -1,6 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
 #include <check.h>
+#include <string.h>
 
 #include "annotations.h"
 
@@ -52,9 +53,28 @@ START_TEST(test_annotation_free_text_set_text) {
 } END_TEST
 
 START_TEST(test_annotation_free_text_get_text) {
+  char* text = NULL;
+
+  /* invalid arguments */
+  fail_unless(zathura_annotation_free_text_get_text(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_free_text_get_text(annotation, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_free_text_get_text(NULL, &text) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_free_text_get_text(annotation, &text) == ZATHURA_ERROR_OK);
+  fail_unless(text != NULL);
+  fail_unless(strcmp(text, "") == 0);
+  fail_unless(zathura_annotation_free_text_set_text(annotation, "text") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_free_text_get_text(annotation, &text) == ZATHURA_ERROR_OK);
+  fail_unless(text != NULL);
+  fail_unless(strcmp(text, "text") == 0);
 } END_TEST
 
 START_TEST(test_annotation_free_text_set_justification) {
+  zathura_annotation_justification_t justification = ZATHURA_ANNOTATION_JUSTIFICATION_CENTERED;
+
+  /* invalid arguments */
+  fail_unless(zathura_annotation_free_text_set_justification(NULL, justification) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
 START_TEST(test_annotation_free_text_get_justification) {
@@ -72,6 +92,21 @@ START_TEST(test_annotation_free_text_set_rich_text) {
 } END_TEST
 
 START_TEST(test_annotation_free_text_get_rich_text) {
+  char* text = NULL;
+
+  /* invalid arguments */
+  fail_unless(zathura_annotation_free_text_get_rich_text(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_free_text_get_rich_text(annotation, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_free_text_get_rich_text(NULL, &text) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_free_text_get_rich_text(annotation, &text) == ZATHURA_ERROR_OK);
+  fail_unless(text != NULL);
+  fail_unless(strcmp(text, "") == 0);
+  fail_unless(zathura_annotation_free_text_set_rich_text(annotation, "text") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_free_text_get_rich_text(annotation, &text) == ZATHURA_ERROR_OK);
+  fail_unless(text != NULL);
+  fail_unless(strcmp(text, "text") == 0);
 } END_TEST
 
 START_TEST(test_annotation_free_text_set_style_string) {

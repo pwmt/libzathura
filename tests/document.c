@@ -22,7 +22,7 @@ START_TEST(test_document_save_as) {
 } END_TEST
 
 START_TEST(test_document_get_path) {
-  zathura_document_t* document;
+  zathura_document_t* document = (zathura_document_t*) 0xCAFEBABE;
   char* path;
 
   /* basic invalid arguments */
@@ -32,7 +32,7 @@ START_TEST(test_document_get_path) {
 } END_TEST
 
 START_TEST(test_document_get_number_of_pages) {
-  zathura_document_t* document;
+  zathura_document_t* document = (zathura_document_t*) 0xCAFEBABE;
   unsigned int number_of_pages;
 
   /* basic invalid arguments */
@@ -42,7 +42,7 @@ START_TEST(test_document_get_number_of_pages) {
 } END_TEST
 
 START_TEST(test_document_get_page) {
-  zathura_document_t* document;
+  zathura_document_t* document = (zathura_document_t*) 0xCAFEBABE;
   zathura_page_t* page;
 
   /* basic invalid arguments */
@@ -52,9 +52,8 @@ START_TEST(test_document_get_page) {
 } END_TEST
 
 START_TEST(test_document_get_page_by_label) {
-  zathura_document_t* document;
+  zathura_document_t* document = (zathura_document_t*) 0xCAFEBABE;
   zathura_page_t* page;
-  const char* path;
 
   /* basic invalid arguments */
   fail_unless(zathura_document_get_page_by_label(NULL,     NULL,  NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -65,7 +64,7 @@ START_TEST(test_document_get_page_by_label) {
 } END_TEST
 
 START_TEST(test_document_get_page_mode) {
-  zathura_document_t* document;
+  zathura_document_t* document = (zathura_document_t*) 0xCAFEBABE;
   zathura_page_mode_t page_mode;
 
   /* basic invalid arguments */
@@ -75,7 +74,7 @@ START_TEST(test_document_get_page_mode) {
 } END_TEST
 
 START_TEST(test_document_get_page_layout) {
-  zathura_document_t* document;
+  zathura_document_t* document = (zathura_document_t*) 0xCAFEBABE;
   zathura_page_layout_t page_layout;
 
   /* basic invalid arguments */
@@ -85,7 +84,7 @@ START_TEST(test_document_get_page_layout) {
 } END_TEST
 
 START_TEST(test_document_get_outline) {
-  zathura_document_t* document;
+  zathura_document_t* document = (zathura_document_t*) 0xCAFEBABE;
   zathura_node_t* outline;
 
   /* basic invalid arguments */
@@ -95,7 +94,7 @@ START_TEST(test_document_get_outline) {
 } END_TEST
 
 START_TEST(test_document_get_attachments) {
-  zathura_document_t* document;
+  zathura_document_t* document = (zathura_document_t*) 0xCAFEBABE;
   zathura_list_t* attachments;
 
   /* basic invalid arguments */
@@ -105,7 +104,7 @@ START_TEST(test_document_get_attachments) {
 } END_TEST
 
 START_TEST(test_document_get_meta_data) {
-  zathura_document_t* document;
+  zathura_document_t* document = (zathura_document_t*) 0xCAFEBABE;
   zathura_list_t* meta_data;
 
   /* basic invalid arguments */

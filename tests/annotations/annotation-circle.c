@@ -19,7 +19,7 @@ START_TEST(test_annotation_circle_get_type) {
 } END_TEST
 
 START_TEST(test_annotation_circle_set_rectangle) {
-  zathura_rectangle_t rectangle = { 0, 0, 0, 0 };
+  zathura_rectangle_t rectangle = { {0, 0}, {0, 0} };
 
   /* invalid arguments */
   fail_unless(zathura_annotation_square_set_rectangle(NULL, rectangle) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -29,8 +29,8 @@ START_TEST(test_annotation_circle_set_rectangle) {
 } END_TEST
 
 START_TEST(test_annotation_circle_get_rectangle) {
-  zathura_rectangle_t rectangle = { 0, 0, 0, 0 };
-  zathura_rectangle_t rectangle_input = { 1, 2, 3, 4 };
+  zathura_rectangle_t rectangle = { {0, 0}, {0, 0} };
+  zathura_rectangle_t rectangle_input = { {1, 2}, {3, 4} };
 
   /* invalid arguments */
   fail_unless(zathura_annotation_square_get_rectangle(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -63,8 +63,8 @@ START_TEST(test_annotation_circle_set_color) {
 } END_TEST
 
 START_TEST(test_annotation_circle_get_color) {
-  zathura_annotation_color_t color = { 0, 0, 0, 0 };
-  zathura_annotation_color_t color_input = { 1, 2, 3, 4 };
+  zathura_annotation_color_t color = { ZATHURA_ANNOTATION_COLOR_SPACE_NONE, {0, 0, 0, 0} };
+  zathura_annotation_color_t color_input = { ZATHURA_ANNOTATION_COLOR_SPACE_NONE, {1, 2, 3, 4} };
 
   /* invalid arguments */
   fail_unless(zathura_annotation_square_get_color(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -79,7 +79,9 @@ START_TEST(test_annotation_circle_get_color) {
 } END_TEST
 
 START_TEST(test_annotation_circle_set_border) {
-  zathura_annotation_border_t border = { 0 };
+  zathura_annotation_border_t border = { 0,
+    ZATHURA_ANNOTATION_BORDER_STYLE_SOLID, {NULL, 0},
+    ZATHURA_ANNOTATION_BORDER_EFFECT_NONE, 0.0 };
 
   /* invalid arguments */
   fail_unless(zathura_annotation_square_set_border(NULL, border) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -89,8 +91,12 @@ START_TEST(test_annotation_circle_set_border) {
 } END_TEST
 
 START_TEST(test_annotation_circle_get_border) {
-  zathura_annotation_border_t border = { 0 };
-  zathura_annotation_border_t border_input = { 1, 2, 3, 4 };
+  zathura_annotation_border_t border = { 0,
+    ZATHURA_ANNOTATION_BORDER_STYLE_SOLID, {NULL, 0},
+    ZATHURA_ANNOTATION_BORDER_EFFECT_NONE, 0.0 };
+  zathura_annotation_border_t border_input = { 0,
+    ZATHURA_ANNOTATION_BORDER_STYLE_SOLID, {NULL, 0},
+    ZATHURA_ANNOTATION_BORDER_EFFECT_NONE, 0.0 };
 
   /* invalid arguments */
   fail_unless(zathura_annotation_square_get_border(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
