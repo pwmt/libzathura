@@ -56,14 +56,16 @@ zathura_annotation_free_text_clear(zathura_annotation_t* annotation)
 
   ANNOTATION_FREE_TEXT_CHECK_TYPE()
 
-  free(annotation->data.free_text->text);
-  annotation->data.free_text->text = NULL;
+  if (annotation->data.free_text != NULL) {
+    free(annotation->data.free_text->text);
+    annotation->data.free_text->text = NULL;
 
-  free(annotation->data.free_text->rich_text);
-  annotation->data.free_text->rich_text = NULL;
+    free(annotation->data.free_text->rich_text);
+    annotation->data.free_text->rich_text = NULL;
 
-  free(annotation->data.free_text);
-  annotation->data.free_text = NULL;
+    free(annotation->data.free_text);
+    annotation->data.free_text = NULL;
+  }
 
   return ZATHURA_ERROR_OK;
 }
