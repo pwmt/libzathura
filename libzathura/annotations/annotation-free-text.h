@@ -258,6 +258,6 @@ zathura_error_t zathura_annotation_free_text_set_line_ending(zathura_annotation_
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_free_text_get_line_ending(zathura_annotation_t*
-    annotation, zathura_annotation_line_ending_t* line_ending[2]);
+    annotation, zathura_annotation_line_ending_t line_ending[2]);
 
 #endif // ANNOTATION_FREE_TEXT_H
