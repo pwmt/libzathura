@@ -6,12 +6,11 @@ include ../common.mk
 
 include config.mk
 
-PROJECT  = tests
-SOURCE   = $(wildcard *.c)
-OBJECTS  = ${SOURCE:.c=.o}
-DOBJECTS = ${SOURCE:.c=.do}
-GCDA     = ${SOURCE:.c=.gcda}
-GCNO     = ${SOURCE:.c=.gcno}
+PROJECT       = tests
+SOURCE        = $(wildcard *.c)
+OBJECTS       = $(addprefix ${BUILDDIR_RELEASE}/,${SOURCE:.c=.o})
+OBJECTS_DEBUG = $(addprefix ${BUILDDIR_DEBUG}/,${SOURCE:.c=.o})
+OBJECTS_GCOV  = $(addprefix ${BUILDDIR_GCOV}/,${SOURCE:.c=.o})
 
 ifneq (${WITH_LIBFIU},0)
 FIU_EXEC += ${FIU_RUN}
@@ -19,38 +18,75 @@ endif
 
 all: ${PROJECT}
 
-debug: options ${PROJECT}-debug
+# release
+
+${PROJECT}: options ${OBJECTS}
+	$(QUIET)${MAKE} WITH_LIBFIU=1 -C .. libzathura
+	$(QUIET)${MAKE} -C plugin
+	$(call colorecho,CC,$@)
+	$(QUIET)${CC} ${SFLAGS} ${LDFLAGS} -o $@ \
+		${OBJECTS} ${LIBS} ${LIBZATHURA_RELEASE}
+
+${OBJECTS}: config.mk ../config.mk ../libzathura/version.h
+
+${BUILDDIR_RELEASE}/%.o: %.c
+	$(call colorecho,CC,$<)
+	@mkdir -p ${DEPENDDIR}/$(dir $(abspath $@))
+	@mkdir -p $(dir $(abspath $@))
+	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} \
+		-o $@ $< -MMD -MF ${DEPENDDIR}/$(abspath $@).dep
 
 run: ${PROJECT}
 	$(QUIET)${FIU_EXEC} ./${PROJECT}
 
-%.o: %.c
-	$(call colorecho,CC,$<)
-	@mkdir -p .depend/$(dir $(abspath $@))
-	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} -o $@ $< -MMD -MF .depend/$@.dep
+# debug
 
-%.do: %.c
-	@mkdir -p .depend/$(dir $(abspath $@))
-	$(call colorecho,CC,$<)
-	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} ${DFLAGS} -o $@ $< -MMD -MF .depend/$(abspath $@).dep
+debug: options ${PROJECT}-debug
 
-${PROJECT}: options ${OBJECTS}
-	$(QUIET)${MAKE} WITH_LIBFIU=1 -C ..
+${PROJECT}-debug: ${OBJECTS_DEBUG}
+	$(QUIET)${MAKE} WITH_LIBFIU=1 -C .. libzathura-debug
 	$(QUIET)${MAKE} -C plugin
 	$(call colorecho,CC,$@)
-	$(QUIET)${CC} ${SFLAGS} ${LDFLAGS} -o $@ ${OBJECTS} ${LIBS}
+	$(QUIET)${CC} ${LDFLAGS} -o $@ \
+		${OBJECTS_DEBUG} ${LIBS} ${LIBZATHURA_DEBUG}
 
-${PROJECT}-debug: options ${DOBJECTS}
-	$(QUIET)${MAKE} WITH_LIBFIU=1 -C .. debug
+${OBJECTS_DEBUG}: config.mk ../config.mk ../libzathura/version.h
+
+${BUILDDIR_DEBUG}/%.o: %.c
+	@mkdir -p ${DEPENDDIR}/$(dir $(abspath $@))
+	@mkdir -p $(dir $(abspath $@))
+	$(call colorecho,CC,$<)
+	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} ${DFLAGS} \
+		-o $@ $< -MMD -MF ${DEPENDDIR}/$(abspath $@).dep
+
+run-debug: ${PROJECT}-debug
+	$(QUIET)${FIU_EXEC} ./${PROJECT}-debug
+
+# gcov
+
+gcov: options ${PROJECT}-gcov
+
+${PROJECT}-gcov: options ${OBJECTS_GCOV}
+	$(QUIET)${MAKE} WITH_LIBFIU=1 -C .. libzathura-gcov
 	$(QUIET)${MAKE} -C plugin
 	$(call colorecho,CC,$@)
-	$(QUIET)${CC} ${LDFLAGS} -o ${PROJECT} ${DOBJECTS} ${LIBS}
+	$(QUIET)${CC} ${LDFLAGS} ${GCOV_LDFLAGS} -o $@ \
+		${OBJECTS_GCOV} ${LIBS} ${LIBZATHURA_GCOV}
+
+${OBJECTS_GCOV}: config.mk ../config.mk ../libzathura/version.h
+
+${BUILDDIR_GCOV}/%.o: %.c
+	@mkdir -p ${DEPENDDIR}/$(dir $(abspath $@))
+	@mkdir -p $(dir $(abspath $@))
+	$(call colorecho,CC,$<)
+	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} ${GCOV_CFLAGS} ${DFLAGS} ${GCOV_DFLAGS} \
+		-o $@ $< -MMD -MF ${DEPENDDIR}/$(abspath $@).dep
+
+run-gcov: ${PROJECT}-gcov
+	$(QUIET)${FIU_EXEC} ./${PROJECT}-gcov
 
 ../libzathura/version.h:
 	$(MAKE) -C .. libzathura/version.h
-
-${OBJECTS}: ../config.mk ../libzathura/version.h
-${DOBJECTS}: ../config.mk ../libzathura/version.h
 
 valgrind: ${PROJECT}
 	 $(QUIET)${VALGRIND} ${VALGRIND_ARGUMENTS} ./${PROJECT}
@@ -59,15 +95,12 @@ clean:
 	$(call colorecho,RM, "Clean test files")
 	$(QUIET)rm -rf ${PROJECT}
 	$(QUIET)rm -rf ${PROJECT}-debug
-	$(QUIET)rm -rf ${OBJECTS}
-	$(QUIET)rm -rf ${DOBJECTS}
-	$(QUIET)rm -rf ${PROJECT}.info
-	$(QUIET)rm -rf ${GCDA}
-	$(QUIET)rm -rf ${GCNO}
-	$(QUIET)rm -rf .depend
+	$(QUIET)rm -rf ${PROJECT}-gcov
+	$(QUIET)rm -rf ${BUILDDIR}
+	$(QUIET)rm -rf ${DEPENDDIR}
 
 	$(QUIET)${MAKE} -C plugin clean
 
 .PHONY: all options clean debug run
 
--include $(wildcard .depend/*.dep)
+-include $(wildcard ${DEPENDDIR}/*.dep)

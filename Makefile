@@ -4,13 +4,11 @@ include config.mk
 include colors.mk
 include common.mk
 
-PROJECT   = libzathura
-SOURCE    = $(wildcard ${PROJECT}/*.c ${PROJECT}/**/*.c)
-OBJECTS   = ${SOURCE:.c=.o}
-DOBJECTS  = ${SOURCE:.c=.do}
-GCDA  		= ${SOURCE:.c=.gcda}
-GCNO 			= ${SOURCE:.c=.gcno}
-HEADERS   = $(filter-out ${PROJECT}/version.h, $(filter-out ${PROJECT/}internal.h, $(wildcard *.h)))
+SOURCE          = $(wildcard ${PROJECT}/*.c ${PROJECT}/**/*.c)
+OBJECTS         = $(addprefix ${BUILDDIR_RELEASE}/,${SOURCE:.c=.o})
+OBJECTS_DEBUG   = $(addprefix ${BUILDDIR_DEBUG}/,${SOURCE:.c=.o})
+OBJECTS_GCOV    = $(addprefix ${BUILDDIR_GCOV}/,${SOURCE:.c=.o})
+HEADERS         = $(filter-out ${PROJECT}/version.h, $(filter-out ${PROJECT/}internal.h, $(wildcard *.h)))
 HEADERS_INSTALL = ${HEADERS} ${PROJECT}/version.h
 
 ifneq (${WITH_LIBFIU},0)
@@ -37,18 +35,15 @@ ${PROJECT}/version.h: ${PROJECT}/version.h.in config.mk
 		sed 's/ZVAPI/${LIBZATHURA_VERSION_API}/' | \
 		sed 's/ZVABI/${LIBZATHURA_VERSION_ABI}/' > ${PROJECT}/version.h
 
-%.o: %.c
-	$(call colorecho,CC,$<)
-	@mkdir -p .depend/$(dir $(abspath $@))
-	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} -o $@ $< -MMD -MF .depend/$(abspath $@).dep
-
-%.do: %.c
-	$(call colorecho,CC,$<)
-	@mkdir -p .depend/$(dir $(abspath $@))
-	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} ${DFLAGS} -o $@ $< -MMD -MF .depend/$(abspath $@).dep
+# release build
 
 ${OBJECTS}:  config.mk ${PROJECT}/version.h
-${DOBJECTS}: config.mk ${PROJECT}/version.h
+
+${BUILDDIR_RELEASE}/%.o: %.c
+	$(call colorecho,CC,$<)
+	@mkdir -p ${DEPENDDIR}/$(dir $(abspath $@))
+	@mkdir -p $(dir $(abspath $@))
+	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} -o $@ $< -MMD -MF ${DEPENDDIR}/$(abspath $@).dep
 
 ${PROJECT}: ${PROJECT}/version.h static shared
 
@@ -56,71 +51,94 @@ static: ${PROJECT}.a
 shared: ${PROJECT}.so.${SOVERSION}
 
 ${PROJECT}.a: ${OBJECTS}
-	$(QUIET)rm -f ${PROJECT}.a
 	$(call colorecho,AR,$@)
-	$(QUIET)ar rcs $@ ${OBJECTS}
+	$(QUIET)ar rcs ${BUILDDIR_RELEASE}/$@ ${OBJECTS}
 
 ${PROJECT}.so.${SOVERSION}: ${OBJECTS}
 	$(call colorecho,LD,$@)
-	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} -o $@ ${OBJECTS} ${LIBS}
+	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} \
+		-o ${BUILDDIR_RELEASE}/$@ ${OBJECTS} ${LIBS}
+
+# debug build
+
+${OBJECTS_DEBUG}: config.mk ${PROJECT}/version.h
+
+${BUILDDIR_DEBUG}/%.o: %.c
+	$(call colorecho,CC,$<)
+	@mkdir -p ${DEPENDDIR}/$(dir $(abspath $@))
+	@mkdir -p $(dir $(abspath $@))
+	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} ${DFLAGS} \
+		-o $@ $< -MMD -MF ${DEPENDDIR}/$(abspath $@).dep
+
+${PROJECT}-debug: ${PROJECT}-debug.a ${PROJECT}-debug.so.${SOVERSION}
+
+${PROJECT}-debug.a: ${OBJECTS_DEBUG}
+	$(call colorecho,AR,${PROJECT}-debug.a)
+	$(QUIET)ar rc ${BUILDDIR_DEBUG}/${PROJECT}.a ${OBJECTS_DEBUG}
+
+${PROJECT}-debug.so.${SOVERSION}: ${OBJECTS_DEBUG}
+	$(call colorecho,LD,${PROJECT}-debug.so.${SOMAJOR})
+	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} \
+		-o ${BUILDDIR_DEBUG}/${PROJECT}.so.${SOVERSION} ${OBJECTS_DEBUG} ${LIBS}
+
+debug: options ${PROJECT}-debug
+
+# gcov build
+
+${OBJECTS_GCOV}: config.mk ${PROJECT}/version.h
+
+${BUILDDIR_GCOV}/%.o: %.c
+	$(call colorecho,CC,$<)
+	@mkdir -p ${DEPENDDIR}/$(dir $(abspath $@))
+	@mkdir -p $(dir $(abspath $@))
+	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} ${GCOV_CFLAGS} ${DFLAGS} ${GCOV_DFLAGS} \
+		-o $@ $< -MMD -MF ${DEPENDDIR}/$(abspath $@).dep
+
+${PROJECT}-gcov: ${PROJECT}-gcov.a ${PROJECT}-gcov.so.${SOVERSION}
+
+${PROJECT}-gcov.a: ${OBJECTS_GCOV}
+	$(call colorecho,AR,${PROJECT}-debug.a)
+	$(QUIET)ar rc ${BUILDDIR_GCOV}/${PROJECT}.a ${OBJECTS_GCOV}
+
+${PROJECT}-gcov.so.${SOVERSION}: ${OBJECTS_GCOV}
+	$(call colorecho,LD,${PROJECT}-debug.so.${SOMAJOR})
+	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} ${GCOV_LDFLAGS} \
+		-o ${BUILDDIR_GCOV}/${PROJECT}.so.${SOVERSION} ${OBJECTS_GCOV} ${LIBS}
+
+gcov: options ${PROJECT}-gcov
+	$(QUIET)${MAKE} -C tests run-gcov
+	$(call colorecho,LCOV,"Analyse data")
+	$(QUIET)${LCOV_EXEC} ${LCOV_FLAGS}
+	$(call colorecho,LCOV,"Generate report")
+	$(QUIET)${GENHTML_EXEC} ${GENHTML_FLAGS}
 
 clean:
 	$(call colorecho,RM, "Clean objects and builds")
-	$(QUIET)rm -rf ${OBJECTS}
-	$(QUIET)rm -rf ${PROJECT}.a
-	$(QUIET)rm -rf ${PROJECT}.so
-
-	$(call colorecho,RM, "Clean debug objects and builds")
-	$(QUIET)rm -rf ${DOBJECTS}
-	$(QUIET)rm -rf ${PROJECT}-debug.a
-	$(QUIET)rm -rf ${PROJECT}-debug.so
+	$(QUIET)rm -rf ${BUILDDIR}
 
 	$(call colorecho,RM, "Clean pkg-config files")
 	$(QUIET)rm -rf ${PROJECT}.pc
 
 	$(call colorecho,RM, "Clean dependencies")
-	$(QUIET)rm -rf .depend
+	$(QUIET)rm -rf ${DEPENDDIR}
 
-	$(call colorecho,RM, "Clean distributionfiles")
+	$(call colorecho,RM, "Clean distribution files")
 	$(QUIET)rm -rf ${PROJECT}-${VERSION}.tar.gz
 	$(QUIET)rm -rf ${PROJECT}.info
 	$(QUIET)rm -rf ${PROJECT}/version.h
 
 	$(call colorecho,RM, "Clean code analysis")
+	$(QUIET)rm -rf ${LCOV_OUTPUT}
 	$(QUIET)rm -rf gcov
-	$(QUIET)rm -rf ${GCDA}
-	$(QUIET)rm -rf ${GCNO}
 
 	$(QUIET)${MAKE} -C tests clean
 	$(QUIET)${MAKE} -C doc clean
-
-${PROJECT}-debug: ${PROJECT}-debug.a ${PROJECT}-debug.so.${SOVERSION}
-
-${PROJECT}-debug.a: ${DOBJECTS}
-	$(QUIET)rm -f ${PROJECT}.a
-	$(call colorecho,AR,${PROJECT}.a)
-	$(QUIET)ar rc ${PROJECT}.a ${DOBJECTS}
-
-${PROJECT}-debug.so.${SOVERSION}: ${DOBJECTS}
-	$(call colorecho,LD,${PROJECT}.so.${SOMAJOR})
-	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} \
-		-o ${PROJECT}.so.${SOVERSION} ${DOBJECTS} ${LIBS}
-
-debug: options ${PROJECT}-debug
 
 doc:
 	$(QUIET)${MAKE} -C doc
 
 test: ${PROJECT}
 	$(QUIET)${MAKE} -C tests run
-
-gcov:
-	$(QUIET)env CFLAGS="-fprofile-arcs -ftest-coverage" LDFLAGS="-fprofile-arcs" WITH_LIBFIU=1 ${MAKE} debug
-	$(QUIET)env CFLAGS="-fprofile-arcs -ftest-coverage" LDFLAGS="-fprofile-arcs" ${MAKE} test
-	$(call colorecho,LCOV,"Analyse data")
-	$(QUIET)lcov --base-directory . --directory ${PROJECT} --capture --rc lcov_branch_coverage=1 --output-file $(PROJECT).info
-	$(call colorecho,LCOV,"Generate report")
-	$(QUIET)genhtml --rc lcov_branch_coverage=1 --output-directory gcov $(PROJECT).info
 
 ${PROJECT}.pc: ${PROJECTNV}.pc.in config.mk
 	$(QUIET)echo project=${PROJECT} > ${PROJECT}.pc
@@ -170,6 +188,6 @@ uninstall-headers:
 	uninstall ninstall-headers ${PROJECT} ${PROJECT}-debug static shared \
 	install-static install-shared
 
-TDEPENDS = ${OBJECTS:.o=.o.dep}
-DEPENDS = ${TDEPENDS:^=.depend/}
--include ${DEPENDS}
+${DEPENDDIR}S = ${OBJECTS:.o=.o.dep}
+DEPENDS = ${${DEPENDDIR}S:^=${DEPENDDIR}/}
+-include $${DEPENDDIR}S}
