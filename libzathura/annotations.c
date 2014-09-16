@@ -82,6 +82,8 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
         error = zathura_annotation_caret_init(*annotation);
         break;
       case ZATHURA_ANNOTATION_INK:
+        error = zathura_annotation_ink_init(*annotation);
+        break;
       case ZATHURA_ANNOTATION_POPUP:
         break;
       case ZATHURA_ANNOTATION_FILE_ATTACHMENT:
@@ -144,6 +146,8 @@ zathura_annotation_free(zathura_annotation_t* annotation)
         error = zathura_annotation_caret_clear(annotation);
         break;
       case ZATHURA_ANNOTATION_INK:
+        error = zathura_annotation_ink_clear(annotation);
+        break;
       case ZATHURA_ANNOTATION_POPUP:
         break;
       case ZATHURA_ANNOTATION_FILE_ATTACHMENT:

@@ -206,7 +206,13 @@ suite_annotations(void)
   tcase = tcase_create("ink");
   tcase_add_checked_fixture(tcase, setup_annotation_ink, teardown);
   tcase_add_test(tcase, test_annotation_ink_new);
+  tcase_add_test(tcase, test_annotation_ink_init);
+  tcase_add_test(tcase, test_annotation_ink_clear);
   tcase_add_test(tcase, test_annotation_ink_get_type);
+  tcase_add_test(tcase, test_annotation_ink_set_paths);
+  tcase_add_test(tcase, test_annotation_ink_get_paths);
+  tcase_add_test(tcase, test_annotation_ink_set_border);
+  tcase_add_test(tcase, test_annotation_ink_get_border);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("popup");
