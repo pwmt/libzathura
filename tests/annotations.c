@@ -250,7 +250,13 @@ suite_annotations(void)
   tcase = tcase_create("popup");
   tcase_add_checked_fixture(tcase, setup_annotation_popup, teardown);
   tcase_add_test(tcase, test_annotation_popup_new);
+  tcase_add_test(tcase, test_annotation_popup_init);
+  tcase_add_test(tcase, test_annotation_popup_clear);
   tcase_add_test(tcase, test_annotation_popup_get_type);
+  tcase_add_test(tcase, test_annotation_popup_set_parent);
+  tcase_add_test(tcase, test_annotation_popup_get_parent);
+  tcase_add_test(tcase, test_annotation_popup_set_open);
+  tcase_add_test(tcase, test_annotation_popup_is_open);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("file-attachment");
