@@ -1,20 +1,29 @@
+# build files
 *.o
 *.do
-*.a
-*.so*
 *.gcda
 *.gcno
 *.info
 *.pc
-*.swp
-*.swo
+*.sw[a-z]
+*.diff
+
+# build dirs
 .depend
 gcov/
+doc/_build
+
+# binaries
 tests/tests
+*.a
+*.so*
+
+# version file
 libzathura/version.h
+
+# development files
 .clang_complete
 .lvimrc
-doc/_build
-doc/doxygen/xml
 .ropeproject
+.frama-c
 compile_commands.json
