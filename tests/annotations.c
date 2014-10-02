@@ -104,7 +104,15 @@ suite_annotations(void)
   tcase = tcase_create("link");
   tcase_add_checked_fixture(tcase, setup_annotation_link, teardown);
   tcase_add_test(tcase, test_annotation_link_new);
+  tcase_add_test(tcase, test_annotation_link_init);
+  tcase_add_test(tcase, test_annotation_link_clear);
   tcase_add_test(tcase, test_annotation_link_get_type);
+  tcase_add_test(tcase, test_annotation_link_set_action);
+  tcase_add_test(tcase, test_annotation_link_get_action);
+  tcase_add_test(tcase, test_annotation_link_set_highlighting_mode);
+  tcase_add_test(tcase, test_annotation_link_get_highlighting_mode);
+  tcase_add_test(tcase, test_annotation_link_set_quad_points);
+  tcase_add_test(tcase, test_annotation_link_get_quad_points);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("markup");

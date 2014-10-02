@@ -142,6 +142,8 @@ struct zathura_annotation_s {
 #include "internal/annotation-file.h"
 #include "internal/annotation-free-text.h"
 #include "internal/annotation-ink.h"
+#include "internal/annotation-link.h"
+#include "internal/annotation-movie.h"
 #include "internal/annotation-text-markup.h"
 
 #endif // ZATHURA_ANNOTATION_INTERNAL_H
