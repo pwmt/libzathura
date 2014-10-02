@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-#include "annotation-file.h"
+#include "annotation-file-attachment.h"
 #include "../attachment.h"
 #include "../annotations.h"
 #include "../error.h"
