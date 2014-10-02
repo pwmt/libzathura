@@ -3,6 +3,9 @@
 #ifndef ANNOTATION_MOVIE_H
 #define ANNOTATION_MOVIE_H
 
+#include "../annotations.h"
+#include "types.h"
+
 /**
  * Sets the title of this movie annotation
  *

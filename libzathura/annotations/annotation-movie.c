@@ -1,8 +1,12 @@
 /* See LICENSE file for license and copyright information */
 
 #include <stdbool.h>
+#include <stdlib.h>
 
+#include "annotation-movie.h"
 #include "../movie.h"
+#include "../annotations.h"
+#include "internal.h"
 
 #define ANNOTATION_MOVIE_CHECK_TYPE() \
   if (annotation->type != ZATHURA_ANNOTATION_MOVIE) { \
@@ -35,6 +39,10 @@ zathura_annotation_movie_init(zathura_annotation_t* annotation)
   if (annotation->data.movie == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
+
+  annotation->data.movie->title = NULL;
+  annotation->data.movie->movie = NULL;
+  annotation->data.movie->play_if_activated = true;
 
   return ZATHURA_ERROR_OK;
 }

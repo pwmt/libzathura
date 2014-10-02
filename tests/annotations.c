@@ -275,6 +275,16 @@ suite_annotations(void)
   tcase_add_checked_fixture(tcase, setup_annotation_movie, teardown);
   tcase_add_test(tcase, test_annotation_movie_new);
   tcase_add_test(tcase, test_annotation_movie_get_type);
+  tcase_add_test(tcase, test_annotation_movie_init);
+  tcase_add_test(tcase, test_annotation_movie_clear);
+  tcase_add_test(tcase, test_annotation_movie_set_title);
+  tcase_add_test(tcase, test_annotation_movie_get_title);
+  tcase_add_test(tcase, test_annotation_movie_set_movie);
+  tcase_add_test(tcase, test_annotation_movie_get_movie);
+  tcase_add_test(tcase, test_annotation_movie_set_movie_activation);
+  tcase_add_test(tcase, test_annotation_movie_get_movie_activation);
+  tcase_add_test(tcase, test_annotation_movie_set_play_if_activated);
+  tcase_add_test(tcase, test_annotation_movie_get_play_if_activated);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("screen");
