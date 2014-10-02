@@ -41,9 +41,29 @@ START_TEST(test_annotation_ink_get_type) {
 } END_TEST
 
 START_TEST(test_annotation_ink_set_paths) {
+  zathura_list_t* paths = zathura_list_alloc();
+  fail_unless(paths != NULL);
+
+  /* invalid arguments */
+  fail_unless(zathura_annotation_ink_set_paths(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_ink_set_paths(annotation, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_ink_set_paths(NULL, paths) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_ink_set_paths(annotation, paths) == ZATHURA_ERROR_OK);
+  zathura_list_free(paths);
 } END_TEST
 
 START_TEST(test_annotation_ink_get_paths) {
+  zathura_list_t* paths;
+
+  /* invalid arguments */
+  fail_unless(zathura_annotation_ink_get_paths(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_ink_get_paths(annotation, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_ink_get_paths(NULL, &paths) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_ink_get_paths(annotation, &paths) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_annotation_ink_set_border) {

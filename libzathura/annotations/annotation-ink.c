@@ -53,6 +53,7 @@ zathura_annotation_ink_clear(zathura_annotation_t* annotation)
   ANNOTATION_INK_CHECK_TYPE()
 
   if (annotation->data.ink != NULL) {
+    zathura_list_free(annotation->data.ink->paths);
     free(annotation->data.ink);
     annotation->data.ink = NULL;
   }
@@ -70,9 +71,9 @@ zathura_annotation_ink_set_paths(zathura_annotation_t* annotation,
 
   ANNOTATION_INK_CHECK_TYPE_AND_DATA()
 
-  annotation->data.ink->paths = paths; // TODO: duplicate list
+  annotation->data.ink->paths = paths;
 
-  return ZATHURA_ERROR_UNKNOWN;
+  return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
@@ -87,7 +88,7 @@ zathura_annotation_ink_get_paths(zathura_annotation_t* annotation,
 
   *paths = annotation->data.ink->paths;
 
-  return ZATHURA_ERROR_UNKNOWN;
+  return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
