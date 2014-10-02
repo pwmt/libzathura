@@ -4,7 +4,7 @@ include config.mk
 include colors.mk
 include common.mk
 
-SOURCE          = $(wildcard ${PROJECT}/*.c ${PROJECT}/**/*.c)
+SOURCE          = $(wildcard ${PROJECT}/*.c ${PROJECT}/**/*.c ${PROJECT}/**/**/*.c)
 OBJECTS         = $(addprefix ${BUILDDIR_RELEASE}/,${SOURCE:.c=.o})
 OBJECTS_DEBUG   = $(addprefix ${BUILDDIR_DEBUG}/,${SOURCE:.c=.o})
 OBJECTS_GCOV    = $(addprefix ${BUILDDIR_GCOV}/,${SOURCE:.c=.o})

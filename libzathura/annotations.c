@@ -72,10 +72,13 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
         break;
       case ZATHURA_ANNOTATION_POLYGON:
       case ZATHURA_ANNOTATION_POLY_LINE:
+        break;
       case ZATHURA_ANNOTATION_HIGHLIGHT:
       case ZATHURA_ANNOTATION_UNDERLINE:
       case ZATHURA_ANNOTATION_SQUIGGLY:
       case ZATHURA_ANNOTATION_STRIKE_OUT:
+        error = zathura_annotation_text_markup_init(*annotation);
+        break;
       case ZATHURA_ANNOTATION_STAMP:
         break;
       case ZATHURA_ANNOTATION_CARET:
@@ -136,10 +139,13 @@ zathura_annotation_free(zathura_annotation_t* annotation)
         break;
       case ZATHURA_ANNOTATION_POLYGON:
       case ZATHURA_ANNOTATION_POLY_LINE:
+        break;
       case ZATHURA_ANNOTATION_HIGHLIGHT:
       case ZATHURA_ANNOTATION_UNDERLINE:
       case ZATHURA_ANNOTATION_SQUIGGLY:
       case ZATHURA_ANNOTATION_STRIKE_OUT:
+        error = zathura_annotation_text_markup_clear(annotation);
+        break;
       case ZATHURA_ANNOTATION_STAMP:
         break;
       case ZATHURA_ANNOTATION_CARET:

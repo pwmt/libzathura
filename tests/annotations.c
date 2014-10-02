@@ -6,6 +6,7 @@
 #include <fiu-control.h>
 
 #include "annotations.h"
+#include "annotations/internal.h"
 
 zathura_annotation_t* annotation;
 
@@ -63,6 +64,7 @@ START_TEST(test_annotation_get_type) {
 #include "annotations/annotation-stamp.c"
 #include "annotations/annotation-strike-out.c"
 #include "annotations/annotation-text.c"
+#include "annotations/annotation-text-markup.c"
 #include "annotations/annotation-trap-net.c"
 #include "annotations/annotation-underline.c"
 #include "annotations/annotation-watermark.c"
@@ -84,6 +86,19 @@ suite_annotations(void)
   tcase_add_checked_fixture(tcase, setup_annotation_text, teardown);
   tcase_add_test(tcase, test_annotation_text_new);
   tcase_add_test(tcase, test_annotation_text_get_type);
+  suite_add_tcase(suite, tcase);
+
+  tcase = tcase_create("text-markup");
+  tcase_add_checked_fixture(tcase, setup_annotation_text_markup, teardown);
+  tcase_add_test(tcase, test_annotation_text_markup_new);
+  tcase_add_test(tcase, test_annotation_text_markup_init);
+  tcase_add_test(tcase, test_annotation_text_markup_clear);
+  suite_add_tcase(suite, tcase);
+
+  tcase = tcase_create("line");
+  tcase_add_checked_fixture(tcase, setup_annotation_line, teardown);
+  tcase_add_test(tcase, test_annotation_line_new);
+  tcase_add_test(tcase, test_annotation_line_get_type);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("link");
@@ -166,24 +181,32 @@ suite_annotations(void)
   tcase_add_checked_fixture(tcase, setup_annotation_highlight, teardown);
   tcase_add_test(tcase, test_annotation_highlight_new);
   tcase_add_test(tcase, test_annotation_highlight_get_type);
+  tcase_add_test(tcase, test_annotation_highlight_set_quad_points);
+  tcase_add_test(tcase, test_annotation_highlight_get_quad_points);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("underline");
   tcase_add_checked_fixture(tcase, setup_annotation_underline, teardown);
   tcase_add_test(tcase, test_annotation_underline_new);
   tcase_add_test(tcase, test_annotation_underline_get_type);
+  tcase_add_test(tcase, test_annotation_underline_set_quad_points);
+  tcase_add_test(tcase, test_annotation_underline_get_quad_points);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("squiggly");
   tcase_add_checked_fixture(tcase, setup_annotation_squiggly, teardown);
   tcase_add_test(tcase, test_annotation_squiggly_new);
   tcase_add_test(tcase, test_annotation_squiggly_get_type);
+  tcase_add_test(tcase, test_annotation_squiggly_set_quad_points);
+  tcase_add_test(tcase, test_annotation_squiggly_get_quad_points);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("strike-out");
   tcase_add_checked_fixture(tcase, setup_annotation_strike_out, teardown);
   tcase_add_test(tcase, test_annotation_strike_out_new);
   tcase_add_test(tcase, test_annotation_strike_out_get_type);
+  tcase_add_test(tcase, test_annotation_strike_out_set_quad_points);
+  tcase_add_test(tcase, test_annotation_strike_out_get_quad_points);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("stamp");

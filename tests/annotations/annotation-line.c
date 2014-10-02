@@ -5,7 +5,7 @@
 #include "annotations.h"
 
 static void setup_annotation_line(void) {
-  fail_unless(zathura_annotation_new(&annotation, ZATHURA_ANNOTATION_line) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_new(&annotation, ZATHURA_ANNOTATION_LINE) == ZATHURA_ERROR_OK);
   fail_unless(annotation != NULL);
 }
 
@@ -15,5 +15,5 @@ START_TEST(test_annotation_line_new) {
 START_TEST(test_annotation_line_get_type) {
   zathura_annotation_type_t type;
   fail_unless(zathura_annotation_get_type(annotation, &type) == ZATHURA_ERROR_OK);
-  fail_unless(type == ZATHURA_ANNOTATION_line);
+  fail_unless(type == ZATHURA_ANNOTATION_LINE);
 } END_TEST
