@@ -149,6 +149,7 @@ struct zathura_annotation_s {
 #include "internal/annotation-sound.h"
 #include "internal/annotation-stamp.h"
 #include "internal/annotation-square-and-circle.h"
+#include "internal/annotation-text.h"
 #include "internal/annotation-text-markup.h"
 
 #endif // ZATHURA_ANNOTATION_INTERNAL_H

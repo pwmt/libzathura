@@ -85,7 +85,15 @@ suite_annotations(void)
   tcase = tcase_create("text");
   tcase_add_checked_fixture(tcase, setup_annotation_text, teardown);
   tcase_add_test(tcase, test_annotation_text_new);
+  tcase_add_test(tcase, test_annotation_text_init);
+  tcase_add_test(tcase, test_annotation_text_clear);
   tcase_add_test(tcase, test_annotation_text_get_type);
+  tcase_add_test(tcase, test_annotation_text_set_icon_name);
+  tcase_add_test(tcase, test_annotation_text_get_icon_name);
+  tcase_add_test(tcase, test_annotation_text_set_open);
+  tcase_add_test(tcase, test_annotation_text_is_open);
+  tcase_add_test(tcase, test_annotation_text_set_state);
+  tcase_add_test(tcase, test_annotation_text_get_state);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("text-markup");

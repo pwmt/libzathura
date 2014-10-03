@@ -58,7 +58,9 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
 
   switch (type) {
       case ZATHURA_ANNOTATION_UNKNOWN:
+        break;
       case ZATHURA_ANNOTATION_TEXT:
+        error = zathura_annotation_text_init(*annotation);
         break;
       case ZATHURA_ANNOTATION_LINK:
         error = zathura_annotation_link_init(*annotation);
@@ -137,7 +139,9 @@ zathura_annotation_free(zathura_annotation_t* annotation)
 
   switch (annotation->type) {
       case ZATHURA_ANNOTATION_UNKNOWN:
+        break;
       case ZATHURA_ANNOTATION_TEXT:
+        error = zathura_annotation_text_clear(annotation);
         break;
       case ZATHURA_ANNOTATION_LINK:
         error = zathura_annotation_link_clear(annotation);
