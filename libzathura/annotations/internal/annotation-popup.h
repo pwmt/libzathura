@@ -19,4 +19,27 @@ typedef struct zathura_annotation_popup_s {
   bool is_open;
 } zathura_annotation_popup_t;
 
+/**
+ * Initializes the annotation as a popup annotation
+ *
+ * @param annotation The annotation
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_OUT_OF_MEMORY Out of memory
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_popup_init(zathura_annotation_t* annotation);
+
+/**
+ * Clear the annotation as a popup annotation
+ *
+ * @param annotation The annotation
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_popup_clear(zathura_annotation_t* annotation);
+
 #endif // INTERNAL_ANNOTATION_POPUP_H

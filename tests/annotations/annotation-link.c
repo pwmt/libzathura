@@ -41,7 +41,7 @@ START_TEST(test_annotation_link_clear) {
 } END_TEST
 
 START_TEST(test_annotation_link_set_action) {
-  zathura_action_t* action;
+  zathura_action_t* action = (zathura_action_t*) 0xCAFEBABE;
 
   /* invalid arguments */
   fail_unless(zathura_annotation_link_set_action(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -65,7 +65,7 @@ START_TEST(test_annotation_link_get_action) {
 } END_TEST
 
 START_TEST(test_annotation_link_set_highlighting_mode) {
-  zathura_annotation_link_highlighting_mode_t highlighting_mode;
+  zathura_annotation_link_highlighting_mode_t highlighting_mode = ZATHURA_ANNOTATION_HIGHLIGHTING_NONE;
 
   /* invalid arguments */
   fail_unless(zathura_annotation_link_set_highlighting_mode(NULL, highlighting_mode) == ZATHURA_ERROR_INVALID_ARGUMENTS);

@@ -41,7 +41,7 @@ START_TEST(test_annotation_popup_get_type) {
 } END_TEST
 
 START_TEST(test_annotation_popup_set_parent) {
-  zathura_annotation_t* popup = 0xCAFEBABE;
+  zathura_annotation_t* popup = (zathura_annotation_t*) 0xCAFEBABE;
 
   /* invalid arguments */
   fail_unless(zathura_annotation_popup_set_parent(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -64,9 +64,9 @@ START_TEST(test_annotation_popup_get_parent) {
   fail_unless(zathura_annotation_popup_get_parent(annotation, &popup) == ZATHURA_ERROR_OK);
   fail_unless(popup == NULL);
 
-  fail_unless(zathura_annotation_popup_set_parent(annotation, 0xCAFEBABE) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_popup_set_parent(annotation, (zathura_annotation_t*) 0xCAFEBABE) == ZATHURA_ERROR_OK);
   fail_unless(zathura_annotation_popup_get_parent(annotation, &popup) == ZATHURA_ERROR_OK);
-  fail_unless(popup == 0xCAFEBABE);
+  fail_unless(popup == (zathura_annotation_t*) 0xCAFEBABE);
 } END_TEST
 
 START_TEST(test_annotation_popup_set_open) {

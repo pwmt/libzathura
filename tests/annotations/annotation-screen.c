@@ -69,7 +69,7 @@ START_TEST(test_annotation_screen_get_title) {
 } END_TEST
 
 START_TEST(test_annotation_screen_set_action) {
-  zathura_action_t* action;
+  zathura_action_t* action = (zathura_action_t*) 0xCAFEBABE;
 
   /* invalid arguments */
   fail_unless(zathura_annotation_screen_set_action(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);

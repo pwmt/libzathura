@@ -69,7 +69,7 @@ START_TEST(test_annotation_movie_get_title) {
 } END_TEST
 
 START_TEST(test_annotation_movie_set_movie) {
-  zathura_movie_t* movie = 0xCAFEBABE;
+  zathura_movie_t* movie = (zathura_movie_t*) 0xCAFEBABE;
 
   /* invalid arguments */
   fail_unless(zathura_annotation_movie_set_movie(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -92,13 +92,13 @@ START_TEST(test_annotation_movie_get_movie) {
   fail_unless(zathura_annotation_movie_get_movie(annotation, &movie) == ZATHURA_ERROR_OK);
   fail_unless(movie == NULL);
 
-  fail_unless(zathura_annotation_movie_set_movie(annotation, 0xCAFEBABE) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_movie_set_movie(annotation, (zathura_movie_t*) 0xCAFEBABE) == ZATHURA_ERROR_OK);
   fail_unless(zathura_annotation_movie_get_movie(annotation, &movie) == ZATHURA_ERROR_OK);
-  fail_unless(movie == 0xCAFEBABE);
+  fail_unless(movie == (zathura_movie_t*) 0xCAFEBABE);
 } END_TEST
 
 START_TEST(test_annotation_movie_set_movie_activation) {
-  zathura_movie_activation_t* activation = 0xCAFEBABE;
+  zathura_movie_activation_t* activation = (zathura_movie_activation_t*) 0xCAFEBABE;
 
   /* invalid arguments */
   fail_unless(zathura_annotation_movie_set_movie_activation(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -121,9 +121,9 @@ START_TEST(test_annotation_movie_get_movie_activation) {
   fail_unless(zathura_annotation_movie_get_movie_activation(annotation, &activation) == ZATHURA_ERROR_OK);
   fail_unless(activation == NULL);
 
-  fail_unless(zathura_annotation_movie_set_movie_activation(annotation, 0xCAFEBABE) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_movie_set_movie_activation(annotation, (zathura_movie_activation_t*) 0xCAFEBABE) == ZATHURA_ERROR_OK);
   fail_unless(zathura_annotation_movie_get_movie_activation(annotation, &activation) == ZATHURA_ERROR_OK);
-  fail_unless(activation == 0xCAFEBABE);
+  fail_unless(activation == (zathura_movie_activation_t*) 0xCAFEBABE);
 } END_TEST
 
 START_TEST(test_annotation_movie_set_play_if_activated) {

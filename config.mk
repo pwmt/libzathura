@@ -85,4 +85,4 @@ FIU_RUN ?= fiu-run -x
 VERBOSE ?= 0
 
 # enable colors
-COLOR ?= 1
+COLOR ?= 0
