@@ -367,6 +367,14 @@ suite_annotations(void)
   tcase_add_checked_fixture(tcase, setup_annotation_3d, teardown);
   tcase_add_test(tcase, test_annotation_3d_new);
   tcase_add_test(tcase, test_annotation_3d_get_type);
+  tcase_add_test(tcase, test_annotation_3d_init);
+  tcase_add_test(tcase, test_annotation_3d_clear);
+  tcase_add_test(tcase, test_annotation_3d_set_artwork);
+  tcase_add_test(tcase, test_annotation_3d_get_artwork);
+  tcase_add_test(tcase, test_annotation_3d_set_view_box);
+  tcase_add_test(tcase, test_annotation_3d_get_view_box);
+  tcase_add_test(tcase, test_annotation_3d_set_interactive);
+  tcase_add_test(tcase, test_annotation_3d_is_interactive);
   suite_add_tcase(suite, tcase);
 
   return suite;

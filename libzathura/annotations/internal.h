@@ -134,9 +134,15 @@ struct zathura_annotation_s {
      * A screen annotation
      */
     struct zathura_annotation_screen_s* screen;
+
+    /**
+     * A 3d annotation
+     */
+    struct zathura_annotation_3d_s* d3d;
   } data;
 };
 
+#include "internal/annotation-3d.h"
 #include "internal/annotation-caret.h"
 #include "internal/annotation-file.h"
 #include "internal/annotation-free-text.h"

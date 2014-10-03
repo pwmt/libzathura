@@ -57,63 +57,67 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
   zathura_error_t error = ZATHURA_ERROR_OK;
 
   switch (type) {
-      case ZATHURA_ANNOTATION_UNKNOWN:
-        break;
-      case ZATHURA_ANNOTATION_TEXT:
-        error = zathura_annotation_text_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_LINK:
-        error = zathura_annotation_link_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_FREE_TEXT:
-        error = zathura_annotation_free_text_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_LINE:
-        error = zathura_annotation_line_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_SQUARE:
-      case ZATHURA_ANNOTATION_CIRCLE:
-        error = zathura_annotation_square_and_circle_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_POLYGON:
-      case ZATHURA_ANNOTATION_POLY_LINE:
-        break;
-      case ZATHURA_ANNOTATION_HIGHLIGHT:
-      case ZATHURA_ANNOTATION_UNDERLINE:
-      case ZATHURA_ANNOTATION_SQUIGGLY:
-      case ZATHURA_ANNOTATION_STRIKE_OUT:
-        error = zathura_annotation_text_markup_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_STAMP:
-        error = zathura_annotation_stamp_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_CARET:
-        error = zathura_annotation_caret_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_INK:
-        error = zathura_annotation_ink_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_POPUP:
-        error = zathura_annotation_popup_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_FILE_ATTACHMENT:
-        error = zathura_annotation_file_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_SOUND:
-        error = zathura_annotation_sound_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_MOVIE:
-        error = zathura_annotation_movie_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_WIDGET:
-        break;
-      case ZATHURA_ANNOTATION_SCREEN:
-        error = zathura_annotation_screen_init(*annotation);
-        break;
-      case ZATHURA_ANNOTATION_PRINTER_MARK:
-      case ZATHURA_ANNOTATION_TRAP_NET:
-      case ZATHURA_ANNOTATION_WATERMARK:
-      case ZATHURA_ANNOTATION_3D:
+    case ZATHURA_ANNOTATION_UNKNOWN:
+      break;
+    case ZATHURA_ANNOTATION_TEXT:
+      error = zathura_annotation_text_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_LINK:
+      error = zathura_annotation_link_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_FREE_TEXT:
+      error = zathura_annotation_free_text_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_LINE:
+      error = zathura_annotation_line_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_SQUARE:
+    case ZATHURA_ANNOTATION_CIRCLE:
+      error = zathura_annotation_square_and_circle_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_POLYGON:
+    case ZATHURA_ANNOTATION_POLY_LINE:
+      break;
+    case ZATHURA_ANNOTATION_HIGHLIGHT:
+    case ZATHURA_ANNOTATION_UNDERLINE:
+    case ZATHURA_ANNOTATION_SQUIGGLY:
+    case ZATHURA_ANNOTATION_STRIKE_OUT:
+      error = zathura_annotation_text_markup_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_STAMP:
+      error = zathura_annotation_stamp_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_CARET:
+      error = zathura_annotation_caret_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_INK:
+      error = zathura_annotation_ink_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_POPUP:
+      error = zathura_annotation_popup_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_FILE_ATTACHMENT:
+      error = zathura_annotation_file_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_SOUND:
+      error = zathura_annotation_sound_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_MOVIE:
+      error = zathura_annotation_movie_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_WIDGET:
+      break;
+    case ZATHURA_ANNOTATION_SCREEN:
+      error = zathura_annotation_screen_init(*annotation);
+      break;
+    case ZATHURA_ANNOTATION_PRINTER_MARK:
+      break;
+    case ZATHURA_ANNOTATION_TRAP_NET:
+      break;
+    case ZATHURA_ANNOTATION_WATERMARK:
+      break;
+    case ZATHURA_ANNOTATION_3D:
+      error = zathura_annotation_3d_init(*annotation);
       break;
     default:
       free(*annotation);
@@ -194,8 +198,10 @@ zathura_annotation_free(zathura_annotation_t* annotation)
       case ZATHURA_ANNOTATION_PRINTER_MARK:
       case ZATHURA_ANNOTATION_TRAP_NET:
       case ZATHURA_ANNOTATION_WATERMARK:
+        break;
       case ZATHURA_ANNOTATION_3D:
-      break;
+        error = zathura_annotation_3d_clear(annotation);
+        break;
     default:
       break;
   }

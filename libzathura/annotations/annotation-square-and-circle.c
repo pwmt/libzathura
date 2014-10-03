@@ -84,9 +84,10 @@ zathura_annotation_circle_get_rectangle(zathura_annotation_t*
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  ANNOTATION_SQUARE_AND_CIRCLE_CHECK_TYPE_AND_DATA()
+
   memcpy(rectangle, &(annotation->data.square_and_circle->rectangle), sizeof(zathura_rectangle_t));
 
-  ANNOTATION_SQUARE_AND_CIRCLE_CHECK_TYPE_AND_DATA()
 
   return ZATHURA_ERROR_OK;
 }
