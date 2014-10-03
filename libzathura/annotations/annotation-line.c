@@ -304,36 +304,6 @@ zathura_annotation_line_has_caption(zathura_annotation_t* annotation, bool* has_
 }
 
 zathura_error_t
-zathura_annotation_line_set_intent(zathura_annotation_t*
-    annotation, zathura_annotation_markup_intent_t intent)
-{
-  if (annotation == NULL) {
-    return ZATHURA_ERROR_INVALID_ARGUMENTS;
-  }
-
-  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
-
-  annotation->data.line->intent = intent;
-
-  return ZATHURA_ERROR_OK;
-}
-
-zathura_error_t
-zathura_annotation_line_get_intent(zathura_annotation_t*
-    annotation, zathura_annotation_markup_intent_t* intent)
-{
-  if (annotation == NULL || intent == NULL) {
-    return ZATHURA_ERROR_INVALID_ARGUMENTS;
-  }
-
-  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
-
-  *intent = annotation->data.line->intent;
-
-  return ZATHURA_ERROR_OK;
-}
-
-zathura_error_t
 zathura_annotation_line_set_caption_position(zathura_annotation_t*
     annotation, zathura_annotation_line_caption_position_t caption_position)
 {
@@ -359,6 +329,36 @@ zathura_annotation_line_get_caption_position(zathura_annotation_t*
   ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
 
   *caption_position = annotation->data.line->caption_position;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_set_intent(zathura_annotation_t*
+    annotation, zathura_annotation_markup_intent_t intent)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  annotation->data.line->intent = intent;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_get_intent(zathura_annotation_t*
+    annotation, zathura_annotation_markup_intent_t* intent)
+{
+  if (annotation == NULL || intent == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  *intent = annotation->data.line->intent;
 
   return ZATHURA_ERROR_OK;
 }

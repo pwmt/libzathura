@@ -232,34 +232,6 @@ zathura_error_t zathura_annotation_line_set_caption(zathura_annotation_t* annota
 zathura_error_t zathura_annotation_line_has_caption(zathura_annotation_t* annotation, bool* caption);
 
 /**
- * Sets the intent of this line annotation
- *
- * @param[in] annotation The annotation
- * @param[in] intent The intent
- *
- * @return ZATHURA_ERROR_OK No error occurred
- * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
- * @return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE Mismatching type of annotation passed
- * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
- */
-zathura_error_t zathura_annotation_line_set_intent(zathura_annotation_t*
-    annotation, zathura_annotation_markup_intent_t intent);
-
-/**
- * Returns the intent of this line annotation
- *
- * @param[in] annotation The annotation
- * @param[out] intent The intent
- *
- * @return ZATHURA_ERROR_OK No error occurred
- * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
- * @return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE Mismatching type of annotation passed
- * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
- */
-zathura_error_t zathura_annotation_line_get_intent(zathura_annotation_t*
-    annotation, zathura_annotation_markup_intent_t* intent);
-
-/**
  * Sets the caption_position of this line annotation
  *
  * @param[in] annotation The annotation
@@ -286,5 +258,33 @@ zathura_error_t zathura_annotation_line_set_caption_position(zathura_annotation_
  */
 zathura_error_t zathura_annotation_line_get_caption_position(zathura_annotation_t*
     annotation, zathura_annotation_line_caption_position_t* caption_position);
+
+/**
+ * Sets the intent of this line annotation
+ *
+ * @param[in] annotation The annotation
+ * @param[in] intent The intent
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE Mismatching type of annotation passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_line_set_intent(zathura_annotation_t*
+    annotation, zathura_annotation_markup_intent_t intent);
+
+/**
+ * Returns the intent of this line annotation
+ *
+ * @param[in] annotation The annotation
+ * @param[out] intent The intent
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE Mismatching type of annotation passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_line_get_intent(zathura_annotation_t*
+    annotation, zathura_annotation_markup_intent_t* intent);
 
 #endif // ANNOTATION_LINE_H

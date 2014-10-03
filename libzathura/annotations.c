@@ -67,6 +67,7 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
         error = zathura_annotation_free_text_init(*annotation);
         break;
       case ZATHURA_ANNOTATION_LINE:
+        error = zathura_annotation_line_init(*annotation);
         break;
       case ZATHURA_ANNOTATION_SQUARE:
       case ZATHURA_ANNOTATION_CIRCLE:
@@ -144,6 +145,7 @@ zathura_annotation_free(zathura_annotation_t* annotation)
         error = zathura_annotation_free_text_clear(annotation);
         break;
       case ZATHURA_ANNOTATION_LINE:
+        error = zathura_annotation_line_clear(annotation);
         break;
       case ZATHURA_ANNOTATION_SQUARE:
       case ZATHURA_ANNOTATION_CIRCLE:
