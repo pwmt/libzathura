@@ -1,31 +1,120 @@
 /* See LICENSE file for license and copyright information */
 
+#include <stdlib.h>
+
+#include "annotation-sound.h"
 #include "../sound.h"
+#include "../annotations.h"
+#include "internal.h"
 
-/**
- * A sound annotation is analogous to a text annotation except that instead
- * of a text note, it contains sound recorded from the computer’s microphone
- * or imported from a file. When the annotation is activated, the sound is
- * played.  The annotation behaves like a text annotation in most ways, with
- * a different icon (by default, a speaker) to indicate that it represents a
- * sound.
- */
-struct zathura_annotation_sound_s {
-  /**
-   * A sound object defining the sound to be played when the annotation
-   * is activated
-   */
-  zathura_sound_t* sound;
+#define ANNOTATION_SOUND_CHECK_TYPE() \
+  if (annotation->type != ZATHURA_ANNOTATION_SOUND) { \
+    return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE; \
+  }
 
-  /**
-   * The name of an icon to be used in displaying the annotation. Viewer
-   * applications should provide predefined icon appearances for at least
-   * the following standard names:
-   *
-   * * Speaker
-   * * Mic
-   *
-   * Additional names may be supported as well.
-   */
-  char* icon_name;
-};
+#define ANNOTATION_SOUND_CHECK_DATA() \
+  if (annotation->data.sound == NULL) { \
+    return ZATHURA_ERROR_UNKNOWN; \
+  }
+
+#define ANNOTATION_SOUND_CHECK_TYPE_AND_DATA() \
+  ANNOTATION_SOUND_CHECK_TYPE() \
+  ANNOTATION_SOUND_CHECK_DATA()
+
+zathura_error_t
+zathura_annotation_sound_init(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_SOUND_CHECK_TYPE()
+
+  if (annotation->data.sound != NULL) {
+    free(annotation->data.sound);
+  }
+
+  annotation->data.sound = calloc(1, sizeof(zathura_annotation_sound_t));
+  if (annotation->data.sound == NULL) {
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_sound_clear(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_SOUND_CHECK_TYPE()
+
+  free(annotation->data.sound);
+  annotation->data.sound = NULL;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_sound_set_sound(zathura_annotation_t* annotation, zathura_sound_t* sound)
+{
+  if (annotation == NULL || sound == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_SOUND_CHECK_TYPE_AND_DATA()
+
+  annotation->data.sound->sound = sound;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_sound_get_sound(zathura_annotation_t* annotation, zathura_sound_t** sound)
+{
+  if (annotation == NULL || sound == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_SOUND_CHECK_TYPE_AND_DATA()
+
+  *sound = annotation->data.sound->sound;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_sound_set_icon_name(zathura_annotation_t*
+    annotation, char* icon_name)
+{
+  if (annotation == NULL || icon_name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_SOUND_CHECK_TYPE_AND_DATA()
+
+  if (annotation->data.file->icon_name != NULL) {
+    g_free(annotation->data.file->icon_name);
+  }
+
+  annotation->data.file->icon_name = g_strdup(icon_name);
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_sound_get_icon_name(zathura_annotation_t*
+    annotation, char** icon_name)
+{
+  if (annotation == NULL || icon_name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_SOUND_CHECK_TYPE_AND_DATA()
+
+  *icon_name = annotation->data.file->icon_name;
+
+  return ZATHURA_ERROR_OK;
+}

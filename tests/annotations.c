@@ -275,6 +275,12 @@ suite_annotations(void)
   tcase_add_checked_fixture(tcase, setup_annotation_sound, teardown);
   tcase_add_test(tcase, test_annotation_sound_new);
   tcase_add_test(tcase, test_annotation_sound_get_type);
+  tcase_add_test(tcase, test_annotation_sound_init);
+  tcase_add_test(tcase, test_annotation_sound_clear);
+  tcase_add_test(tcase, test_annotation_sound_set_sound);
+  tcase_add_test(tcase, test_annotation_sound_get_sound);
+  tcase_add_test(tcase, test_annotation_sound_set_icon_name);
+  tcase_add_test(tcase, test_annotation_sound_get_icon_name);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("movie");
