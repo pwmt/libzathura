@@ -1,5 +1,5 @@
-API and Development
-*******************
+API
+***
 
 .. module:: libzathura
 .. toctree::
@@ -10,4 +10,3 @@ API and Development
     document
     annotations
     forms
-    contributing
