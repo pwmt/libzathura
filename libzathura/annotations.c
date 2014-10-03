@@ -83,6 +83,7 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
         error = zathura_annotation_text_markup_init(*annotation);
         break;
       case ZATHURA_ANNOTATION_STAMP:
+        error = zathura_annotation_stamp_init(*annotation);
         break;
       case ZATHURA_ANNOTATION_CARET:
         error = zathura_annotation_caret_init(*annotation);
@@ -161,6 +162,7 @@ zathura_annotation_free(zathura_annotation_t* annotation)
         error = zathura_annotation_text_markup_clear(annotation);
         break;
       case ZATHURA_ANNOTATION_STAMP:
+        error = zathura_annotation_stamp_clear(annotation);
         break;
       case ZATHURA_ANNOTATION_CARET:
         error = zathura_annotation_caret_clear(annotation);

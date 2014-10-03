@@ -1,32 +1,101 @@
 /* See LICENSE file for license and copyright information */
 
-/**
- * A rubber stamp annotation displays text or graphics intended to look as
- * if they were stamped on the page with a rubber stamp. When opened, it
- * displays a pop-up window containing the text of the associated note.
- */
-struct zathura_annotation_stamp_s {
-  /**
-   * The name of an icon to be used in displaying the annotation. Viewer
-   * applications should provide predefined icon appearances for at least
-   * the following standard names:
-   *
-   * * Approved
-   * * AsIs
-   * * Confidential
-   * * Departmental
-   * * Draft
-   * * Experimental
-   * * Expired
-   * * Final
-   * * ForComment
-   * * ForPublicRelease
-   * * NotApproved
-   * * NotForPublicRelease
-   * * Sold
-   * * TopSecret
-   *
-   * Additional names may be supported as well.
-   */
-  char* icon_name;
-};
+#include <stdlib.h>
+
+#include "annotation-stamp.h"
+#include "../annotations.h"
+#include "../error.h"
+
+#include "internal.h"
+
+#define ANNOTATION_STAMP_CHECK_TYPE() \
+  if (annotation->type != ZATHURA_ANNOTATION_STAMP) { \
+    return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE; \
+  }
+
+#define ANNOTATION_STAMP_CHECK_DATA() \
+  if (annotation->data.caret == NULL) { \
+    return ZATHURA_ERROR_UNKNOWN; \
+  }
+
+#define ANNOTATION_STAMP_CHECK_TYPE_AND_DATA() \
+  ANNOTATION_STAMP_CHECK_TYPE() \
+  ANNOTATION_STAMP_CHECK_DATA()
+
+zathura_error_t
+zathura_annotation_stamp_init(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_STAMP_CHECK_TYPE()
+
+  if (annotation->data.file != NULL) {
+    free(annotation->data.file);
+    annotation->data.file = NULL;
+  }
+
+  annotation->data.file = calloc(1, sizeof(zathura_annotation_stamp_t));
+  if (annotation->data.file == NULL) {
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
+
+  annotation->data.file->icon_name = NULL;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_stamp_clear(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_STAMP_CHECK_TYPE()
+
+  if (annotation->data.file != NULL) {
+    g_free(annotation->data.file->icon_name);
+  }
+
+  free(annotation->data.file);
+  annotation->data.file = NULL;
+
+  return ZATHURA_ERROR_OK;
+}
+
+
+zathura_error_t
+zathura_annotation_stamp_set_icon_name(zathura_annotation_t*
+    annotation, char* icon_name)
+{
+  if (annotation == NULL || icon_name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_STAMP_CHECK_TYPE_AND_DATA()
+
+  if (annotation->data.stamp->icon_name != NULL) {
+    g_free(annotation->data.stamp->icon_name);
+  }
+
+  annotation->data.stamp->icon_name = g_strdup(icon_name);
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_stamp_get_icon_name(zathura_annotation_t*
+    annotation, char** icon_name)
+{
+  if (annotation == NULL || icon_name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_STAMP_CHECK_TYPE_AND_DATA()
+
+  *icon_name = annotation->data.stamp->icon_name;
+
+  return ZATHURA_ERROR_OK;
+}

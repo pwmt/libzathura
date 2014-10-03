@@ -242,7 +242,11 @@ suite_annotations(void)
   tcase = tcase_create("stamp");
   tcase_add_checked_fixture(tcase, setup_annotation_stamp, teardown);
   tcase_add_test(tcase, test_annotation_stamp_new);
+  tcase_add_test(tcase, test_annotation_stamp_init);
+  tcase_add_test(tcase, test_annotation_stamp_clear);
   tcase_add_test(tcase, test_annotation_stamp_get_type);
+  tcase_add_test(tcase, test_annotation_stamp_set_icon_name);
+  tcase_add_test(tcase, test_annotation_stamp_get_icon_name);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("caret");

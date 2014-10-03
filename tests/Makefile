@@ -93,7 +93,7 @@ run-gcov: ${PROJECT}-gcov
 	$(MAKE) -C .. libzathura/version.h
 
 valgrind: ${PROJECT}-debug
-	 $(QUIET)${FIU_EXEC} ${VALGRIND} ${VALGRIND_ARGUMENTS} ./${PROJECT}-debug
+	 $(QUIET)G_SLICE=always-malloc G_DEBUG=gc-friendly ${FIU_EXEC} ${VALGRIND} ${VALGRIND_ARGUMENTS} ./${PROJECT}-debug
 
 clean:
 	$(call colorecho,RM, "Clean test files")
