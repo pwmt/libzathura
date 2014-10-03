@@ -1,6 +1,8 @@
 /* See LICENSE file for license and copyright information */
 
 #include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "../types.h"
 
@@ -8,87 +10,355 @@
 #include "border.h"
 #include "annotation-line.h"
 #include "annotation-markup.h"
+#include "internal.h"
 
-/**
- * A line annotation displays a single straight line on the page. When
- * opened, it displays a pop-up window containing the text of the associated
- * note.
- */
-struct zathura_annotation_line_s {
-  /**
-   * Specifying the starting and ending coordinates of the line in default
-   * user space.
-   */
-  struct {
-    zathura_point_t start; /**< Start point */
-    zathura_point_t end; /*<< End point */
-  } coordinates;
+#define ANNOTATION_LINE_CHECK_TYPE() \
+  if (annotation->type != ZATHURA_ANNOTATION_LINE) { \
+    return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE; \
+  }
 
-  /**
-   * Border style
-   */
-  zathura_annotation_border_t border;
+#define ANNOTATION_LINE_CHECK_DATA() \
+  if (annotation->data.line == NULL) { \
+    return ZATHURA_ERROR_UNKNOWN; \
+  }
 
-  /**
-   * An array of two names specifying the line ending styles to be used in
-   * drawing the annotation’s border. The first and second elements of the
-   * array specify the line ending styles for the endpoints defined,
-   * respectively, by the first and second pairs of coordinates, (x1, y1)
-   * and (x2, y2), in the L array.
-   */
-  zathura_annotation_line_ending_t line_endings[2];
+#define ANNOTATION_LINE_CHECK_TYPE_AND_DATA() \
+  ANNOTATION_LINE_CHECK_TYPE() \
+  ANNOTATION_LINE_CHECK_DATA()
 
-  /**
-   * The color
-   */
-  zathura_annotation_color_t color;
+zathura_error_t
+zathura_annotation_line_init(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
 
-  /**
-   * The length of leader lines in default user space that extend from each
-   * endpoint of the line perpendicular to the line itself. A positive value
-   * means that the leader lines appear in the direction that is clockwise
-   * when traversing the line from its starting point to its ending point
-   * (as specified by @a coordinates); a negative value indicates the
-   * opposite direction.
-   */
-  int leader_lines;
+  ANNOTATION_LINE_CHECK_TYPE()
 
-  /**
-   * A non-negative number representing the length of leader line extensions
-   * that extend from the line proper 180 degrees from the leader lines.
-   */
-  unsigned int leader_line_extensions_length;
+  if (annotation->data.line != NULL) {
+    free(annotation->data.line);
+    annotation->data.line = NULL;
+  }
 
-  /**
-   * If true, the text specified by the annotations contents or rich content
-   * entries should be replicated as a caption in the appearance of the
-   * line. The text should be rendered in a manner appropriate to the
-   * content, taking into account factors such as writing direction.
-   */
-  bool caption;
+  annotation->data.line = calloc(1, sizeof(zathura_annotation_line_t));
+  if (annotation->data.line == NULL) {
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
 
-  /**
-   * A name describing the intent of the line annotation. Valid values are
-   * @a ZATHURA_ANNOTATION_MARKUP_INTENT_LINE_ARROW, which means that the
-   * annotation is intended to function as an arrow, and
-   * ZATHURA_ANNOTATION_MARKUP_INTENT_LINE_DIMENSION, which means that the
-   * annotation is intended to function as a dimension line.
-   */
-  zathura_annotation_markup_intent_t intent;
+  return ZATHURA_ERROR_OK;
+}
 
-  /**
-   * A non-negative number representing the length of the leader line
-   * offset, which is the amount of empty space between the endpoints of the
-   * annotation and the beginning of the leader lines.
-   */
-  unsigned int leader_line_offset;
+zathura_error_t
+zathura_annotation_line_clear(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
 
-  /**
-   * A name describing the annotation’s caption positioning. Valid values
-   * are @a ZATHURA_ANNOTATION_CAPTION_POSITION_INLINE, meaning the caption
-   * will be centered inside the line, and @a
-   * ZATHURA_ANNOTATION_CAPTION_POSITION_TOP , meaning the caption will be
-   * on top of the line.
-   */
-  zathura_annotation_line_caption_position_t caption_position;
-};
+  ANNOTATION_LINE_CHECK_TYPE()
+
+  free(annotation->data.line);
+  annotation->data.line = NULL;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_line_set_coordinates(zathura_annotation_t*
+    annotation, zathura_point_t coordinates[2])
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  annotation->data.line->coordinates.start = coordinates[0];
+  annotation->data.line->coordinates.end   = coordinates[1];
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_line_get_coordinates(zathura_annotation_t*
+    annotation, zathura_point_t coordinates[2])
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  coordinates[0] = annotation->data.line->coordinates.start;
+  coordinates[1] = annotation->data.line->coordinates.end;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_set_border(zathura_annotation_t*
+    annotation, zathura_annotation_border_t border)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  memcpy(&(annotation->data.line->border), &border, sizeof(zathura_annotation_border_t));
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_get_border(zathura_annotation_t*
+    annotation, zathura_annotation_border_t* border)
+{
+  if (annotation == NULL || border == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  memcpy(border, &(annotation->data.line->border), sizeof(zathura_annotation_border_t));
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_set_line_ending(zathura_annotation_t*
+    annotation, zathura_annotation_line_ending_t line_ending[2])
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  annotation->data.line->line_endings[0] = line_ending[0];
+  annotation->data.line->line_endings[1] = line_ending[1];
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_get_line_ending(zathura_annotation_t*
+    annotation, zathura_annotation_line_ending_t line_ending[2])
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  line_ending[0] = annotation->data.line->line_endings[0];
+  line_ending[1] = annotation->data.line->line_endings[1];
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_set_color(zathura_annotation_t*
+    annotation, zathura_annotation_color_t color)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  memcpy(&(annotation->data.line->color), &color, sizeof(zathura_annotation_color_t));
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_get_color(zathura_annotation_t*
+    annotation, zathura_annotation_color_t* color)
+{
+  if (annotation == NULL || color == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  memcpy(color, &(annotation->data.line->color), sizeof(zathura_annotation_color_t));
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_set_leader_lines_length(zathura_annotation_t*
+    annotation, int leader_lines_length)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  annotation->data.line->leader_lines_length = leader_lines_length;
+  
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_get_leader_lines_length(zathura_annotation_t*
+    annotation, int* leader_lines_length)
+{
+  if (annotation == NULL || leader_lines_length == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  *leader_lines_length = annotation->data.line->leader_lines_length;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_set_leader_line_extensions_length(zathura_annotation_t*
+    annotation, unsigned int leader_line_extensions_length)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  annotation->data.line->leader_line_extensions_length = leader_line_extensions_length;
+  
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_get_leader_line_extensions_length(zathura_annotation_t*
+    annotation, unsigned int* leader_line_extensions_length)
+{
+  if (annotation == NULL || leader_line_extensions_length == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  *leader_line_extensions_length = annotation->data.line->leader_line_extensions_length;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_set_leader_line_offset(zathura_annotation_t*
+    annotation, unsigned int leader_line_offset)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  annotation->data.line->leader_line_offset = leader_line_offset;
+  
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_get_leader_line_offset(zathura_annotation_t*
+    annotation, unsigned int* leader_line_offset)
+{
+  if (annotation == NULL || leader_line_offset == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  *leader_line_offset = annotation->data.line->leader_line_offset;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_set_caption(zathura_annotation_t* annotation, bool has_caption)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  annotation->data.line->has_caption = has_caption;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_has_caption(zathura_annotation_t* annotation, bool* has_caption)
+{
+  if (annotation == NULL || has_caption == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  *has_caption = annotation->data.line->has_caption;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_set_intent(zathura_annotation_t*
+    annotation, zathura_annotation_markup_intent_t intent)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  annotation->data.line->intent = intent;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_get_intent(zathura_annotation_t*
+    annotation, zathura_annotation_markup_intent_t* intent)
+{
+  if (annotation == NULL || intent == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  *intent = annotation->data.line->intent;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_set_caption_position(zathura_annotation_t*
+    annotation, zathura_annotation_line_caption_position_t caption_position)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  annotation->data.line->caption_position = caption_position;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_line_get_caption_position(zathura_annotation_t*
+    annotation, zathura_annotation_line_caption_position_t* caption_position)
+{
+  if (annotation == NULL || caption_position == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_LINE_CHECK_TYPE_AND_DATA()
+
+  *caption_position = annotation->data.line->caption_position;
+
+  return ZATHURA_ERROR_OK;
+}
