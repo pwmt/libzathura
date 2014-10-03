@@ -297,6 +297,12 @@ suite_annotations(void)
   tcase_add_checked_fixture(tcase, setup_annotation_screen, teardown);
   tcase_add_test(tcase, test_annotation_screen_new);
   tcase_add_test(tcase, test_annotation_screen_get_type);
+  tcase_add_test(tcase, test_annotation_screen_init);
+  tcase_add_test(tcase, test_annotation_screen_clear);
+  tcase_add_test(tcase, test_annotation_screen_set_title);
+  tcase_add_test(tcase, test_annotation_screen_get_title);
+  tcase_add_test(tcase, test_annotation_screen_set_action);
+  tcase_add_test(tcase, test_annotation_screen_get_action);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("printer-mark");

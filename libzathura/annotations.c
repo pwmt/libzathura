@@ -101,7 +101,10 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
         error = zathura_annotation_movie_init(*annotation);
         break;
       case ZATHURA_ANNOTATION_WIDGET:
+        break;
       case ZATHURA_ANNOTATION_SCREEN:
+        error = zathura_annotation_screen_init(*annotation);
+        break;
       case ZATHURA_ANNOTATION_PRINTER_MARK:
       case ZATHURA_ANNOTATION_TRAP_NET:
       case ZATHURA_ANNOTATION_WATERMARK:
@@ -174,7 +177,10 @@ zathura_annotation_free(zathura_annotation_t* annotation)
         error = zathura_annotation_movie_clear(annotation);
         break;
       case ZATHURA_ANNOTATION_WIDGET:
+        break;
       case ZATHURA_ANNOTATION_SCREEN:
+        error = zathura_annotation_screen_clear(annotation);
+        break;
       case ZATHURA_ANNOTATION_PRINTER_MARK:
       case ZATHURA_ANNOTATION_TRAP_NET:
       case ZATHURA_ANNOTATION_WATERMARK:
