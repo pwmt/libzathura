@@ -16,6 +16,10 @@ ifneq (${WITH_LIBFIU},0)
 FIU_EXEC += ${FIU_RUN}
 endif
 
+ifneq ($(wildcard ${VALGRIND_SUPPRESSION_FILE}),)
+VALGRIND_ARGUMENTS += --suppressions=${VALGRIND_SUPPRESSION_FILE}
+endif
+
 all: ${PROJECT}
 
 # release
@@ -88,8 +92,8 @@ run-gcov: ${PROJECT}-gcov
 ../libzathura/version.h:
 	$(MAKE) -C .. libzathura/version.h
 
-valgrind: ${PROJECT}
-	 $(QUIET)${VALGRIND} ${VALGRIND_ARGUMENTS} ./${PROJECT}
+valgrind: ${PROJECT}-debug
+	 $(QUIET)${FIU_EXEC} ${VALGRIND} ${VALGRIND_ARGUMENTS} ./${PROJECT}-debug
 
 clean:
 	$(call colorecho,RM, "Clean test files")

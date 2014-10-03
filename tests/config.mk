@@ -10,3 +10,9 @@ LDFLAGS += -rdynamic
 LIBZATHURA_RELEASE=../${BUILDDIR_RELEASE}/libzathura.a
 LIBZATHURA_DEBUG=../${BUILDDIR_DEBUG}/libzathura.a
 LIBZATHURA_GCOV=../${BUILDDIR_GCOV}/libzathura.a
+#
+# valgrind
+VALGRIND = valgrind
+VALGRIND_ARGUMENTS = --tool=memcheck --leak-check=yes --leak-resolution=high \
+	--show-reachable=yes --log-file=libzathura-valgrind.log
+VALGRIND_SUPPRESSION_FILE = libzathura.suppression
