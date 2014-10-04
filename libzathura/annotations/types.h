@@ -141,17 +141,17 @@ typedef enum zathura_annotation_markup_intent_e {
   /**
    * The annotation is intended to function as a cloud object.
    */
-  ZATHURA_ANNOTATION_MARKUP_INTENT_LINE_POLYGON_CLOUD,
+  ZATHURA_ANNOTATION_MARKUP_INTENT_POLYGON_CLOUD,
 
   /**
    * The polygon annotation is intended to function as a dimension.
    */
-  ZATHURA_ANNOTATION_MARKUP_INTENT_LINE_POLYGON_DIMENSION,
+  ZATHURA_ANNOTATION_MARKUP_INTENT_POLYGON_DIMENSION,
 
   /**
    * The polyline annotation is intended to function as a dimension
    */
-  ZATHURA_ANNOTATION_MARKUP_INTENT_LINE_POLYLINE_DIMENSION,
+  ZATHURA_ANNOTATION_MARKUP_INTENT_POLYLINE_DIMENSION,
 } zathura_annotation_markup_intent_t;
 
 /**
@@ -198,5 +198,19 @@ typedef enum zathura_annotation_link_highlighting_mode_e {
    */
   ZATHURA_ANNOTATION_HIGHLIGHTING_PUSH = 'P'
 } zathura_annotation_link_highlighting_mode_t;
+
+/**
+ * A measure dictionary specifies an alternate coordinate system for a region of
+ * a page. Along with the viewport dictionary, it provides the information
+ * needed to convert coordinates in the page’s coordinate system to coordinates
+ * in the measuring coordinate system. The measure dictionary provides
+ * information for formatting the resulting values into textual form for
+ * presentation in a graphical user interface.
+ *
+ * TODO: Implement the measure dictionary.
+ */
+typedef struct zathura_annotation_measure_s {
+  char* scale_ratio;
+} zathura_annotation_measure_t;
 
 #endif // ANNOTATION_TYPES_H

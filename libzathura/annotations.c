@@ -76,6 +76,8 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
       error = zathura_annotation_square_and_circle_init(*annotation);
       break;
     case ZATHURA_ANNOTATION_POLYGON:
+      error = zathura_annotation_polygon_init(*annotation);
+      break;
     case ZATHURA_ANNOTATION_POLY_LINE:
       break;
     case ZATHURA_ANNOTATION_HIGHLIGHT:
@@ -161,6 +163,8 @@ zathura_annotation_free(zathura_annotation_t* annotation)
         error = zathura_annotation_square_and_circle_clear(annotation);
         break;
       case ZATHURA_ANNOTATION_POLYGON:
+        error = zathura_annotation_polygon_clear(annotation);
+        break;
       case ZATHURA_ANNOTATION_POLY_LINE:
         break;
       case ZATHURA_ANNOTATION_HIGHLIGHT:

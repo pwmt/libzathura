@@ -116,6 +116,11 @@ struct zathura_annotation_s {
     struct zathura_annotation_popup_s* popup;
 
     /**
+     * A polygon annotation
+     */
+    struct zathura_annotation_polygon_s* polygon;
+
+    /**
      * A file attachment annotation
      */
     struct zathura_annotation_file_s* file;
@@ -150,6 +155,7 @@ struct zathura_annotation_s {
 #include "internal/annotation-line.h"
 #include "internal/annotation-link.h"
 #include "internal/annotation-movie.h"
+#include "internal/annotation-polygon.h"
 #include "internal/annotation-popup.h"
 #include "internal/annotation-screen.h"
 #include "internal/annotation-sound.h"

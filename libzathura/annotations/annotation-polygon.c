@@ -179,3 +179,33 @@ zathura_annotation_polygon_get_intent(zathura_annotation_t*
 
   return ZATHURA_ERROR_OK;
 }
+
+zathura_error_t
+zathura_annotation_polygon_set_measure(zathura_annotation_t*
+    annotation, zathura_annotation_measure_t* measure)
+{
+  if (annotation == NULL || measure == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_POLYGON_CHECK_TYPE_AND_DATA()
+
+  annotation->data.polygon->measure = measure;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_polygon_get_measure(zathura_annotation_t*
+    annotation, zathura_annotation_measure_t** measure)
+{
+  if (annotation == NULL || measure == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_POLYGON_CHECK_TYPE_AND_DATA()
+
+  *measure = annotation->data.polygon->measure;
+
+  return ZATHURA_ERROR_OK;
+}
