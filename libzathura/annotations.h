@@ -13,6 +13,10 @@
 #include "sound.h"
 #include "types.h"
 
+#include "annotations/border.h"
+#include "annotations/color.h"
+#include "annotations/flags.h"
+
 /**
  * An annotation associates an object such as a note, sound, or movie with a
  * location on a page of a document, or provides a way to interact with the user
@@ -59,13 +63,221 @@ typedef enum zathura_annotation_type_s {
   ZATHURA_ANNOTATION_3D,
 } zathura_annotation_type_t;
 
-zathura_error_t zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_type_t type);
-zathura_error_t zathura_annotation_free(zathura_annotation_t* annotation);
-zathura_error_t zathura_annotation_get_type(zathura_annotation_t* annotation, zathura_annotation_type_t* type);
+/**
+ * Creates a new annotation of the specified type
+ *
+ * @param[out] annotation The annotation
+ * @param[in] type The type of the annotation
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE Mismatching type of annotation passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_new(zathura_annotation_t** annotation,
+    zathura_annotation_type_t type);
 
-#include "annotations/border.h"
-#include "annotations/color.h"
-#include "annotations/flags.h"
+/**
+ * Frees the passed annotation
+ *
+ * @param[in] annotation The annotation
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_free(zathura_annotation_t* annotation);
+
+/**
+ * Returns the type of the passed annotation
+ *
+ * @param[in] annotation The annotation
+ * @param[out] type The type of the annotation
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_get_type(zathura_annotation_t* annotation,
+    zathura_annotation_type_t* type);
+
+/**
+ * Sets the position of the annotation defining the location of the annotation
+ * on the page in default user space units.
+ *
+ * @param[in] annotation The annotation
+ * @param[in] position The position defining the location of the annotation on
+ *  the page in default user space units
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_set_position(zathura_annotation_t* annotation,
+    zathura_rectangle_t position);
+
+/**
+ * Returns the position of the annotation defining the location of the annotation
+ * on the page in default user space units.
+ *
+ * @param[in] annotation The annotation
+ * @param[out] position The position defining the location of the annotation on
+ *  the page in default user space units
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_get_position(zathura_annotation_t* annotation,
+    zathura_rectangle_t* position);
+
+/**
+ * Sets the text to be displayed for the annotation or, if this type of
+ * annotation does not display text, an alternate description of the
+ * annotation’s contents in human-readable form. In either case, this text is
+ * useful when extracting the document’s contents in support of accessibility to
+ * users with disabilities or for other purposes.
+ *
+ * @param[in] annotation The annotation
+ * @param[in] content The content of the annotation
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_set_content(zathura_annotation_t* annotation,
+    const char* content);
+
+/**
+ * Sets the text to be displayed for the annotation or, if this type of
+ * annotation does not display text, an alternate description of the
+ * annotation’s contents in human-readable form. In either case, this text is
+ * useful when extracting the document’s contents in support of accessibility to
+ * users with disabilities or for other purposes.
+ *
+ * @param[in] annotation The annotation
+ * @param[out] content The content of the annotation
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_get_content(zathura_annotation_t* annotation,
+    char** content);
+
+/**
+ * Sets the annotation name, a text string uniquely identifying it among all the
+ * annotations on its page.
+ *
+ * @param[in] annotation The annotation
+ * @param[in] name The name of the annotation
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_set_name(zathura_annotation_t* annotation,
+    const char* name);
+
+/**
+ * Returns the annotation name, a text string uniquely identifying it among all the
+ * annotations on its page.
+ *
+ * @param[in] annotation The annotation
+ * @param[out] name The name of the annotation
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_get_name(zathura_annotation_t* annotation,
+    char** name);
+
+/**
+ * Sets the date and time when the annotation was most recently modified.
+ *
+ * @param[in] annotation The annotation
+ * @param[in] date The date of the annotation
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_set_modification_date(zathura_annotation_t*
+    annotation, time_t modification_date);
+
+/**
+ * Returns the date and time when the annotation was most recently modified.
+ *
+ * @param[in] annotation The annotation
+ * @param[in] date The date of the annotation
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_get_modification_date(zathura_annotation_t*
+    annotation, time_t* modification_date);
+
+/**
+ * Sets a set of flags specifying various characteristics of the annotation.
+ *
+ * @param[in] annotation The annotation
+ * @param[in] flags The flags of the annotation
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_set_flags(zathura_annotation_t* annotation,
+    zathura_annotation_flag_t flags);
+
+/**
+ * Returns a set of flags specifying various characteristics of the annotation.
+ *
+ * @param[in] annotation The annotation
+ * @param[out] flags The flags of the annotation
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_get_flags(zathura_annotation_t* annotation,
+    zathura_annotation_flag_t* flags);
+
+/**
+ * Sets a color used for the following purpose:
+ *
+ *  - The background of the annotation’s icon when closed
+ *  - The title bar of the annotation’s pop-up window
+ *  - The border of a link annotation
+ *
+ * @param[in] annotation The annotation
+ * @param[in] color The color
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_set_color(zathura_annotation_t* annotation,
+    zathura_annotation_color_t color);
+
+/**
+ * Returns the color used for the following purpose:
+ *
+ *  - The background of the annotation’s icon when closed
+ *  - The title bar of the annotation’s pop-up window
+ *  - The border of a link annotation
+ *
+ * @param[in] annotation The annotation
+ * @param[in] color The color
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_get_color(zathura_annotation_t* annotation,
+    zathura_annotation_color_t* color);
 
 #include "annotations/annotation-3d.h"
 #include "annotations/annotation-caret.h"

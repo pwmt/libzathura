@@ -122,9 +122,6 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
     case ZATHURA_ANNOTATION_3D:
       error = zathura_annotation_3d_init(*annotation);
       break;
-    default:
-      free(*annotation);
-      return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
   if (error != ZATHURA_ERROR_OK) {
@@ -208,8 +205,9 @@ zathura_annotation_free(zathura_annotation_t* annotation)
       case ZATHURA_ANNOTATION_3D:
         error = zathura_annotation_3d_clear(annotation);
         break;
-    default:
-      break;
+      default:
+        error = ZATHURA_ERROR_INVALID_ARGUMENTS;
+        break;
   }
 
   free(annotation);
@@ -229,6 +227,170 @@ zathura_annotation_get_type(zathura_annotation_t* annotation, zathura_annotation
   }
 
   *type = annotation->type;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_set_position(zathura_annotation_t* annotation,
+    zathura_rectangle_t position)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  annotation->position = position;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_get_position(zathura_annotation_t* annotation,
+    zathura_rectangle_t* position)
+{
+  if (annotation == NULL || position == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *position = annotation->position;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_set_content(zathura_annotation_t* annotation,
+    const char* content)
+{
+  if (annotation == NULL || content == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  if (annotation->content != NULL) {
+    g_free(annotation->content);
+  }
+
+  annotation->content = g_strdup(content);
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_get_content(zathura_annotation_t* annotation,
+    char** content)
+{
+  if (annotation == NULL || content == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *content = annotation->content;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_set_name(zathura_annotation_t* annotation,
+    const char* name)
+{
+  if (annotation == NULL || name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  if (annotation->name != NULL) {
+    g_free(annotation->name);
+  }
+
+  annotation->name = g_strdup(name);
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_get_name(zathura_annotation_t* annotation,
+    char** name)
+{
+  if (annotation == NULL || name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *name = annotation->name;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_set_modification_date(zathura_annotation_t*
+    annotation, time_t modification_date)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  annotation->modification_date = modification_date;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_get_modification_date(zathura_annotation_t*
+    annotation, time_t* modification_date)
+{
+  if (annotation == NULL || modification_date == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *modification_date = annotation->modification_date;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_set_flags(zathura_annotation_t* annotation,
+    zathura_annotation_flag_t flags)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  annotation->flags = flags;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_get_flags(zathura_annotation_t* annotation,
+    zathura_annotation_flag_t* flags)
+{
+  if (annotation == NULL || flags == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *flags = annotation->flags;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_set_color(zathura_annotation_t* annotation,
+    zathura_annotation_color_t color)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  annotation->color = color;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_get_color(zathura_annotation_t* annotation,
+    zathura_annotation_color_t* color)
+{
+  if (annotation == NULL || color == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *color = annotation->color;
 
   return ZATHURA_ERROR_OK;
 }

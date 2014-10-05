@@ -47,7 +47,6 @@ START_TEST(test_annotation_is_markup_annotation) {
   fail_unless(zathura_annotation_free(markup_annotation) == ZATHURA_ERROR_OK); \
   markup_annotation = NULL;
 
-  TEST_IS_MARKUP_ANNOTATION(ZATHURA_ANNOTATION_UNKNOWN,         false)
   TEST_IS_MARKUP_ANNOTATION(ZATHURA_ANNOTATION_TEXT,            true)
   TEST_IS_MARKUP_ANNOTATION(ZATHURA_ANNOTATION_LINK,            false)
   TEST_IS_MARKUP_ANNOTATION(ZATHURA_ANNOTATION_FREE_TEXT,       true)
