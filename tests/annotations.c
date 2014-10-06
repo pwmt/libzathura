@@ -18,7 +18,6 @@ static void setup(void) {
 static void teardown(void) {
   if (annotation != NULL) {
     fail_unless(zathura_annotation_free(annotation) == ZATHURA_ERROR_OK);
-    annotation = NULL;
   }
 }
 
@@ -341,7 +340,21 @@ suite_annotations(void)
   tcase = tcase_create("markup");
   tcase_add_checked_fixture(tcase, setup_annotation_markup, teardown);
   tcase_add_test(tcase, test_annotation_markup_new);
+  tcase_add_test(tcase, test_annotation_markup_init);
+  tcase_add_test(tcase, test_annotation_markup_clear);
   tcase_add_test(tcase, test_annotation_is_markup_annotation);
+  tcase_add_test(tcase, test_annotation_markup_set_label);
+  tcase_add_test(tcase, test_annotation_markup_get_label);
+  tcase_add_test(tcase, test_annotation_markup_set_popup_annotation);
+  tcase_add_test(tcase, test_annotation_markup_get_popup_annotation);
+  tcase_add_test(tcase, test_annotation_markup_set_text);
+  tcase_add_test(tcase, test_annotation_markup_get_text);
+  tcase_add_test(tcase, test_annotation_markup_set_creation_date);
+  tcase_add_test(tcase, test_annotation_markup_get_creation_date);
+  tcase_add_test(tcase, test_annotation_markup_set_reply_to_annotation);
+  tcase_add_test(tcase, test_annotation_markup_get_reply_to_annotation);
+  tcase_add_test(tcase, test_annotation_markup_set_reply_type);
+  tcase_add_test(tcase, test_annotation_markup_get_reply_type);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("free-text");

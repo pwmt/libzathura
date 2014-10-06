@@ -53,8 +53,10 @@ zathura_annotation_link_clear(zathura_annotation_t* annotation)
 
   ANNOTATION_LINK_CHECK_TYPE()
 
-  free(annotation->data.link);
-  annotation->data.link = NULL;
+  if (annotation->data.link != NULL) {
+    free(annotation->data.link);
+    annotation->data.link = NULL;
+  }
 
   return ZATHURA_ERROR_OK;
 }
@@ -127,7 +129,7 @@ zathura_annotation_link_set_quad_points(zathura_annotation_t* annotation, zathur
   }
 
   ANNOTATION_LINK_CHECK_TYPE()
-  annotation->data.text_markup->quad_points = quad_points;
+  annotation->data.link->quad_points = quad_points;
 
   return ZATHURA_ERROR_OK;
 }
@@ -141,7 +143,7 @@ zathura_annotation_link_get_quad_points(zathura_annotation_t* annotation, zathur
 
   ANNOTATION_LINK_CHECK_TYPE()
 
-  *quad_points = annotation->data.text_markup->quad_points;
+  *quad_points = annotation->data.link->quad_points;
 
   return ZATHURA_ERROR_OK;
 }

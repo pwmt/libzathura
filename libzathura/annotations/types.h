@@ -163,13 +163,13 @@ typedef enum zathura_annotation_markup_reply_type_e {
    * The annotation is considered a reply to the annotation specified by
    * @a ::reply_type.
    */
-  ZATHURA_ANNOTATION_REPLY_TYPE_REPLY,
+  ZATHURA_ANNOTATION_MARKUP_REPLY_TYPE_REPLY,
 
   /**
    * The annotation is grouped with the annotation specified by
    * @a ::reply_type.
    */
-  ZATHURA_ANNOTATION_REPLY_TYPE_GROUP
+  ZATHURA_ANNOTATION_MARKUP_REPLY_TYPE_GROUP
 } zathura_annotation_markup_reply_type_t;
 
 /**

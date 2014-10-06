@@ -14,7 +14,7 @@
   }
 
 #define ANNOTATION_STAMP_CHECK_DATA() \
-  if (annotation->data.caret == NULL) { \
+  if (annotation->data.stamp == NULL) { \
     return ZATHURA_ERROR_UNKNOWN; \
   }
 
@@ -31,17 +31,17 @@ zathura_annotation_stamp_init(zathura_annotation_t* annotation)
 
   ANNOTATION_STAMP_CHECK_TYPE()
 
-  if (annotation->data.file != NULL) {
-    free(annotation->data.file);
-    annotation->data.file = NULL;
+  if (annotation->data.stamp != NULL) {
+    free(annotation->data.stamp);
+    annotation->data.stamp = NULL;
   }
 
-  annotation->data.file = calloc(1, sizeof(zathura_annotation_stamp_t));
-  if (annotation->data.file == NULL) {
+  annotation->data.stamp = calloc(1, sizeof(zathura_annotation_stamp_t));
+  if (annotation->data.stamp == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
 
-  annotation->data.file->icon_name = NULL;
+  annotation->data.stamp->icon_name = NULL;
 
   return ZATHURA_ERROR_OK;
 }
@@ -55,12 +55,12 @@ zathura_annotation_stamp_clear(zathura_annotation_t* annotation)
 
   ANNOTATION_STAMP_CHECK_TYPE()
 
-  if (annotation->data.file != NULL) {
-    g_free(annotation->data.file->icon_name);
+  if (annotation->data.stamp != NULL) {
+    g_free(annotation->data.stamp->icon_name);
   }
 
-  free(annotation->data.file);
-  annotation->data.file = NULL;
+  free(annotation->data.stamp);
+  annotation->data.stamp = NULL;
 
   return ZATHURA_ERROR_OK;
 }

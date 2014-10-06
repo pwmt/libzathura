@@ -95,11 +95,11 @@ zathura_annotation_sound_set_icon_name(zathura_annotation_t*
 
   ANNOTATION_SOUND_CHECK_TYPE_AND_DATA()
 
-  if (annotation->data.file->icon_name != NULL) {
-    g_free(annotation->data.file->icon_name);
+  if (annotation->data.sound->icon_name != NULL) {
+    g_free(annotation->data.sound->icon_name);
   }
 
-  annotation->data.file->icon_name = g_strdup(icon_name);
+  annotation->data.sound->icon_name = g_strdup(icon_name);
 
   return ZATHURA_ERROR_OK;
 }
@@ -114,7 +114,7 @@ zathura_annotation_sound_get_icon_name(zathura_annotation_t*
 
   ANNOTATION_SOUND_CHECK_TYPE_AND_DATA()
 
-  *icon_name = annotation->data.file->icon_name;
+  *icon_name = annotation->data.sound->icon_name;
 
   return ZATHURA_ERROR_OK;
 }

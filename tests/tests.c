@@ -22,7 +22,7 @@ int main(void)
 
   /* setup test suite */
   SRunner* suite_runner = srunner_create(NULL);
-  /* srunner_set_fork_status(suite_runner, CK_NOFORK); */
+  srunner_set_fork_status(suite_runner, CK_NOFORK);
 
   srunner_add_suite(suite_runner, suite_internal());
   srunner_add_suite(suite_runner, suite_image_buffer());

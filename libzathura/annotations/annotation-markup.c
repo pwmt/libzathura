@@ -1,61 +1,14 @@
 /* See LICENSE file for license and copyright information */
 
+#include <stdlib.h>
+
 #include "../annotations.h"
 #include "internal.h"
+#include "internal/annotation-markup.h"
 
-/**
- * Many annotation types are defined as markup annotations because they are
- * used primarily to mark up PDF documents. These annotations have text that
- * appears as part of the annotation and may be displayed in other ways by a
- * viewer application, such as in a Comments pane.
- */
-struct zathura_annotation_markup_s {
-  /**
-   * The text label to be displayed in the title bar of the annotation’s
-   * pop-up window when open and active. By convention, this entry
-   * identifies the user who added the annotation.
-   */
-  char* label;
-
-  /**
-   * An indirect reference to a pop-up annotation for entering or editing
-   * the text associated with this annotation.
-   */
-  zathura_annotation_t* popup_annotation;
-
-  /**
-   * A rich text string to be displayed in the pop-up window when the
-   * annotation is opened.
-   */
-  char* text;
-
-  /**
-   * The date and time when the annotation was created.
-   */
-  time_t creation_date;
-
-  /**
-   * A reference to the annotation that this annotation is “in reply to”.
-   * Both annotations must be on the same page of the document. The
-   * relationship between the two annotations is specified by the RT entry.
-   */
-  zathura_annotation_t* reply_to_annotation;
-
-  /**
-   * A type specifying the relationship (the “reply type”) between this
-   * annotation and one specified by @a ::reply_type.
-   */
-  zathura_annotation_markup_reply_type_t reply_type;
-};
-
-zathura_error_t
-zathura_annotation_is_markup_annotation(zathura_annotation_t* annotation, bool*
-    is_markup_annotation)
+static int
+check_if_markup_annotation(zathura_annotation_t* annotation)
 {
-  if (annotation == NULL || is_markup_annotation == NULL) {
-    return ZATHURA_ERROR_INVALID_ARGUMENTS;
-  }
-  
   switch (annotation->type) {
     case ZATHURA_ANNOTATION_UNKNOWN:
     case ZATHURA_ANNOTATION_LINK:
@@ -67,8 +20,7 @@ zathura_annotation_is_markup_annotation(zathura_annotation_t* annotation, bool*
     case ZATHURA_ANNOTATION_TRAP_NET:
     case ZATHURA_ANNOTATION_WATERMARK:
     case ZATHURA_ANNOTATION_3D:
-      *is_markup_annotation = false;
-      break;
+      return 1;
     case ZATHURA_ANNOTATION_TEXT:
     case ZATHURA_ANNOTATION_FREE_TEXT:
     case ZATHURA_ANNOTATION_LINE:
@@ -85,11 +37,257 @@ zathura_annotation_is_markup_annotation(zathura_annotation_t* annotation, bool*
     case ZATHURA_ANNOTATION_INK:
     case ZATHURA_ANNOTATION_FILE_ATTACHMENT:
     case ZATHURA_ANNOTATION_SOUND:
-      *is_markup_annotation = true;
-      break;
+      return 0;
     default:
-      return ZATHURA_ERROR_INVALID_ARGUMENTS;
+      return -1;
   }
+}
+
+#define ANNOTATION_MARKUP_CHECK_TYPE() \
+  if (check_if_markup_annotation(annotation) != 0) { \
+    return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE; \
+  }
+
+#define ANNOTATION_MARKUP_CHECK_DATA() \
+  if (annotation->markup == NULL) { \
+    return ZATHURA_ERROR_UNKNOWN; \
+  }
+
+#define ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA() \
+  ANNOTATION_MARKUP_CHECK_TYPE() \
+  ANNOTATION_MARKUP_CHECK_DATA()
+
+zathura_error_t
+zathura_annotation_is_markup_annotation(zathura_annotation_t* annotation, bool*
+    is_markup_annotation)
+{
+  if (annotation == NULL || is_markup_annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+  
+  int result = check_if_markup_annotation(annotation);
+  if (result == -1) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  } else if (result == 1) {
+    *is_markup_annotation = false;
+  } else {
+    *is_markup_annotation = true;
+  }
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_markup_init(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE()
+
+  if (annotation->markup != NULL) {
+    free(annotation->markup);
+    annotation->markup = NULL;
+  }
+
+  annotation->markup = calloc(1, sizeof(zathura_annotation_markup_t));
+  if (annotation->markup == NULL) {
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_markup_clear(zathura_annotation_t* annotation)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE()
+
+  if (annotation->markup != NULL) {
+    free(annotation->markup);
+    annotation->markup = NULL;
+  }
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_markup_set_label(zathura_annotation_t*
+    annotation, char* label)
+{
+  if (annotation == NULL || label == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  if (annotation->markup->label != NULL) {
+    g_free(annotation->markup->label);
+  }
+
+  annotation->markup->label = g_strdup(label);
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_markup_get_label(zathura_annotation_t*
+    annotation, char** label)
+{
+  if (annotation == NULL || label == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  *label = annotation->markup->label;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_markup_set_popup_annotation(zathura_annotation_t* annotation, zathura_annotation_t* popup_annotation)
+{
+  if (annotation == NULL || popup_annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  annotation->markup->popup_annotation = popup_annotation;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_markup_get_popup_annotation(zathura_annotation_t* annotation, zathura_annotation_t** popup_annotation)
+{
+  if (annotation == NULL || popup_annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  *popup_annotation = annotation->markup->popup_annotation;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_markup_set_text(zathura_annotation_t*
+    annotation, char* text)
+{
+  if (annotation == NULL || text == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  if (annotation->markup->text != NULL) {
+    g_free(annotation->markup->text);
+  }
+
+  annotation->markup->text = g_strdup(text);
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_markup_get_text(zathura_annotation_t*
+    annotation, char** text)
+{
+  if (annotation == NULL || text == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  *text = annotation->markup->text;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_markup_set_creation_date(zathura_annotation_t*
+    annotation, time_t creation_date)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  annotation->markup->creation_date = creation_date;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_markup_get_creation_date(zathura_annotation_t*
+    annotation, time_t* creation_date)
+{
+  if (annotation == NULL || creation_date == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  *creation_date = annotation->markup->creation_date;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_markup_set_reply_to_annotation(zathura_annotation_t*
+    annotation, zathura_annotation_t* reply_to_annotation)
+{
+  if (annotation == NULL || reply_to_annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  annotation->markup->reply_to_annotation = reply_to_annotation;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_markup_get_reply_to_annotation(zathura_annotation_t*
+    annotation, zathura_annotation_t** reply_to_annotation)
+{
+  if (annotation == NULL || reply_to_annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  *reply_to_annotation = annotation->markup->reply_to_annotation;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_markup_set_reply_type(zathura_annotation_t* annotation,
+    zathura_annotation_markup_reply_type_t reply_type)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  annotation->markup->reply_type = reply_type;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_markup_get_reply_type(zathura_annotation_t* annotation,
+    zathura_annotation_markup_reply_type_t* reply_type)
+{
+  if (annotation == NULL || reply_type == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  *reply_type = annotation->markup->reply_type;
 
   return ZATHURA_ERROR_OK;
 }

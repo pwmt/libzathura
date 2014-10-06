@@ -15,7 +15,7 @@
   }
 
 #define ANNOTATION_FILE_CHECK_DATA() \
-  if (annotation->data.caret == NULL) { \
+  if (annotation->data.file == NULL) { \
     return ZATHURA_ERROR_UNKNOWN; \
   }
 

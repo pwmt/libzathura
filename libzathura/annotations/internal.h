@@ -59,12 +59,12 @@ struct zathura_annotation_s {
    */
   bool is_markup;
 
-  union {
-    /**
-     * A markup annotation
-     */
-    struct zathura_annotation_markup_s* markup;
+  /**
+    * A markup annotation
+    */
+  struct zathura_annotation_markup_s* markup;
 
+  union {
     /**
      * A text annotation
      */
@@ -159,6 +159,7 @@ struct zathura_annotation_s {
 #include "internal/annotation-ink.h"
 #include "internal/annotation-line.h"
 #include "internal/annotation-link.h"
+#include "internal/annotation-markup.h"
 #include "internal/annotation-movie.h"
 #include "internal/annotation-polygon.h"
 #include "internal/annotation-poly-line.h"

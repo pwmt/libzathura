@@ -124,6 +124,14 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
       break;
   }
 
+  bool is_markup_annotation = false;
+  if (error == ZATHURA_ERROR_OK &&
+      zathura_annotation_is_markup_annotation(*annotation, &is_markup_annotation) == ZATHURA_ERROR_OK) {
+      if (is_markup_annotation == true) {
+        zathura_annotation_markup_init(*annotation);
+      }
+  }
+
   if (error != ZATHURA_ERROR_OK) {
     free(*annotation);
     return error;
@@ -208,6 +216,14 @@ zathura_annotation_free(zathura_annotation_t* annotation)
       default:
         error = ZATHURA_ERROR_INVALID_ARGUMENTS;
         break;
+  }
+
+  bool is_markup_annotation = false;
+  if (error == ZATHURA_ERROR_OK &&
+      zathura_annotation_is_markup_annotation(annotation, &is_markup_annotation) == ZATHURA_ERROR_OK) {
+      if (is_markup_annotation == true) {
+        error = zathura_annotation_markup_clear(annotation);
+      }
   }
 
   free(annotation);

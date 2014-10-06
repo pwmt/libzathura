@@ -81,7 +81,7 @@ typedef enum zathura_annotation_text_icon_s {
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_text_set_icon_name(zathura_annotation_t*
-    annotation, char* icon_name);
+    annotation, const char* icon_name);
 
 /**
  * Returns the icon name of this text annotation

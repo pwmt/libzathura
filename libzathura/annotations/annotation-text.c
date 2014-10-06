@@ -54,7 +54,7 @@ zathura_annotation_text_clear(zathura_annotation_t* annotation)
   ANNOTATION_TEXT_CHECK_TYPE()
 
   if (annotation->data.text != NULL) {
-    g_free(annotation->data.file->icon_name);
+    g_free(annotation->data.text->icon_name);
     free(annotation->data.text);
     annotation->data.text = NULL;
   }
@@ -64,7 +64,7 @@ zathura_annotation_text_clear(zathura_annotation_t* annotation)
 
 zathura_error_t
 zathura_annotation_text_set_icon_name(zathura_annotation_t*
-    annotation, char* icon_name)
+    annotation, const char* icon_name)
 {
   if (annotation == NULL || icon_name == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
