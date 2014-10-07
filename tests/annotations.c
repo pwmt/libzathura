@@ -580,7 +580,15 @@ suite_annotations(void)
   tcase = tcase_create("printer-mark");
   tcase_add_checked_fixture(tcase, setup_annotation_printer_mark, teardown);
   tcase_add_test(tcase, test_annotation_printer_mark_new);
+  tcase_add_test(tcase, test_annotation_printer_mark_init);
+  tcase_add_test(tcase, test_annotation_printer_mark_clear);
   tcase_add_test(tcase, test_annotation_printer_mark_get_type);
+  tcase_add_test(tcase, test_annotation_printer_mark_set_name);
+  tcase_add_test(tcase, test_annotation_printer_mark_get_name);
+  tcase_add_test(tcase, test_annotation_printer_mark_set_mark_style);
+  tcase_add_test(tcase, test_annotation_printer_mark_get_mark_style);
+  tcase_add_test(tcase, test_annotation_printer_mark_set_colorants);
+  tcase_add_test(tcase, test_annotation_printer_mark_get_colorants);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("trap-net");

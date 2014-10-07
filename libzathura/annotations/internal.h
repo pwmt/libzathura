@@ -146,6 +146,11 @@ struct zathura_annotation_s {
     struct zathura_annotation_screen_s* screen;
 
     /**
+     * A printer-mark annotation
+     */
+    struct zathura_annotation_printer_mark_s* printer_mark;
+
+    /**
      * A 3d annotation
      */
     struct zathura_annotation_3d_s* d3d;
@@ -164,6 +169,7 @@ struct zathura_annotation_s {
 #include "internal/annotation-polygon.h"
 #include "internal/annotation-poly-line.h"
 #include "internal/annotation-popup.h"
+#include "internal/annotation-printer-mark.h"
 #include "internal/annotation-screen.h"
 #include "internal/annotation-sound.h"
 #include "internal/annotation-stamp.h"
