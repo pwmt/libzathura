@@ -49,7 +49,7 @@ zathura_error_t zathura_plugin_manager_free(zathura_plugin_manager_t* plugin_man
 zathura_error_t zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char* path);
 
 /**
- * Loads all modules existing in the given @directory
+ * Loads all modules existing in the given @a directory
  *
  * @param[in] plugin_manager The plugin manager
  * @param[in] directory The path of the directory of modules

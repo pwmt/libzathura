@@ -7,7 +7,7 @@
  * Sets the rectangle of the square annotation
  *
  * @param[in] annotation The annotation
- * @param[in] symbol The symbol
+ * @param[in] rectangle The rectangle
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -21,7 +21,7 @@ zathura_error_t zathura_annotation_square_set_rectangle(zathura_annotation_t*
  * Returns the rectangle of the square annotation
  *
  * @param[in] annotation The annotation
- * @param[out] symbol The symbol
+ * @param[out] rectangle The rectangle
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -35,7 +35,7 @@ zathura_error_t zathura_annotation_square_get_rectangle(zathura_annotation_t*
  * Sets the color of the square annotation
  *
  * @param[in] annotation The annotation
- * @param[in] symbol The symbol
+ * @param[in] color The color
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -49,7 +49,7 @@ zathura_error_t zathura_annotation_square_set_color(zathura_annotation_t*
  * Returns the color of the square annotation
  *
  * @param[in] annotation The annotation
- * @param[out] symbol The symbol
+ * @param[out] color The color
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -63,7 +63,7 @@ zathura_error_t zathura_annotation_square_get_color(zathura_annotation_t*
  * Sets the border of the square annotation
  *
  * @param[in] annotation The annotation
- * @param[in] symbol The symbol
+ * @param[in] border The border
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -77,7 +77,7 @@ zathura_error_t zathura_annotation_square_set_border(zathura_annotation_t*
  * Returns the border of the square annotation
  *
  * @param[in] annotation The annotation
- * @param[out] symbol The symbol
+ * @param[out] border The border
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed

@@ -52,7 +52,7 @@ zathura_error_t zathura_annotation_markup_get_label(zathura_annotation_t*
  * Sets the pop-up annotation annotation with which this markup annotation is associated.
  *
  * @param[in] annotation The annotation
- * @param[in] paths The list of paths
+ * @param[in] popup_annotation The popup annotation
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -65,7 +65,7 @@ zathura_error_t zathura_annotation_markup_set_popup_annotation(zathura_annotatio
  * Sets the pop-up annotation annotation with which this markup annotation is associated.
  *
  * @param[in] annotation The annotation
- * @param[out] paths The list of paths
+ * @param[out] popup_annotation The popup annotation
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -104,10 +104,10 @@ zathura_error_t zathura_annotation_markup_get_text(zathura_annotation_t*
     annotation, char** text);
 
 /**
- * Sets the date and time when the annotation was most recently modified.
+ * Sets the date and time when the annotation was created.
  *
  * @param[in] annotation The annotation
- * @param[in] date The date of the annotation
+ * @param[in] creation_date The creation date of the annotation
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -117,10 +117,10 @@ zathura_error_t zathura_annotation_markup_set_creation_date(zathura_annotation_t
     annotation, time_t creation_date);
 
 /**
- * Returns the date and time when the annotation was most recently modified.
+ * Returns the date and time when the annotation was created.
  *
  * @param[in] annotation The annotation
- * @param[in] date The date of the annotation
+ * @param[in] creation_date The creation date of the annotation
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -130,10 +130,11 @@ zathura_error_t zathura_annotation_markup_get_creation_date(zathura_annotation_t
     annotation, time_t* creation_date);
 
 /**
- * Sets the reply-to annotation annotation with which this markup annotation is associated.
+ * Sets the reply-to annotation annotation with which this markup annotation is
+ * associated.
  *
  * @param[in] annotation The annotation
- * @param[in] paths The list of paths
+ * @param[in] reply_to_annotation Reply-to annotation
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -145,10 +146,11 @@ zathura_annotation_markup_set_reply_to_annotation(zathura_annotation_t*
     annotation, zathura_annotation_t* reply_to_annotation);
 
 /**
- * Sets the reply-to annotation annotation with which this markup annotation is associated.
+ * Returns the reply-to annotation annotation with which this markup annotation
+ * is associated.
  *
  * @param[in] annotation The annotation
- * @param[out] paths The list of paths
+ * @param[out] reply_to_annotation Reply-to annotation
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed

@@ -10,7 +10,7 @@
  * Sets the parent annotation with which this pop-up annotation is associated.
  *
  * @param[in] annotation The annotation
- * @param[in] paths The list of paths
+ * @param[in] parent The parent annotation
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -23,7 +23,7 @@ zathura_error_t zathura_annotation_popup_set_parent(zathura_annotation_t* annota
  * Sets the parent annotation with which this pop-up annotation is associated.
  *
  * @param[in] annotation The annotation
- * @param[out] paths The list of paths
+ * @param[out] parent The parent annotation
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed

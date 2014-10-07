@@ -12,7 +12,7 @@ typedef struct zathura_3d_s zathura_3d_t;
  * Sets the actual 3d of this 3d annotation
  *
  * @param[in] annotation The annotation
- * @param[in] 3d The 3d object
+ * @param[in] artwork The 3d object
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -26,7 +26,7 @@ zathura_error_t zathura_annotation_3d_set_artwork(zathura_annotation_t*
  * Returns the actual 3d of this 3d annotation
  *
  * @param[in] annotation The annotation
- * @param[out] 3d The 3d object
+ * @param[out] artwork The 3d object
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -40,7 +40,7 @@ zathura_error_t zathura_annotation_3d_get_artwork(zathura_annotation_t*
  * Sets the view_box of the 3d annotation
  *
  * @param[in] annotation The annotation
- * @param[in] symbol The symbol
+ * @param[in] view_box The view box
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -54,7 +54,7 @@ zathura_error_t zathura_annotation_3d_set_view_box(zathura_annotation_t*
  * Returns the view_box of the 3d annotation
  *
  * @param[in] annotation The annotation
- * @param[out] symbol The symbol
+ * @param[out] view_box The view box
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed

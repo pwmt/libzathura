@@ -197,7 +197,7 @@ zathura_error_t zathura_annotation_get_name(zathura_annotation_t* annotation,
  * Sets the date and time when the annotation was most recently modified.
  *
  * @param[in] annotation The annotation
- * @param[in] date The date of the annotation
+ * @param[in] modification_date The date of the annotation modification
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -210,7 +210,7 @@ zathura_error_t zathura_annotation_set_modification_date(zathura_annotation_t*
  * Returns the date and time when the annotation was most recently modified.
  *
  * @param[in] annotation The annotation
- * @param[in] date The date of the annotation
+ * @param[in] modification_date The date of the annotation modification
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed

@@ -43,7 +43,8 @@ typedef struct zathura_annotation_markup_s {
 
   /**
    * A type specifying the relationship (the “reply type”) between this
-   * annotation and one specified by @a ::reply_type.
+   * annotation and one specified by @a
+   * ::zathura_annotation_markup_reply_type_t.
    */
   zathura_annotation_markup_reply_type_t reply_type;
 } zathura_annotation_markup_t;

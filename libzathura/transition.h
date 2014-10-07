@@ -11,7 +11,7 @@ typedef enum zathura_page_transition_style_e {
   /**
    * Two lines sweep across the screen, revealing the new page. The lines may be
    * either horizontal or vertical and may move inward from the edges of the
-   * page or outward from the center, as specified by the @a
+   * page or outward from the center, as specified by the 
    * ::zathura_page_transition_t.dimension and @a
    * ::zathura_page_transition_t.motion entries, respectively.
    */

@@ -58,7 +58,7 @@ zathura_error_t zathura_annotation_printer_mark_set_mark_style(zathura_annotatio
  * and suitable for presentation to the user on the screen.
  *
  * @param[in] annotation The annotation
- * @param[out] mark style The mark style
+ * @param[out] mark_style The mark style
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed

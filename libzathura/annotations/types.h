@@ -156,18 +156,18 @@ typedef enum zathura_annotation_markup_intent_e {
 
 /**
  * A type specifying the relationship (the “reply type”) between this annotation
- * and one specified by @a ::reply_type.
+ * and one specified by @a ::zathura_annotation_markup_reply_type_t.
  */
 typedef enum zathura_annotation_markup_reply_type_e {
   /**
    * The annotation is considered a reply to the annotation specified by
-   * @a ::reply_type.
+   * @a ::zathura_annotation_markup_reply_type_t.
    */
   ZATHURA_ANNOTATION_MARKUP_REPLY_TYPE_REPLY,
 
   /**
    * The annotation is grouped with the annotation specified by
-   * @a ::reply_type.
+   * @a ::zathura_annotation_markup_reply_type_t.
    */
   ZATHURA_ANNOTATION_MARKUP_REPLY_TYPE_GROUP
 } zathura_annotation_markup_reply_type_t;

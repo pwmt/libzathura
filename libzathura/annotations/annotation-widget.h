@@ -201,7 +201,7 @@ zathura_error_t zathura_annotation_widget_get_border(zathura_annotation_t*
  * Sets the background color of the widget annotation
  *
  * @param[in] annotation The annotation
- * @param[in] color The background color
+ * @param[in] background_color The background color
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -215,7 +215,7 @@ zathura_error_t zathura_annotation_widget_set_background_color(zathura_annotatio
  * Returns the background color of the widget annotation
  *
  * @param[in] annotation The annotation
- * @param[out] color The background color
+ * @param[out] background_color The background color
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed

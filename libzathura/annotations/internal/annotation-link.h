@@ -25,11 +25,6 @@ typedef struct zathura_annotation_link_s {
    * An list of n @a zathura_quad_point_t objects specifying the coordinates
    * of n quadrilaterals in default user space that comprise the region in
    * which the link should be activated.
-   *
-   * If this entry is not present or the viewer application does not
-   * recognize it, the region specified by the @a ::position entry should be
-   * used.  @a region should be ignored if any coordinate in the array lies
-   * outside the region specified by @a ::position.
    */
   zathura_list_t* quad_points;
 } zathura_annotation_link_t;

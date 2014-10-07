@@ -9,7 +9,7 @@
  * Describes the transition object of the page which is used
  * for presentations
  */
-struct zathura_page_transition_s {
+typedef struct zathura_page_transition_s {
   /**
    * The transition style to use when moving to this page from another during a
    * presentation.
@@ -77,7 +77,7 @@ struct zathura_page_transition_s {
    * ::ZATHURA_PAGE_TRANSITION_UNCOVER.
    */
   bool rectangular;
-};
+} zathura_page_transition_t;
 
 zathura_error_t
 zathura_page_transition_new(zathura_page_transition_t** transition,
