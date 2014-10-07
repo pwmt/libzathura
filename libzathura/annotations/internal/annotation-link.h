@@ -19,7 +19,7 @@ typedef struct zathura_annotation_link_s {
    * The annotation’s highlighting mode, the visual effect to be used when
    * the mouse button is pressed or held down inside its active area.
    */
-  zathura_annotation_link_highlighting_mode_t highlighting_mode;
+  zathura_annotation_highlighting_mode_t highlighting_mode;
 
   /**
    * An list of n @a zathura_quad_point_t objects specifying the coordinates

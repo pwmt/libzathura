@@ -50,7 +50,7 @@ zathura_annotation_link_get_action(zathura_annotation_t* annotation,
  */
 zathura_error_t
 zathura_annotation_link_set_highlighting_mode(zathura_annotation_t* annotation,
-    zathura_annotation_link_highlighting_mode_t mode);
+    zathura_annotation_highlighting_mode_t mode);
 
 /**
  * Returns the  annotation’s highlighting mode, the visual effect to be used
@@ -64,7 +64,9 @@ zathura_annotation_link_set_highlighting_mode(zathura_annotation_t* annotation,
  * @return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE Mismatching type of annotation passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_link_get_highlighting_mode(zathura_annotation_t* annotation, zathura_annotation_link_highlighting_mode_t* mode);
+zathura_error_t
+zathura_annotation_link_get_highlighting_mode(zathura_annotation_t* annotation,
+    zathura_annotation_highlighting_mode_t* mode);
 
 /**
  * Sets a list of 8 × n numbers specifying the coordinates of n quadri-

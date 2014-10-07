@@ -176,7 +176,7 @@ typedef enum zathura_annotation_markup_reply_type_e {
  * The annotation’s highlighting mode, the visual effect to be used when the
  * mouse button is pressed or held down inside its active area.
  */
-typedef enum zathura_annotation_link_highlighting_mode_e {
+typedef enum zathura_annotation_highlighting_mode_e {
   /**
    * No highlighting.
    */
@@ -197,7 +197,7 @@ typedef enum zathura_annotation_link_highlighting_mode_e {
    * page.
    */
   ZATHURA_ANNOTATION_HIGHLIGHTING_PUSH = 'P'
-} zathura_annotation_link_highlighting_mode_t;
+} zathura_annotation_highlighting_mode_t;
 
 /**
  * A measure dictionary specifies an alternate coordinate system for a region of

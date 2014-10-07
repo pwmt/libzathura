@@ -248,6 +248,7 @@ START_TEST(test_annotation_get_color) {
 #include "annotations/annotation-trap-net.c"
 #include "annotations/annotation-underline.c"
 #include "annotations/annotation-watermark.c"
+#include "annotations/annotation-widget.c"
 
 Suite*
 suite_annotations(void)
@@ -601,6 +602,36 @@ suite_annotations(void)
   tcase_add_checked_fixture(tcase, setup_annotation_watermark, teardown);
   tcase_add_test(tcase, test_annotation_watermark_new);
   tcase_add_test(tcase, test_annotation_watermark_get_type);
+  suite_add_tcase(suite, tcase);
+
+  tcase = tcase_create("widget");
+  tcase_add_checked_fixture(tcase, setup_annotation_widget, teardown);
+  tcase_add_test(tcase, test_annotation_widget_new);
+  tcase_add_test(tcase, test_annotation_widget_get_type);
+  tcase_add_test(tcase, test_annotation_widget_init);
+  tcase_add_test(tcase, test_annotation_widget_clear);
+  tcase_add_test(tcase, test_annotation_widget_set_form_field);
+  tcase_add_test(tcase, test_annotation_widget_get_form_field);
+  tcase_add_test(tcase, test_annotation_widget_set_highlighting_mode);
+  tcase_add_test(tcase, test_annotation_widget_get_highlighting_mode);
+  tcase_add_test(tcase, test_annotation_widget_set_action);
+  tcase_add_test(tcase, test_annotation_widget_get_action);
+  tcase_add_test(tcase, test_annotation_widget_set_additional_actions);
+  tcase_add_test(tcase, test_annotation_widget_get_additional_actions);
+  tcase_add_test(tcase, test_annotation_widget_set_border);
+  tcase_add_test(tcase, test_annotation_widget_get_border);
+  tcase_add_test(tcase, test_annotation_widget_set_background_color);
+  tcase_add_test(tcase, test_annotation_widget_get_background_color);
+  tcase_add_test(tcase, test_annotation_widget_set_rotation);
+  tcase_add_test(tcase, test_annotation_widget_get_rotation);
+  tcase_add_test(tcase, test_annotation_widget_set_caption);
+  tcase_add_test(tcase, test_annotation_widget_get_caption);
+  tcase_add_test(tcase, test_annotation_widget_set_rollover_caption);
+  tcase_add_test(tcase, test_annotation_widget_get_rollover_caption);
+  tcase_add_test(tcase, test_annotation_widget_set_alternate_caption);
+  tcase_add_test(tcase, test_annotation_widget_get_alternate_caption);
+  tcase_add_test(tcase, test_annotation_widget_set_caption_position);
+  tcase_add_test(tcase, test_annotation_widget_get_caption_position);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("3D");

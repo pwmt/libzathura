@@ -93,7 +93,7 @@ zathura_annotation_link_get_action(zathura_annotation_t* annotation,
 
 zathura_error_t
 zathura_annotation_link_set_highlighting_mode(zathura_annotation_t* annotation,
-    zathura_annotation_link_highlighting_mode_t mode)
+    zathura_annotation_highlighting_mode_t mode)
 {
   if (annotation == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
@@ -107,7 +107,7 @@ zathura_annotation_link_set_highlighting_mode(zathura_annotation_t* annotation,
 }
 
 zathura_error_t
-zathura_annotation_link_get_highlighting_mode(zathura_annotation_t* annotation, zathura_annotation_link_highlighting_mode_t* mode)
+zathura_annotation_link_get_highlighting_mode(zathura_annotation_t* annotation, zathura_annotation_highlighting_mode_t* mode)
 
 {
   if (annotation == NULL || mode == NULL) {

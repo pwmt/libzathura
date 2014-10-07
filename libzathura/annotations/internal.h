@@ -154,6 +154,11 @@ struct zathura_annotation_s {
      * A 3d annotation
      */
     struct zathura_annotation_3d_s* d3d;
+
+    /**
+     * A widget annotation
+     */
+    struct zathura_annotation_widget_s* widget;
   } data;
 };
 
@@ -176,5 +181,6 @@ struct zathura_annotation_s {
 #include "internal/annotation-square-and-circle.h"
 #include "internal/annotation-text.h"
 #include "internal/annotation-text-markup.h"
+#include "internal/annotation-widget.h"
 
 #endif // ZATHURA_ANNOTATION_INTERNAL_H
