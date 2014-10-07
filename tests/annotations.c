@@ -233,7 +233,7 @@ START_TEST(test_annotation_get_color) {
 #include "annotations/annotation-link.c"
 #include "annotations/annotation-markup.c"
 #include "annotations/annotation-movie.c"
-#include "annotations/annotation-poly-line.c"
+#include "annotations/annotation-polyline.c"
 #include "annotations/annotation-polygon.c"
 #include "annotations/annotation-popup.c"
 #include "annotations/annotation-printer-mark.c"

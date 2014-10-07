@@ -290,7 +290,7 @@ zathura_error_t zathura_annotation_get_color(zathura_annotation_t* annotation,
 #include "annotations/annotation-link.h"
 #include "annotations/annotation-markup.h"
 #include "annotations/annotation-movie.h"
-#include "annotations/annotation-poly-line.h"
+#include "annotations/annotation-polyline.h"
 #include "annotations/annotation-polygon.h"
 #include "annotations/annotation-popup.h"
 #include "annotations/annotation-printer-mark.h"

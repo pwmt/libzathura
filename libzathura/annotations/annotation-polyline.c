@@ -3,9 +3,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "annotation-poly-line.h"
+#include "annotation-polyline.h"
 #include "internal.h"
-#include "internal/annotation-poly-line.h"
+#include "internal/annotation-polyline.h"
 
 #define ANNOTATION_POLY_LINE_CHECK_TYPE() \
   if (annotation->type != ZATHURA_ANNOTATION_POLY_LINE) { \

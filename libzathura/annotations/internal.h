@@ -172,7 +172,7 @@ struct zathura_annotation_s {
 #include "internal/annotation-markup.h"
 #include "internal/annotation-movie.h"
 #include "internal/annotation-polygon.h"
-#include "internal/annotation-poly-line.h"
+#include "internal/annotation-polyline.h"
 #include "internal/annotation-popup.h"
 #include "internal/annotation-printer-mark.h"
 #include "internal/annotation-screen.h"
