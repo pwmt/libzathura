@@ -71,10 +71,10 @@ START_TEST(test_form_field_get_type) {
   TEST_FORM_FIELD_GET_TYPE(form_field, type, ZATHURA_FORM_FIELD_SIGNATURE)
 } END_TEST
 
-#include "form-fields/button.c"
-#include "form-fields/text.c"
-#include "form-fields/choice.c"
-#include "form-fields/choice-item.c"
+#include "form-fields/form-field-button.c"
+#include "form-fields/form-field-text.c"
+#include "form-fields/form-field-choice.c"
+#include "form-fields/form-field-choice-item.c"
 
 Suite*
 suite_form_fields(void)

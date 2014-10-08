@@ -56,8 +56,8 @@ typedef enum zathura_form_field_type_e {
 zathura_error_t zathura_form_field_get_type(zathura_form_field_t* form_field,
     zathura_form_field_type_t* type);
 
-#include "form-fields/button.h"
-#include "form-fields/text.h"
-#include "form-fields/choice.h"
+#include "form-fields/form-field-button.h"
+#include "form-fields/form-field-text.h"
+#include "form-fields/form-field-choice.h"
 
 #endif /* FORM_FIELDS_H */
