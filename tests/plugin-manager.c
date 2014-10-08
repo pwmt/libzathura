@@ -90,13 +90,13 @@ START_TEST(test_plugin_manager_get_plugin) {
 
   /* invalid parameter */
   fail_unless(zathura_plugin_manager_get_plugin(NULL, NULL, NULL)           == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, "xx", NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, "", NULL)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, NULL, NULL)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, NULL, "xx") == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, NULL, "") == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* load plugins */
   fail_unless(zathura_plugin_manager_load_dir(plugin_manager, "./plugin/") == ZATHURA_ERROR_OK);
-  fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, "application/pdf", &plugin) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, &plugin, "application/pdf") == ZATHURA_ERROR_OK);
   fail_unless(plugin != NULL);
 
   fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);

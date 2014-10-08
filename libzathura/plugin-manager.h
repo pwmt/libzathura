@@ -82,6 +82,6 @@ zathura_error_t zathura_plugin_manager_get_plugins(zathura_plugin_manager_t* plu
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_plugin_manager_get_plugin(zathura_plugin_manager_t* plugin_manager, const char* mime_type, zathura_plugin_t** plugin);
+zathura_error_t zathura_plugin_manager_get_plugin(zathura_plugin_manager_t* plugin_manager, zathura_plugin_t** plugin, const char* mime_type);
 
 #endif /* PLUGIN_MANAGER_H */

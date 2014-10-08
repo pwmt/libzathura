@@ -258,7 +258,7 @@ zathura_plugin_manager_get_plugins(zathura_plugin_manager_t* plugin_manager,
 
 zathura_error_t
 zathura_plugin_manager_get_plugin(zathura_plugin_manager_t* plugin_manager,
-    const char* mime_type, zathura_plugin_t** plugin)
+    zathura_plugin_t** plugin, const char* mime_type)
 {
   if (plugin_manager == NULL || mime_type == NULL || strlen(mime_type) == 0 || plugin == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;

@@ -68,10 +68,10 @@ zathura_plugin_get_functions(zathura_plugin_t* plugin,
 }
 
 zathura_error_t
-zathura_plugin_open_document(zathura_plugin_t* plugin, const char* path,
-    const char* password, zathura_document_t** document)
+zathura_plugin_open_document(zathura_plugin_t* plugin, zathura_document_t**
+    document, const char* path, const char* password)
 {
-  if (plugin == NULL || path == NULL || strlen(path) == 0 || document == NULL) {
+  if (plugin == NULL || document == NULL || path == NULL || strlen(path) == 0) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 

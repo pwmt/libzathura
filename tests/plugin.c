@@ -150,17 +150,18 @@ START_TEST(test_plugin_open_document) {
   /* invalid parameter */
   fail_unless(zathura_plugin_open_document(NULL,   NULL, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_plugin_open_document(plugin, NULL, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_plugin_open_document(plugin, "",   NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_plugin_open_document(plugin, "ab", "",   NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_open_document(plugin, &document, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_open_document(plugin, &document, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_plugin_open_document(plugin, &document, "", NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid parameter */
-  fail_unless(zathura_plugin_open_document(plugin, "Makefile", NULL, &document) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_OK);
   fail_unless(zathura_document_free(document) == ZATHURA_ERROR_OK);
 
   /* fault injection */
   fiu_enable_external("libc/mm/calloc", 1, NULL, 0, cb_test_plugin_document_open_calloc);
-  fail_unless(zathura_plugin_open_document(plugin, "Makefile", NULL, &document) == ZATHURA_ERROR_OUT_OF_MEMORY);
-  fail_unless(zathura_plugin_open_document(plugin, "Makefile", NULL, &document) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
 } END_TEST
 
