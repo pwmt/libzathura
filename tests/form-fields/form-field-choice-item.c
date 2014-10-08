@@ -77,3 +77,34 @@ START_TEST(test_form_field_choice_item_is_selected) {
   fail_unless(zathura_form_field_choice_item_is_selected(choice_item, &is_selected) == ZATHURA_ERROR_OK);
   fail_unless(is_selected == false);
 } END_TEST
+
+START_TEST(test_form_field_choice_item_set_name) {
+  char* name = "test";
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_choice_item_set_name(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_item_set_name(choice_item, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_item_set_name(NULL, name) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_choice_item_set_name(choice_item, name) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_form_field_choice_item_get_name) {
+  char* name;
+  char* input = "test";
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_choice_item_get_name(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_item_get_name(choice_item, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_item_get_name(NULL, &name) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_choice_item_set_name(choice_item, input) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_item_get_name(choice_item, &name) == ZATHURA_ERROR_OK);
+  fail_unless(g_strcmp0(input, "test") == 0);
+
+  fail_unless(zathura_form_field_choice_item_set_name(choice_item, input) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_item_get_name(choice_item, &name) == ZATHURA_ERROR_OK);
+  fail_unless(g_strcmp0(input, "test") == 0);
+} END_TEST

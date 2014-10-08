@@ -121,6 +121,20 @@ zathura_error_t zathura_form_field_choice_get_items(zathura_form_field_t*
  * Selects the option
  *
  * @param[in] choice_item The choice item
+ * @param[out] name The name of the choice item
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t
+zathura_form_field_choice_item_get_name(zathura_form_field_choice_item_t*
+  choice_item, char** name);
+
+/**
+ * Selects the option
+ *
+ * @param[in] choice_item The choice item
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed

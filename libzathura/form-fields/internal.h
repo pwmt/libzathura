@@ -18,7 +18,6 @@
     return ZATHURA_ERROR_INVALID_ARGUMENTS; \
   } \
 
-
 /**
  * Describes the form field
  */

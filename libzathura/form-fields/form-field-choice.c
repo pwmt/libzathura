@@ -75,6 +75,36 @@ zathura_form_field_choice_get_items(zathura_form_field_t* form_field, zathura_li
 }
 
 zathura_error_t
+zathura_form_field_choice_item_set_name(zathura_form_field_choice_item_t*
+  choice_item, const char* name)
+{
+  if (choice_item == NULL || name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  if (choice_item->name != NULL) {
+    g_free(choice_item->name);
+  }
+
+  choice_item->name = g_strdup(name);
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_form_field_choice_item_get_name(zathura_form_field_choice_item_t*
+  choice_item, char** name)
+{
+  if (choice_item == NULL || name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *name = choice_item->name;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
 zathura_form_field_choice_set_editable(zathura_form_field_t* form_field, bool
     is_editable)
 {

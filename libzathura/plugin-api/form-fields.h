@@ -234,4 +234,19 @@ zathura_form_field_choice_item_new(zathura_form_field_choice_item_t** item,
 zathura_error_t
 zathura_form_field_choice_item_free(zathura_form_field_choice_item_t* item);
 
+/**
+ * Sets the name of the choice item
+ *
+ * @param[in] item The new form field choice item
+ * @param[in] name The name of the choice item
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_OUT_OF_MEMORY Out of memory
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t
+zathura_form_field_choice_item_set_name(zathura_form_field_choice_item_t* item,
+    const char* name);
+
 #endif /* PLUGIN_API_FORM_FIELDS_H */

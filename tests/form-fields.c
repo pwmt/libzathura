@@ -121,6 +121,8 @@ suite_form_fields(void)
   tcase_add_test(tcase, test_form_field_choice_item_select);
   tcase_add_test(tcase, test_form_field_choice_item_deselect);
   tcase_add_test(tcase, test_form_field_choice_item_is_selected);
+  tcase_add_test(tcase, test_form_field_choice_item_set_name);
+  tcase_add_test(tcase, test_form_field_choice_item_get_name);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("choice");
