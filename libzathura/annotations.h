@@ -35,31 +35,134 @@ typedef struct zathura_annotation_s zathura_annotation_t;
  * Standard annotation types
  */
 typedef enum zathura_annotation_type_s {
+  /**
+   * Unknown annotation type.
+   */
   ZATHURA_ANNOTATION_UNKNOWN,
+
+  /**
+   * A text annotation.
+   */
   ZATHURA_ANNOTATION_TEXT,
+
+  /**
+   * A link annotation.
+   */
   ZATHURA_ANNOTATION_LINK,
+
+  /**
+   * A free-text annotation.
+   */
   ZATHURA_ANNOTATION_FREE_TEXT,
+
+  /**
+   * A line annotation.
+   */
   ZATHURA_ANNOTATION_LINE,
+
+  /**
+   * A square annotation.
+   */
   ZATHURA_ANNOTATION_SQUARE,
+
+  /**
+   * A circle annotation.
+   */
   ZATHURA_ANNOTATION_CIRCLE,
+
+  /**
+   * A polygon annotation.
+   */
   ZATHURA_ANNOTATION_POLYGON,
+
+  /**
+   * A polyline annotation.
+   */
   ZATHURA_ANNOTATION_POLY_LINE,
+
+  /**
+   * A highlight annotation.
+   */
   ZATHURA_ANNOTATION_HIGHLIGHT,
+
+  /**
+   * A underline annotation.
+   */
   ZATHURA_ANNOTATION_UNDERLINE,
+
+  /**
+   * A squiggly annotation.
+   */
   ZATHURA_ANNOTATION_SQUIGGLY,
+
+  /**
+   * A strike-out annotation.
+   */
   ZATHURA_ANNOTATION_STRIKE_OUT,
+
+  /**
+   * A stamp annotation.
+   */
   ZATHURA_ANNOTATION_STAMP,
+
+  /**
+   * A caret annotation.
+   */
   ZATHURA_ANNOTATION_CARET,
+
+  /**
+   * An ink annotation.
+   */
   ZATHURA_ANNOTATION_INK,
+
+  /**
+   * A pop-up annotation.
+   */
   ZATHURA_ANNOTATION_POPUP,
+
+  /**
+   * A file-attachment annotation.
+   */
   ZATHURA_ANNOTATION_FILE_ATTACHMENT,
+
+  /**
+   * A sound annotation.
+   */
   ZATHURA_ANNOTATION_SOUND,
+
+  /**
+   * A movie annotation.
+   */
   ZATHURA_ANNOTATION_MOVIE,
+
+  /**
+   * A widget annotation.
+   */
   ZATHURA_ANNOTATION_WIDGET,
+
+  /**
+   * A screen annotation.
+   */
   ZATHURA_ANNOTATION_SCREEN,
+
+  /**
+   * A printer's mark annotation..
+   */
   ZATHURA_ANNOTATION_PRINTER_MARK,
+
+  /**
+   * A trap-net annotation.
+   */
   ZATHURA_ANNOTATION_TRAP_NET,
+
+  /**
+   * A watermark annotation.
+   */
   ZATHURA_ANNOTATION_WATERMARK,
+
+  /**
+   * A 3D annotation.
+   */
   ZATHURA_ANNOTATION_3D,
 } zathura_annotation_type_t;
 

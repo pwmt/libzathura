@@ -12,4 +12,5 @@ libraries with a modular plugin system.
   installation
   usage/index
   api/index
+  plugins/index
   development/index

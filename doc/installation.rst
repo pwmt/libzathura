@@ -24,7 +24,7 @@ Stable version
 Since libzathura packages are available for many distributions it is recommended
 to use them by installing them with your prefered package manager. Otherwise you
 can grab the latest version of the source code from our website and build it by
-hand
+hand:
 
 .. code-block:: sh
 
@@ -47,4 +47,4 @@ features, that we are working on, type in the following commands:
   make
   make install
 
-For the installation of a file type plugin check the :plugins:(../plugins) section.
+For the installation of a file type plugin check the :ref:`plugins` section.
