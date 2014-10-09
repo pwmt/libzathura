@@ -8,6 +8,7 @@
 #include "internal/form-field-button.h"
 #include "internal/form-field-text.h"
 #include "internal/form-field-choice.h"
+#include "internal/form-field-signature.h"
 
 #define CHECK_FORM_FIELD_TYPE(form_field, type) \
   zathura_form_field_type_t form_field_type; \
@@ -31,6 +32,7 @@ struct zathura_form_field_s {
     struct zathura_form_field_button_s button;
     struct zathura_form_field_text_s text;
     struct zathura_form_field_choice_s choice;
+    struct zathura_form_field_signature_s signature;
   } data;
 };
 

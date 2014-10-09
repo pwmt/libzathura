@@ -75,6 +75,7 @@ START_TEST(test_form_field_get_type) {
 #include "form-fields/form-field-text.c"
 #include "form-fields/form-field-choice.c"
 #include "form-fields/form-field-choice-item.c"
+#include "form-fields/form-field-signature.c"
 
 Suite*
 suite_form_fields(void)
@@ -139,6 +140,12 @@ suite_form_fields(void)
   tcase_add_test(tcase, test_form_field_choice_do_spell_check);
   tcase_add_test(tcase, test_form_field_choice_set_items);
   tcase_add_test(tcase, test_form_field_choice_get_items);
+  suite_add_tcase(suite, tcase);
+
+  tcase = tcase_create("signature");
+  tcase_add_checked_fixture(tcase, setup_form_field_signature, teardown);
+  tcase_add_test(tcase, test_form_field_signature_set_signature);
+  tcase_add_test(tcase, test_form_field_signature_get_signature);
   suite_add_tcase(suite, tcase);
 
   return suite;

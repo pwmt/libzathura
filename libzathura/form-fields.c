@@ -51,6 +51,7 @@ zathura_form_field_new(zathura_form_field_t** form_field, zathura_form_field_typ
       (*form_field)->data.choice.items = NULL;
       break;
     case ZATHURA_FORM_FIELD_SIGNATURE:
+      (*form_field)->data.signature.signature = NULL;
       break;
   }
 
