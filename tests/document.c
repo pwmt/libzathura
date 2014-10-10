@@ -103,14 +103,24 @@ START_TEST(test_document_get_attachments) {
   fail_unless(zathura_document_get_attachments(NULL, &attachments) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
-START_TEST(test_document_get_meta_data) {
+START_TEST(test_document_get_metadata) {
   zathura_document_t* document = (zathura_document_t*) 0xCAFEBABE;
-  zathura_list_t* meta_data;
+  zathura_list_t* metadata;
 
   /* basic invalid arguments */
-  fail_unless(zathura_document_get_meta_data(NULL,     NULL)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_document_get_meta_data(document, NULL)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_document_get_meta_data(NULL, &meta_data) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_metadata(NULL,     NULL)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_metadata(document, NULL)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_metadata(NULL, &metadata) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+} END_TEST
+
+START_TEST(test_document_get_permissions) {
+  zathura_document_t* document = (zathura_document_t*) 0xCAFEBABE;
+  zathura_document_permission_t permissions;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_document_get_permissions(NULL,     NULL)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_permissions(document, NULL)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_permissions(NULL, &permissions) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
 Suite*
@@ -144,8 +154,12 @@ suite_document(void)
   tcase_add_test(tcase, test_document_get_attachments);
   suite_add_tcase(suite, tcase);
 
-  tcase = tcase_create("meta data");
-  tcase_add_test(tcase, test_document_get_meta_data);
+  tcase = tcase_create("metadata");
+  tcase_add_test(tcase, test_document_get_metadata);
+  suite_add_tcase(suite, tcase);
+
+  tcase = tcase_create("permissions");
+  tcase_add_test(tcase, test_document_get_permissions);
   suite_add_tcase(suite, tcase);
 
   return suite;

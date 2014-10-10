@@ -100,6 +100,7 @@ zathura_document_get_page_layout(zathura_document_t* document,
   }
 
   return ZATHURA_ERROR_OK;
+
 }
 
 zathura_error_t
@@ -123,9 +124,21 @@ zathura_document_get_attachments(zathura_document_t* document, zathura_list_t** 
 }
 
 zathura_error_t
-zathura_document_get_meta_data(zathura_document_t* document, zathura_list_t** meta_data)
+zathura_document_get_metadata(zathura_document_t* document, zathura_list_t**
+    metadata)
 {
-  if (document == NULL || meta_data == NULL) {
+  if (document == NULL || metadata == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_document_get_permissions(zathura_document_t* document,
+    zathura_document_permission_t* permissions)
+{
+  if (document == NULL || permissions == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 

@@ -73,6 +73,58 @@ typedef enum zathura_page_mode_e {
   ZATHURA_PAGE_MODE_USE_ATTACHMENTS
 } zathura_page_mode_t;
 
+typedef enum zathura_document_permission_e {
+  /**
+   * Print the document (possibly not at the highest quality level.
+  */
+  ZATHURA_PERMISSION_PRINT = 1 << 3,
+
+  /**
+   * Modify the contents of the document by operations other than those
+   * controlled by bits 6, 9, and 11.
+   */
+  ZATHURA_PERMISSION_MODIFY = 1 << 4,
+
+  /**
+   * Copy or otherwise extract text and graphics from the document by operations
+   * other than that controlled by bit 10.
+  */
+  ZATHURA_PERMISSION_COPY = 1 << 5,
+
+  /**
+   * Add or modify text annotations, fill in interactive form fields, and, if
+   * bit 4 is also set, create or modify interactive form fields (including
+   * signature fields).
+   */
+  ZATHURA_PERMISSION_ANNOTATIONS = 1 << 6,
+
+  /**
+   * Fill in existing interactive form fields (including signature fields), even
+   * if bit 6 is clear.
+   */
+  ZATHURA_PERMISSION_FILL_FORM = 1 << 9,
+
+  /**
+   * Extract text and graphics (in support of accessibility to users with
+   * disabilities or for other purposes).
+   */
+  ZATHURA_PERMISSION_ACCESSIBILITY = 1 << 10,
+
+  /**
+   * Assemble the document (insert, rotate, or delete pages and create bookmarks
+   * or thumbnail images), even if bit 4 is clear.
+   */
+  ZATHURA_PERMISSION_ASSEMBLE = 1 << 11,
+
+  /**
+   * Print the document to a representation from which a faithful digital copy
+   * of the PDF content could be generated. When this bit is clear (and bit 3 is
+   * set), printing is limited to a low-level representation of the appearance,
+   * possibly of degraded quality.
+    */
+  ZATHURA_PERMISSION_HIGH_RES_PRINT = 1 << 12,
+} zathura_document_permission_t;
+
 typedef struct zathura_document_s zathura_document_t;
 
 /**
@@ -215,13 +267,26 @@ zathura_error_t zathura_document_get_attachments(zathura_document_t* document,
  * Returns the list of the meta data information of this document
  *
  * @param[in] document The zathura document object
- * @param[out] meta_data List of meta data information
+ * @param[out] metadata List of meta data information
  * *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_document_get_meta_data(zathura_document_t* document,
-    zathura_list_t** meta_data);
+zathura_error_t zathura_document_get_metadata(zathura_document_t* document,
+    zathura_list_t** metadata);
+
+/**
+ * Returns the permissions of the document
+ *
+ * @param[in] document The zathura document object
+ * @param[out] permissions The permissions of the document
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_document_get_permissions(zathura_document_t* document,
+    zathura_document_permission_t* permissions);
 
 #endif /* DOCUMENT_H */
