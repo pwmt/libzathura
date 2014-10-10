@@ -6,8 +6,7 @@
 #include <stdbool.h>
 
 #include "../form-fields.h"
-
-typedef struct zathura_signature_s zathura_signature_t;
+#include "../crypto/signature.h"
 
 /**
  * Sets the signature of the given signature form field.

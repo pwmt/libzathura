@@ -89,3 +89,113 @@ zathura_form_field_get_type(zathura_form_field_t* form_field,
   return ZATHURA_ERROR_OK;
 }
 
+zathura_error_t
+zathura_form_field_set_name(zathura_form_field_t* form_field, const char* name)
+{
+  if (form_field == NULL || name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  if (form_field->name != NULL) {
+    g_free(form_field->name);
+  }
+
+  form_field->name = g_strdup(name);
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_form_field_get_name(zathura_form_field_t* form_field, char** name)
+{
+  if (form_field == NULL || name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *name = form_field->name;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_form_field_set_partial_name(zathura_form_field_t* form_field, const char* partial_name)
+{
+  if (form_field == NULL || partial_name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  if (form_field->partial_name != NULL) {
+    g_free(form_field->partial_name);
+  }
+
+  form_field->partial_name = g_strdup(partial_name);
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_form_field_get_partial_name(zathura_form_field_t* form_field, char** partial_name)
+{
+  if (form_field == NULL || partial_name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *partial_name = form_field->partial_name;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_form_field_set_mapping_name(zathura_form_field_t* form_field, const char* mapping_name)
+{
+  if (form_field == NULL || mapping_name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  if (form_field->mapping_name != NULL) {
+    g_free(form_field->mapping_name);
+  }
+
+  form_field->mapping_name = g_strdup(mapping_name);
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_form_field_get_mapping_name(zathura_form_field_t* form_field, char**
+    mapping_name)
+{
+  if (form_field == NULL || mapping_name == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *mapping_name = form_field->mapping_name;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_form_field_set_flags(zathura_form_field_t* form_field,
+    zathura_form_field_flag_t flags)
+{
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  form_field->flags = flags;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_form_field_get_flags(zathura_form_field_t* form_field,
+    zathura_form_field_flag_t* flags)
+{
+  if (form_field == NULL || flags == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *flags = form_field->flags;
+
+  return ZATHURA_ERROR_OK;
+}

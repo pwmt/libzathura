@@ -28,6 +28,34 @@ struct zathura_form_field_s {
    */
   zathura_form_field_type_t type;
 
+  /**
+   * An alternate field name to be used in place of the actual field name
+   * wherever the field must be identified in the user interface (such as in
+   * error or status messages referring to the field). This text is also useful
+   * when extracting the document’s contents in support of accessibility to
+   * users with disabilities or for other purposes.
+   */
+  char* name;
+
+  /**
+   * The partial field name.
+   */
+  char* partial_name;
+
+  /**
+   * The mapping name to be used when exporting interactive form field data from
+   * the document.
+   */
+  char* mapping_name;
+
+  /**
+   * A set of flags specifying various characteristics of the field.
+   */
+  zathura_form_field_flag_t flags;
+
+  /**
+   * Fields to store specific data
+   */
   union {
     struct zathura_form_field_button_s button;
     struct zathura_form_field_text_s text;

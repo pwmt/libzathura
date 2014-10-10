@@ -43,6 +43,13 @@ typedef enum zathura_form_field_type_e {
   ZATHURA_FORM_FIELD_SIGNATURE,
 } zathura_form_field_type_t;
 
+typedef enum zathura_form_field_flag_s {
+  ZATHURA_FORM_FIELD_FLAG_NONE = 0,
+  ZATHURA_FORM_FIELD_FLAG_READ_ONLY,
+  ZATHURA_FORM_FIELD_FLAG_REQUIRED,
+  ZATHURA_FORM_FIELD_FLAG_NO_EXPORT
+} zathura_form_field_flag_t;
+
 /**
  * Returns the type of the form field
  *
@@ -55,6 +62,54 @@ typedef enum zathura_form_field_type_e {
  */
 zathura_error_t zathura_form_field_get_type(zathura_form_field_t* form_field,
     zathura_form_field_type_t* type);
+
+/**
+ * Returns the name of the form field
+ *
+ * @param[in] form_field
+ * @param[out] name The name
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_get_name(zathura_form_field_t* form_field, char** name);
+
+/**
+ * Returns the partial name of the form field
+ *
+ * @param[in] form_field
+ * @param[out] partial_name The partial name
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_get_partial_name(zathura_form_field_t* form_field, char** partial_name);
+
+/**
+ * Returns the mapping name of the form field
+ *
+ * @param[in] form_field
+ * @param[out] mapping_name The mapping name
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_get_mapping_name(zathura_form_field_t* form_field, char** mapping_name);
+
+/**
+ * Returns the flags of the form field
+ *
+ * @param[in] form_field
+ * @param[out] flags The flags
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_get_flags(zathura_form_field_t* form_field, zathura_form_field_flag_t* flags);
 
 #include "form-fields/form-field-button.h"
 #include "form-fields/form-field-text.h"

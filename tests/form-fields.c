@@ -10,6 +10,11 @@
 
 zathura_form_field_t* form_field;
 
+static void setup(void) {
+  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_BUTTON) == ZATHURA_ERROR_OK);
+  fail_unless(form_field != NULL);
+}
+
 static void teardown(void) {
   fail_unless(zathura_form_field_free(form_field) == ZATHURA_ERROR_OK);
   form_field = NULL;
@@ -71,6 +76,121 @@ START_TEST(test_form_field_get_type) {
   TEST_FORM_FIELD_GET_TYPE(form_field, type, ZATHURA_FORM_FIELD_SIGNATURE)
 } END_TEST
 
+START_TEST(test_form_field_set_name) {
+  char* text = "test";
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_set_name(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_set_name(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_set_name(NULL, text) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_set_name(form_field, text) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_form_field_get_name) {
+  char* text;
+  char* input = "test";
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_get_name(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_name(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_name(NULL, &text) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_set_name(form_field, input) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_get_name(form_field, &text) == ZATHURA_ERROR_OK);
+  fail_unless(g_strcmp0(input, "test") == 0);
+
+  fail_unless(zathura_form_field_set_name(form_field, input) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_get_name(form_field, &text) == ZATHURA_ERROR_OK);
+  fail_unless(g_strcmp0(input, "test") == 0);
+} END_TEST
+
+START_TEST(test_form_field_set_partial_name) {
+  char* text = "test";
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_set_partial_name(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_set_partial_name(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_set_partial_name(NULL, text) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_set_partial_name(form_field, text) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_form_field_get_partial_name) {
+  char* text;
+  char* input = "test";
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_get_partial_name(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_partial_name(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_partial_name(NULL, &text) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_set_partial_name(form_field, input) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_get_partial_name(form_field, &text) == ZATHURA_ERROR_OK);
+  fail_unless(g_strcmp0(input, "test") == 0);
+
+  fail_unless(zathura_form_field_set_partial_name(form_field, input) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_get_partial_name(form_field, &text) == ZATHURA_ERROR_OK);
+  fail_unless(g_strcmp0(input, "test") == 0);
+} END_TEST
+
+START_TEST(test_form_field_set_mapping_name) {
+  char* text = "test";
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_set_mapping_name(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_set_mapping_name(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_set_mapping_name(NULL, text) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_set_mapping_name(form_field, text) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_form_field_get_mapping_name) {
+  char* text;
+  char* input = "test";
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_get_mapping_name(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_mapping_name(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_mapping_name(NULL, &text) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_set_mapping_name(form_field, input) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_get_mapping_name(form_field, &text) == ZATHURA_ERROR_OK);
+  fail_unless(g_strcmp0(input, "test") == 0);
+
+  fail_unless(zathura_form_field_set_mapping_name(form_field, input) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_get_mapping_name(form_field, &text) == ZATHURA_ERROR_OK);
+  fail_unless(g_strcmp0(input, "test") == 0);
+} END_TEST
+
+START_TEST(test_form_field_set_flags) {
+  zathura_form_field_flag_t flags = ZATHURA_FORM_FIELD_FLAG_NONE;
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_set_flags(NULL, flags) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_set_flags(form_field, flags) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_form_field_get_flags) {
+  zathura_form_field_flag_t flags;
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_get_flags(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_flags(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_flags(NULL, &flags) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_get_flags(form_field, &flags) == ZATHURA_ERROR_OK);
+} END_TEST
+
 #include "form-fields/form-field-button.c"
 #include "form-fields/form-field-text.c"
 #include "form-fields/form-field-choice.c"
@@ -84,9 +204,18 @@ suite_form_fields(void)
   Suite* suite = suite_create("form-fields");
 
   tcase = tcase_create("basic");
+  tcase_add_checked_fixture(tcase, setup, teardown);
   tcase_add_test(tcase, test_form_field_free);
   tcase_add_test(tcase, test_form_field_new);
   tcase_add_test(tcase, test_form_field_get_type);
+  tcase_add_test(tcase, test_form_field_set_name);
+  tcase_add_test(tcase, test_form_field_get_name);
+  tcase_add_test(tcase, test_form_field_set_partial_name);
+  tcase_add_test(tcase, test_form_field_get_partial_name);
+  tcase_add_test(tcase, test_form_field_set_mapping_name);
+  tcase_add_test(tcase, test_form_field_get_mapping_name);
+  tcase_add_test(tcase, test_form_field_set_flags);
+  tcase_add_test(tcase, test_form_field_get_flags);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("button");
