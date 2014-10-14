@@ -12,6 +12,12 @@ OBJECTS       = $(addprefix ${BUILDDIR_RELEASE}/,${SOURCE:.c=.o})
 OBJECTS_DEBUG = $(addprefix ${BUILDDIR_DEBUG}/,${SOURCE:.c=.o})
 OBJECTS_GCOV  = $(addprefix ${BUILDDIR_GCOV}/,${SOURCE:.c=.o})
 
+ifneq (${WITH_MAGIC},0)
+INCS += ${MAGIC_INC}
+LIBS += ${MAGIC_LIB}
+CPPFLAGS += -DWITH_MAGIC
+endif
+
 ifneq (${WITH_LIBFIU},0)
 FIU_EXEC += ${FIU_RUN}
 endif

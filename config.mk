@@ -46,6 +46,9 @@ GTK_LIB ?= $(shell pkg-config --libs gtk+-2.0)
 GMODULE_INC ?= $(shell pkg-config --cflags gmodule-no-export-2.0)
 GMODULE_LIB ?= $(shell pkg-config --libs gmodule-no-export-2.0)
 
+MAGIC_INC ?=
+MAGIC_LIB ?= -lmagic
+
 FIU_INC ?= $(shell pkg-config --cflags libfiu)
 FIU_LIB ?= $(shell pkg-config --libs libfiu)
 
@@ -76,6 +79,10 @@ LCOV_FLAGS=--base-directory . --directory ${BUILDDIR_GCOV} --capture --rc \
 					 lcov_branch_coverage=1 --output-file ${BUILDDIR_GCOV}/$(PROJECT).info
 GENHTML_EXEC=genhtml
 GENHTML_FLAGS=--rc lcov_branch_coverage=1 --output-directory ${LCOV_OUTPUT} ${BUILDDIR_GCOV}/$(PROJECT).info
+
+# mimetype detection
+# To disable support for mimetype detction with libmagic set WITH_MAGIC to 0.
+WITH_MAGIC ?= 1
 
 # libfiu
 WITH_LIBFIU ?= 1

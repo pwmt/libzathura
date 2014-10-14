@@ -11,10 +11,16 @@ OBJECTS_GCOV    = $(addprefix ${BUILDDIR_GCOV}/,${SOURCE:.c=.o})
 HEADERS         = $(filter-out ${PROJECT}/version.h, $(filter-out ${PROJECT/}internal.h, $(wildcard *.h)))
 HEADERS_INSTALL = ${HEADERS} ${PROJECT}/version.h
 
+ifneq (${WITH_MAGIC},0)
+INCS += ${MAGIC_INC}
+LIBS += ${MAGIC_LIB}
+CPPFLAGS += -DWITH_MAGIC
+endif
+
 ifneq (${WITH_LIBFIU},0)
 INCS += ${FIU_INC}
 LIBS += ${FIU_LIB}
-CFLAGS += "-DFIU_ENABLE"
+CPPFLAGS += -DFIU_ENABLE
 endif
 
 all: options ${PROJECT}

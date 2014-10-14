@@ -9,6 +9,10 @@
 #include <stdio.h>
 #include <gio/gio.h>
 
+#ifdef WITH_MAGIC
+#include <magic.h>
+#endif
+
 #include "internal.h"
 #include "fiu-local.h"
 
@@ -45,76 +49,50 @@ zathura_realpath(const char* path, char** real_path)
   return ZATHURA_ERROR_OK;
 }
 
-zathura_error_t
-zathura_guess_type(const char* path, char** type)
+#ifdef WITH_MAGIC
+static char*
+guess_type_magic(const char* path) {
+  char* mime_type = NULL;
+
+  /* creat magic cookie */
+  const int flags =
+    MAGIC_MIME_TYPE |
+    MAGIC_SYMLINK |
+    MAGIC_NO_CHECK_APPTYPE |
+    MAGIC_NO_CHECK_CDF |
+    MAGIC_NO_CHECK_ELF |
+    MAGIC_NO_CHECK_ENCODING;
+  magic_t magic = magic_open(flags);
+  if (magic == NULL) {
+    goto cleanup;
+  }
+
+  /* ... and load mime database */
+  if (magic_load(magic, NULL) < 0) {
+    goto cleanup;
+  }
+
+  /* get the mime type */
+  mime_type = (char*) magic_file(magic, path);
+  if (mime_type == NULL) {
+    goto cleanup;
+  }
+  /* dup so we own the memory */
+  mime_type = g_strdup(mime_type);
+
+cleanup:
+
+  if (magic != NULL) {
+    magic_close(magic);
+  }
+
+  return mime_type;
+}
+#endif
+
+static char*
+guess_type_file(const char* path)
 {
-  if (path == NULL || strlen(path) == 0 || type == NULL) {
-    return ZATHURA_ERROR_INVALID_ARGUMENTS;
-  }
-
-  /* guess by path */
-  gboolean uncertain;
-  char* content_type = g_content_type_guess(path, NULL, 0, &uncertain);
-  fiu_do_on("zathura_guess_type_g_content_type_guess", g_free(content_type); content_type = NULL);
-  if (content_type == NULL) {
-    return ZATHURA_ERROR_UNKNOWN;
-  }
-
-  fiu_do_on("zathura_guess_type_uncertain_1", uncertain = TRUE);
-  if (uncertain == FALSE) {
-    *type = content_type;
-    return ZATHURA_ERROR_OK;
-  }
-
-  /* guess from data */
-  char* real_path;
-  if (zathura_realpath(path, &real_path) != ZATHURA_ERROR_OK) {
-    return ZATHURA_ERROR_UNKNOWN;
-  }
-
-  FILE* f = fopen(real_path, "rb");
-  if (f == NULL) {
-    free(real_path);
-    g_free((void*) content_type);
-    return ZATHURA_ERROR_OK;;
-  }
-
-  free(real_path);
-
-  const int fd = fileno(f);
-  guchar* content = NULL;
-  size_t length = 0u;
-
-  while (uncertain == TRUE && length < GT_MAX_READ) {
-    g_free((void*)content_type);
-    content_type = NULL;
-
-    content = g_try_realloc(content, length + BUFSIZ);
-    if (content == NULL) {
-      continue;
-    }
-
-    const ssize_t r = read(fd, content + length, BUFSIZ);
-    if (r == -1) {
-      break;
-    }
-
-    length += r;
-    content_type = g_content_type_guess(NULL, content, length, &uncertain);
-  }
-
-  fclose(f);
-  g_free(content);
-
-  if (uncertain == FALSE) {
-    *type = content_type;
-    return ZATHURA_ERROR_OK;
-  }
-
-  g_free((void*) content_type);
-  content_type = NULL;
-
-  /* guess by using the file command */
   GString* command = g_string_new("file -b --mime-type ");
   char* tmp        = g_shell_quote(path);
 
@@ -126,20 +104,96 @@ zathura_guess_type(const char* path, char** type)
   int ret = 0;
   g_spawn_command_line_sync(command->str, &out, NULL, &ret, &error);
   g_string_free(command, TRUE);
-
   if (error != NULL) {
     g_error_free(error);
     g_free(out);
-    return ZATHURA_ERROR_UNKNOWN;
+    return NULL;
   }
-
   if (WEXITSTATUS(ret) != 0) {
     g_free(out);
-    return ZATHURA_ERROR_UNKNOWN;
+    return NULL;
   }
 
   g_strdelimit(out, "\n\r", '\0');
-  *type = out;
+  return out;
+}
 
-  return ZATHURA_ERROR_OK;
+static char*
+guess_type_glib(const char* path)
+{
+  gboolean uncertain = FALSE;
+  char* content_type = g_content_type_guess(path, NULL, 0, &uncertain);
+  if (content_type == NULL) {
+  } else {
+    if (uncertain == FALSE) {
+      return content_type;
+    }
+  }
+
+  FILE* f = fopen(path, "rb");
+  if (f == NULL) {
+    return NULL;
+  }
+
+  const int fd = fileno(f);
+  guchar* content = NULL;
+  size_t length = 0u;
+  ssize_t bytes_read = -1;
+  while (uncertain == TRUE && length < GT_MAX_READ && bytes_read != 0) {
+    g_free((void*)content_type);
+    content_type = NULL;
+
+    guchar* temp_content = g_try_realloc(content, length + BUFSIZ);
+    if (temp_content == NULL) {
+      break;
+    }
+    content = temp_content;
+
+    bytes_read = read(fd, content + length, BUFSIZ);
+    if (bytes_read == -1) {
+      break;
+    }
+
+    length += bytes_read;
+    content_type = g_content_type_guess(NULL, content, length, &uncertain);
+  }
+
+  fclose(f);
+  g_free(content);
+  if (uncertain == FALSE) {
+    return content_type;
+  }
+
+  g_free((void*)content_type);
+  return NULL;
+}
+
+zathura_error_t
+zathura_guess_type(const char* path, char** type)
+{
+  if (path == NULL || strlen(path) == 0 || type == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+#ifdef WITH_MAGIC
+  /* try content type detection with libmagic */
+  *type = guess_type_magic(path);
+  if (*type != NULL) {
+    return ZATHURA_ERROR_OK;
+  }
+#endif
+
+  /* try content type detection with glib */
+  *type = guess_type_glib(path);
+  if (*type != NULL) {
+    return ZATHURA_ERROR_OK;
+  }
+
+  /* try content type detection with find */
+  *type = guess_type_file(path);
+  if (*type != NULL) {
+    return ZATHURA_ERROR_OK;
+  }
+
+  return ZATHURA_ERROR_UNKNOWN;
 }
