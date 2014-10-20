@@ -39,11 +39,10 @@ START_TEST(test_zathura_guess_type) {
   fail_unless(zathura_guess_type("a",  NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  /* TODO: Add example files
-  /* fail_unless(zathura_guess_type("file.pdf", &type) == ZATHURA_ERROR_OK); */
-  /* fail_unless(strcmp(type, "application/pdf") == 0); */
-  /* free(type); */
-  /*  */
+  fail_unless(zathura_guess_type("files/empty.pdf", &type) == ZATHURA_ERROR_OK);
+  fail_unless(strcmp(type, "application/pdf") == 0);
+  free(type);
+
   /* fail_unless(zathura_guess_type("file.djvu", &type) == ZATHURA_ERROR_OK); */
   /* fail_unless(strcmp(type, "image/vnd.djvu") == 0); */
   /* free(type); */
