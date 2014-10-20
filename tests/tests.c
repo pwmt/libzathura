@@ -4,6 +4,7 @@
 #include <fiu.h>
 
 Suite* suite_internal(void);
+Suite* suite_actions(void);
 Suite* suite_image_buffer(void);
 Suite* suite_plugin_manager(void);
 Suite* suite_plugin(void);
@@ -35,6 +36,7 @@ int main(void)
   srunner_add_suite(suite_runner, suite_transition());
   srunner_add_suite(suite_runner, suite_form_fields());
   srunner_add_suite(suite_runner, suite_annotations());
+  srunner_add_suite(suite_runner, suite_actions());
 
   int number_failed = 0;
   srunner_run_all(suite_runner, CK_ENV);
