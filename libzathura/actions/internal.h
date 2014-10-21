@@ -9,7 +9,7 @@
 #include "internal/action-goto-embedded.h"
 #include "internal/action-goto.h"
 #include "internal/action-goto-remote.h"
-#include "internal/action-hide.h"
+#include "internal/action-hide-annotations.h"
 #include "internal/action-launch.h"
 #include "internal/action-movie.h"
 #include "internal/action-named.h"

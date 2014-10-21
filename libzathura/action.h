@@ -75,7 +75,7 @@ typedef struct zathura_destination_s
 #include "actions/action-goto-embedded.h"
 #include "actions/action-goto.h"
 #include "actions/action-goto-remote.h"
-#include "actions/action-hide.h"
+#include "actions/action-hide-annotations.h"
 #include "actions/action-launch.h"
 #include "actions/action-movie.h"
 #include "actions/action-named.h"

@@ -14,6 +14,7 @@ zathura_error_t zathura_action_new(zathura_action_t** action, zathura_action_typ
 
   switch (type) {
     case ZATHURA_ACTION_UNKNOWN:
+      break;
     case ZATHURA_ACTION_NONE:
     case ZATHURA_ACTION_GOTO:
     case ZATHURA_ACTION_GOTO_REMOTE:
@@ -46,6 +47,7 @@ zathura_error_t zathura_action_new(zathura_action_t** action, zathura_action_typ
 
   switch (type) {
     case ZATHURA_ACTION_UNKNOWN:
+      break;
     case ZATHURA_ACTION_NONE:
     case ZATHURA_ACTION_GOTO:
     case ZATHURA_ACTION_GOTO_REMOTE:
