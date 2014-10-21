@@ -14,7 +14,6 @@ gcov/
 doc/_build
 
 # binaries
-tests/tests
 *.a
 *.so*
 
@@ -27,3 +26,4 @@ libzathura/version.h
 .ropeproject
 .frama-c
 compile_commands.json
+*.log
