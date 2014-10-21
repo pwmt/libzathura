@@ -3,7 +3,7 @@ Actions
 
 Instead of simply jumping to a destination in the document, an annotation or
 outline item can specify an action for the viewer application to perform, such
-as launching an application, playing a sound, or changing an annotation’s
+as launching an application, playing a sound, or changing an annotation's
 appearance state.
 
 Action Types
