@@ -3,4 +3,39 @@
 #ifndef INTERNAL_ACTION_RENDITION_H
 #define INTERNAL_ACTION_RENDITION_H
 
+#include "../../action.h"
+
+/**
+ * A rendition action
+ */
+typedef struct zathura_action_rendition_s {
+  /**
+   * FIXME: Temporary value so that the struct is not empty
+   */
+  void* tmp;
+} zathura_action_rendition_t;
+
+/**
+ * Initializes the action as a rendition action
+ *
+ * @param[in] action The action
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_OUT_OF_MEMORY Out of memory
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_action_rendition_init(zathura_action_t* action);
+
+/**
+ * Clear the rendition action
+ *
+ * @param[in] action The action
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_action_rendition_clear(zathura_action_t* action);
+
 #endif /* INTERNAL_ACTION_RENDITION_H */

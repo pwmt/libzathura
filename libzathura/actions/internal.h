@@ -25,6 +25,20 @@ struct zathura_action_s {
 
   union {
     struct zathura_action_goto_s* goto_dest;
+    struct zathura_action_goto_remote_s* goto_remote_dest;
+    struct zathura_action_goto_3d_view_dest_s* goto_3d_view_dest;
+    struct zathura_action_uri_dest_s* uri_dest;
+    struct zathura_action_rendition_s* rendition_dest;
+    struct zathura_action_movie_s* movie_dest;
+    struct zathura_action_sound_s* sound_dest;
+    struct zathura_action_remote_s* remote_dest;
+    struct zathura_action_set_ocg_state_s* set_ocg_state_dest;
+    struct zathura_action_named_s* named_dest;
+    struct zathura_action_goto_embedded_s* goto_embedded_dest;
+    struct zathura_action_launch_s* launch_dest;
+    struct zathura_action_hide_annotations_s* hide_annotations_dest;
+    struct zathura_action_thread_s* thread_dest;
+    struct zathura_action_transition_s* transition_dest;
   } data;
 };
 
