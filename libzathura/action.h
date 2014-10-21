@@ -49,8 +49,8 @@ typedef enum zathura_destination_type_e
 /**
  * Returns the type of the given action
  *
- * @param action[in] The action
- * @param type[out] The type of the action
+ * @param[in] action The action
+ * @param[out] type The type of the action
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -69,7 +69,6 @@ typedef struct zathura_destination_s
   double bottom; /**< Bottom coordinate */
   double scale; /**< Scale */
 } zathura_destination_t;
-
 
 #include "actions/action-goto-3d-view.h"
 #include "actions/action-goto-embedded.h"

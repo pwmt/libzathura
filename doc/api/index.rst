@@ -9,4 +9,5 @@ API
     plugin-manager
     document
     annotations
+    actions
     forms
