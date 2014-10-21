@@ -42,31 +42,46 @@
 typedef void (*zathura_plugin_register_function_t)(zathura_plugin_functions_t* functions);
 
 typedef zathura_error_t (*zathura_plugin_document_open_t)(zathura_document_t* document);
-typedef zathura_error_t (*zathura_plugin_document_free_t)(zathura_document_t* document, void* data);
-typedef zathura_error_t (*zathura_plugin_document_save_as)(zathura_document_t* document, const char* path);
-typedef zathura_error_t (*zathura_plugin_document_get_index)(zathura_document_t* document, zathura_node_t** index);
-typedef zathura_error_t (*zathura_plugin_document_get_attachments)(zathura_document_t* document, zathura_list_t** attachments);
-typedef zathura_error_t (*zathura_plugin_document_get_information)(zathura_document_t* document, zathura_list_t** information);
+typedef zathura_error_t (*zathura_plugin_document_free_t)(zathura_document_t* document);
+typedef zathura_error_t (*zathura_plugin_document_save_as_t)(zathura_document_t* document, const char* path);
+typedef zathura_error_t (*zathura_plugin_document_get_outline_t)(zathura_document_t* document, zathura_node_t** outline);
+typedef zathura_error_t (*zathura_plugin_document_get_attachments_t)(zathura_document_t* document, zathura_list_t** attachments);
+typedef zathura_error_t (*zathura_plugin_document_get_metadata_t)(zathura_document_t* document, zathura_list_t** metadata);
 
 typedef zathura_error_t (*zathura_plugin_page_init_t)(zathura_page_t* page);
-typedef zathura_error_t (*zathura_plugin_page_clear_t)(zathura_page_t* page, void* data);
+typedef zathura_error_t (*zathura_plugin_page_clear_t)(zathura_page_t* page);
+typedef zathura_error_t (*zathura_plugin_page_search_text_t)(zathura_page_t* page, const char* text, zathura_list_t** results);
+typedef zathura_error_t (*zathura_plugin_page_get_text_t)(zathura_page_t* page, char** text, zathura_rectangle_t rectangle);
+typedef zathura_error_t (*zathura_plugin_page_get_links_t)(zathura_page_t* page, zathura_list_t** links);
+typedef zathura_error_t (*zathura_plugin_page_get_form_fields_t)(zathura_page_t* page, zathura_list_t** form_fields);
+typedef zathura_error_t (*zathura_plugin_page_get_images_t)(zathura_page_t* page, zathura_list_t** images);
+typedef zathura_error_t (*zathura_plugin_page_get_annotations_t)(zathura_page_t* page, zathura_list_t** annotations);
+typedef zathura_error_t (*zathura_plugin_page_render_t)(zathura_page_t* page, zathura_image_buffer_t** buffer, double scale, int rotation, int flags);
+#ifdef HAVE_CAIRO
+typedef zathura_error_t (*zathura_plugin_page_render_cairo_t)(zathura_page_t* page, cairo_t* cairo, double scale, int rotation, int flags);
+#endif
 
-//typedef girara_tree_node_t* (*zathura_plugin_document_index_generate_t)(zathura_document_t* document, void* data, zathura_error_t* error);
+struct zathura_plugin_functions_s {
+  zathura_plugin_document_open_t document_open;
+  zathura_plugin_document_free_t document_free;
+  zathura_plugin_document_save_as_t document_save_as;
+  zathura_plugin_document_get_outline_t document_get_outline;
+  zathura_plugin_document_get_attachments_t document_get_attachments;
+  zathura_plugin_document_get_metadata_t document_get_metadata;
 
-//typedef zathura_error_t (*zathura_plugin_document_save_as_t)(zathura_document_t* document, void* data, const char* path);
-//typedef girara_list_t* (*zathura_plugin_document_attachments_get_t)(zathura_document_t* document, void* data, zathura_error_t* error);
-//typedef zathura_error_t (*zathura_plugin_document_attachment_save_t)(zathura_document_t* document, void* data, const char* attachment, const char* file);
-//typedef girara_list_t* (*zathura_plugin_document_get_information_t)(zathura_document_t* document, void* data, zathura_error_t* error);
-//typedef zathura_error_t (*zathura_plugin_page_init_t)(zathura_page_t* page);
-//typedef zathura_error_t (*zathura_plugin_page_clear_t)(zathura_page_t* page, void* data);
-//typedef girara_list_t* (*zathura_plugin_page_search_text_t)(zathura_page_t* page, void* data, const char* text, zathura_error_t* error);
-//typedef girara_list_t* (*zathura_plugin_page_links_get_t)(zathura_page_t* page, void* data, zathura_error_t* error);
-//typedef girara_list_t* (*zathura_plugin_page_form_fields_get_t)(zathura_page_t* page, void* data, zathura_error_t* error);
-//typedef girara_list_t* (*zathura_plugin_page_images_get_t)(zathura_page_t* page, void* data, zathura_error_t* error);
-//typedef cairo_surface_t* (*zathura_plugin_page_image_get_cairo_t)(zathura_page_t* page, void* data, zathura_image_t* image, zathura_error_t* error);
-//typedef char* (*zathura_plugin_page_get_text_t)(zathura_page_t* page, void* data, zathura_rectangle_t rectangle, zathura_error_t* error);
-//typedef zathura_image_buffer_t* (*zathura_plugin_page_render_t)(zathura_page_t* page, void* data, zathura_error_t* error);
-//typedef zathura_error_t (*zathura_plugin_page_render_cairo_t)(zathura_page_t* page, void* data, cairo_t* cairo, bool printing);
+  zathura_plugin_page_init_t page_init;
+  zathura_plugin_page_clear_t page_clear;
+  zathura_plugin_page_search_text_t page_search_text;
+  zathura_plugin_page_get_text_t page_get_text;
+  zathura_plugin_page_get_links_t page_get_links;
+  zathura_plugin_page_get_form_fields_t page_get_form_fields;
+  zathura_plugin_page_get_images_t page_get_images;
+  zathura_plugin_page_get_annotations_t page_get_annotations;
+  zathura_plugin_page_render_t page_render;
+#ifdef HAVE_CAIRO
+  zathura_plugin_page_render_cairo_t page_render_cairo;
+#endif
+};
 
 zathura_error_t zathura_plugin_set_name(zathura_plugin_t* plugin, const char* name);
 zathura_error_t zathura_plugin_set_register_function(zathura_plugin_t* plugin, zathura_plugin_register_function_t function);

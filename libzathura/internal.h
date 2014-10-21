@@ -23,14 +23,21 @@ struct zathura_document_s {
   unsigned int number_of_pages;
   zathura_page_t** pages;
   zathura_plugin_t* plugin;
+
+  zathura_page_layout_t page_layout;
+  zathura_page_mode_t page_mode;
+  zathura_document_permission_t permissions;
 };
 
 struct zathura_page_s {
   zathura_document_t* document;
+  unsigned int index;
   unsigned int width;
   unsigned int height;
   char* label;
   zathura_page_transition_t* transition;
+  zathura_rectangle_t crop_box;
+  unsigned int duration;
 };
 
 zathura_error_t zathura_page_free(zathura_page_t* page);

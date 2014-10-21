@@ -7,9 +7,7 @@
 #include "error.h"
 
 typedef struct zathura_plugin_s zathura_plugin_t;
-typedef struct zathura_plugin_functions_s {
-  zathura_error_t (*document_open)(zathura_document_t* document);
-} zathura_plugin_functions_t;
+typedef struct zathura_plugin_functions_s zathura_plugin_functions_t;
 
 typedef struct zathura_plugin_version_s {
   unsigned int major; /**< Major version of the plugin */
