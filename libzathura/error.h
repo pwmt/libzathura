@@ -26,7 +26,11 @@ typedef enum zathura_error_e {
 
   ZATHURA_ERROR_ANNOTATION_INVALID_TYPE, /**< The given annotation does not
                                            match the type that this function
-                                           equires */
+                                           requires */
+
+  ZATHURA_ERROR_ACTION_INVALID_TYPE, /**< The given action does not
+                                           match the type that this function
+                                           requires */
 } zathura_error_t;
 
 #endif /* ERROR_H */

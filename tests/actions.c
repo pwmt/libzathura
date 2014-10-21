@@ -56,6 +56,8 @@ START_TEST(test_action_get_type) {
   fail_unless(type == ZATHURA_ACTION_UNKNOWN);
 } END_TEST
 
+#include "actions/action-goto.c"
+
 Suite*
 suite_actions(void)
 {
@@ -67,6 +69,14 @@ suite_actions(void)
   tcase_add_test(tcase, test_action_free);
   tcase_add_test(tcase, test_action_new);
   tcase_add_test(tcase, test_action_get_type);
+  suite_add_tcase(suite, tcase);
+
+  tcase = tcase_create("goto");
+  tcase_add_checked_fixture(tcase, setup_action_goto, teardown);
+  tcase_add_test(tcase, test_action_goto_new);
+  tcase_add_test(tcase, test_action_goto_get_type);
+  tcase_add_test(tcase, test_action_goto_init);
+  tcase_add_test(tcase, test_action_goto_clear);
   suite_add_tcase(suite, tcase);
 
   return suite;

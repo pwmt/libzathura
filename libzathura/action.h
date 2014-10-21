@@ -17,7 +17,7 @@ typedef enum zathura_action_type_e
 {
   ZATHURA_ACTION_UNKNOWN, /**< Invalid type */
   ZATHURA_ACTION_NONE, /**< No action */
-  ZATHURA_ACTION_GOTO_DEST, /**< actions to a page */
+  ZATHURA_ACTION_GOTO, /**< actions to a page */
   ZATHURA_ACTION_GOTO_REMOTE, /**< actions to a page */
   ZATHURA_ACTION_GOTO_EMBEDDED, /**< actions to an embedded file */
   ZATHURA_ACTION_LAUNCH, /**< actions to an external source */
@@ -69,5 +69,22 @@ typedef struct zathura_destination_s
   double bottom; /**< Bottom coordinate */
   double scale; /**< Scale */
 } zathura_destination_t;
+
+
+#include "actions/action-goto-3d-view.h"
+#include "actions/action-goto-embedded.h"
+#include "actions/action-goto.h"
+#include "actions/action-goto-remote.h"
+#include "actions/action-hide.h"
+#include "actions/action-launch.h"
+#include "actions/action-movie.h"
+#include "actions/action-named.h"
+#include "actions/action-rendition.h"
+#include "actions/action-set-ocg-state.h"
+#include "actions/action-sound.h"
+#include "actions/action-thread.h"
+#include "actions/action-transition.h"
+#include "actions/action-uri.h"
+#include "actions/internal.h"
 
 #endif /* ACTION_H */
