@@ -64,6 +64,11 @@ START_TEST(test_plugin_get_name) {
   /* valid parameter */
   fail_unless(zathura_plugin_get_name(plugin, &name)  == ZATHURA_ERROR_OK);
   fail_unless(strcmp(name, "plugin") == 0);
+
+  /* corrupt plugin */
+  plugin->name = NULL;
+  fail_unless(zathura_plugin_get_name(plugin, &name)  == ZATHURA_ERROR_UNKNOWN);
+  plugin->name = (char*) name;
 } END_TEST
 
 START_TEST(test_plugin_get_path) {
@@ -77,6 +82,11 @@ START_TEST(test_plugin_get_path) {
   /* valid parameter */
   fail_unless(zathura_plugin_get_path(plugin, &path)  == ZATHURA_ERROR_OK);
   fail_unless(strstr(path, "plugin/plugin.so") != NULL);
+
+  /* corrupt plugin */
+  plugin->path = NULL;
+  fail_unless(zathura_plugin_get_path(plugin, &path)  == ZATHURA_ERROR_UNKNOWN);
+  plugin->path = (char*) path;
 } END_TEST
 
 START_TEST(test_plugin_get_version) {
