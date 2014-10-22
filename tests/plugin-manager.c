@@ -96,7 +96,7 @@ START_TEST(test_plugin_manager_get_plugin) {
 
   /* load plugins */
   fail_unless(zathura_plugin_manager_load_dir(plugin_manager, "./plugin/") == ZATHURA_ERROR_OK);
-  fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, &plugin, "application/pdf") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, &plugin, "libzathura/test-plugin") == ZATHURA_ERROR_OK);
   fail_unless(plugin != NULL);
 
   fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);

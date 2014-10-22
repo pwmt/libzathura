@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "internal.h"
 #include "document.h"
@@ -37,22 +38,6 @@ zathura_document_free(zathura_document_t* document)
   }
 
   free(document);
-
-  return ZATHURA_ERROR_OK;
-}
-
-zathura_error_t
-zathura_document_set_path(zathura_document_t* document, const char* path)
-{
-  if (document == NULL || path == NULL) {
-    return ZATHURA_ERROR_INVALID_ARGUMENTS;
-  }
-
-  if (document->path != NULL) {
-    g_free(document->path);
-  }
-
-  document->path = g_strdup(path);
 
   return ZATHURA_ERROR_OK;
 }
@@ -101,11 +86,26 @@ zathura_document_get_page(zathura_document_t* document, unsigned int index,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  CHECK_IF_IMPLEMENTED(document, page_init)
+
   if (index >= document->number_of_pages) {
     return ZATHURA_ERROR_DOCUMENT_INVALID_INDEX;
   }
 
-  *page = document->pages[index];
+  if (document->pages[index] == NULL) {
+    zathura_error_t error = ZATHURA_ERROR_OK;
+    error = zathura_page_new(&(document->pages[index]));
+    if (error != ZATHURA_ERROR_OK) {
+      return error;
+    }
+
+    error = document->plugin->functions.page_init(document->pages[index]);
+    if (error != ZATHURA_ERROR_OK) {
+      return error;
+    }
+  } else {
+    *page = document->pages[index];
+  }
 
   return ZATHURA_ERROR_OK;
 }
@@ -118,8 +118,8 @@ zathura_document_get_page_by_label(zathura_document_t* document, const char* lab
   }
 
   for (unsigned int i = 0; i < document->number_of_pages; i++) {
-    if (strcmp(page[i]->label, label) == 0) {
-      *page = page[i];
+    if (document->pages[i]->label != NULL && strcmp(document->pages[i]->label, label) == 0) {
+      *page = document->pages[i];
       return ZATHURA_ERROR_OK;
     }
   }

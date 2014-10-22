@@ -101,6 +101,7 @@ zathura_plugin_open_document(zathura_plugin_t* plugin, zathura_document_t**
   /* Initialize document */
   (*document)->path     = real_path;
   (*document)->password = (password != NULL) ? g_strdup(password) : NULL;
+  (*document)->plugin   = plugin;
 
   /* Open document */
   zathura_error_t error = plugin->functions.document_open(*document);
