@@ -11,6 +11,7 @@
 #include "plugin.h"
 #include "plugin-api.h"
 #include "plugin-manager.h"
+#include "internal.h"
 
 zathura_plugin_manager_t* plugin_manager;
 zathura_plugin_t* plugin;
@@ -163,6 +164,14 @@ START_TEST(test_plugin_open_document) {
   fiu_enable_external("libc/mm/calloc", 1, NULL, 0, cb_test_plugin_document_open_calloc);
   fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+
+  fiu_enable_external("libc/mm/calloc", 2, NULL, 0, cb_test_plugin_document_open_calloc);
+  fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fiu_disable("libc/mm/calloc");
+
+  /* unset document_open function */
+  plugin->functions.document_open = NULL;
+  fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_PLUGIN_NOT_IMPLEMENTED);
 } END_TEST
 
 

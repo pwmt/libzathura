@@ -19,7 +19,9 @@ Suite* suite_annotations(void);
 int main(void)
 {
   /* initialize libfiu */
+#ifdef FIU_ENABLE
   fiu_init(0);
+#endif
 
   /* setup test suite */
   SRunner* suite_runner = srunner_create(NULL);
