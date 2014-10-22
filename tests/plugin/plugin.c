@@ -2,6 +2,7 @@
 
 #include "libzathura/plugin-api.h"
 #include "libzathura/macros.h"
+
 #include <stdio.h>
 
 /* forward declarations */
@@ -14,6 +15,16 @@ zathura_error_t document_get_attachments(zathura_document_t* document, zathura_l
 zathura_error_t document_get_metadata(zathura_document_t* document, zathura_list_t** metadata);
 zathura_error_t page_init(zathura_page_t* page);
 zathura_error_t page_clear(zathura_page_t* page);
+zathura_error_t page_search_text(zathura_page_t* page, const char* text, zathura_list_t** results);
+zathura_error_t page_get_text(zathura_page_t* page, char** text, zathura_rectangle_t rectangle);
+zathura_error_t page_get_links(zathura_page_t* page, zathura_list_t** links);
+zathura_error_t page_get_form_fields(zathura_page_t* page, zathura_list_t** form_fields);
+zathura_error_t page_get_images(zathura_page_t* page, zathura_list_t** images);
+zathura_error_t page_get_annotations(zathura_page_t* page, zathura_list_t** annotations);
+zathura_error_t page_render(zathura_page_t* page, zathura_image_buffer_t** buffer, double scale, int rotation, int flags);
+#ifdef HAVE_CAIRO
+zathura_error_t page_render_cairo(zathura_page_t* page, cairo* cairo, double scale, int rotation, int flags);
+#endif
 
 /* register plugin */
 ZATHURA_PLUGIN_REGISTER(
@@ -40,6 +51,16 @@ register_functions(zathura_plugin_functions_t* functions)
 
   functions->page_init = page_init;
   functions->page_clear = page_clear;
+  functions->page_search_text = page_search_text;
+  functions->page_get_text = page_get_text;
+  functions->page_get_links = page_get_links;
+  functions->page_get_form_fields = page_get_form_fields;
+  functions->page_get_images = page_get_images;
+  functions->page_get_annotations = page_get_annotations;
+  functions->page_render = page_render;
+#ifdef HAVE_CAIRO
+  functions->page_render_cairo = page_render_cairo;
+#endif
 }
 
 zathura_error_t
@@ -116,19 +137,79 @@ document_save_as(zathura_document_t* UNUSED(document), const char* UNUSED(path))
 }
 
 zathura_error_t
-document_get_outline(zathura_document_t* UNUSED(document), zathura_node_t** UNUSED(outline))
+document_get_outline(zathura_document_t* UNUSED(document), zathura_node_t**
+    UNUSED(outline))
 {
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-document_get_attachments(zathura_document_t* UNUSED(document), zathura_list_t** UNUSED(attachments))
+document_get_attachments(zathura_document_t* UNUSED(document),
+    zathura_list_t** UNUSED(attachments))
 {
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-document_get_metadata(zathura_document_t* UNUSED(document), zathura_list_t** UNUSED(metadata))
+document_get_metadata(zathura_document_t* UNUSED(document), zathura_list_t**
+    UNUSED(metadata))
 {
   return ZATHURA_ERROR_OK;
 }
+
+zathura_error_t
+page_search_text(zathura_page_t* UNUSED(page), const char* UNUSED(text),
+    zathura_list_t** UNUSED(results))
+{
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+page_get_text(zathura_page_t* UNUSED(page), char** UNUSED(text), zathura_rectangle_t
+    UNUSED(rectangle))
+{
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+page_get_links(zathura_page_t* UNUSED(page), zathura_list_t** UNUSED(links))
+{
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+page_get_form_fields(zathura_page_t* UNUSED(page), zathura_list_t**
+    UNUSED(form_fields))
+{
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+page_get_images(zathura_page_t* UNUSED(page), zathura_list_t** UNUSED(images))
+{
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+page_get_annotations(zathura_page_t* UNUSED(page), zathura_list_t**
+    UNUSED(annotations))
+{
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+page_render(zathura_page_t* UNUSED(page), zathura_image_buffer_t** UNUSED(buffer),
+    double UNUSED(scale), int UNUSED(rotation), int UNUSED(flags))
+{
+  return ZATHURA_ERROR_OK;
+}
+
+#ifdef HAVE_CAIRO
+zathura_error_t
+page_render_cairo(zathura_page_t* UNUSED(page), cairo* UNUSED(cairo), double
+    UNUSED(scale), int UNUSED(rotation), int UNUSED(flags))
+{
+  return ZATHURA_ERROR_OK;
+}
+
+#endif

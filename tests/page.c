@@ -5,8 +5,37 @@
 #include <fiu-control.h>
 
 #include "page.h"
+#include "plugin-manager.h"
 #include "plugin-api.h"
 #include "internal.h"
+
+zathura_page_t* page = NULL;
+zathura_document_t* document;
+zathura_plugin_manager_t* plugin_manager;
+
+static void setup_page(void) {
+  fail_unless(zathura_plugin_manager_new(&plugin_manager) == ZATHURA_ERROR_OK);
+  fail_unless(plugin_manager != NULL);
+  fail_unless(zathura_plugin_manager_load(plugin_manager, "./plugin/plugin.so") == ZATHURA_ERROR_OK);
+
+  zathura_plugin_t* plugin = NULL;
+  fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, &plugin, "libzathura/test-plugin") == ZATHURA_ERROR_OK);
+  fail_unless(plugin != NULL);
+
+  fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_OK);
+  fail_unless(document != NULL);
+
+  fail_unless(zathura_document_get_page(document, 0, &page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+}
+
+static void teardown_page(void) {
+  fail_unless(zathura_document_free(document) == ZATHURA_ERROR_OK);
+  document = NULL;
+
+  fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);
+  plugin_manager = NULL;
+}
 
 START_TEST(test_page_new) {
   zathura_page_t* page = NULL;
@@ -322,7 +351,6 @@ START_TEST(test_page_get_label) {
 } END_TEST
 
 START_TEST(test_page_get_text) {
-  zathura_page_t* page = NULL;
   char* text;
   zathura_rectangle_t rectangle = { {0, 0}, {0, 0}};
 
@@ -330,40 +358,48 @@ START_TEST(test_page_get_text) {
   fail_unless(zathura_page_get_text(NULL, NULL, rectangle) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_text(page, NULL, rectangle) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_text(NULL, &text, rectangle) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_get_text(page, &text, rectangle) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_get_links) {
-  zathura_page_t* page = NULL;
   zathura_list_t* links;;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_get_links(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_links(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_links(NULL, &links) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_get_links(page, &links) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_get_form_fields) {
-  zathura_page_t* page = NULL;
   zathura_list_t* form_fields;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_get_form_fields(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_form_fields(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_form_fields(NULL, &form_fields) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_get_form_fields(page, &form_fields) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_get_images) {
-  zathura_page_t* page = NULL;
   zathura_list_t* images;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_get_images(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_images(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_images(NULL, &images) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_get_images(page, &images) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_search_text) {
-  zathura_page_t* page = NULL;
   zathura_list_t* results;
 
   /* basic invalid arguments */
@@ -372,37 +408,46 @@ START_TEST(test_page_search_text) {
   fail_unless(zathura_page_search_text(page, "",   NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_search_text(page, "a",  NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_search_text(page, "",   &results) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_search_text(page, "abc", &results) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_get_annotations) {
-  zathura_page_t* page = NULL;
   zathura_list_t* annotations;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_get_annotations(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_annotations(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_annotations(NULL, &annotations) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_get_annotations(page, &annotations) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_render) {
-  zathura_page_t* page = NULL;
   zathura_image_buffer_t* buffer;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_render(NULL, NULL, 0, 0, 0)     == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_render(page, NULL, 0, 0, 0)     == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_render(page, &buffer, -1, 0, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_render(page, &buffer, 1.0, 0, 0) == ZATHURA_ERROR_OK);
 } END_TEST
 
 #ifdef HAVE_CAIRO
 START_TEST(test_page_render_cairo) {
-  zathura_page_t* page = NULL;
   cairo_t* cairo;
 
   /* basic invalid arguments */
-  fail_unless(zathura_page_render(NULL, NULL, 0, 0, 0)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_render(page, NULL, 0, 0, 0)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_render(page, cairo, -1, 0, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_render_cairo(NULL, NULL, 0, 0, 0)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_render_cairo(page, NULL, 0, 0, 0)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_render_cairo(page, cairo, -1, 0, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_render_cairo(page, cairo, 1.0, 0, 0) == ZATHURA_ERROR_OK);
 } END_TEST
 #endif
 
@@ -429,35 +474,38 @@ suite_page(void)
   tcase_add_test(tcase, test_page_get_duration);
   tcase_add_test(tcase, test_page_set_crop_box);
   tcase_add_test(tcase, test_page_get_crop_box);
-  suite_add_tcase(suite, tcase);
-
-  tcase = tcase_create("label");
   tcase_add_test(tcase, test_page_set_label);
   tcase_add_test(tcase, test_page_get_label);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("text");
+  tcase_add_checked_fixture(tcase, setup_page, teardown_page);
   tcase_add_test(tcase, test_page_get_text);
   tcase_add_test(tcase, test_page_search_text);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("annotations");
+  tcase_add_checked_fixture(tcase, setup_page, teardown_page);
   tcase_add_test(tcase, test_page_get_annotations);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("links");
+  tcase_add_checked_fixture(tcase, setup_page, teardown_page);
   tcase_add_test(tcase, test_page_get_links);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("forms");
+  tcase_add_checked_fixture(tcase, setup_page, teardown_page);
   tcase_add_test(tcase, test_page_get_form_fields);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("images");
+  tcase_add_checked_fixture(tcase, setup_page, teardown_page);
   tcase_add_test(tcase, test_page_get_images);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("render");
+  tcase_add_checked_fixture(tcase, setup_page, teardown_page);
   tcase_add_test(tcase, test_page_render);
 #ifdef HAVE_CAIRO
   tcase_add_test(tcase, test_page_render_cairo);

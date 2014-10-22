@@ -2,6 +2,7 @@
 
 include ../../config.mk
 include ../../common.mk
+include ../../colors.mk
 include config.mk
 
 PROJECT = plugin
