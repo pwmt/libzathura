@@ -1,6 +1,8 @@
 /* See LICENSE file for license and copyright information */
 
 #include <check.h>
+#include <fiu.h>
+#include <fiu-control.h>
 
 #include "page.h"
 #include "plugin-api.h"
@@ -21,94 +23,302 @@ START_TEST(test_page_free) {
   fail_unless(zathura_page_free(NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
+START_TEST(test_page_set_document) {
+  zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
+  zathura_document_t* document;
+  fail_unless(zathura_document_new(&document) == ZATHURA_ERROR_OK);
+  fail_unless(document != NULL);
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_set_document(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_set_document(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_set_document(NULL, document) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_set_document(page, document) == ZATHURA_ERROR_OK);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_document_free(document) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_page_get_document) {
+  zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
+  zathura_document_t* document = (zathura_document_t*) 0xCAFEBABE;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_get_document(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_document(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_document(NULL, &document) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_get_document(page, &document) == ZATHURA_ERROR_OK);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_page_set_index) {
+  zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_set_index(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_set_index(page, 0) == ZATHURA_ERROR_OK);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
+} END_TEST
+
 START_TEST(test_page_get_index) {
   zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
   unsigned int index;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_get_index(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_index(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_index(NULL, &index) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_set_index(page, 0) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_page_get_index(page, &index) == ZATHURA_ERROR_OK);
+  fail_unless(index == 0);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_set_width) {
+  zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
   /* basic invalid arguments */
   fail_unless(zathura_page_set_width(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_set_width(page, 100) == ZATHURA_ERROR_OK);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_get_width) {
   zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
   unsigned int width;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_get_width(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_width(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_width(NULL, &width) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_set_width(page, 100) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_page_get_width(page, &width) == ZATHURA_ERROR_OK);
+  fail_unless(width == 100);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_set_height) {
+  zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
   /* basic invalid arguments */
   fail_unless(zathura_page_set_height(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_set_height(page, 100) == ZATHURA_ERROR_OK);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_get_height) {
   zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
   unsigned int height;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_get_height(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_height(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_height(NULL, &height) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_set_height(page, 100) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_page_get_height(page, &height) == ZATHURA_ERROR_OK);
+  fail_unless(height == 100);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_page_set_transition) {
+  zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
+  zathura_page_transition_t* transition = (zathura_page_transition_t*) 0xCAFEBABE;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_set_transition(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_set_transition(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_set_transition(NULL, transition) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_set_transition(page, transition) == ZATHURA_ERROR_OK);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_get_transition) {
   zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
   zathura_page_transition_t* transition;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_get_transition(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_transition(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_transition(NULL, &transition) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_get_transition(page, &transition) == ZATHURA_ERROR_OK);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_page_set_duration) {
+  zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_set_duration(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_set_duration(page, 0) == ZATHURA_ERROR_OK);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_get_duration) {
   zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
   unsigned int duration;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_get_duration(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_duration(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_duration(NULL, &duration) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_get_duration(page, &duration) == ZATHURA_ERROR_OK);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_page_set_crop_box) {
+  zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
+  zathura_rectangle_t crop_box;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_set_crop_box(NULL, crop_box) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_set_crop_box(page, crop_box) == ZATHURA_ERROR_OK);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_get_crop_box) {
   zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
   zathura_rectangle_t crop_box;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_get_crop_box(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_crop_box(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_crop_box(NULL, &crop_box) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_get_crop_box(page, &crop_box) == ZATHURA_ERROR_OK);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_set_label) {
   zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
 
   /* basic invalid arguments */
   fail_unless(zathura_page_set_label(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_set_label(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_set_label(page, "")   == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_set_label(NULL, "a")  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_set_label(page, "a")  == ZATHURA_ERROR_OK);
+
+  fiu_enable("libc/mm/calloc", 1, NULL, 0);
+  fail_unless(zathura_page_set_label(page, "a")  == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fiu_disable("libc/mm/calloc");
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_get_label) {
   zathura_page_t* page = NULL;
+  fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
   const char* label;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_get_label(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_label(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_get_label(NULL, &label) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_get_label(page, &label) == ZATHURA_ERROR_OK);
+
+  /* clean-up */
+  fail_unless(zathura_page_free(page) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_get_text) {
@@ -205,13 +415,19 @@ suite_page(void)
   tcase = tcase_create("basic");
   tcase_add_test(tcase, test_page_new);
   tcase_add_test(tcase, test_page_free);
+  tcase_add_test(tcase, test_page_set_document);
+  tcase_add_test(tcase, test_page_get_document);
+  tcase_add_test(tcase, test_page_set_index);
   tcase_add_test(tcase, test_page_get_index);
   tcase_add_test(tcase, test_page_set_width);
   tcase_add_test(tcase, test_page_get_width);
   tcase_add_test(tcase, test_page_set_height);
   tcase_add_test(tcase, test_page_get_height);
+  tcase_add_test(tcase, test_page_set_transition);
   tcase_add_test(tcase, test_page_get_transition);
+  tcase_add_test(tcase, test_page_set_duration);
   tcase_add_test(tcase, test_page_get_duration);
+  tcase_add_test(tcase, test_page_set_crop_box);
   tcase_add_test(tcase, test_page_get_crop_box);
   suite_add_tcase(suite, tcase);
 

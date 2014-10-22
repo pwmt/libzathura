@@ -92,6 +92,14 @@ page_init(zathura_page_t* page)
     zathura_page_set_label(page, "abc");
   }
 
+  if (zathura_page_set_width(page, 600) != ZATHURA_ERROR_OK) {
+    return ZATHURA_ERROR_UNKNOWN;
+  }
+
+  if (zathura_page_set_height(page, 800) != ZATHURA_ERROR_OK) {
+    return ZATHURA_ERROR_UNKNOWN;
+  }
+
   return ZATHURA_ERROR_OK;
 }
 

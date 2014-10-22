@@ -3,12 +3,13 @@
 #ifndef PAGE_H
 #define PAGE_H
 
+typedef struct zathura_page_s zathura_page_t;
+
 #include "error.h"
+#include "document.h"
 #include "types.h"
 #include "image-buffer.h"
 #include "transition.h"
-
-typedef struct zathura_page_s zathura_page_t;
 
 /**
  * Returns the index of the page.
@@ -21,6 +22,18 @@ typedef struct zathura_page_s zathura_page_t;
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_page_get_index(zathura_page_t* page, unsigned int* index);
+
+/**
+ * Returns the document of the page.
+ *
+ * @param[in] page The used page object
+ * @param[out] document The document of the page
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_page_get_document(zathura_page_t* page, zathura_document_t** document);
 
 /**
  * Returns the width of the page.

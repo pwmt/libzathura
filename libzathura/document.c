@@ -15,6 +15,21 @@
   }
 
 zathura_error_t
+zathura_document_new(zathura_document_t** document)
+{
+  if (document == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *document = calloc(1, sizeof(zathura_document_t));
+  if (*document == NULL) {
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
 zathura_document_free(zathura_document_t* document)
 {
   if (document == NULL) {
@@ -95,6 +110,16 @@ zathura_document_get_page(zathura_document_t* document, unsigned int index,
   if (document->pages[index] == NULL) {
     zathura_error_t error = ZATHURA_ERROR_OK;
     error = zathura_page_new(&(document->pages[index]));
+    if (error != ZATHURA_ERROR_OK) {
+      return error;
+    }
+
+    error = zathura_page_set_document(document->pages[index], document);
+    if (error != ZATHURA_ERROR_OK) {
+      return error;
+    }
+
+    error = zathura_page_set_index(document->pages[index], index);
     if (error != ZATHURA_ERROR_OK) {
       return error;
     }

@@ -60,6 +60,14 @@ START_TEST(test_document_get_path) {
   fail_unless(zathura_document_get_path(document, &path) == ZATHURA_ERROR_OK);
 } END_TEST
 
+START_TEST(test_document_set_number_of_pages) {
+  /* basic invalid arguments */
+  fail_unless(zathura_document_set_number_of_pages(NULL, 1) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_document_set_number_of_pages(document, 1) == ZATHURA_ERROR_OK);
+} END_TEST
+
 START_TEST(test_document_get_number_of_pages) {
   unsigned int number_of_pages;
 
@@ -82,6 +90,7 @@ START_TEST(test_document_get_page) {
 
   /* valid arguments */
   fail_unless(zathura_document_get_page(document, 0, &page) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_document_get_page(document, 100, &page) == ZATHURA_ERROR_DOCUMENT_INVALID_INDEX);
 } END_TEST
 
 START_TEST(test_document_get_page_by_label) {
@@ -99,6 +108,14 @@ START_TEST(test_document_get_page_by_label) {
   fail_unless(zathura_document_get_page_by_label(document, "xyz", &page) == ZATHURA_ERROR_DOCUMENT_INVALID_LABEL);
 } END_TEST
 
+START_TEST(test_document_set_page_mode) {
+  /* basic invalid arguments */
+  fail_unless(zathura_document_set_page_mode(NULL, ZATHURA_PAGE_MODE_USE_NONE) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_document_set_page_mode(document, ZATHURA_PAGE_MODE_USE_NONE) == ZATHURA_ERROR_OK);
+} END_TEST
+
 START_TEST(test_document_get_page_mode) {
   zathura_page_mode_t page_mode;
 
@@ -109,6 +126,14 @@ START_TEST(test_document_get_page_mode) {
 
   /* valid arguments */
   fail_unless(zathura_document_get_page_mode(document, &page_mode) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_document_set_page_layout) {
+  /* basic invalid arguments */
+  fail_unless(zathura_document_set_page_layout(NULL, ZATHURA_PAGE_LAYOUT_SINGLE_PAGE) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_document_set_page_layout(document, ZATHURA_PAGE_LAYOUT_SINGLE_PAGE) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_document_get_page_layout) {
@@ -159,6 +184,14 @@ START_TEST(test_document_get_metadata) {
   fail_unless(zathura_document_get_metadata(document, &metadata) == ZATHURA_ERROR_OK);
 } END_TEST
 
+START_TEST(test_document_set_permissions) {
+  /* basic invalid arguments */
+  fail_unless(zathura_document_set_permissions(NULL, ZATHURA_PERMISSION_PRINT)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_document_set_permissions(document, ZATHURA_PERMISSION_PRINT) == ZATHURA_ERROR_OK);
+} END_TEST
+
 START_TEST(test_document_get_permissions) {
   zathura_document_permission_t permissions;
 
@@ -181,9 +214,14 @@ suite_document(void)
   tcase_add_checked_fixture(tcase, setup_document, teardown_document);
   tcase_add_test(tcase, test_document_free);
   tcase_add_test(tcase, test_document_get_path);
+  tcase_add_test(tcase, test_document_set_number_of_pages);
   tcase_add_test(tcase, test_document_get_number_of_pages);
+  tcase_add_test(tcase, test_document_set_page_mode);
   tcase_add_test(tcase, test_document_get_page_mode);
+  tcase_add_test(tcase, test_document_set_page_layout);
   tcase_add_test(tcase, test_document_get_page_layout);
+  tcase_add_test(tcase, test_document_set_permissions);
+  tcase_add_test(tcase, test_document_get_permissions);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("save-as");
@@ -210,11 +248,6 @@ suite_document(void)
   tcase = tcase_create("metadata");
   tcase_add_checked_fixture(tcase, setup_document, teardown_document);
   tcase_add_test(tcase, test_document_get_metadata);
-  suite_add_tcase(suite, tcase);
-
-  tcase = tcase_create("permissions");
-  tcase_add_checked_fixture(tcase, setup_document, teardown_document);
-  tcase_add_test(tcase, test_document_get_permissions);
   suite_add_tcase(suite, tcase);
 
   return suite;

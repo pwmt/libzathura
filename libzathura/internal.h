@@ -40,7 +40,21 @@ struct zathura_page_s {
   unsigned int duration;
 };
 
+zathura_error_t zathura_document_new(zathura_document_t** document);
+
+/**
+ * Creates a new page object
+ *
+ * @param[out] page
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_OUT_OF_MEMORY Out of memory
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_page_new(zathura_page_t** page);
 zathura_error_t zathura_page_free(zathura_page_t* page);
+zathura_error_t zathura_page_set_document(zathura_page_t* page, zathura_document_t* document);
 
 zathura_error_t zathura_realpath(const char* path, char** realpath);
 zathura_error_t zathura_guess_type(const char* path, char** type);

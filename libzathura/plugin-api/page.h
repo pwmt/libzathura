@@ -7,18 +7,6 @@
 #include "../page.h"
 
 /**
- * Creates a new page object
- *
- * @param[out] page
- *
- * @return ZATHURA_ERROR_OK No error occurred
- * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
- * @return ZATHURA_ERROR_OUT_OF_MEMORY Out of memory
- * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
- */
-zathura_error_t zathura_page_new(zathura_page_t** page);
-
-/**
  * Sets the custom data of the page object
  *
  * @param[in] page The page object
@@ -102,4 +90,6 @@ zathura_error_t zathura_page_set_label(zathura_page_t* page, const char* label);
  */
 zathura_error_t zathura_page_set_transition(zathura_page_t* page, zathura_page_transition_t* transition);
 
+zathura_error_t zathura_page_set_duration(zathura_page_t* page, unsigned int duration);
+zathura_error_t zathura_page_set_crop_box(zathura_page_t* page, zathura_rectangle_t crop_box);
 #endif /* PLUGIN_API_PAGE_H */

@@ -3,6 +3,8 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
 
+typedef struct zathura_document_s zathura_document_t;
+
 #include "error.h"
 #include "list.h"
 #include "node.h"
@@ -124,8 +126,6 @@ typedef enum zathura_document_permission_e {
     */
   ZATHURA_PERMISSION_HIGH_RES_PRINT = 1 << 12,
 } zathura_document_permission_t;
-
-typedef struct zathura_document_s zathura_document_t;
 
 /**
  * Frees the given document

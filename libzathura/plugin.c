@@ -85,17 +85,18 @@ zathura_plugin_open_document(zathura_plugin_t* plugin, zathura_document_t**
     return ZATHURA_ERROR_DOCUMENT_DOES_NOT_EXIST;
   }
 
+  zathura_error_t error = ZATHURA_ERROR_OK;
+
   /* Determine real path */
   char* real_path;
-  if (zathura_realpath(path, &real_path) != ZATHURA_ERROR_OK) {
-    return ZATHURA_ERROR_UNKNOWN;
+  if ((error = zathura_realpath(path, &real_path)) != ZATHURA_ERROR_OK) {
+    return error;
   }
 
   /* Create document */
-  *document = calloc(1, sizeof(zathura_document_t));
-  if (*document == NULL) {
+  if ((error = zathura_document_new(document)) != ZATHURA_ERROR_OK) {
     free(real_path);
-    return ZATHURA_ERROR_OUT_OF_MEMORY;
+    return error;
   }
 
   /* Initialize document */
@@ -104,7 +105,7 @@ zathura_plugin_open_document(zathura_plugin_t* plugin, zathura_document_t**
   (*document)->plugin   = plugin;
 
   /* Open document */
-  zathura_error_t error = plugin->functions.document_open(*document);
+  error = plugin->functions.document_open(*document);
   if (error != ZATHURA_ERROR_OK) {
     zathura_document_free(*document);
     *document = NULL;

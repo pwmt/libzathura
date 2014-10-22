@@ -18,4 +18,15 @@
  */
 zathura_error_t zathura_document_set_number_of_pages(zathura_document_t* document, unsigned int number_of_pages);
 
+zathura_error_t zathura_document_set_page_mode(zathura_document_t* document,
+    zathura_page_mode_t page_mode);
+
+zathura_error_t
+zathura_document_set_page_layout(zathura_document_t* document,
+    zathura_page_layout_t page_layout);
+
+zathura_error_t
+zathura_document_set_permissions(zathura_document_t* document,
+    zathura_document_permission_t permissions);
+
 #endif /* PLUGIN_API_DOCUMENT_H */

@@ -155,12 +155,12 @@ START_TEST(test_plugin_open_document) {
   fail_unless(zathura_plugin_open_document(plugin, &document, "", NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid parameter */
+  fail_unless(zathura_plugin_open_document(plugin, &document, "DoesNotExist", NULL) == ZATHURA_ERROR_DOCUMENT_DOES_NOT_EXIST);
   fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_OK);
   fail_unless(zathura_document_free(document) == ZATHURA_ERROR_OK);
 
   /* fault injection */
   fiu_enable_external("libc/mm/calloc", 1, NULL, 0, cb_test_plugin_document_open_calloc);
-  fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
 } END_TEST

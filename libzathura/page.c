@@ -48,6 +48,30 @@ zathura_page_free(zathura_page_t* page)
 }
 
 zathura_error_t
+zathura_page_set_document(zathura_page_t* page, zathura_document_t* document)
+{
+  if (page == NULL || document == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  page->document = document;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_page_get_document(zathura_page_t* page, zathura_document_t** document)
+{
+  if (page == NULL || document == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *document = page->document;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
 zathura_page_set_index(zathura_page_t* page, unsigned int index)
 {
   if (page == NULL) {
@@ -181,7 +205,7 @@ zathura_page_get_transition(zathura_page_t* page, zathura_page_transition_t** tr
 
   *transition = page->transition;
 
-  return ZATHURA_ERROR_UNKNOWN;
+  return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
