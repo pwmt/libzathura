@@ -439,7 +439,7 @@ START_TEST(test_page_render) {
 
 #ifdef HAVE_CAIRO
 START_TEST(test_page_render_cairo) {
-  cairo_t* cairo;
+  cairo_t* cairo = (cairo_t*) 0xCAFEBABE;
 
   /* basic invalid arguments */
   fail_unless(zathura_page_render_cairo(NULL, NULL, 0, 0, 0)   == ZATHURA_ERROR_INVALID_ARGUMENTS);

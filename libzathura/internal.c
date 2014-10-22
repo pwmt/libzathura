@@ -50,8 +50,12 @@ zathura_realpath(const char* path, char** real_path)
 }
 
 #ifdef WITH_MAGIC
-static char*
+char*
 guess_type_magic(const char* path) {
+  if (path == NULL || strlen(path) == 0) {
+    return NULL;
+  }
+
   char* mime_type = NULL;
 
   /* creat magic cookie */
@@ -77,6 +81,7 @@ guess_type_magic(const char* path) {
   if (mime_type == NULL) {
     goto cleanup;
   }
+
   /* dup so we own the memory */
   mime_type = g_strdup(mime_type);
 
@@ -90,9 +95,13 @@ cleanup:
 }
 #endif
 
-static char*
+char*
 guess_type_file(const char* path)
 {
+  if (path == NULL || strlen(path) == 0) {
+    return NULL;
+  }
+
   GString* command = g_string_new("file -b --mime-type ");
   char* tmp        = g_shell_quote(path);
 
@@ -118,9 +127,13 @@ guess_type_file(const char* path)
   return out;
 }
 
-static char*
+char*
 guess_type_glib(const char* path)
 {
+  if (path == NULL || strlen(path) == 0) {
+    return NULL;
+  }
+
   gboolean uncertain = FALSE;
   char* content_type = g_content_type_guess(path, NULL, 0, &uncertain);
   if (content_type == NULL) {

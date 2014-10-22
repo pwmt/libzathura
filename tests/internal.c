@@ -9,6 +9,11 @@
 
 #include "internal.h"
 
+/* forward declarations */
+char* guess_type_magic(const char* path);
+char* guess_type_file(const char* path);
+char* guess_type_glib(const char* path);
+
 START_TEST(test_zathura_realpath) {
   char* real_path;
 
@@ -42,11 +47,37 @@ START_TEST(test_zathura_guess_type) {
   fail_unless(zathura_guess_type("files/empty.pdf", &type) == ZATHURA_ERROR_OK);
   fail_unless(strcmp(type, "application/pdf") == 0);
   free(type);
-
-  /* fail_unless(zathura_guess_type("file.djvu", &type) == ZATHURA_ERROR_OK); */
-  /* fail_unless(strcmp(type, "image/vnd.djvu") == 0); */
-  /* free(type); */
 } END_TEST
+
+START_TEST(test_zathura_guess_type_glib) {
+  /* basic invalid arguments */
+  fail_unless(guess_type_glib(NULL) == NULL);
+  fail_unless(guess_type_glib("")   == NULL);
+  fail_unless(guess_type_glib("a")  == NULL);
+
+  /* valid arguments */
+  fail_unless(strcmp(guess_type_glib("files/empty.pdf"), "application/pdf") == 0);
+} END_TEST
+
+START_TEST(test_zathura_guess_type_file) {
+  /* basic invalid arguments */
+  fail_unless(guess_type_file(NULL) == NULL);
+  fail_unless(guess_type_file("")   == NULL);
+
+  /* valid arguments */
+  fail_unless(strcmp(guess_type_file("files/empty.pdf"), "application/pdf") == 0);
+} END_TEST
+
+#ifdef WITH_MAGIC
+START_TEST(test_zathura_guess_type_magic) {
+  /* basic invalid arguments */
+  fail_unless(guess_type_magic(NULL) == NULL);
+  fail_unless(guess_type_magic("")   == NULL);
+
+  /* valid arguments */
+  fail_unless(strcmp(guess_type_magic("files/empty.pdf"), "application/pdf") == 0);
+} END_TEST
+#endif
 
 Suite*
 suite_internal(void)
@@ -60,6 +91,11 @@ suite_internal(void)
 
   tcase = tcase_create("zathura_guess_type");
   tcase_add_test(tcase, test_zathura_guess_type);
+  tcase_add_test(tcase, test_zathura_guess_type_glib);
+  tcase_add_test(tcase, test_zathura_guess_type_file);
+#ifdef WITH_MAGIC
+  tcase_add_test(tcase, test_zathura_guess_type_magic);
+#endif
   suite_add_tcase(suite, tcase);
 
   return suite;
