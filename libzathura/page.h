@@ -5,6 +5,10 @@
 
 typedef struct zathura_page_s zathura_page_t;
 
+#if HAVE_CAIRO
+#include <cairo.h>
+#endif
+
 #include "error.h"
 #include "document.h"
 #include "types.h"

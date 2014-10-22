@@ -17,6 +17,12 @@ LIBS += ${MAGIC_LIB}
 CPPFLAGS += -DWITH_MAGIC
 endif
 
+ifneq (${WITH_CAIRO},0)
+INCS += ${CAIRO_INC}
+LIBS += ${CAIRO_LIB}
+CPPFLAGS += -DHAVE_CAIRO
+endif
+
 ifneq (${WITH_LIBFIU},0)
 INCS += ${FIU_INC}
 LIBS += ${FIU_LIB}

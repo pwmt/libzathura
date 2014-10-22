@@ -8,6 +8,7 @@
 #endif
 
 #include "error.h"
+#include "types.h"
 #include "image-buffer.h"
 
 typedef struct zathura_image_s zathura_image_t;
@@ -19,5 +20,8 @@ zathura_error_t zathura_image_get_cairo_surface(zathura_image_t* image, cairo_su
 #endif
 
 zathura_error_t zathura_image_free(zathura_image_t* image);
+
+zathura_error_t
+zathura_image_get_position(zathura_image_t* image, zathura_rectangle_t* position);
 
 #endif /* IMAGE_H */

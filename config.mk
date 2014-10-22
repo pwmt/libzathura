@@ -49,6 +49,9 @@ GMODULE_LIB ?= $(shell pkg-config --libs gmodule-no-export-2.0)
 MAGIC_INC ?=
 MAGIC_LIB ?= -lmagic
 
+CAIRO_INC ?= $(shell pkg-config --cflags cairo)
+CAIRO_LIB ?= $(shell pkg-config --libs cairo)
+
 FIU_INC ?= $(shell pkg-config --cflags libfiu)
 FIU_LIB ?= $(shell pkg-config --libs libfiu)
 
@@ -83,6 +86,9 @@ GENHTML_FLAGS=--rc lcov_branch_coverage=1 --output-directory ${LCOV_OUTPUT} ${BU
 # mimetype detection
 # To disable support for mimetype detction with libmagic set WITH_MAGIC to 0.
 WITH_MAGIC ?= 1
+
+# cairo support
+WITH_CAIRO ?= 1
 
 # libfiu
 WITH_LIBFIU ?= 1

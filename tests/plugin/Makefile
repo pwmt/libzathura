@@ -9,6 +9,12 @@ PROJECT = plugin
 SOURCE  = $(wildcard *.c)
 OBJECTS = ${SOURCE:.c=.o}
 
+ifneq (${WITH_CAIRO},0)
+INCS += ${CAIRO_INC}
+LIBS += ${CAIRO_LIB}
+CPPFLAGS += -DHAVE_CAIRO
+endif
+
 all: options ${PROJECT}.so
 
 options:

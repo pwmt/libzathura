@@ -9,6 +9,7 @@
 #include "version.h"
 #include "attachment.h"
 #include "list.h"
+#include "image.h"
 
 #define PLUGIN_REGISTER_FUNCTION         "zathura_plugin_register"
 #define PLUGIN_VERSION_MAJOR_FUNCTION    "zathura_plugin_version_major"
@@ -92,5 +93,7 @@ zathura_error_t zathura_plugin_add_mimetype(zathura_plugin_t* plugin, const char
 #include "plugin-api/page.h"
 #include "plugin-api/transition.h"
 #include "plugin-api/form-fields.h"
+
+zathura_error_t zathura_image_new(zathura_image_t** image, zathura_rectangle_t position);
 
 #endif /* PLUGIN_API_H */
