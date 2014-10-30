@@ -8,7 +8,9 @@ SOURCE          = $(wildcard ${PROJECT}/*.c ${PROJECT}/**/*.c ${PROJECT}/**/**/*
 OBJECTS         = $(addprefix ${BUILDDIR_RELEASE}/,${SOURCE:.c=.o})
 OBJECTS_DEBUG   = $(addprefix ${BUILDDIR_DEBUG}/,${SOURCE:.c=.o})
 OBJECTS_GCOV    = $(addprefix ${BUILDDIR_GCOV}/,${SOURCE:.c=.o})
-HEADERS         = $(filter-out ${PROJECT}/version.h, $(filter-out ${PROJECT/}internal.h, $(wildcard *.h)))
+HEADERS         = $(filter-out ${PROJECT}/version.h, \
+                  $(filter-out ${PROJECT}/internal.h, \
+                  $(wildcard ${PROJECT}/*.h)))
 HEADERS_INSTALL = ${HEADERS} ${PROJECT}/version.h
 
 ifneq (${WITH_MAGIC},0)
@@ -152,43 +154,41 @@ doc:
 test: ${PROJECT}
 	$(QUIET)${MAKE} -C tests run
 
-${PROJECT}.pc: ${PROJECTNV}.pc.in config.mk
+${PROJECT}.pc: ${PROJECT}.pc.in config.mk
 	$(QUIET)echo project=${PROJECT} > ${PROJECT}.pc
 	$(QUIET)echo version=${VERSION} >> ${PROJECT}.pc
 	$(QUIET)echo includedir=${INCLUDEDIR} >> ${PROJECT}.pc
 	$(QUIET)echo libdir=${LIBDIR} >> ${PROJECT}.pc
-	$(QUIET)cat ${PROJECTNV}.pc.in >> ${PROJECT}.pc
+	$(QUIET)cat ${PROJECT}.pc.in >> ${PROJECT}.pc
 
 install-static: static
 	$(call colorecho,INSTALL,"Install static library")
 	$(QUIET)mkdir -m 755 -p ${DESTDIR}${LIBDIR}
-	$(QUIET)install -m 644 ${PROJECT}.a ${DESTDIR}${LIBDIR}
+	$(QUIET)install -m 644 ${BUILDDIR_RELEASE}/${PROJECT}.a ${DESTDIR}${LIBDIR}
 
 install-shared: shared
 	$(call colorecho,INSTALL,"Install shared library")
 	$(QUIET)mkdir -m 755 -p ${DESTDIR}${LIBDIR}
-	$(QUIET)install -m 644 ${PROJECT}.so.${SOVERSION} ${DESTDIR}${LIBDIR}
+	$(QUIET)install -m 644 ${BUILDDIR_RELEASE}/${PROJECT}.so.${SOVERSION} ${DESTDIR}${LIBDIR}
 	$(QUIET)ln -s ${PROJECT}.so.${SOVERSION} ${DESTDIR}${LIBDIR}/${PROJECT}.so.${SOMAJOR} || \
 		echo "Failed to create ${PROJECT}.so.${SOMAJOR}. Please check if it exists and points to the correct version of ${PROJECT}.so."
 	$(QUIET)ln -s ${PROJECT}.so.${SOVERSION} ${DESTDIR}${LIBDIR}/${PROJECT}.so || \
 		echo "Failed to create ${PROJECT}.so. Please check if it exists and points to the correct version of ${PROJECT}.so."
 
 install: options install-static install-shared install-headers
-		$(QUIET)${MAKE} -C po install
 
 install-headers: ${PROJECT}/version.h ${PROJECT}.pc
 	$(call colorecho,INSTALL,"Install pkg-config file")
 	$(QUIET)mkdir -m 755 -p ${DESTDIR}${LIBDIR}/pkgconfig
 	$(QUIET)install -m 644 ${PROJECT}.pc ${DESTDIR}${LIBDIR}/pkgconfig
 	$(call colorecho,INSTALL,"Install header files")
-	$(QUIET)mkdir -m 755 -p ${DESTDIR}${INCLUDEDIR}/zathura
-	$(QUIET)install -m 644 ${HEADERS_INSTALL} ${DESTDIR}${INCLUDEDIR}/zathura
+	$(QUIET)mkdir -m 755 -p ${DESTDIR}${INCLUDEDIR}/${PROJECT}
+	$(QUIET)install -m 644 ${HEADERS_INSTALL} ${DESTDIR}${INCLUDEDIR}/${PROJECT}
 
 uninstall: uninstall-headers
 	$(call colorecho,UNINSTALL,"Remove library files")
 	$(QUIET)rm -f ${LIBDIR}/${PROJECT}.a ${LIBDIR}/${PROJECT}.so.${SOVERSION} \
 		${LIBDIR}/${PROJECT}.so.${SOMAJOR} ${LIBDIR}/${PROJECT}.so
-	$(QUIET)${MAKE} -C po uninstall
 
 uninstall-headers:
 	$(call colorecho,UNINSTALL,"Remove header files")
