@@ -96,6 +96,19 @@ zathura_document_get_path(zathura_document_t* document, char** path)
 }
 
 zathura_error_t
+zathura_document_get_password(zathura_document_t* document,
+    char** password)
+{
+  if (document == NULL || password == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *password = document->password;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
 zathura_document_set_number_of_pages(zathura_document_t* document, unsigned int number_of_pages)
 {
   if (document == NULL) {

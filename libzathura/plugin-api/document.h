@@ -37,4 +37,8 @@ zathura_error_t
 zathura_document_get_data(zathura_document_t* document,
     void** data);
 
+zathura_error_t
+zathura_document_get_password(zathura_document_t* document,
+    char** password);
+
 #endif /* PLUGIN_API_DOCUMENT_H */

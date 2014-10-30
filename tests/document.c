@@ -88,6 +88,18 @@ START_TEST(test_document_get_path) {
   fail_unless(zathura_document_get_path(document, &path) == ZATHURA_ERROR_OK);
 } END_TEST
 
+START_TEST(test_document_get_password) {
+  char* password;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_document_get_password(NULL,     NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_password(document, NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_password(NULL,     &password) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_document_get_password(document, &password) == ZATHURA_ERROR_OK);
+} END_TEST
+
 START_TEST(test_document_set_number_of_pages) {
   /* basic invalid arguments */
   fail_unless(zathura_document_set_number_of_pages(NULL, 1) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -244,6 +256,7 @@ suite_document(void)
   tcase_add_test(tcase, test_document_set_data);
   tcase_add_test(tcase, test_document_get_data);
   tcase_add_test(tcase, test_document_get_path);
+  tcase_add_test(tcase, test_document_get_password);
   tcase_add_test(tcase, test_document_set_number_of_pages);
   tcase_add_test(tcase, test_document_get_number_of_pages);
   tcase_add_test(tcase, test_document_set_page_mode);
