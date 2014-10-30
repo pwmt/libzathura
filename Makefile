@@ -4,13 +4,23 @@ include config.mk
 include colors.mk
 include common.mk
 
-SOURCE          = $(wildcard ${PROJECT}/*.c ${PROJECT}/**/*.c ${PROJECT}/**/**/*.c)
+SOURCE          = $(wildcard \
+                    ${PROJECT}/*.c \
+                    ${PROJECT}/**/*.c \
+                    ${PROJECT}/**/**/*.c)
 OBJECTS         = $(addprefix ${BUILDDIR_RELEASE}/,${SOURCE:.c=.o})
 OBJECTS_DEBUG   = $(addprefix ${BUILDDIR_DEBUG}/,${SOURCE:.c=.o})
 OBJECTS_GCOV    = $(addprefix ${BUILDDIR_GCOV}/,${SOURCE:.c=.o})
 HEADERS         = $(filter-out ${PROJECT}/version.h, \
                   $(filter-out ${PROJECT}/internal.h, \
-                  $(wildcard ${PROJECT}/*.h)))
+                  $(filter-out ${PROJECT}/internal/*.h, \
+                  $(filter-out ${PROJECT}/**/internal.h, \
+                  $(filter-out ${PROJECT}/**/internal/*.h, \
+                  $(wildcard \
+                    ${PROJECT}/*.h \
+                    ${PROJECT}/**/*.h \
+                    ${PROJECT}/**/**/*.h \
+                  ))))))
 HEADERS_INSTALL = ${HEADERS} ${PROJECT}/version.h
 
 ifneq (${WITH_MAGIC},0)
@@ -183,7 +193,10 @@ install-headers: ${PROJECT}/version.h ${PROJECT}.pc
 	$(QUIET)install -m 644 ${PROJECT}.pc ${DESTDIR}${LIBDIR}/pkgconfig
 	$(call colorecho,INSTALL,"Install header files")
 	$(QUIET)mkdir -m 755 -p ${DESTDIR}${INCLUDEDIR}/${PROJECT}
-	$(QUIET)install -m 644 ${HEADERS_INSTALL} ${DESTDIR}${INCLUDEDIR}/${PROJECT}
+	$(QUIET)for header in ${HEADERS_INSTALL}; do \
+		mkdir -m 755 -p ${DESTDIR}${INCLUDEDIR}/`dirname $$header`; \
+		install -m 644 $$header ${DESTDIR}${INCLUDEDIR}/$$header; \
+	done
 
 uninstall: uninstall-headers
 	$(call colorecho,UNINSTALL,"Remove library files")
@@ -192,7 +205,7 @@ uninstall: uninstall-headers
 
 uninstall-headers:
 	$(call colorecho,UNINSTALL,"Remove header files")
-	$(QUIET)rm -rf ${INCLUDEDIR}/zathura
+	$(QUIET)rm -rf ${INCLUDEDIR}/${PROJECT}
 	$(call colorecho,UNINSTALL,"Remove pkg-config file")
 	$(QUIET)rm -f ${LIBDIR}/pkgconfig/${PROJECT}.pc
 
