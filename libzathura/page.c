@@ -48,6 +48,32 @@ zathura_page_free(zathura_page_t* page)
 }
 
 zathura_error_t
+zathura_page_set_data(zathura_page_t* page,
+    void* data)
+{
+  if (page == NULL || data == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  page->data = data;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_page_get_data(zathura_page_t* page,
+    void** data)
+{
+  if (page == NULL || data == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *data = page->data;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
 zathura_page_set_document(zathura_page_t* page, zathura_document_t* document)
 {
   if (page == NULL || document == NULL) {

@@ -52,6 +52,34 @@ START_TEST(test_page_free) {
   fail_unless(zathura_page_free(NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
+START_TEST(test_page_set_data) {
+  void* data = (void*) 0xCAFEBABE;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_set_data(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_set_data(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_set_data(NULL, data) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_set_data(page, data) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_page_get_data) {
+  void* data;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_get_data(NULL, NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_data(page, NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_data(NULL, &data) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_get_data(page, &data) == ZATHURA_ERROR_OK);
+
+  fail_unless(zathura_page_set_data(page, (void*) 0xCAFEBABE) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_page_get_data(page, &data) == ZATHURA_ERROR_OK);
+  fail_unless(data == (void*) 0xCAFEBABE);
+} END_TEST
+
 START_TEST(test_page_set_document) {
   zathura_page_t* page = NULL;
   fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
@@ -458,8 +486,11 @@ suite_page(void)
   Suite* suite = suite_create("page");
 
   tcase = tcase_create("basic");
+  tcase_add_checked_fixture(tcase, setup_page, teardown_page);
   tcase_add_test(tcase, test_page_new);
   tcase_add_test(tcase, test_page_free);
+  tcase_add_test(tcase, test_page_set_data);
+  tcase_add_test(tcase, test_page_get_data);
   tcase_add_test(tcase, test_page_set_document);
   tcase_add_test(tcase, test_page_get_document);
   tcase_add_test(tcase, test_page_set_index);

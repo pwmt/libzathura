@@ -58,6 +58,32 @@ zathura_document_free(zathura_document_t* document)
 }
 
 zathura_error_t
+zathura_document_set_data(zathura_document_t* document,
+    void* data)
+{
+  if (document == NULL || data == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  document->data = data;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_document_get_data(zathura_document_t* document,
+    void** data)
+{
+  if (document == NULL || data == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *data = document->data;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
 zathura_document_get_path(zathura_document_t* document, char** path)
 {
   if (document == NULL || path == NULL) {

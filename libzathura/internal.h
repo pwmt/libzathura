@@ -27,6 +27,8 @@ struct zathura_document_s {
   zathura_page_layout_t page_layout;
   zathura_page_mode_t page_mode;
   zathura_document_permission_t permissions;
+
+  void* data;
 };
 
 struct zathura_page_s {
@@ -38,6 +40,8 @@ struct zathura_page_s {
   zathura_page_transition_t* transition;
   zathura_rectangle_t crop_box;
   unsigned int duration;
+
+  void* data;
 };
 
 zathura_error_t zathura_document_new(zathura_document_t** document);
@@ -55,6 +59,8 @@ zathura_error_t zathura_document_new(zathura_document_t** document);
 zathura_error_t zathura_page_new(zathura_page_t** page);
 zathura_error_t zathura_page_free(zathura_page_t* page);
 zathura_error_t zathura_page_set_document(zathura_page_t* page, zathura_document_t* document);
+zathura_error_t zathura_page_set_data(zathura_page_t* page, void* data);
+zathura_error_t zathura_page_get_data(zathura_page_t* page, void** data);
 
 zathura_error_t zathura_realpath(const char* path, char** realpath);
 zathura_error_t zathura_guess_type(const char* path, char** type);

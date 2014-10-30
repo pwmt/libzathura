@@ -29,4 +29,12 @@ zathura_error_t
 zathura_document_set_permissions(zathura_document_t* document,
     zathura_document_permission_t permissions);
 
+zathura_error_t
+zathura_document_set_data(zathura_document_t* document,
+    void* data);
+
+zathura_error_t
+zathura_document_get_data(zathura_document_t* document,
+    void** data);
+
 #endif /* PLUGIN_API_DOCUMENT_H */
