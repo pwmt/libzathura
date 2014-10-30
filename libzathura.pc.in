@@ -3,5 +3,5 @@ Description: document library
 Version: ${version}
 URL: http://pwmt.org/projects/libzathura
 Cflags: -I${includedir}
-Libs: -L${libdir} -l${project}
+Libs: -L${libdir} -lzathura
 Requires.private: cairo

@@ -121,11 +121,11 @@ ${BUILDDIR_GCOV}/%.o: %.c
 ${PROJECT}-gcov: ${PROJECT}-gcov.a ${PROJECT}-gcov.so.${SOVERSION}
 
 ${PROJECT}-gcov.a: ${OBJECTS_GCOV}
-	$(call colorecho,AR,${PROJECT}-debug.a)
+	$(call colorecho,AR,${PROJECT}-gcov.a)
 	$(QUIET)ar rc ${BUILDDIR_GCOV}/${PROJECT}.a ${OBJECTS_GCOV}
 
 ${PROJECT}-gcov.so.${SOVERSION}: ${OBJECTS_GCOV}
-	$(call colorecho,LD,${PROJECT}-debug.so.${SOMAJOR})
+	$(call colorecho,LD,${PROJECT}-gcov.so.${SOMAJOR})
 	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} ${GCOV_LDFLAGS} \
 		-o ${BUILDDIR_GCOV}/${PROJECT}.so.${SOVERSION} ${OBJECTS_GCOV} ${LIBS}
 
@@ -167,7 +167,10 @@ test: ${PROJECT}
 ${PROJECT}.pc: ${PROJECT}.pc.in config.mk
 	$(QUIET)echo project=${PROJECT} > ${PROJECT}.pc
 	$(QUIET)echo version=${VERSION} >> ${PROJECT}.pc
+	$(QUIET)echo apiversion=${LIBZATHURA_VERSION_API} >> ${PROJECT}.pc
+	$(QUIET)echo abiversion=${LIBZATHURA_VERSION_ABI} >> ${PROJECT}.pc
 	$(QUIET)echo includedir=${INCLUDEDIR} >> ${PROJECT}.pc
+	$(QUIET)echo plugindir=${PLUGINDIR} >> ${PROJECT}.pc
 	$(QUIET)echo libdir=${LIBDIR} >> ${PROJECT}.pc
 	$(QUIET)cat ${PROJECT}.pc.in >> ${PROJECT}.pc
 

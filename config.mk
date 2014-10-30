@@ -31,6 +31,7 @@ PREFIX ?= /usr
 LIBDIR ?= ${PREFIX}/lib
 INCLUDEDIR ?= ${PREFIX}/include
 DEPENDDIR=.depend
+PLUGINDIR ?= ${PREFIX}/lib/zathura
 BUILDDIR=build
 BUILDDIR_RELEASE=${BUILDDIR}/release
 BUILDDIR_DEBUG=${BUILDDIR}/debug
