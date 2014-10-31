@@ -5,8 +5,8 @@ Requirements
 ------------
 glib2 (>= 2.32.4)
 check (>= 0.9.8) (for tests)
+libfiu (>= 0.91) (for fault-injection)
 python-docutils (for man pages)
-libfiu (>= 0.91)
 libmagic from file(1) (optional, for mime-type detection)
 
 Installation
