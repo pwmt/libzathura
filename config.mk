@@ -32,10 +32,10 @@ LIBDIR ?= ${PREFIX}/lib
 INCLUDEDIR ?= ${PREFIX}/include
 DEPENDDIR=.depend
 PLUGINDIR ?= ${PREFIX}/lib/zathura
-BUILDDIR=build
-BUILDDIR_RELEASE=${BUILDDIR}/release
-BUILDDIR_DEBUG=${BUILDDIR}/debug
-BUILDDIR_GCOV=${BUILDDIR}/gcov
+BUILDDIR ?= build
+BUILDDIR_RELEASE ?= ${BUILDDIR}/release
+BUILDDIR_DEBUG ?= ${BUILDDIR}/debug
+BUILDDIR_GCOV ?= ${BUILDDIR}/gcov
 
 # libs
 GLIB_INC ?= $(shell pkg-config --cflags glib-2.0)

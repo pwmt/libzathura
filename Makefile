@@ -71,17 +71,19 @@ ${BUILDDIR_RELEASE}/%.o: %.c
 
 ${PROJECT}: ${PROJECT}/version.h static shared
 
-static: ${PROJECT}.a
-shared: ${PROJECT}.so.${SOVERSION}
+static: ${BUILDDIR_RELEASE}/${PROJECT}.a
+shared: ${BUILDDIR_RELEASE}/${PROJECT}.so.${SOVERSION}
 
-${PROJECT}.a: ${OBJECTS}
+${BUILDDIR_RELEASE}/${PROJECT}.a: ${OBJECTS}
 	$(call colorecho,AR,$@)
 	$(QUIET)ar rcs ${BUILDDIR_RELEASE}/$@ ${OBJECTS}
 
-${PROJECT}.so.${SOVERSION}: ${OBJECTS}
+${BUILDDIR_RELEASE}/${PROJECT}.so.${SOVERSION}: ${OBJECTS}
 	$(call colorecho,LD,$@)
 	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} \
 		-o ${BUILDDIR_RELEASE}/$@ ${OBJECTS} ${LIBS}
+
+release: options ${PROJECT}
 
 # debug build
 
@@ -94,13 +96,16 @@ ${BUILDDIR_DEBUG}/%.o: %.c
 	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} ${DFLAGS} \
 		-o $@ $< -MMD -MF ${DEPENDDIR}/$(abspath $@).dep
 
-${PROJECT}-debug: ${PROJECT}-debug.a ${PROJECT}-debug.so.${SOVERSION}
+${PROJECT}-debug: ${PROJECT}/version.h static-debug shared-debug
 
-${PROJECT}-debug.a: ${OBJECTS_DEBUG}
+static-debug: ${BUILDDIR_DEBUG}/${PROJECT}.a
+shared-debug: ${BUILDDIR_DEBUG}/${PROJECT}.so.${SOVERSION}
+
+${BUILDDIR_DEBUG}/${PROJECT}.a: ${OBJECTS_DEBUG}
 	$(call colorecho,AR,${PROJECT}-debug.a)
 	$(QUIET)ar rc ${BUILDDIR_DEBUG}/${PROJECT}.a ${OBJECTS_DEBUG}
 
-${PROJECT}-debug.so.${SOVERSION}: ${OBJECTS_DEBUG}
+${BUILDDIR_DEBUG}/${PROJECT}.so.${SOVERSION}: ${OBJECTS_DEBUG}
 	$(call colorecho,LD,${PROJECT}-debug.so.${SOMAJOR})
 	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} \
 		-o ${BUILDDIR_DEBUG}/${PROJECT}.so.${SOVERSION} ${OBJECTS_DEBUG} ${LIBS}
@@ -115,16 +120,19 @@ ${BUILDDIR_GCOV}/%.o: %.c
 	$(call colorecho,CC,$<)
 	@mkdir -p ${DEPENDDIR}/$(dir $(abspath $@))
 	@mkdir -p $(dir $(abspath $@))
-	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} ${GCOV_CFLAGS} ${DFLAGS} ${GCOV_DFLAGS} \
+	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} ${GCOV_CFLAGS} ${DFLAGS} \
 		-o $@ $< -MMD -MF ${DEPENDDIR}/$(abspath $@).dep
 
-${PROJECT}-gcov: ${PROJECT}-gcov.a ${PROJECT}-gcov.so.${SOVERSION}
+${PROJECT}-gcov: ${PROJECT}/version.h static-gcov shared-gcov
 
-${PROJECT}-gcov.a: ${OBJECTS_GCOV}
+static-gcov: ${BUILDDIR_GCOV}/${PROJECT}.a
+shared-gcov: ${BUILDDIR_GCOV}/${PROJECT}.so.${SOVERSION}
+
+${BUILDDIR_GCOV}/${PROJECT}.a: ${OBJECTS_GCOV}
 	$(call colorecho,AR,${PROJECT}-gcov.a)
 	$(QUIET)ar rc ${BUILDDIR_GCOV}/${PROJECT}.a ${OBJECTS_GCOV}
 
-${PROJECT}-gcov.so.${SOVERSION}: ${OBJECTS_GCOV}
+${BUILDDIR_GCOV}/${PROJECT}.so.${SOVERSION}: ${OBJECTS_GCOV}
 	$(call colorecho,LD,${PROJECT}-gcov.so.${SOMAJOR})
 	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} ${GCOV_LDFLAGS} \
 		-o ${BUILDDIR_GCOV}/${PROJECT}.so.${SOVERSION} ${OBJECTS_GCOV} ${LIBS}
