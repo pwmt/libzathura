@@ -76,12 +76,12 @@ shared: ${BUILDDIR_RELEASE}/${PROJECT}.so.${SOVERSION}
 
 ${BUILDDIR_RELEASE}/${PROJECT}.a: ${OBJECTS}
 	$(call colorecho,AR,$@)
-	$(QUIET)ar rcs ${BUILDDIR_RELEASE}/$@ ${OBJECTS}
+	$(QUIET)ar rcs ${BUILDDIR_RELEASE}/${PROJECT}.a ${OBJECTS}
 
 ${BUILDDIR_RELEASE}/${PROJECT}.so.${SOVERSION}: ${OBJECTS}
 	$(call colorecho,LD,$@)
 	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} \
-		-o ${BUILDDIR_RELEASE}/$@ ${OBJECTS} ${LIBS}
+		-o ${BUILDDIR_RELEASE}/${PROJECT}.so.${SOVERSION} ${OBJECTS} ${LIBS}
 
 release: options ${PROJECT}
 
