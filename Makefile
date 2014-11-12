@@ -102,11 +102,11 @@ static-debug: ${BUILDDIR_DEBUG}/${PROJECT}.a
 shared-debug: ${BUILDDIR_DEBUG}/${PROJECT}.so.${SOVERSION}
 
 ${BUILDDIR_DEBUG}/${PROJECT}.a: ${OBJECTS_DEBUG}
-	$(call colorecho,AR,${PROJECT}-debug.a)
+	$(call colorecho,AR,${PROJECT}.a)
 	$(QUIET)ar rc ${BUILDDIR_DEBUG}/${PROJECT}.a ${OBJECTS_DEBUG}
 
 ${BUILDDIR_DEBUG}/${PROJECT}.so.${SOVERSION}: ${OBJECTS_DEBUG}
-	$(call colorecho,LD,${PROJECT}-debug.so.${SOMAJOR})
+	$(call colorecho,LD,${PROJECT}.so.${SOMAJOR})
 	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} \
 		-o ${BUILDDIR_DEBUG}/${PROJECT}.so.${SOVERSION} ${OBJECTS_DEBUG} ${LIBS}
 
@@ -129,11 +129,11 @@ static-gcov: ${BUILDDIR_GCOV}/${PROJECT}.a
 shared-gcov: ${BUILDDIR_GCOV}/${PROJECT}.so.${SOVERSION}
 
 ${BUILDDIR_GCOV}/${PROJECT}.a: ${OBJECTS_GCOV}
-	$(call colorecho,AR,${PROJECT}-gcov.a)
+	$(call colorecho,AR,${PROJECT}.a)
 	$(QUIET)ar rc ${BUILDDIR_GCOV}/${PROJECT}.a ${OBJECTS_GCOV}
 
 ${BUILDDIR_GCOV}/${PROJECT}.so.${SOVERSION}: ${OBJECTS_GCOV}
-	$(call colorecho,LD,${PROJECT}-gcov.so.${SOMAJOR})
+	$(call colorecho,LD,${PROJECT}.so.${SOMAJOR})
 	$(QUIET)${CC} -Wl,-soname,${PROJECT}.so.${SOMAJOR} -shared ${LDFLAGS} ${GCOV_LDFLAGS} \
 		-o ${BUILDDIR_GCOV}/${PROJECT}.so.${SOVERSION} ${OBJECTS_GCOV} ${LIBS}
 
