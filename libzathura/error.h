@@ -20,6 +20,7 @@ typedef enum zathura_error_e {
   ZATHURA_ERROR_DOCUMENT_INVALID_INDEX, /**< Invalid index */
   ZATHURA_ERROR_DOCUMENT_INVALID_LABEL, /**< Invalid label */
   ZATHURA_ERROR_DOCUMENT_OUTLINE_DOES_NOT_EXIST, /**< Document does not have an outline */
+  ZATHURA_ERROR_DOCUMENT_HAS_NO_ATTACHMENTS, /**< Document does not have attachments */
 
   ZATHURA_ERROR_PAGE_TRANSITION_STYLE_INVALID_ACTION, /**< The style of the transition is not valid for this action */
 
