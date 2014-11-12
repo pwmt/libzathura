@@ -44,7 +44,12 @@ struct zathura_attachment_s {
   /**
    * Custom data of the plugin
    */
-  void* data;
+  char* data;
+
+  /**
+   * Custom data of the plugin
+   */
+  void* user_data;
 };
 
 zathura_error_t
@@ -69,6 +74,10 @@ zathura_attachment_free(zathura_attachment_t* attachment)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  if (attachment->data != NULL) {
+    free(attachment->data);
+  }
+
   free(attachment);
 
   return ZATHURA_ERROR_OK;
@@ -85,19 +94,36 @@ zathura_attachment_save(zathura_attachment_t* attachment, const char* path)
 }
 
 zathura_error_t
-zathura_attachment_set_data(zathura_attachment_t* attachment, void* data)
+zathura_attachment_set_data(zathura_attachment_t* attachment, const char* data, unsigned int size)
 {
-  if (attachment == NULL || data == NULL) {
+  if (attachment == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  attachment->data = data;
+  if (attachment->data != NULL) {
+    free(attachment->data);
+  }
+
+  attachment->size = size;
+
+  if (size == 0) {
+    attachment->data = NULL;
+  } else {
+    attachment->data = calloc(size, sizeof(char));
+    if (attachment->data == NULL) {
+      return ZATHURA_ERROR_OUT_OF_MEMORY;
+    }
+
+    if (memcpy(attachment->data, data, size) != attachment->data) {
+      return ZATHURA_ERROR_UNKNOWN;
+    }
+  }
 
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_attachment_get_data(zathura_attachment_t* attachment, void** data)
+zathura_attachment_get_data(zathura_attachment_t* attachment, char** data)
 {
   if (attachment == NULL || data == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
@@ -175,18 +201,6 @@ zathura_attachment_get_description(zathura_attachment_t* attachment, const
   *description = attachment->description;
 
 	return ZATHURA_ERROR_OK;
-}
-
-zathura_error_t
-zathura_attachment_set_size(zathura_attachment_t* attachment, unsigned int size)
-{
-  if (attachment == NULL) {
-    return ZATHURA_ERROR_INVALID_ARGUMENTS;
-  }
-
-  attachment->size = size;
-
-  return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
@@ -285,4 +299,28 @@ zathura_attachment_get_checksum(zathura_attachment_t* attachment, const char**
   *checksum = attachment->checksum;
 
 	return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_attachment_set_user_data(zathura_attachment_t* attachment, void* user_data)
+{
+  if (attachment == NULL || user_data == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  attachment->user_data = user_data;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_attachment_get_user_data(zathura_attachment_t* attachment, void** user_data)
+{
+  if (attachment == NULL || user_data == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *user_data = attachment->user_data;
+
+  return ZATHURA_ERROR_OK;
 }

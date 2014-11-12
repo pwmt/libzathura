@@ -32,28 +32,28 @@ zathura_error_t zathura_attachment_new(zathura_attachment_t** attachment);
 zathura_error_t zathura_attachment_free(zathura_attachment_t* attachment);
 
 /**
- * Sets the custom data of an attachment object
+ * Sets the data of an attachment object
  *
  * @param[in] attachment The attachment object
- * @param[in] data The custom data
+ * @param[in] data The data
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_attachment_set_data(zathura_attachment_t* attachment, void* data);
+zathura_error_t zathura_attachment_set_data(zathura_attachment_t* attachment, const char* data, unsigned int size);
 
 /**
- * Returns the custom data of an attachment object
+ * Returns the data of an attachment object
  *
  * @param[in] attachment The attachment object
- * @param[out] data The custom data
+ * @param[out] data The data
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_attachment_get_data(zathura_attachment_t* attachment, void** data);
+zathura_error_t zathura_attachment_get_data(zathura_attachment_t* attachment, char** data);
 
 /**
  * Sets the name of the attachment. The name can be NULL but must not be an
@@ -82,18 +82,6 @@ zathura_error_t zathura_attachment_set_name(zathura_attachment_t* attachment, co
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_attachment_set_description(zathura_attachment_t* attachment, const char* description);
-
-/**
- * Sets the size (in bytes) of the attachment
- *
- * @param[in] attachment The attachment object
- * @param[in] size The size
- *
- * @return ZATHURA_ERROR_OK No error occurred
- * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
- * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
- */
-zathura_error_t zathura_attachment_set_size(zathura_attachment_t* attachment, unsigned int size);
 
 /**
  * Sets the creation time of the attachment
