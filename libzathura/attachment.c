@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 #include "attachment.h"
+#include "plugin-api/attachment.h"
 
 struct zathura_attachment_s {
   /**
@@ -50,6 +51,11 @@ struct zathura_attachment_s {
    * Custom data of the plugin
    */
   void* user_data;
+
+  /**
+   * Custom save function
+   */
+  zathura_attachment_save_function_t save_function;
 };
 
 zathura_error_t
@@ -88,6 +94,10 @@ zathura_attachment_save(zathura_attachment_t* attachment, const char* path)
 {
   if (attachment == NULL || path == NULL || strlen(path) == 0) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  if (attachment->save_function != NULL) {
+    return attachment->save_function(attachment, path, attachment->user_data);
   }
 
 	return ZATHURA_ERROR_OK;
@@ -321,6 +331,19 @@ zathura_attachment_get_user_data(zathura_attachment_t* attachment, void** user_d
   }
 
   *user_data = attachment->user_data;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_attachment_set_save_function(zathura_attachment_t* attachment,
+    zathura_attachment_save_function_t save_function)
+{
+  if (attachment == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  attachment->save_function = save_function;
 
   return ZATHURA_ERROR_OK;
 }

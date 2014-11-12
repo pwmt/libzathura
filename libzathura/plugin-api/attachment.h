@@ -30,4 +30,31 @@ zathura_error_t zathura_attachment_set_user_data(zathura_attachment_t* attachmen
  */
 zathura_error_t zathura_attachment_get_user_data(zathura_attachment_t* attachment, void** data);
 
+/**
+ * A function type that can be used for a plugin to implement a custom save
+ * attachment function.
+ *
+ * @param[in] attachment The attachment
+ * @param path[in] The path where the file should be saved
+ * @param user_data[in] Custom user data (set by the plugin)
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+typedef zathura_error_t (*zathura_attachment_save_function_t)(zathura_attachment_t* attachment, const char* path, void* user_data);
+
+/**
+ * Sets a function that is used by a plugin to implement a custom save
+ * attachment function.
+ *
+ * @param[in] attachment The attachment
+ * @param save_function[in] The save function
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_attachment_set_save_function(zathura_attachment_t* attachment, zathura_attachment_save_function_t save_function);
+
 #endif /* PLUGIN_API_ATTACHMENT_H */
