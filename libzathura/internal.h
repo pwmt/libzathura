@@ -44,6 +44,11 @@ struct zathura_page_s {
   void* data;
 };
 
+struct zathura_document_meta_entry_s {
+  zathura_document_meta_type_t type;
+  char* value;
+};
+
 zathura_error_t zathura_document_new(zathura_document_t** document);
 
 /**

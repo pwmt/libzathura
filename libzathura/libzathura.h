@@ -12,6 +12,7 @@
 #include "image-buffer.h"
 #include "image.h"
 #include "list.h"
+#include "metadata.h"
 #include "movie.h"
 #include "node.h"
 #include "outline.h"
