@@ -7,6 +7,8 @@
 
 typedef GList zathura_list_t;
 
+#define ZATHURA_LIST_FOREACH(item, list) for(zathura_list_t *__glist = list; __glist && (item = __glist->data, true); __glist = __glist->next)
+
 #define zathura_list_alloc g_list_alloc
 #define zathura_list_free(list) g_list_free((list))
 #define zathura_list_free_full(list, free_func) g_list_free_full((list), (free_func))
@@ -16,6 +18,7 @@ typedef GList zathura_list_t;
 #define zathura_list_nth_data(list, n) g_list_nth_data((list), (n))
 #define zathura_list_length(list) g_list_length((list))
 #define zathura_list_copy(list) g_list_copy((list))
+#define zathura_list_reverse(list) g_list_reverse((list))
 #define zathura_list_foreach(list, func, user_data) g_list_foreach((list), (func), (user_data))
 
 #endif /* LIST_H */

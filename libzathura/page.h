@@ -116,7 +116,7 @@ zathura_error_t zathura_page_get_duration(zathura_page_t* page, unsigned int* du
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_page_search_text(zathura_page_t* page, const char* text,
-    zathura_list_t** results);
+    zathura_search_flag_t flags, zathura_list_t** results);
 
 /**
  * Returns the text of the @a page that lies within the given @a rectangle.

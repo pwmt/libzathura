@@ -284,7 +284,7 @@ zathura_page_get_duration(zathura_page_t* page, unsigned int* duration)
 
 zathura_error_t
 zathura_page_search_text(zathura_page_t* page, const char* text,
-    zathura_list_t** results)
+    zathura_search_flag_t flags, zathura_list_t** results)
 {
   if (page == NULL || results == NULL || text == NULL || strlen(text) == 0) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
@@ -292,7 +292,7 @@ zathura_page_search_text(zathura_page_t* page, const char* text,
 
   CHECK_IF_IMPLEMENTED(page, page_search_text)
 
-  return page->document->plugin->functions.page_search_text(page, text, results);
+  return page->document->plugin->functions.page_search_text(page, text, flags, results);
 }
 
 zathura_error_t

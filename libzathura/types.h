@@ -23,6 +23,12 @@ typedef struct zathura_quad_point_s {
   zathura_point_t p4;
 } zathura_quad_point_t;
 
+typedef enum zathura_search_flag_e {
+  ZATHURA_SEARCH_DEFAULT           = 0,
+  ZATHURA_SEARCH_CASE_SENSITIVE    = 1 << 0,
+  ZATHURA_SEARCH_WHOLE_WORDS_ONLY = 1 << 1
+} zathura_search_flag_t;
+
 typedef struct zathura_path_s {
   zathura_list_t* points;
 } zathura_path_t;
