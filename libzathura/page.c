@@ -296,7 +296,7 @@ zathura_page_search_text(zathura_page_t* page, const char* text,
 }
 
 zathura_error_t
-zathura_page_get_text(zathura_page_t* page, char** text,
+zathura_page_get_selected_text(zathura_page_t* page, char** text,
     zathura_rectangle_t rectangle)
 {
   if (page == NULL || text == NULL) {
@@ -305,7 +305,19 @@ zathura_page_get_text(zathura_page_t* page, char** text,
 
   CHECK_IF_IMPLEMENTED(page, page_get_text)
 
-  return page->document->plugin->functions.page_get_text(page, text, rectangle);
+  return page->document->plugin->functions.page_get_selected_text(page, text, rectangle);
+}
+
+zathura_error_t
+zathura_page_get_text(zathura_page_t* page, char** text)
+{
+  if (page == NULL || text == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_IF_IMPLEMENTED(page, page_get_selected_text)
+
+  return page->document->plugin->functions.page_get_text(page, text);
 }
 
 zathura_error_t

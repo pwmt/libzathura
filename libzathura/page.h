@@ -119,6 +119,18 @@ zathura_error_t zathura_page_search_text(zathura_page_t* page, const char* text,
     zathura_search_flag_t flags, zathura_list_t** results);
 
 /**
+ * Returns the text of the @a page.
+ *
+ * @param[in] page The used page object
+ * @param[out] text The text of the page that lies within the given rectangle
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_page_get_text(zathura_page_t* page, char** text);
+
+/**
  * Returns the text of the @a page that lies within the given @a rectangle.
  *
  * @param[in] page The used page object
@@ -129,7 +141,7 @@ zathura_error_t zathura_page_search_text(zathura_page_t* page, const char* text,
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_page_get_text(zathura_page_t* page, char** text,
+zathura_error_t zathura_page_get_selected_text(zathura_page_t* page, char** text,
     zathura_rectangle_t rectangle);
 
 /**

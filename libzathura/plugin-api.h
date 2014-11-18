@@ -55,7 +55,8 @@ typedef zathura_error_t (*zathura_plugin_document_get_metadata_t)(zathura_docume
 typedef zathura_error_t (*zathura_plugin_page_init_t)(zathura_page_t* page);
 typedef zathura_error_t (*zathura_plugin_page_clear_t)(zathura_page_t* page);
 typedef zathura_error_t (*zathura_plugin_page_search_text_t)(zathura_page_t* page, const char* text, zathura_search_flag_t flags, zathura_list_t** results);
-typedef zathura_error_t (*zathura_plugin_page_get_text_t)(zathura_page_t* page, char** text, zathura_rectangle_t rectangle);
+typedef zathura_error_t (*zathura_plugin_page_get_text_t)(zathura_page_t* page, char** text);
+typedef zathura_error_t (*zathura_plugin_page_get_selected_text_t)(zathura_page_t* page, char** text, zathura_rectangle_t rectangle);
 typedef zathura_error_t (*zathura_plugin_page_get_links_t)(zathura_page_t* page, zathura_list_t** links);
 typedef zathura_error_t (*zathura_plugin_page_get_form_fields_t)(zathura_page_t* page, zathura_list_t** form_fields);
 typedef zathura_error_t (*zathura_plugin_page_get_images_t)(zathura_page_t* page, zathura_list_t** images);
@@ -77,6 +78,7 @@ struct zathura_plugin_functions_s {
   zathura_plugin_page_clear_t page_clear;
   zathura_plugin_page_search_text_t page_search_text;
   zathura_plugin_page_get_text_t page_get_text;
+  zathura_plugin_page_get_selected_text_t page_get_selected_text;
   zathura_plugin_page_get_links_t page_get_links;
   zathura_plugin_page_get_form_fields_t page_get_form_fields;
   zathura_plugin_page_get_images_t page_get_images;

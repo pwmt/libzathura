@@ -20,7 +20,8 @@ zathura_error_t document_get_metadata(zathura_document_t* document, zathura_list
 zathura_error_t page_init(zathura_page_t* page);
 zathura_error_t page_clear(zathura_page_t* page);
 zathura_error_t page_search_text(zathura_page_t* page, const char* text, zathura_search_flag_t flags, zathura_list_t** results);
-zathura_error_t page_get_text(zathura_page_t* page, char** text, zathura_rectangle_t rectangle);
+zathura_error_t page_get_text(zathura_page_t* page, char** text);
+zathura_error_t page_get_selected_text(zathura_page_t* page, char** text, zathura_rectangle_t rectangle);
 zathura_error_t page_get_links(zathura_page_t* page, zathura_list_t** links);
 zathura_error_t page_get_form_fields(zathura_page_t* page, zathura_list_t** form_fields);
 zathura_error_t page_get_images(zathura_page_t* page, zathura_list_t** images);
@@ -57,6 +58,7 @@ register_functions(zathura_plugin_functions_t* functions)
   functions->page_clear = page_clear;
   functions->page_search_text = page_search_text;
   functions->page_get_text = page_get_text;
+  functions->page_get_selected_text = page_get_selected_text;
   functions->page_get_links = page_get_links;
   functions->page_get_form_fields = page_get_form_fields;
   functions->page_get_images = page_get_images;
@@ -169,7 +171,13 @@ page_search_text(zathura_page_t* UNUSED(page), const char* UNUSED(text),
 }
 
 zathura_error_t
-page_get_text(zathura_page_t* UNUSED(page), char** UNUSED(text), zathura_rectangle_t
+page_get_text(zathura_page_t* UNUSED(page), char** UNUSED(text))
+{
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+page_get_selected_text(zathura_page_t* UNUSED(page), char** UNUSED(text), zathura_rectangle_t
     UNUSED(rectangle))
 {
   return ZATHURA_ERROR_OK;

@@ -380,15 +380,26 @@ START_TEST(test_page_get_label) {
 
 START_TEST(test_page_get_text) {
   char* text;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_page_get_text(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_text(page, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_page_get_text(page, &text) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_page_get_selected_text) {
+  char* text;
   zathura_rectangle_t rectangle = { {0, 0}, {0, 0}};
 
   /* basic invalid arguments */
-  fail_unless(zathura_page_get_text(NULL, NULL, rectangle) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_get_text(page, NULL, rectangle) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_get_text(NULL, &text, rectangle) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_selected_text(NULL, NULL, rectangle) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_selected_text(page, NULL, rectangle) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_get_selected_text(NULL, &text, rectangle) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_page_get_text(page, &text, rectangle) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_page_get_selected_text(page, &text, rectangle) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_get_links) {
@@ -512,6 +523,7 @@ suite_page(void)
   tcase = tcase_create("text");
   tcase_add_checked_fixture(tcase, setup_page, teardown_page);
   tcase_add_test(tcase, test_page_get_text);
+  tcase_add_test(tcase, test_page_get_selected_text);
   tcase_add_test(tcase, test_page_search_text);
   suite_add_tcase(suite, tcase);
 
