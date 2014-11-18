@@ -19,9 +19,9 @@ typedef enum zathura_document_meta_type_e {
 
 typedef struct zathura_document_meta_entry_s zathura_document_meta_entry_t;
 
-zathura_error_t zathura_document_metra_entry_get_type(zathura_document_meta_entry_t*
+zathura_error_t zathura_document_meta_entry_get_type(zathura_document_meta_entry_t*
     entry, zathura_document_meta_type_t* type);
-zathura_error_t zathura_document_metra_entry_get_value(zathura_document_meta_entry_t*
+zathura_error_t zathura_document_meta_entry_get_value(zathura_document_meta_entry_t*
     entry, const char** value);
 
 #endif /* METADATA_H */
