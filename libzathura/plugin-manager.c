@@ -12,10 +12,6 @@
 #include "version.h"
 #include "internal.h"
 
-struct zathura_plugin_manager_s {
-  zathura_list_t* plugins; /**< List of pluins */
-};
-
 typedef void (*zathura_plugin_register_service_t)(zathura_plugin_t*);
 typedef unsigned int (*zathura_plugin_api_version_t)(void);
 typedef unsigned int (*zathura_plugin_abi_version_t)(void);

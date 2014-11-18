@@ -8,6 +8,10 @@
 #include "error.h"
 #include "transition.h"
 
+struct zathura_plugin_manager_s {
+  zathura_list_t* plugins; /**< List of pluins */
+};
+
 struct zathura_plugin_s {
   zathura_plugin_register_function_t register_function;
   zathura_plugin_functions_t functions;

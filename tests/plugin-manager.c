@@ -5,6 +5,7 @@
 #include <fiu-control.h>
 
 #include "plugin-manager.h"
+#include "internal.h"
 
 START_TEST(test_plugin_manager_new) {
   zathura_plugin_manager_t* plugin_manager = NULL;
@@ -98,6 +99,16 @@ START_TEST(test_plugin_manager_get_plugin) {
   fail_unless(zathura_plugin_manager_load_dir(plugin_manager, "./plugin/") == ZATHURA_ERROR_OK);
   fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, &plugin, "libzathura/test-plugin") == ZATHURA_ERROR_OK);
   fail_unless(plugin != NULL);
+
+  /* corrupt data */
+  zathura_list_t* list;
+  fail_unless(zathura_plugin_manager_get_plugins(plugin_manager, &list) == ZATHURA_ERROR_OK);
+  fail_unless(list != NULL);
+  plugin_manager->plugins = NULL;
+
+  fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, &plugin, "libzathura/test-plugin") == ZATHURA_ERROR_UNKNOWN);
+  plugin_manager->plugins = list;
+
 
   fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);
 } END_TEST
