@@ -19,7 +19,7 @@ zathura_error_t document_get_attachments(zathura_document_t* document, zathura_l
 zathura_error_t document_get_metadata(zathura_document_t* document, zathura_list_t** metadata);
 zathura_error_t page_init(zathura_page_t* page);
 zathura_error_t page_clear(zathura_page_t* page);
-zathura_error_t page_search_text(zathura_page_t* page, const char* text, zathura_list_t** results);
+zathura_error_t page_search_text(zathura_page_t* page, const char* text, zathura_search_flag_t flags, zathura_list_t** results);
 zathura_error_t page_get_text(zathura_page_t* page, char** text, zathura_rectangle_t rectangle);
 zathura_error_t page_get_links(zathura_page_t* page, zathura_list_t** links);
 zathura_error_t page_get_form_fields(zathura_page_t* page, zathura_list_t** form_fields);
@@ -163,7 +163,7 @@ document_get_metadata(zathura_document_t* UNUSED(document), zathura_list_t**
 
 zathura_error_t
 page_search_text(zathura_page_t* UNUSED(page), const char* UNUSED(text),
-    zathura_list_t** UNUSED(results))
+    zathura_search_flag_t UNUSED(flags), zathura_list_t** UNUSED(results))
 {
   return ZATHURA_ERROR_OK;
 }

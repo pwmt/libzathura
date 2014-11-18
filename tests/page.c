@@ -431,14 +431,14 @@ START_TEST(test_page_search_text) {
   zathura_list_t* results;
 
   /* basic invalid arguments */
-  fail_unless(zathura_page_search_text(NULL, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_search_text(page, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_search_text(page, "",   NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_search_text(page, "a",  NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_search_text(page, "",   &results) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_search_text(NULL, NULL, ZATHURA_SEARCH_DEFAULT, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_search_text(page, NULL, ZATHURA_SEARCH_DEFAULT, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_search_text(page, "",   ZATHURA_SEARCH_DEFAULT, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_search_text(page, "a",  ZATHURA_SEARCH_DEFAULT, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_search_text(page, "",   ZATHURA_SEARCH_DEFAULT, &results) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_page_search_text(page, "abc", &results) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_page_search_text(page, "abc", ZATHURA_SEARCH_DEFAULT, &results) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_page_get_annotations) {
