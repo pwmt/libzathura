@@ -5,7 +5,7 @@ CHECK_LIB ?= $(shell pkg-config --libs check)
 
 INCS += ${CHECK_INC} ${FIU_INC} -I ../libzathura
 LIBS += ${CHECK_LIB} ${FIU_LIB} -Wl,--whole-archive -Wl,--no-whole-archive
-LDFLAGS += -rdynamic
+LDFLAGS += -rdynamic -ldl
 
 LIBZATHURA_RELEASE=../${BUILDDIR_RELEASE}/libzathura.a
 LIBZATHURA_DEBUG=../${BUILDDIR_DEBUG}/libzathura.a

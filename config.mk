@@ -38,8 +38,8 @@ BUILDDIR_DEBUG ?= ${BUILDDIR}/debug
 BUILDDIR_GCOV ?= ${BUILDDIR}/gcov
 
 # libs
-GLIB_INC ?= $(shell pkg-config --cflags glib-2.0)
-GLIB_LIB ?= $(shell pkg-config --libs glib-2.0)
+GLIB_INC ?= $(shell pkg-config --cflags glib-2.0 gio-2.0)
+GLIB_LIB ?= $(shell pkg-config --libs glib-2.0 gio-2.0)
 
 GMODULE_INC ?= $(shell pkg-config --cflags gmodule-no-export-2.0)
 GMODULE_LIB ?= $(shell pkg-config --libs gmodule-no-export-2.0)

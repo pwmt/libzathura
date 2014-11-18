@@ -25,6 +25,8 @@ CPPFLAGS += -DHAVE_CAIRO
 endif
 
 ifneq (${WITH_LIBFIU},0)
+INCS += ${FIU_INC}
+LIBS += ${FIU_LIB}
 FIU_EXEC += ${FIU_RUN}
 endif
 
