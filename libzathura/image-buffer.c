@@ -94,6 +94,19 @@ zathura_image_buffer_get_width(zathura_image_buffer_t* buffer, unsigned int*
 }
 
 zathura_error_t
+zathura_image_buffer_set_rowstride(zathura_image_buffer_t* buffer, unsigned int
+    rowstride)
+{
+  if (buffer == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  buffer->rowstride = rowstride;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
 zathura_image_buffer_get_rowstride(zathura_image_buffer_t* buffer, unsigned int*
     rowstride)
 {
