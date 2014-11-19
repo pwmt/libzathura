@@ -100,6 +100,7 @@ zathura_error_t zathura_plugin_add_mimetype(zathura_plugin_t* plugin, const char
 #include "plugin-api/page.h"
 #include "plugin-api/metadata.h"
 #include "plugin-api/transition.h"
+#include "plugin-api/action.h"
 #include "plugin-api/image.h"
 
 #endif /* PLUGIN_API_H */
