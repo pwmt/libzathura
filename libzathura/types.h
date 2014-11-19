@@ -5,6 +5,7 @@
 
 #include "list.h"
 #include "node.h"
+#include "action.h"
 
 typedef struct zathura_point_s {
   float x;
@@ -32,4 +33,10 @@ typedef enum zathura_search_flag_e {
 typedef struct zathura_path_s {
   zathura_list_t* points;
 } zathura_path_t;
+
+typedef struct zathura_link_mapping_s {
+  zathura_rectangle_t position;
+  zathura_action_t* action;
+} zathura_link_mapping_t;
+
 #endif /* TYPES_H */
