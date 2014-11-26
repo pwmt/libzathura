@@ -15,6 +15,7 @@ zathura_form_field_new(zathura_form_field_t** form_field, zathura_form_field_typ
   }
 
   switch (type) {
+    case ZATHURA_FORM_FIELD_UNKNOWN:
     case ZATHURA_FORM_FIELD_BUTTON:
     case ZATHURA_FORM_FIELD_TEXT:
     case ZATHURA_FORM_FIELD_CHOICE:
@@ -30,6 +31,8 @@ zathura_form_field_new(zathura_form_field_t** form_field, zathura_form_field_typ
   }
 
   switch (type) {
+    case ZATHURA_FORM_FIELD_UNKNOWN:
+      break;
     case ZATHURA_FORM_FIELD_BUTTON:
       (*form_field)->data.button.type = ZATHURA_FORM_FIELD_BUTTON_TYPE_PUSH;
       (*form_field)->data.button.state = false;
