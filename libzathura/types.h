@@ -6,6 +6,7 @@
 #include "list.h"
 #include "node.h"
 #include "action.h"
+#include "form-fields.h"
 
 typedef struct zathura_point_s {
   float x;
@@ -38,5 +39,10 @@ typedef struct zathura_link_mapping_s {
   zathura_rectangle_t position;
   zathura_action_t* action;
 } zathura_link_mapping_t;
+
+typedef struct zathura_form_field_mapping_s {
+  zathura_rectangle_t position;
+  zathura_form_field_t* form_field;
+} zathura_form_field_mapping_t;
 
 #endif /* TYPES_H */

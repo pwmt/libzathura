@@ -22,7 +22,7 @@ typedef enum zathura_form_field_type_e {
   /**
    * Unknown form field type
    */
-  ZATHURA_FORM_FIELD_UNKNOWN,
+  ZATHURA_FORM_FIELD_UNKNOWN = 0,
 
   /**
    * Represents interactive controls on the screen that the user can manipulate
