@@ -45,4 +45,9 @@ typedef struct zathura_form_field_mapping_s {
   zathura_form_field_t* form_field;
 } zathura_form_field_mapping_t;
 
+typedef struct zathura_annotation_mapping_s {
+  zathura_rectangle_t position;
+  zathura_annotation_t* annotation;
+} zathura_annotation_mapping_t;
+
 #endif /* TYPES_H */
