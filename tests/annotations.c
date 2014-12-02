@@ -346,6 +346,8 @@ suite_annotations(void)
   tcase_add_test(tcase, test_annotation_is_markup_annotation);
   tcase_add_test(tcase, test_annotation_markup_set_label);
   tcase_add_test(tcase, test_annotation_markup_get_label);
+  tcase_add_test(tcase, test_annotation_markup_set_opacity);
+  tcase_add_test(tcase, test_annotation_markup_get_opacity);
   tcase_add_test(tcase, test_annotation_markup_set_popup_annotation);
   tcase_add_test(tcase, test_annotation_markup_get_popup_annotation);
   tcase_add_test(tcase, test_annotation_markup_set_text);

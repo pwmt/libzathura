@@ -96,6 +96,8 @@ zathura_annotation_markup_init(zathura_annotation_t* annotation)
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
 
+  annotation->markup->opacity = 1.0;
+
   return ZATHURA_ERROR_OK;
 }
 
@@ -144,6 +146,34 @@ zathura_error_t zathura_annotation_markup_get_label(zathura_annotation_t*
   ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
 
   *label = annotation->markup->label;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_markup_set_opacity(zathura_annotation_t*
+    annotation, double opacity)
+{
+  if (annotation == NULL || opacity < 0.0 || opacity > 1.0) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  annotation->markup->opacity = opacity;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_markup_get_opacity(zathura_annotation_t*
+    annotation, double* opacity)
+{
+  if (annotation == NULL || opacity == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  ANNOTATION_MARKUP_CHECK_TYPE_AND_DATA()
+
+  *opacity = annotation->markup->opacity;
 
   return ZATHURA_ERROR_OK;
 }

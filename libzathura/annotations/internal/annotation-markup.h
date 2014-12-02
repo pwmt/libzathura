@@ -17,6 +17,16 @@ typedef struct zathura_annotation_markup_s {
    */
   char* label;
 
+  /** The constant opacity value to be used in painting the annotation. This
+   * value applies to all visible elements of the annotation in its closed state
+   * (including its background and border) but not to the popup window that
+   * appears when the annotation is opened. The specified value is not used if
+   * the annotation has a double opacity;
+   *
+   * Default: 1.0
+   */
+  double opacity;
+
   /**
    * An indirect reference to a pop-up annotation for entering or editing
    * the text associated with this annotation.

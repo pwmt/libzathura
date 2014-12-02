@@ -49,6 +49,41 @@ zathura_error_t zathura_annotation_markup_get_label(zathura_annotation_t*
     annotation, char** label);
 
 /**
+ * Sets the constant opacity value to be used in painting the annotation. This
+ * value applies to all visible elements of the annotation in its closed state
+ * (including its background and border) but not to the pop- up window that
+ * appears when the annotation is opened.
+ *
+ * @param[in] annotation The annotation
+ * @param[in] opacity The attachment
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE Mismatching type of annotation passed
+ * @return ZATHURA_ERROR_OUT_OF_MEMORY Out of memory
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_markup_set_opacity(zathura_annotation_t*
+    annotation, double opacity);
+
+/**
+ * Returns the constant opacity value to be used in painting the annotation. This
+ * value applies to all visible elements of the annotation in its closed state
+ * (including its background and border) but not to the pop- up window that
+ * appears when the annotation is opened.
+ *
+ * @param[in] annotation The annotation
+ * @param[out] opacity The attachment
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE Mismatching type of annotation passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_markup_get_opacity(zathura_annotation_t*
+    annotation, double* opacity);
+
+/**
  * Sets the pop-up annotation annotation with which this markup annotation is associated.
  *
  * @param[in] annotation The annotation

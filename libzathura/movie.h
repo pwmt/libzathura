@@ -5,6 +5,7 @@
 
 #include "image.h"
 #include "attachment.h"
+#include "types.h"
 
 /**
  * Some documents includes the ability to embed movies within a document by

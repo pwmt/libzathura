@@ -134,6 +134,47 @@ START_TEST(test_annotation_markup_get_label) {
   fail_unless(g_strcmp0(label, "test") == 0);
 } END_TEST
 
+START_TEST(test_annotation_markup_set_opacity) {
+  /* invalid arguments */
+  fail_unless(zathura_annotation_markup_set_opacity(NULL, 0.0)
+      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_markup_set_opacity(annotation, -1.0)
+      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_markup_set_opacity(annotation, 1.5)
+      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_markup_set_opacity(annotation, 1.0)
+      == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_markup_set_opacity(annotation, 0.5)
+      == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_markup_set_opacity(annotation, 0.0)
+      == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_annotation_markup_get_opacity) {
+  double opacity = 0.0;
+
+  /* invalid arguments */
+  fail_unless(zathura_annotation_markup_get_opacity(NULL, NULL)
+      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_markup_get_opacity(annotation, NULL)
+      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_markup_get_opacity(NULL, &opacity)
+      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_markup_get_opacity(annotation, &opacity)
+      == ZATHURA_ERROR_OK);
+  fail_unless(opacity == 1.0);
+
+  fail_unless(zathura_annotation_markup_set_opacity(annotation, 0.5)
+      == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_markup_get_opacity(annotation, &opacity)
+      == ZATHURA_ERROR_OK);
+  fail_unless(opacity == 0.5);
+} END_TEST
+
 START_TEST(test_annotation_markup_set_popup_annotation) {
   zathura_annotation_t* popup = (zathura_annotation_t*) 0xCAFEBABE;
 

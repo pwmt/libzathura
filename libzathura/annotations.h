@@ -32,6 +32,14 @@
 typedef struct zathura_annotation_s zathura_annotation_t;
 
 /**
+ * Annotation mapping
+ */
+typedef struct zathura_annotation_mapping_s {
+  zathura_rectangle_t position;
+  zathura_annotation_t* annotation;
+} zathura_annotation_mapping_t;
+
+/**
  * Standard annotation types
  */
 typedef enum zathura_annotation_type_s {
