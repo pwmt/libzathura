@@ -113,7 +113,7 @@ zathura_plugin_open_document(zathura_plugin_t* plugin, zathura_document_t**
   }
 
   /* Allocate pages */
-  (*document)->pages = calloc((*document)->number_of_pages, sizeof(zathura_page_t*));
+  (*document)->pages = calloc((*document)->number_of_pages, sizeof(*((*document)->pages)));
   if ((*document)->pages == NULL) {
     zathura_document_free(*document);
     *document = NULL;

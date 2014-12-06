@@ -65,7 +65,7 @@ zathura_attachment_new(zathura_attachment_t** attachment)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  *attachment = calloc(1, sizeof(zathura_attachment_t));
+  *attachment = calloc(1, sizeof(**attachment));
   if (*attachment == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
@@ -119,7 +119,7 @@ zathura_attachment_set_data(zathura_attachment_t* attachment, const char* data, 
   if (size == 0) {
     attachment->data = NULL;
   } else {
-    attachment->data = calloc(size, sizeof(char));
+    attachment->data = calloc(size, sizeof(*(attachment->data)));
     if (attachment->data == NULL) {
       return ZATHURA_ERROR_OUT_OF_MEMORY;
     }

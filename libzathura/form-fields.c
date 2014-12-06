@@ -25,7 +25,7 @@ zathura_form_field_new(zathura_form_field_t** form_field, zathura_form_field_typ
       return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  *form_field = calloc(1, sizeof(zathura_form_field_t));
+  *form_field = calloc(1, sizeof(**form_field));
   if (*form_field == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }

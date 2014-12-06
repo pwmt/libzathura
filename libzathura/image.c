@@ -21,7 +21,7 @@ zathura_image_new(zathura_image_t** image, zathura_rectangle_t position)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  *image = calloc(1, sizeof(zathura_image_t));
+  *image = calloc(1, sizeof(**image));
   if (*image == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }

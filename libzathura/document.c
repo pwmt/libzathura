@@ -21,7 +21,7 @@ zathura_document_new(zathura_document_t** document)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  *document = calloc(1, sizeof(zathura_document_t));
+  *document = calloc(1, sizeof(**document));
   if (*document == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }

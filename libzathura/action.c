@@ -34,7 +34,7 @@ zathura_error_t zathura_action_new(zathura_action_t** action, zathura_action_typ
       return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  *action = calloc(1, sizeof(zathura_action_t));
+  *action = calloc(1, sizeof(**action));
   if (*action == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }

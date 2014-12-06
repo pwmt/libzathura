@@ -18,7 +18,7 @@ zathura_error_t zathura_outline_element_new(zathura_outline_element_t** element,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  *element = calloc(1, sizeof(zathura_outline_element_t));
+  *element = calloc(1, sizeof(**element));
   if (*element == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }

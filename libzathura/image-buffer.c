@@ -26,7 +26,7 @@ zathura_image_buffer_new(zathura_image_buffer_t** buffer, unsigned int width,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  if ((*buffer = calloc(1, sizeof(zathura_image_buffer_t))) == NULL) {
+  if ((*buffer = calloc(1, sizeof(**buffer))) == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
 

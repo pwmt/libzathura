@@ -14,7 +14,7 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  *annotation = calloc(1, sizeof(zathura_annotation_t));
+  *annotation = calloc(1, sizeof(**annotation));
   if (*annotation == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }

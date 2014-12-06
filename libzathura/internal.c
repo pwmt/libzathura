@@ -35,7 +35,7 @@ zathura_realpath(const char* path, char** real_path)
   }
 #endif
 
-  *real_path = calloc(sizeof(char), path_max);
+  *real_path = calloc(path_max, sizeof(**real_path));
   if (*real_path == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }

@@ -6,6 +6,7 @@
 #include "../error.h"
 
 #include "action-goto-3d-view.h"
+#include "internal/action-goto-3d-view.h"
 
 #define ACTION_GOTO_3D_VIEW_CHECK_TYPE() \
   if (action->type != ZATHURA_ACTION_GOTO_3D_VIEW) { \
@@ -30,7 +31,7 @@ zathura_action_goto_3d_view_init(zathura_action_t* action)
     free(action->data.goto_3d_view_dest);
   }
 
-  action->data.goto_3d_view_dest = calloc(1, sizeof(zathura_action_goto_3d_view_t));
+  action->data.goto_3d_view_dest = calloc(1, sizeof(*(action->data.goto_3d_view_dest)));
   if (action->data.goto_3d_view_dest == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }

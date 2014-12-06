@@ -44,7 +44,7 @@ zathura_plugin_manager_new(zathura_plugin_manager_t** plugin_manager)
     goto error_ret;
   }
 
-  if ((*plugin_manager = calloc(1, sizeof(zathura_plugin_manager_t))) == NULL) {
+  if ((*plugin_manager = calloc(1, sizeof(**plugin_manager))) == NULL) {
     error = ZATHURA_ERROR_OUT_OF_MEMORY;
     goto error_ret;
   }
@@ -155,7 +155,7 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
   }
 
   /* create and register plugin */
-  plugin = calloc(1, sizeof(zathura_plugin_t));
+  plugin = calloc(1, sizeof(*plugin));
   if (plugin == NULL) {
     error = ZATHURA_ERROR_OUT_OF_MEMORY;
     goto error_free;

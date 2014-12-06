@@ -105,7 +105,7 @@ zathura_page_transition_new(zathura_page_transition_t** transition,
       return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  *transition = calloc(1, sizeof(zathura_page_transition_t));
+  *transition = calloc(1, sizeof(**transition));
   if (*transition == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }

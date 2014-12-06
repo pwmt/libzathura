@@ -14,7 +14,7 @@ zathura_document_meta_entry_new(zathura_document_meta_entry_t**
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  *entry = calloc(1, sizeof(zathura_document_meta_entry_t));
+  *entry = calloc(1, sizeof(**entry));
   if (*entry == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }

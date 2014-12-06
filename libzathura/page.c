@@ -22,7 +22,7 @@ zathura_page_new(zathura_page_t** page)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  if ((*page = calloc(1, sizeof(zathura_page_t))) == NULL) {
+  if ((*page = calloc(1, sizeof(**page))) == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
 
@@ -183,7 +183,7 @@ zathura_page_set_label(zathura_page_t* page, const char* label)
     page->label = NULL;
   }
 
-  page->label = calloc(sizeof(char), len + 1);
+  page->label = calloc(len + 1, sizeof(*(page->label)));
   if (page->label == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
