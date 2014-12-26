@@ -49,7 +49,7 @@ typedef zathura_error_t (*zathura_attachment_save_function_t)(zathura_attachment
  * attachment function.
  *
  * @param[in] attachment The attachment
- * @param save_function[in] The save function
+ * @param[in] save_function The save function
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed

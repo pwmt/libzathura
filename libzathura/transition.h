@@ -11,9 +11,9 @@ typedef enum zathura_page_transition_style_e {
   /**
    * Two lines sweep across the screen, revealing the new page. The lines may be
    * either horizontal or vertical and may move inward from the edges of the
-   * page or outward from the center, as specified by the 
-   * ::zathura_page_transition_t.dimension and @a
-   * ::zathura_page_transition_t.motion entries, respectively.
+   * page or outward from the center, as specified by the @a
+   * ::zathura_page_transition_get_dimension and @a
+   * ::zathura_page_transition_get_motion entries, respectively.
    */
   ZATHURA_PAGE_TRANSITION_SPLIT,
 
@@ -21,21 +21,21 @@ typedef enum zathura_page_transition_style_e {
    * Multiple lines, that are evenly spaced accross the screen, synchronously
    * sweep in the same.motion to reveal the new page. The lines may either be
    * horizontal or vertical, as specified by the @a
-   * ::zathura_page_transition_t.dimension entry. Horizontal lines move
+   * ::zathura_page_transition_get_dimension entry. Horizontal lines move
    * downward, vertical lines move to the right.
    */
   ZATHURA_PAGE_TRANSITION_BLINDS,
 
   /**
    * A rectangular box sweeps inward from the edges of the page or outward from
-   * the center, as specified by the @a ::zathura_page_transition_t.motion
+   * the center, as specified by the @a ::zathura_page_transition_get_motion
    * entry, revealing the new page .
    */
   ZATHURA_PAGE_TRANSITION_BOX,
 
   /**
    * A single line sweeps across the screen from one edge to the other in the
-   *.motion specified by the ::zathura_page_transition_t.motion entry,
+   *.motion specified by the ::zathura_page_transition_get_motion entry,
    * revealing the new page.
    */
   ZATHURA_PAGE_TRANSITION_WIPE,
@@ -48,22 +48,22 @@ typedef enum zathura_page_transition_style_e {
   /**
    * Similar to Dissolve, except that the effect sweeps across the page in a
    * wide band moving from one side of the screen to the other in the direction
-   * specified by the @a ::zathura_page_transition_t.motion entry.
+   * specified by the @a ::zathura_page_transition_get_motion entry.
    */
   ZATHURA_PAGE_TRANSITION_GLITTER,
 
   /**
    * The new page simply replaces the old one with no special transition effect;
-   * the @a ::zathura_page_transition_t.duration entry is ignored.
+   * the @a ::zathura_page_transition_get_duration entry is ignored.
    * */
   ZATHURA_PAGE_TRANSITION_REPLACE,
 
   /**
    * Changes are flown out or in (as specified by @a
-   * ::zathura_page_transition_t.motion), in the direction specified by @a
-   * ::zathura_page_transition_t.angle, to
+   * ::zathura_page_transition_get_motion), in the direction specified by @a
+   * ::zathura_page_transition_get_angle, to
    * or from a location that is offscreen except when @a
-   * ::zathura_page_transition_t.angle is 0.
+   * ::zathura_page_transition_get_angle is 0.
    *
    */
   ZATHURA_PAGE_TRANSITION_FLY,
@@ -71,22 +71,22 @@ typedef enum zathura_page_transition_style_e {
   /**
    * The old page slides off the screen while the new page slides in,
    * pushing the old page out in the direction specified by @a
-   * ::zathura_page_transition_t.angle
+   * ::zathura_page_transition_get_angle
    *
    */
   ZATHURA_PAGE_TRANSITION_PUSH,
 
   /**
    * The new page slides on to the screen in the direction specified
-   * by @a ::zathura_page_transition_t.angle, covering the old page.
+   * by @a ::zathura_page_transition_get_angle, covering the old page.
    *
    */
   ZATHURA_PAGE_TRANSITION_COVER,
 
   /**
    * The old page slides off the screen in the direction specified by @a
-   * ::zathura_page_transition_t.angle, uncovering the new page in the direction
-   * specified by @a ::zathura_page_transition_t.angle.
+   * ::zathura_page_transition_get_angle, uncovering the new page in the direction
+   * specified by @a ::zathura_page_transition_get_angle.
    */
   ZATHURA_PAGE_TRANSITION_UNCOVER,
 

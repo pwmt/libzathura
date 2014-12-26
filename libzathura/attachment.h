@@ -36,6 +36,7 @@ zathura_error_t zathura_attachment_free(zathura_attachment_t* attachment);
  *
  * @param[in] attachment The attachment object
  * @param[in] data The data
+ * @param[in] size The size of data in bytes
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed

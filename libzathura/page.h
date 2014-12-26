@@ -109,6 +109,7 @@ zathura_error_t zathura_page_get_duration(zathura_page_t* page, unsigned int* du
  *
  * @param[in] page The used page object
  * @param[in] text The search item
+ * @param[in] flags The search flags
  * @param[out] results The search results
  *
  * @return ZATHURA_ERROR_OK No error occurred
