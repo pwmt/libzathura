@@ -65,6 +65,7 @@ typedef zathura_error_t (*zathura_plugin_page_render_t)(zathura_page_t* page, za
 #ifdef HAVE_CAIRO
 typedef zathura_error_t (*zathura_plugin_page_render_cairo_t)(zathura_page_t* page, cairo_t* cairo, double scale, int rotation, int flags);
 #endif
+typedef zathura_error_t (*zathura_plugin_page_save_form_field_t)(zathura_page_t* page, zathura_form_field_t* form_field);
 
 struct zathura_plugin_functions_s {
   zathura_plugin_document_open_t document_open;
@@ -87,6 +88,8 @@ struct zathura_plugin_functions_s {
 #ifdef HAVE_CAIRO
   zathura_plugin_page_render_cairo_t page_render_cairo;
 #endif
+
+  zathura_plugin_page_save_form_field_t page_save_form_field;
 };
 
 zathura_error_t zathura_plugin_set_name(zathura_plugin_t* plugin, const char* name);

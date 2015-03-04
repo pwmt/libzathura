@@ -395,3 +395,17 @@ zathura_page_render_cairo(zathura_page_t* page, cairo_t* cairo, double scale,
   return page->document->plugin->functions.page_render_cairo(page, cairo, scale, rotation, flags);
 }
 #endif
+
+zathura_error_t
+zathura_page_save_form_field(zathura_page_t* page, zathura_form_field_t* form_field)
+{
+  if (page == NULL || form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_IF_IMPLEMENTED(page, page_save_form_field)
+
+  return page->document->plugin->functions.page_save_form_field(page, form_field);
+
+  return ZATHURA_ERROR_OK;
+}
