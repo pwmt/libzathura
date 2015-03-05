@@ -17,7 +17,7 @@
  * @return ZATHURA_ERROR_OUT_OF_MEMORY Out of memory
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_form_field_new(zathura_form_field_t** form_field,
+zathura_error_t zathura_form_field_new(zathura_page_t* page, zathura_form_field_t** form_field,
     zathura_form_field_type_t type);
 
 /**
@@ -82,6 +82,30 @@ zathura_error_t zathura_form_field_set_mapping_name(zathura_form_field_t*
  */
 zathura_error_t zathura_form_field_set_flags(zathura_form_field_t* form_field,
     zathura_form_field_flag_t flags);
+
+/**
+ * Sets the custom data of an form field object
+ *
+ * @param[in] form_field The form field object
+ * @param[in] data The custom data
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_set_user_data(zathura_form_field_t* form_field, void* data);
+
+/**
+ * Returns the custom data of an form field object
+ *
+ * @param[in] form_field The form field object
+ * @param[out] data The custom data
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_get_user_data(zathura_form_field_t* form_field, void** data);
 
 #include "form-fields/form-field-button.h"
 #include "form-fields/form-field-choice.h"

@@ -4,13 +4,14 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "internal.h"
 #include "form-fields.h"
 #include "form-fields/internal.h"
 
 zathura_error_t
-zathura_form_field_new(zathura_form_field_t** form_field, zathura_form_field_type_t type)
+zathura_form_field_new(zathura_page_t* page, zathura_form_field_t** form_field, zathura_form_field_type_t type)
 {
-  if (form_field == NULL) {
+  if (page == NULL || form_field == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
@@ -59,6 +60,7 @@ zathura_form_field_new(zathura_form_field_t** form_field, zathura_form_field_typ
   }
 
   (*form_field)->type = type;
+  (*form_field)->page = page;
 
   return ZATHURA_ERROR_OK;
 }
@@ -199,6 +201,51 @@ zathura_form_field_get_flags(zathura_form_field_t* form_field,
   }
 
   *flags = form_field->flags;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_form_field_set_user_data(zathura_form_field_t* form_field, void* user_data)
+{
+  if (form_field == NULL || user_data == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  form_field->user_data = user_data;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_form_field_get_user_data(zathura_form_field_t* form_field, void** user_data)
+{
+  if (form_field == NULL || user_data == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *user_data = form_field->user_data;
+
+  return ZATHURA_ERROR_OK;
+}
+
+#define CHECK_IF_IMPLEMENTED(page, function) \
+  if ((page)->document == NULL || \
+      (page)->document->plugin == NULL || \
+      (page)->document->plugin->functions.function == NULL) { \
+    return ZATHURA_ERROR_PLUGIN_NOT_IMPLEMENTED; \
+  }
+
+zathura_error_t
+zathura_form_field_save(zathura_form_field_t* form_field)
+{
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_IF_IMPLEMENTED(form_field->page, form_field_save)
+
+  return form_field->page->document->plugin->functions.form_field_save(form_field);
 
   return ZATHURA_ERROR_OK;
 }

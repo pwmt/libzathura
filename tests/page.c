@@ -427,21 +427,6 @@ START_TEST(test_page_get_form_fields) {
   fail_unless(zathura_page_get_form_fields(page, &form_fields) == ZATHURA_ERROR_OK);
 } END_TEST
 
-START_TEST(test_page_save_form_field) {
-  zathura_form_field_t* form_field;
-  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_TEXT) == ZATHURA_ERROR_OK);
-  fail_unless(form_field != NULL);
-
-  /* basic invalid arguments */
-  fail_unless(zathura_page_save_form_field(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_save_form_field(page, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_save_form_field(NULL, form_field) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-
-  /* valid arguments */
-  fail_unless(zathura_page_save_form_field(page, form_field) == ZATHURA_ERROR_OK);
-  fail_unless(zathura_form_field_free(form_field) == ZATHURA_ERROR_OK);
-} END_TEST
-
 START_TEST(test_page_get_images) {
   zathura_list_t* images;
 
@@ -556,7 +541,6 @@ suite_page(void)
   tcase = tcase_create("forms");
   tcase_add_checked_fixture(tcase, setup_page, teardown_page);
   tcase_add_test(tcase, test_page_get_form_fields);
-  tcase_add_test(tcase, test_page_save_form_field);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("images");

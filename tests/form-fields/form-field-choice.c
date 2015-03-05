@@ -7,7 +7,13 @@
 #include "list.h"
 
 static void setup_form_field_choice(void) {
-  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_CHOICE) == ZATHURA_ERROR_OK);
+  setup_document_plugin(&plugin_manager, &document);
+
+  fail_unless(zathura_document_get_page(document, 0, &page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_CHOICE) == ZATHURA_ERROR_OK);
+  fail_unless(form_field != NULL);
 }
 
 #define TEST_FORM_FIELD_CHOICE_SET_TYPE(form_field_var, type) \

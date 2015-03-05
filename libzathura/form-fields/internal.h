@@ -4,6 +4,7 @@
 #define INTERNAL_FORM_FIELDS_H
 
 #include "../form-fields.h"
+#include "../page.h"
 
 #include "internal/form-field-button.h"
 #include "internal/form-field-text.h"
@@ -62,6 +63,16 @@ struct zathura_form_field_s {
     struct zathura_form_field_choice_s choice;
     struct zathura_form_field_signature_s signature;
   } data;
+
+  /**
+   * The page that is associated with this form field
+   */
+  zathura_page_t* page;
+
+  /**
+   * User data
+   */
+  void* user_data;
 };
 
 #endif /* INTERNAL_FORM_FIELDS_H */

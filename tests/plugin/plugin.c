@@ -30,7 +30,7 @@ zathura_error_t page_render(zathura_page_t* page, zathura_image_buffer_t** buffe
 #ifdef HAVE_CAIRO
 zathura_error_t page_render_cairo(zathura_page_t* page, cairo_t* cairo, double scale, int rotation, int flags);
 #endif
-zathura_error_t page_save_form_field(zathura_page_t* page, zathura_form_field_t* form_field);
+zathura_error_t form_field_save(zathura_form_field_t* form_field);
 
 /* register plugin */
 ZATHURA_PLUGIN_REGISTER(
@@ -68,7 +68,7 @@ register_functions(zathura_plugin_functions_t* functions)
 #ifdef HAVE_CAIRO
   functions->page_render_cairo = page_render_cairo;
 #endif
-  functions->page_save_form_field = page_save_form_field;
+  functions->form_field_save = form_field_save;
 }
 
 zathura_error_t
@@ -228,7 +228,7 @@ page_render_cairo(zathura_page_t* UNUSED(page), cairo_t* UNUSED(cairo), double
 #endif
 
 zathura_error_t
-page_save_form_field(zathura_page_t* UNUSED(page), zathura_form_field_t* UNUSED(form_field))
+form_field_save(zathura_form_field_t* UNUSED(form_field))
 {
   return ZATHURA_ERROR_OK;
 }

@@ -7,17 +7,32 @@
 
 #include "form-fields.h"
 #include "plugin-api.h"
+#include "utils.h"
 
 zathura_form_field_t* form_field;
+zathura_page_t* page;
+zathura_document_t* document;
+zathura_plugin_manager_t* plugin_manager;
 
 static void setup(void) {
-  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_BUTTON) == ZATHURA_ERROR_OK);
+  setup_document_plugin(&plugin_manager, &document);
+
+  fail_unless(zathura_document_get_page(document, 0, &page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_BUTTON) == ZATHURA_ERROR_OK);
   fail_unless(form_field != NULL);
 }
 
 static void teardown(void) {
   fail_unless(zathura_form_field_free(form_field) == ZATHURA_ERROR_OK);
   form_field = NULL;
+
+  fail_unless(zathura_document_free(document) == ZATHURA_ERROR_OK);
+  document = NULL;
+
+  fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);
+  plugin_manager = NULL;
 }
 
 START_TEST(test_form_field_free) {
@@ -29,33 +44,38 @@ START_TEST(test_form_field_new) {
   zathura_form_field_t* form_field;
 
   /* basic invalid arguments */
-  fail_unless(zathura_form_field_new(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_form_field_new(&form_field, INT_MAX) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_new(NULL, NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_new(NULL, &form_field, INT_MAX) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_new(page, NULL, INT_MAX) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_new(page, &form_field, INT_MAX) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_BUTTON) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_UNKNOWN) == ZATHURA_ERROR_OK);
   fail_unless(zathura_form_field_free(form_field) == ZATHURA_ERROR_OK);
 
-  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_TEXT) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_BUTTON) == ZATHURA_ERROR_OK);
   fail_unless(zathura_form_field_free(form_field) == ZATHURA_ERROR_OK);
 
-  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_CHOICE) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_TEXT) == ZATHURA_ERROR_OK);
   fail_unless(zathura_form_field_free(form_field) == ZATHURA_ERROR_OK);
 
-  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_SIGNATURE) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_CHOICE) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_free(form_field) == ZATHURA_ERROR_OK);
+
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_SIGNATURE) == ZATHURA_ERROR_OK);
   fail_unless(zathura_form_field_free(form_field) == ZATHURA_ERROR_OK);
 
   /* fault injection */
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
-  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_BUTTON) == ZATHURA_ERROR_OUT_OF_MEMORY);
-  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_TEXT) == ZATHURA_ERROR_OUT_OF_MEMORY);
-  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_CHOICE) == ZATHURA_ERROR_OUT_OF_MEMORY);
-  fail_unless(zathura_form_field_new(&form_field, ZATHURA_FORM_FIELD_SIGNATURE) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_BUTTON) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_TEXT) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_CHOICE) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_SIGNATURE) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
 } END_TEST
 
-#define TEST_FORM_FIELD_GET_TYPE(form_field_var, type_var, type) \
-  fail_unless(zathura_form_field_new(&(form_field_var), (type)) == ZATHURA_ERROR_OK); \
+#define TEST_FORM_FIELD_GET_TYPE(page, form_field_var, type_var, type) \
+  fail_unless(zathura_form_field_new(page, &(form_field_var), (type)) == ZATHURA_ERROR_OK); \
   fail_unless(zathura_form_field_get_type((form_field_var), &(type_var)) == ZATHURA_ERROR_OK); \
   fail_unless((type_var) == (type)); \
   fail_unless(zathura_form_field_free((form_field_var)) == ZATHURA_ERROR_OK);
@@ -70,10 +90,10 @@ START_TEST(test_form_field_get_type) {
   fail_unless(zathura_form_field_get_type(NULL, &type) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  TEST_FORM_FIELD_GET_TYPE(form_field, type, ZATHURA_FORM_FIELD_BUTTON)
-  TEST_FORM_FIELD_GET_TYPE(form_field, type, ZATHURA_FORM_FIELD_TEXT)
-  TEST_FORM_FIELD_GET_TYPE(form_field, type, ZATHURA_FORM_FIELD_CHOICE)
-  TEST_FORM_FIELD_GET_TYPE(form_field, type, ZATHURA_FORM_FIELD_SIGNATURE)
+  TEST_FORM_FIELD_GET_TYPE(page, form_field, type, ZATHURA_FORM_FIELD_BUTTON)
+  TEST_FORM_FIELD_GET_TYPE(page, form_field, type, ZATHURA_FORM_FIELD_TEXT)
+  TEST_FORM_FIELD_GET_TYPE(page, form_field, type, ZATHURA_FORM_FIELD_CHOICE)
+  TEST_FORM_FIELD_GET_TYPE(page, form_field, type, ZATHURA_FORM_FIELD_SIGNATURE)
 } END_TEST
 
 START_TEST(test_form_field_set_name) {
@@ -191,6 +211,47 @@ START_TEST(test_form_field_get_flags) {
   fail_unless(zathura_form_field_get_flags(form_field, &flags) == ZATHURA_ERROR_OK);
 } END_TEST
 
+START_TEST(test_form_field_set_user_data) {
+  void* user_data;
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_set_user_data(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_set_user_data(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_set_user_data(NULL, &user_data)      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_set_user_data(form_field, &user_data) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_form_field_get_user_data) {
+  void* user_data = (void*) 0xCAFEBABE;
+
+  /* invalid arguments */
+  fail_unless(zathura_form_field_get_user_data(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_user_data(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_user_data(NULL, &user_data)      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_set_user_data(form_field, user_data)  == ZATHURA_ERROR_OK);
+
+  void* user_data2;
+  fail_unless(zathura_form_field_get_user_data(form_field, &user_data2) == ZATHURA_ERROR_OK);
+  fail_unless(user_data == user_data2);
+} END_TEST
+
+START_TEST(test_form_field_save) {
+  zathura_form_field_t* form_field;
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_TEXT) == ZATHURA_ERROR_OK);
+  fail_unless(form_field != NULL);
+
+  /* basic invalid arguments */
+  fail_unless(zathura_form_field_save(NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_save(form_field) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_free(form_field) == ZATHURA_ERROR_OK);
+} END_TEST
+
 #include "form-fields/form-field-button.c"
 #include "form-fields/form-field-text.c"
 #include "form-fields/form-field-choice.c"
@@ -216,6 +277,9 @@ suite_form_fields(void)
   tcase_add_test(tcase, test_form_field_get_mapping_name);
   tcase_add_test(tcase, test_form_field_set_flags);
   tcase_add_test(tcase, test_form_field_get_flags);
+  tcase_add_test(tcase, test_form_field_set_user_data);
+  tcase_add_test(tcase, test_form_field_get_user_data);
+  tcase_add_test(tcase, test_form_field_save);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("button");

@@ -116,6 +116,17 @@ zathura_error_t zathura_form_field_get_mapping_name(zathura_form_field_t* form_f
  */
 zathura_error_t zathura_form_field_get_flags(zathura_form_field_t* form_field, zathura_form_field_flag_t* flags);
 
+/**
+ * Saves the form field back to the plugin
+ *
+ * @param[in] form_field The form field
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_save(zathura_form_field_t* form_field);
+
 #include "form-fields/form-field-button.h"
 #include "form-fields/form-field-text.h"
 #include "form-fields/form-field-choice.h"

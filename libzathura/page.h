@@ -244,16 +244,4 @@ zathura_error_t zathura_page_render_cairo(zathura_page_t* page, cairo_t* cairo,
     double scale, int rotation, int flags);
 #endif
 
-/**
- * Saves the form field back to the plugin
- *
- * @param[in] form_field The form field
- *
- * @return ZATHURA_ERROR_OK No error occurred
- * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
- * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
- */
-zathura_error_t zathura_page_save_form_field(zathura_page_t* page,
-    zathura_form_field_t* form_field);
-
 #endif /* PAGE_H */
