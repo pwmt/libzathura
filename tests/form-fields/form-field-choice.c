@@ -92,6 +92,48 @@ TEST_FORM_FIELD_CHOICE_BOOLEAN(
     test_form_field_choice_do_spell_check, zathura_form_field_choice_do_spell_check
     )
 
+START_TEST(test_form_field_choice_test_with_multiselect) {
+  fail_unless(zathura_form_field_choice_set_multiselect(form_field, true) == ZATHURA_ERROR_OK);
+
+  zathura_form_field_choice_item_t* choice_item;
+  fail_unless(zathura_form_field_choice_item_new(form_field, &choice_item, "Item") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_item_select(choice_item) == ZATHURA_ERROR_OK);
+
+  bool is_selected;
+  fail_unless(zathura_form_field_choice_item_is_selected(choice_item, &is_selected) == ZATHURA_ERROR_OK);
+  fail_unless(is_selected == true);
+
+  zathura_form_field_choice_item_t* choice_item2;
+  fail_unless(zathura_form_field_choice_item_new(form_field, &choice_item2, "Item 2") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_item_select(choice_item2) == ZATHURA_ERROR_OK);
+
+  fail_unless(zathura_form_field_choice_item_is_selected(choice_item2, &is_selected) == ZATHURA_ERROR_OK);
+  fail_unless(is_selected == true);
+  fail_unless(zathura_form_field_choice_item_is_selected(choice_item, &is_selected) == ZATHURA_ERROR_OK);
+  fail_unless(is_selected == true);
+} END_TEST
+
+START_TEST(test_form_field_choice_test_without_multiselect) {
+  fail_unless(zathura_form_field_choice_set_multiselect(form_field, false) == ZATHURA_ERROR_OK);
+
+  zathura_form_field_choice_item_t* choice_item;
+  fail_unless(zathura_form_field_choice_item_new(form_field, &choice_item, "Item") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_item_select(choice_item) == ZATHURA_ERROR_OK);
+
+  bool is_selected;
+  fail_unless(zathura_form_field_choice_item_is_selected(choice_item, &is_selected) == ZATHURA_ERROR_OK);
+  fail_unless(is_selected == true);
+
+  zathura_form_field_choice_item_t* choice_item2;
+  fail_unless(zathura_form_field_choice_item_new(form_field, &choice_item2, "Item 2") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_item_select(choice_item2) == ZATHURA_ERROR_OK);
+
+  fail_unless(zathura_form_field_choice_item_is_selected(choice_item2, &is_selected) == ZATHURA_ERROR_OK);
+  fail_unless(is_selected == true);
+  fail_unless(zathura_form_field_choice_item_is_selected(choice_item, &is_selected) == ZATHURA_ERROR_OK);
+  fail_unless(is_selected == false);
+} END_TEST
+
 START_TEST(test_form_field_choice_get_items_invalid) {
   zathura_list_t* list = NULL;
 

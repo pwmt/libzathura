@@ -3,6 +3,8 @@
 #ifndef INTERNAL_FORM_FIELD_CHOICE_H
 #define INTERNAL_FORM_FIELD_CHOICE_H
 
+#include "../../list.h"
+
 /**
  * A form field choice item
  */

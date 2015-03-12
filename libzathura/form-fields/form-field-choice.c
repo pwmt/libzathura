@@ -266,6 +266,14 @@ zathura_form_field_choice_item_select(zathura_form_field_choice_item_t* choice_i
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  /* Unselect all if field is not a multi select field */
+  if (choice_item->form_field->data.choice.is_multiselect == false) {
+    zathura_form_field_choice_item_t* tmp_choice_item;
+    ZATHURA_LIST_FOREACH(tmp_choice_item, choice_item->form_field->data.choice.items) {
+      tmp_choice_item->selected = false;
+    }
+  }
+
   choice_item->selected = true;
 
   return ZATHURA_ERROR_OK;
