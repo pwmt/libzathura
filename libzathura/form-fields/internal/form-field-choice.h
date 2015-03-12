@@ -8,6 +8,11 @@
  */
 struct zathura_form_field_choice_item_s {
   /**
+   * The corresponding form field
+   */
+  zathura_form_field_t* form_field;
+
+  /**
    * The name of the item
    */
   char* name;

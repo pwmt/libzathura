@@ -331,7 +331,8 @@ suite_form_fields(void)
   tcase_add_test(tcase, test_form_field_choice_is_multiselect);
   tcase_add_test(tcase, test_form_field_choice_set_spell_check);
   tcase_add_test(tcase, test_form_field_choice_do_spell_check);
-  tcase_add_test(tcase, test_form_field_choice_set_items);
+  tcase_add_test(tcase, test_form_field_choice_get_items_invalid);
+  tcase_add_test(tcase, test_form_field_choice_get_items_empty);
   tcase_add_test(tcase, test_form_field_choice_get_items);
   suite_add_tcase(suite, tcase);
 

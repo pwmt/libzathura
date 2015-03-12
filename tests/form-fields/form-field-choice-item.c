@@ -7,10 +7,19 @@
 #include "form-fields.h"
 #include "list.h"
 
+zathura_form_field_t* form_field;
 zathura_form_field_choice_item_t* choice_item;
 
 static void setup_form_field_choice_item(void) {
-  fail_unless(zathura_form_field_choice_item_new(&choice_item, "Item") == ZATHURA_ERROR_OK);
+  setup_document_plugin(&plugin_manager, &document);
+
+  fail_unless(zathura_document_get_page(document, 0, &page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_CHOICE) == ZATHURA_ERROR_OK);
+  fail_unless(form_field != NULL);
+
+  fail_unless(zathura_form_field_choice_item_new(form_field, &choice_item, "Item") == ZATHURA_ERROR_OK);
 }
 
 static void teardown_form_field_choice_item(void) {
@@ -22,17 +31,20 @@ START_TEST(test_form_field_choice_item_new) {
   zathura_form_field_choice_item_t* item;
 
   /* invalid arguments */
-  fail_unless(zathura_form_field_choice_item_new(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_form_field_choice_item_new(&item, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_form_field_choice_item_new(NULL, "name") == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_item_new(NULL, NULL, NULL)         == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_item_new(NULL, &item, NULL)        == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_item_new(NULL, NULL, "name")       == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_item_new(NULL, &item, "name")      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_item_new(form_field, NULL, "name") == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_item_new(form_field, &item, NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_form_field_choice_item_new(&item, "name") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_item_new(form_field, &item, "name") == ZATHURA_ERROR_OK);
   fail_unless(item != NULL);
   fail_unless(zathura_form_field_choice_item_free(item) == ZATHURA_ERROR_OK);
 
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
-  fail_unless(zathura_form_field_choice_item_new(&item, "name") == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_form_field_choice_item_new(form_field, &item, "name") == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
 } END_TEST
 

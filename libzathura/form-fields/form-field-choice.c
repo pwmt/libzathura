@@ -46,20 +46,6 @@ zathura_form_field_choice_get_type(zathura_form_field_t* form_field,
 }
 
 zathura_error_t
-zathura_form_field_choice_set_items(zathura_form_field_t* form_field, zathura_list_t* items)
-{
-  if (form_field == NULL || items == NULL) {
-    return ZATHURA_ERROR_INVALID_ARGUMENTS;
-  }
-
-  CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
-
-  form_field->data.choice.items = items;
-
-  return ZATHURA_ERROR_OK;
-}
-
-zathura_error_t
 zathura_form_field_choice_get_items(zathura_form_field_t* form_field, zathura_list_t**
     items)
 {
@@ -220,15 +206,16 @@ zathura_form_field_choice_do_spell_check(zathura_form_field_t* form_field, bool*
 
   CHECK_FORM_FIELD_TYPE(form_field, ZATHURA_FORM_FIELD_CHOICE)
 
-  *do_spell_check =form_field->data.choice.do_spell_check;
+  *do_spell_check = form_field->data.choice.do_spell_check;
 
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_form_field_choice_item_new(zathura_form_field_choice_item_t** item, const char* name)
+zathura_form_field_choice_item_new(zathura_form_field_t* form_field,
+    zathura_form_field_choice_item_t** item, const char* name)
 {
-  if (item == NULL || name == NULL || strlen(name) == 0) {
+  if (form_field == NULL || item == NULL || name == NULL || strlen(name) == 0) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
@@ -237,8 +224,11 @@ zathura_form_field_choice_item_new(zathura_form_field_choice_item_t** item, cons
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
 
-  (*item)->selected = false;
-  (*item)->name = g_strdup(name);
+  (*item)->form_field = form_field;
+  (*item)->selected   = false;
+  (*item)->name       = g_strdup(name);
+
+  form_field->data.choice.items = zathura_list_append(form_field->data.choice.items, *item);
 
   return ZATHURA_ERROR_OK;
 }
@@ -250,7 +240,7 @@ zathura_form_field_choice_item_free(zathura_form_field_choice_item_t* item)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  free(item->name);
+  g_free(item->name);
   free(item);
 
   return ZATHURA_ERROR_OK;

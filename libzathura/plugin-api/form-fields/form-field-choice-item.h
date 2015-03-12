@@ -15,7 +15,7 @@
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t
-zathura_form_field_choice_item_new(zathura_form_field_choice_item_t** item,
+zathura_form_field_choice_item_new(zathura_form_field_t* form_field, zathura_form_field_choice_item_t** item,
     const char* name);
 
 /**

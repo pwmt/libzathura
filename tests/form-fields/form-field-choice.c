@@ -92,35 +92,37 @@ TEST_FORM_FIELD_CHOICE_BOOLEAN(
     test_form_field_choice_do_spell_check, zathura_form_field_choice_do_spell_check
     )
 
-START_TEST(test_form_field_choice_set_items) {
-  zathura_list_t* list = zathura_list_alloc();
-  fail_unless(list != NULL);
+START_TEST(test_form_field_choice_get_items_invalid) {
+  zathura_list_t* list = NULL;
 
   /* invalid arguments */
-  fail_unless(zathura_form_field_choice_set_items(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_form_field_choice_set_items(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_form_field_choice_set_items(NULL, list) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_get_items(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_get_items(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_choice_get_items(NULL, &list) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  zathura_list_free(list);
+} END_TEST
+
+START_TEST(test_form_field_choice_get_items_empty) {
+  zathura_list_t* list = NULL;
 
   /* valid arguments */
-  fail_unless(zathura_form_field_choice_set_items(form_field, list) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_choice_get_items(form_field, &list) == ZATHURA_ERROR_OK);
+  fail_unless(list == NULL);
 
   zathura_list_free(list);
 } END_TEST
 
 START_TEST(test_form_field_choice_get_items) {
-  zathura_list_t* get_list = NULL;
-  zathura_list_t* list = zathura_list_alloc();
-  fail_unless(list != NULL);
+  zathura_list_t* list = NULL;
 
-  /* invalid arguments */
-  fail_unless(zathura_form_field_choice_get_items(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_form_field_choice_get_items(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_form_field_choice_get_items(NULL, &get_list) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  zathura_form_field_choice_item_t* choice_item;
+  fail_unless(zathura_form_field_choice_item_new(form_field, &choice_item, "Item") == ZATHURA_ERROR_OK);
 
   /* valid arguments */
-  fail_unless(zathura_form_field_choice_set_items(form_field, list) == ZATHURA_ERROR_OK);
-  fail_unless(zathura_form_field_choice_get_items(form_field, &get_list) == ZATHURA_ERROR_OK);
-  fail_unless(get_list == list);
+  fail_unless(zathura_form_field_choice_get_items(form_field, &list) == ZATHURA_ERROR_OK);
+  fail_unless(list != NULL);
+  fail_unless(zathura_list_length(list) == 1);
 
   zathura_list_free(list);
 } END_TEST

@@ -72,18 +72,4 @@ zathura_error_t zathura_form_field_choice_set_multiselect(zathura_form_field_t*
 zathura_error_t zathura_form_field_choice_set_spell_check(zathura_form_field_t*
     form_field, bool value);
 
-/**
- * Sets the list of options of the choice form field.
- *
- * @param[in] form_field The form field
- * @param[in] items the list of options
- *
- * @return ZATHURA_ERROR_OK No error occurred
- * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
- * @return ZATHURA_ERROR_OUT_OF_MEMORY Out of memory
- * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
- */
-zathura_error_t zathura_form_field_choice_set_items(zathura_form_field_t*
-    form_field, zathura_list_t* items);
-
 #endif /* PLUGIN_API_FORM_FIELD_CHOICE_H */
