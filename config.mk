@@ -26,6 +26,9 @@ SOMAJOR = 1
 SOMINOR = 0
 SOVERSION = ${SOMAJOR}.${SOMINOR}
 
+# pkg-config binary
+PKG_CONFIG ?= pkg-config
+
 # paths
 PREFIX ?= /usr
 LIBDIR ?= ${PREFIX}/lib
@@ -38,20 +41,20 @@ BUILDDIR_DEBUG ?= ${BUILDDIR}/debug
 BUILDDIR_GCOV ?= ${BUILDDIR}/gcov
 
 # libs
-GLIB_INC ?= $(shell pkg-config --cflags glib-2.0 gio-2.0)
-GLIB_LIB ?= $(shell pkg-config --libs glib-2.0 gio-2.0)
+GLIB_INC ?= $(shell ${PKG_CONFIG} --cflags glib-2.0 gio-2.0)
+GLIB_LIB ?= $(shell ${PKG_CONFIG} --libs glib-2.0 gio-2.0)
 
-GMODULE_INC ?= $(shell pkg-config --cflags gmodule-no-export-2.0)
-GMODULE_LIB ?= $(shell pkg-config --libs gmodule-no-export-2.0)
+GMODULE_INC ?= $(shell ${PKG_CONFIG} --cflags gmodule-no-export-2.0)
+GMODULE_LIB ?= $(shell ${PKG_CONFIG} --libs gmodule-no-export-2.0)
 
 MAGIC_INC ?=
 MAGIC_LIB ?= -lmagic
 
-CAIRO_INC ?= $(shell pkg-config --cflags cairo)
-CAIRO_LIB ?= $(shell pkg-config --libs cairo)
+CAIRO_INC ?= $(shell ${PKG_CONFIG} --cflags cairo)
+CAIRO_LIB ?= $(shell ${PKG_CONFIG} --libs cairo)
 
-FIU_INC ?= $(shell pkg-config --cflags libfiu)
-FIU_LIB ?= $(shell pkg-config --libs libfiu)
+FIU_INC ?= $(shell ${PKG_CONFIG} --cflags libfiu)
+FIU_LIB ?= $(shell ${PKG_CONFIG} --libs libfiu)
 
 INCS = ${GLIB_INC} ${GMODULE_INC}
 LIBS = ${GLIB_LIB} ${GMODULE_LIB} -lm
@@ -67,6 +70,9 @@ DFLAGS = -O0 -g
 
 # compiler
 CC ?= gcc
+
+# archiver
+AR ?= ar
 
 # strip
 SFLAGS ?= -s
