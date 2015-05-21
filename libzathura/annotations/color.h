@@ -41,7 +41,7 @@ typedef struct zathura_annotation_color_s {
   /**
    * Values that depend on the used colorspace
    */
-  double values[4];
+  char values[4];
 } zathura_annotation_color_t;
 
 #endif // ANNOTATION_COLOR_SPACE_H
