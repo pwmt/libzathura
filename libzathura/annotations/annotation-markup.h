@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_MARKUP_H
 #define ANNOTATION_MARKUP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 
 /**
@@ -221,5 +225,9 @@ zathura_error_t zathura_annotation_markup_set_reply_type(zathura_annotation_t* a
  */
 zathura_error_t zathura_annotation_markup_get_reply_type(zathura_annotation_t* annotation,
     zathura_annotation_markup_reply_type_t* reply_type);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANOTATION_MARKUP_H

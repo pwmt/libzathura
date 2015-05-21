@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ANNOTATION_LINE_H
 #define INTERNAL_ANNOTATION_LINE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * A line annotation displays a single straight line on the page. When
  * opened, it displays a pop-up window containing the text of the associated
@@ -109,5 +113,9 @@ zathura_error_t zathura_annotation_line_init(zathura_annotation_t* annotation);
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_line_clear(zathura_annotation_t* annotation);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // INTERNAL_ANNOTATION_LINE_H

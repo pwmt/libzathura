@@ -3,6 +3,10 @@
 #ifndef ZATHURA_ANNOTATION_INTERNAL_H
 #define ZATHURA_ANNOTATION_INTERNAL_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <time.h>
 
 #include "../annotations.h"
@@ -182,5 +186,9 @@ struct zathura_annotation_s {
 #include "internal/annotation-text.h"
 #include "internal/annotation-text-markup.h"
 #include "internal/annotation-widget.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ZATHURA_ANNOTATION_INTERNAL_H

@@ -3,6 +3,10 @@
 #ifndef PLUGIN_API_FORM_FIELDS_H
 #define PLUGIN_API_FORM_FIELDS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../error.h"
 #include "../form-fields.h"
 
@@ -112,5 +116,9 @@ zathura_error_t zathura_form_field_get_user_data(zathura_form_field_t* form_fiel
 #include "form-fields/form-field-choice-item.h"
 #include "form-fields/form-field-signature.h"
 #include "form-fields/form-field-text.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PLUGIN_API_FORM_FIELDS_H */

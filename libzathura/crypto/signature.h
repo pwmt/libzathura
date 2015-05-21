@@ -3,6 +3,10 @@
 #ifndef CRYPTO_SIGNATURE_H
 #define CRYPTO_SIGNATURE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "certificate.h"
 #include "private-key.h"
 
@@ -25,5 +29,9 @@ zathura_error_t zathura_signature_get_private_key(zathura_signature_t* signature
 zathura_error_t zathura_signature_sign(zathura_signature_t* signature, unsigned char** data, size_t* dlen);
 
 zathura_error_t zathura_signature_verify(zathura_signature_t* signature, bool* is_valid, unsigned char* data, size_t dlen);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* CRYPTO_SIGNATURE_H */

@@ -3,6 +3,10 @@
 #ifndef FORM_FIELD_BUTTON_H
 #define FORM_FIELD_BUTTON_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 
 #include "../form-fields.h"
@@ -70,5 +74,9 @@ zathura_error_t zathura_form_field_button_get_state(zathura_form_field_t*
  */
 zathura_error_t zathura_form_field_button_set_state(zathura_form_field_t*
     form_field, bool state);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FORM_FIELD_BUTTON_H */

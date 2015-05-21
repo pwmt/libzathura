@@ -3,6 +3,10 @@
 #ifndef PLUGIN_API_FORM_FIELD_CHOICE_H
 #define PLUGIN_API_FORM_FIELD_CHOICE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Sets the choice type of the choice form field.
  *
@@ -71,5 +75,9 @@ zathura_error_t zathura_form_field_choice_set_multiselect(zathura_form_field_t*
  */
 zathura_error_t zathura_form_field_choice_set_spell_check(zathura_form_field_t*
     form_field, bool value);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PLUGIN_API_FORM_FIELD_CHOICE_H */

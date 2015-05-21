@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_TEXT_MARKUP_H
 #define ANNOTATION_TEXT_MARKUP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../../list.h"
 
 /**
@@ -66,5 +70,9 @@ zathura_annotation_text_markup_get_quad_points(zathura_annotation_t* annotation,
 zathura_error_t zathura_annotation_text_markup_init(zathura_annotation_t* annotation);
 
 zathura_error_t zathura_annotation_text_markup_clear(zathura_annotation_t* annotation);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_TEXT_MARKUP_H

@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_WIDGET_H
 #define ANNOTATION_WIDGET_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "../error.h"
 #include "../form-fields.h"
@@ -369,5 +373,9 @@ zathura_error_t zathura_annotation_widget_set_caption_position(zathura_annotatio
  */
 zathura_error_t zathura_annotation_widget_get_caption_position(zathura_annotation_t*
     annotation, zathura_annotation_widget_caption_position_t* caption_position);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_WIDGET_H

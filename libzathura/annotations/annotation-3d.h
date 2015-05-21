@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_3D_H
 #define ANNOTATION_3D_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "types.h"
 
@@ -101,5 +105,9 @@ zathura_annotation_3d_set_interactive(zathura_annotation_t* annotation, bool is_
  */
 zathura_error_t
 zathura_annotation_3d_is_interactive(zathura_annotation_t* annotation, bool* is_interactive);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //ANNOTATION_3D_H

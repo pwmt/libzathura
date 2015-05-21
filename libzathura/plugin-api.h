@@ -3,6 +3,10 @@
 #ifndef PLUGIN_API_H
 #define PLUGIN_API_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "error.h"
 #include "plugin.h"
 #include "page.h"
@@ -105,5 +109,9 @@ zathura_error_t zathura_plugin_add_mimetype(zathura_plugin_t* plugin, const char
 #include "plugin-api/transition.h"
 #include "plugin-api/action.h"
 #include "plugin-api/image.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PLUGIN_API_H */

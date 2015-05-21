@@ -3,6 +3,10 @@
 #ifndef ATTACHMENT_H
 #define ATTACHMENT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <time.h>
 
 #include "error.h"
@@ -208,5 +212,9 @@ zathura_error_t zathura_attachment_get_modification_time(zathura_attachment_t*
  */
 zathura_error_t zathura_attachment_get_checksum(zathura_attachment_t*
     attachment, const char** checksum);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ATTACHMENT_H */

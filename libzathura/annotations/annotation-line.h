@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_LINE_H
 #define ANNOTATION_LINE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 
 /**
@@ -286,5 +290,9 @@ zathura_error_t zathura_annotation_line_set_intent(zathura_annotation_t*
  */
 zathura_error_t zathura_annotation_line_get_intent(zathura_annotation_t*
     annotation, zathura_annotation_markup_intent_t* intent);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_LINE_H

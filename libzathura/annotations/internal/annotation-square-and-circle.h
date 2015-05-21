@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ANNOTATION_SQUARE_AND_CIRCLE_H
 #define INTERNAL_ANNOTATION_SQUARE_AND_CIRCLE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../../annotations.h"
 #include "../../error.h"
 
@@ -64,5 +68,9 @@ zathura_error_t zathura_annotation_square_and_circle_init(zathura_annotation_t* 
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_square_and_circle_clear(zathura_annotation_t* annotation);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // INTERNAL_ANNOTATION_SQUARE_AND_CIRCLE_H

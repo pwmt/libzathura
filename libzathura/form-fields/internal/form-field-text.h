@@ -3,6 +3,10 @@
 #ifndef INTERNAL_FORM_FIELD_TEXT_H
 #define INTERNAL_FORM_FIELD_TEXT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../form-field-text.h"
 
 struct zathura_form_field_text_s {
@@ -41,5 +45,9 @@ struct zathura_form_field_text_s {
    */
   char* text;
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* INTERNAL_FORM_FIELD_TEXT_H */

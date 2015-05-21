@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_UNDERLINE_H
 #define ANNOTATION_UNDERLINE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "../error.h"
 
@@ -39,5 +43,9 @@ zathura_error_t zathura_annotation_underline_set_quad_points(zathura_annotation_
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_underline_get_quad_points(zathura_annotation_t* annotation, zathura_list_t** quad_points);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_UNDERLINE_H

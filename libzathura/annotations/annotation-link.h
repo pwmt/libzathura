@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_LINK_H
 #define ANNOTATION_LINK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "../error.h"
 
@@ -101,5 +105,9 @@ zathura_error_t zathura_annotation_link_set_quad_points(zathura_annotation_t* an
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_link_get_quad_points(zathura_annotation_t* annotation, zathura_list_t** quad_points);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_LINK_H

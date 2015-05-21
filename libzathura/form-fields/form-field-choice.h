@@ -3,6 +3,10 @@
 #ifndef FORM_FIELD_CHOICE_H
 #define FORM_FIELD_CHOICE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 
 #include "../form-fields.h"
@@ -168,5 +172,9 @@ zathura_error_t zathura_form_field_choice_item_select(zathura_form_field_choice_
  */
 zathura_error_t zathura_form_field_choice_item_is_selected(zathura_form_field_choice_item_t*
     choice_item, bool* is_selected);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FORM_FIELD_CHOICE_H */

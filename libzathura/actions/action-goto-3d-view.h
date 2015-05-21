@@ -3,4 +3,12 @@
 #ifndef ACTION_GOTO_3D_VIEW_H
 #define ACTION_GOTO_3D_VIEW_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* ACTION_GOTO_3D_VIEW_H */

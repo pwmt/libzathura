@@ -3,6 +3,10 @@
 #ifndef FORM_FIELDS_H
 #define FORM_FIELDS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 
 #include "error.h"
@@ -131,5 +135,9 @@ zathura_error_t zathura_form_field_save(zathura_form_field_t* form_field);
 #include "form-fields/form-field-text.h"
 #include "form-fields/form-field-choice.h"
 #include "form-fields/form-field-signature.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FORM_FIELDS_H */

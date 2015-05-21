@@ -3,6 +3,10 @@
 #ifndef INTERNAL_FORM_FIELDS_H
 #define INTERNAL_FORM_FIELDS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../form-fields.h"
 #include "../page.h"
 
@@ -74,5 +78,9 @@ struct zathura_form_field_s {
    */
   void* user_data;
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* INTERNAL_FORM_FIELDS_H */

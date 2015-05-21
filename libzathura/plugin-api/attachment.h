@@ -3,6 +3,10 @@
 #ifndef PLUGIN_API_ATTACHMENT_H
 #define PLUGIN_API_ATTACHMENT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../attachment.h"
 #include "../error.h"
 
@@ -56,5 +60,9 @@ typedef zathura_error_t (*zathura_attachment_save_function_t)(zathura_attachment
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_attachment_set_save_function(zathura_attachment_t* attachment, zathura_attachment_save_function_t save_function);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PLUGIN_API_ATTACHMENT_H */

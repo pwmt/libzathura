@@ -3,6 +3,10 @@
 #ifndef TRANSITION_H
 #define TRANSITION_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 
 #include "error.h"
@@ -209,5 +213,9 @@ zathura_error_t zathura_page_transition_get_scale(zathura_page_transition_t*
 zathura_error_t
 zathura_page_transition_is_rectangular(zathura_page_transition_t* transition,
     bool* is_rectangular);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TRANSITION_H */

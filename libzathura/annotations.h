@@ -3,6 +3,10 @@
 #ifndef ANNOTATIONS_H
 #define ANNOTATIONS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <time.h>
 #include <stdbool.h>
 
@@ -415,5 +419,9 @@ zathura_error_t zathura_annotation_get_color(zathura_annotation_t* annotation,
 #include "annotations/annotation-trap-net.h"
 #include "annotations/annotation-underline.h"
 #include "annotations/annotation-watermark.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ANNOTATIONS_H */

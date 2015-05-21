@@ -3,6 +3,10 @@
 #ifndef INTERNAL_FORM_FIELD_BUTTON_H
 #define INTERNAL_FORM_FIELD_BUTTON_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Button form field
  */
@@ -18,5 +22,8 @@ struct zathura_form_field_button_s {
   bool state;
 };
 
-#endif /* INTERNAL_FORM_FIELD_BUTTON_H */
+#ifdef __cplusplus
+}
+#endif
 
+#endif /* INTERNAL_FORM_FIELD_BUTTON_H */

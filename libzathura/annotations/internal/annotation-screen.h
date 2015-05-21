@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ANNOTATION_SCREEN_H
 #define INTERNAL_ANNOTATION_SCREEN_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * A screen annotation specifies a region of a page upon which
  * media clips may be played. It also serves as an object from which actions
@@ -44,5 +48,9 @@ zathura_error_t zathura_annotation_screen_init(zathura_annotation_t* annotation)
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_screen_clear(zathura_annotation_t* annotation);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // INTERNAL_ANNOTATION_SCREEN_H

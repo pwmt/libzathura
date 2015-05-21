@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ANNOTATION_MARKUP_H
 #define INTERNAL_ANNOTATION_MARKUP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Many annotation types are defined as markup annotations because they are
  * used primarily to mark up PDF documents. These annotations have text that
@@ -81,5 +85,9 @@ zathura_error_t zathura_annotation_markup_init(zathura_annotation_t* annotation)
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_markup_clear(zathura_annotation_t* annotation);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // INTERNAL_ANNOTATION_MARKUP_H

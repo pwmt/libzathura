@@ -3,6 +3,10 @@
 #ifndef FIU_H
 #define FIU_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef FIU_ENABLE
 #define fiu_do_on(name, action)
 #define fiu_exit_on(name)
@@ -12,6 +16,10 @@
 #define fiu_return_on(name, retval)
 #else
 #include <fiu.h>
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* FIU_H */

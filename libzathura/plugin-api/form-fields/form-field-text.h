@@ -3,6 +3,10 @@
 #ifndef PLUGIN_API_FORM_FIELD_TEXT_H
 #define PLUGIN_API_FORM_FIELD_TEXT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Sets the text type of the text form field.
  *
@@ -82,5 +86,9 @@ zathura_error_t zathura_form_field_text_set_scroll(zathura_form_field_t*
  */
 zathura_error_t zathura_form_field_text_set_spell_check(zathura_form_field_t*
     form_field, bool value);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PLUGIN_API_FORM_FIELD_TEXT_H */

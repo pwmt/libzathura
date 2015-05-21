@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_SOUND_H
 #define ANNOTATION_SOUND_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "../sound.h"
 
@@ -62,5 +66,9 @@ zathura_error_t zathura_annotation_sound_set_icon_name(zathura_annotation_t*
  */
 zathura_error_t zathura_annotation_sound_get_icon_name(zathura_annotation_t*
     annotation, char** icon_name);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //ANNOTATION_SOUND_H

@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_TEXT_H
 #define ANNOTATION_TEXT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "../error.h"
 
@@ -154,5 +158,9 @@ zathura_annotation_text_set_state(zathura_annotation_t* annotation,
 zathura_error_t
 zathura_annotation_text_get_state(zathura_annotation_t* annotation,
     zathura_annotation_text_state_t* state);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANOTATION_TEXT_H

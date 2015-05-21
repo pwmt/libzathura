@@ -3,6 +3,10 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct zathura_document_s zathura_document_t;
 
 #include "error.h"
@@ -288,5 +292,9 @@ zathura_error_t zathura_document_get_metadata(zathura_document_t* document,
  */
 zathura_error_t zathura_document_get_permissions(zathura_document_t* document,
     zathura_document_permission_t* permissions);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* DOCUMENT_H */

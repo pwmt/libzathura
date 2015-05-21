@@ -3,6 +3,10 @@
 #ifndef PLUGIN_API_TRANSITION_H
 #define PLUGIN_API_TRANSITION_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../transition.h"
 #include "../error.h"
 
@@ -100,5 +104,9 @@ zathura_error_t zathura_page_transition_set_scale(zathura_page_transition_t* tra
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_page_transition_set_rectangular(zathura_page_transition_t* transition, bool is_rectangular);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PLUGIN_API_TRANSITION_H */

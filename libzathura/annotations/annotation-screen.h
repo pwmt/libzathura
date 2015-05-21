@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_SCREEN_H
 #define ANNOTATION_SCREEN_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "types.h"
 
@@ -63,5 +67,9 @@ zathura_annotation_screen_set_action(zathura_annotation_t* annotation,
 zathura_error_t
 zathura_annotation_screen_get_action(zathura_annotation_t* annotation,
     zathura_action_t** action);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_SCREEN_H

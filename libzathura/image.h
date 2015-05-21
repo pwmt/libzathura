@@ -3,6 +3,10 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if HAVE_CAIRO
 #include <cairo.h>
 #endif
@@ -23,5 +27,9 @@ zathura_error_t zathura_image_free(zathura_image_t* image);
 
 zathura_error_t
 zathura_image_get_position(zathura_image_t* image, zathura_rectangle_t* position);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* IMAGE_H */

@@ -3,6 +3,10 @@
 #ifndef PLUGIN_API_ACTIONS_H
 #define PLUGIN_API_ACTIONS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../error.h"
 #include "../action.h"
 
@@ -45,5 +49,9 @@ zathura_error_t zathura_action_free(zathura_action_t* action);
 #include "actions/action-thread.h"
 #include "actions/action-transition.h"
 #include "actions/action-uri.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PLUGIN_API_ACTIONS_H */

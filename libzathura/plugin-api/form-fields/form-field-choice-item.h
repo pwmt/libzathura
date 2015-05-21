@@ -3,6 +3,10 @@
 #ifndef PLUGIN_API_FORM_FIELD_CHOICE_ITEM_H
 #define PLUGIN_API_FORM_FIELD_CHOICE_ITEM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Creates a new form field choice item
  *
@@ -44,5 +48,9 @@ zathura_form_field_choice_item_free(zathura_form_field_choice_item_t* item);
 zathura_error_t
 zathura_form_field_choice_item_set_name(zathura_form_field_choice_item_t* item,
     const char* name);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PLUGIN_API_FORM_FIELD_CHOICE_ITEM_H */

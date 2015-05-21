@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_FILE_H
 #define ANNOTATION_FILE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "../attachment.h"
 #include "../error.h"
@@ -64,5 +68,9 @@ zathura_error_t zathura_annotation_file_set_icon_name(zathura_annotation_t*
  */
 zathura_error_t zathura_annotation_file_get_icon_name(zathura_annotation_t*
     annotation, char** icon_name);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //ANNOTATION_FILE_H

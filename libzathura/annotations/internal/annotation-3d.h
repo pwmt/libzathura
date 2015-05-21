@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ANNOTATION_3D_H
 #define INTERNAL_ANNOTATION_3D_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../types.h"
 
 /**
@@ -56,5 +60,9 @@ zathura_error_t zathura_annotation_3d_init(zathura_annotation_t* annotation);
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_3d_clear(zathura_annotation_t* annotation);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // INTERNAL_ANNOTATION_3D_H

@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_COLOR_SPACE_H
 #define ANNOTATION_COLOR_SPACE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Defines the different supported color spaces.
  */
@@ -43,5 +47,9 @@ typedef struct zathura_annotation_color_s {
    */
   char values[4];
 } zathura_annotation_color_t;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_COLOR_SPACE_H

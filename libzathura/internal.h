@@ -3,6 +3,10 @@
 #ifndef INTERNAL_H
 #define INTERNAL_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "document.h"
 #include "plugin-api.h"
 #include "error.h"
@@ -73,5 +77,9 @@ zathura_error_t zathura_page_get_data(zathura_page_t* page, void** data);
 
 zathura_error_t zathura_realpath(const char* path, char** realpath);
 zathura_error_t zathura_guess_type(const char* path, char** type);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* INTERNAL_H */

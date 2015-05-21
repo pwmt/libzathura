@@ -3,6 +3,10 @@
 #ifndef METADATA_H
 #define METADATA_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "error.h"
 
 typedef enum zathura_document_meta_type_e {
@@ -23,5 +27,9 @@ zathura_error_t zathura_document_meta_entry_get_type(zathura_document_meta_entry
     entry, zathura_document_meta_type_t* type);
 zathura_error_t zathura_document_meta_entry_get_value(zathura_document_meta_entry_t*
     entry, const char** value);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* METADATA_H */

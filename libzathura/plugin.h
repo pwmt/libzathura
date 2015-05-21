@@ -3,6 +3,10 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "document.h"
 #include "error.h"
 
@@ -77,5 +81,9 @@ zathura_error_t zathura_plugin_get_functions(zathura_plugin_t* plugin, zathura_p
  */
 zathura_error_t zathura_plugin_open_document(zathura_plugin_t* plugin,
     zathura_document_t** document, const char* path, const char* password);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PLUGIN_H */

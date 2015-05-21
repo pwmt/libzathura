@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ANNOTATION_LINK_H
 #define INTERNAL_ANNOTATION_LINK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "annotation-link.h"
 
 /**
@@ -51,5 +55,9 @@ zathura_error_t zathura_annotation_link_init(zathura_annotation_t* annotation);
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_link_clear(zathura_annotation_t* annotation);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // INTERNAL_ANNOTATION_LINK_H

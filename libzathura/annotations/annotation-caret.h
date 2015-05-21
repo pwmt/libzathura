@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_CARET_H
 #define ANNOTATION_CARET_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "types.h"
 
@@ -76,5 +80,9 @@ zathura_error_t zathura_annotation_caret_set_padding(zathura_annotation_t*
  */
 zathura_error_t zathura_annotation_caret_get_padding(zathura_annotation_t*
     annotation, zathura_annotation_padding_t* padding);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_CARET_H

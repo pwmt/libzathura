@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_SQUARE_H
 #define ANNOTATION_SQUARE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Sets the rectangle of the square annotation
  *
@@ -86,5 +90,9 @@ zathura_error_t zathura_annotation_square_set_border(zathura_annotation_t*
  */
 zathura_error_t zathura_annotation_square_get_border(zathura_annotation_t*
     annotation, zathura_annotation_border_t* border);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_SQUARE_H

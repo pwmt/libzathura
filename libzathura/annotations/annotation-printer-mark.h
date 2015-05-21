@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_PRINTER_MARK_H
 #define ANNOTATION_PRINTER_MARK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "../error.h"
 
@@ -99,5 +103,9 @@ zathura_error_t zathura_annotation_printer_mark_set_colorants(zathura_annotation
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_printer_mark_get_colorants(zathura_annotation_t* annotation, zathura_list_t** colorants);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_PRINTER_MARK_H

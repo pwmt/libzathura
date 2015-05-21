@@ -3,4 +3,12 @@
 #ifndef ACTION_RENDITION_H
 #define ACTION_RENDITION_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* ACTION_RENDITION_H */

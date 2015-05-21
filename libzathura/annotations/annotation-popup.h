@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_POPUP_H
 #define ANNOTATION_POPUP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "../error.h"
 
@@ -59,5 +63,9 @@ zathura_error_t zathura_annotation_popup_set_open(zathura_annotation_t* annotati
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_popup_is_open(zathura_annotation_t* annotation, bool* is_open);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //ANNOTATION_POPUP_H

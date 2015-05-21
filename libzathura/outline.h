@@ -3,6 +3,10 @@
 #ifndef OUTLINE_H
 #define OUTLINE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "error.h"
 #include "action.h"
 #include "node.h"
@@ -13,5 +17,9 @@ zathura_error_t zathura_outline_element_get_title(zathura_outline_element_t* ele
 zathura_error_t zathura_outline_element_get_action(zathura_outline_element_t* element, zathura_action_t** action);
 
 zathura_error_t zathura_outline_free(zathura_node_t* outline);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* OUTLINE_H */

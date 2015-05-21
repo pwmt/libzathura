@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ANNOTATION_POLYGON_H
 #define INTERNAL_ANNOTATION_POLYGON_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Polygon annotations display closed polygons on the page. Such polygons may
  * have any number of vertices connected by straight lines.
@@ -60,5 +64,9 @@ zathura_error_t zathura_annotation_polygon_init(zathura_annotation_t* annotation
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_polygon_clear(zathura_annotation_t* annotation);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // INTERNAL_ANNOTATION_POLYGON_H

@@ -3,6 +3,10 @@
 #ifndef FORM_FIELD_TEXT_H
 #define FORM_FIELD_TEXT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 
 #include "../form-fields.h"
@@ -131,5 +135,9 @@ zathura_error_t zathura_form_field_text_do_scroll(zathura_form_field_t*
  */
 zathura_error_t zathura_form_field_text_do_spell_check(zathura_form_field_t*
     form_field, bool* do_spell_check);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* FORM_FIELD_TEXT_H */

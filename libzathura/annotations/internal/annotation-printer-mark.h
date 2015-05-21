@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ANNOTATION_PRINTER_MARK_H
 #define INTERNAL_ANNOTATION_PRINTER_MARK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** 
  * Printer’s marks are graphic symbols or text added to a page to assist
  * production personnel in identifying components of a multiple-plate job and
@@ -66,5 +70,9 @@ zathura_error_t zathura_annotation_printer_mark_init(zathura_annotation_t* annot
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_printer_mark_clear(zathura_annotation_t* annotation);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // INTERNAL_ANNOTATION_PRINTER_MARK_H

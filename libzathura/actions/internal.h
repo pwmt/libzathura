@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ACTIONS_H
 #define INTERNAL_ACTIONS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../action.h"
 
 #include "internal/action-goto-3d-view.h"
@@ -41,5 +45,9 @@ struct zathura_action_s {
     struct zathura_action_transition_s* transition_dest;
   } data;
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* INTERNAL_ACTIONS_H */

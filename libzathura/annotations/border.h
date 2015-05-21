@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_BORDER_H
 #define ANNOTATION_BORDER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../list.h"
 
 /**
@@ -102,5 +106,9 @@ typedef struct zathura_annotation_border_s {
   zathura_annotation_border_effect_t effect;
   float intensity;
 } zathura_annotation_border_t;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_BORDER_H

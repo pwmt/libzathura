@@ -3,6 +3,10 @@
 #ifndef PLUGIN_API_IMAGE_H
 #define PLUGIN_API_IMAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../error.h"
 #include "../page.h"
 
@@ -14,5 +18,9 @@ zathura_error_t zathura_image_set_user_data(zathura_image_t* image, void* data);
 zathura_error_t zathura_image_get_user_data(zathura_image_t* image, void** data);
 zathura_error_t zathura_image_set_get_cairo_surface_function(zathura_image_t* image, zathura_image_get_cairo_surface_t function);
 zathura_error_t zathura_image_set_get_buffer_function(zathura_image_t* image, zathura_image_get_buffer_t function);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PLUGIN_API_IMAGE_H */

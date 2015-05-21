@@ -3,6 +3,10 @@
 #ifndef SOUND_H
 #define SOUND_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "attachment.h"
 
 /**
@@ -28,5 +32,9 @@ typedef struct zathura_sound_s {
    */
   zathura_attachment_t* file;
 } zathura_sound_t;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SOUND_H */

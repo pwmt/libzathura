@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ANNOTATION_CARET_H
 #define INTERNAL_ANNOTATION_CARET_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * A caret annotation is a visual symbol that indicates the presence of text
  * edits.
@@ -51,5 +55,9 @@ zathura_error_t zathura_annotation_caret_init(zathura_annotation_t* annotation);
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_caret_clear(zathura_annotation_t* annotation);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // INTERNAL_ANNOTATION_CARET_H

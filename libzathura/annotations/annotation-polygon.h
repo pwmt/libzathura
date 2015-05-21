@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_POLYGON_H
 #define ANNOTATION_POLYGON_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "types.h"
 #include "color.h"
@@ -148,5 +152,9 @@ zathura_error_t zathura_annotation_polygon_set_measure(zathura_annotation_t*
  */
 zathura_error_t zathura_annotation_polygon_get_measure(zathura_annotation_t*
     annotation, zathura_annotation_measure_t** measure);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_POLYGON_H

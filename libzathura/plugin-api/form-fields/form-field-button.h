@@ -3,6 +3,10 @@
 #ifndef PLUGIN_API_FORM_FIELD_BUTTON_H
 #define PLUGIN_API_FORM_FIELD_BUTTON_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Sets the button type of the button form field.
  *
@@ -15,5 +19,9 @@
  */
 zathura_error_t zathura_form_field_button_set_type( zathura_form_field_t*
     form_field, zathura_form_field_button_type_t type);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PLUGIN_API_FORM_FIELD_BUTTON_H */

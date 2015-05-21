@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ANNOTATION_POLY_LINE_H
 #define INTERNAL_ANNOTATION_POLY_LINE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../color.h"
 #include "../../list.h"
 
@@ -72,5 +76,9 @@ zathura_error_t zathura_annotation_poly_line_init(zathura_annotation_t* annotati
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_poly_line_clear(zathura_annotation_t* annotation);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // INTERNAL_ANNOTATION_POLY_LINE_H

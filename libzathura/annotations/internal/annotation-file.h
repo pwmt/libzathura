@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ANNOTATION_FILE_H
 #define INTERNAL_ANNOTATION_FILE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * A file attachment annotation contains a reference to a file, which
  * typically is embedded in the document For example, a table of data might
@@ -57,5 +61,9 @@ zathura_error_t zathura_annotation_file_init(zathura_annotation_t* annotation);
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_file_clear(zathura_annotation_t* annotation);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // INTERNAL_ANNOTATION_FILE_H

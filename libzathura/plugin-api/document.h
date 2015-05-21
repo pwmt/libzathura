@@ -3,6 +3,10 @@
 #ifndef PLUGIN_API_DOCUMENT_H
 #define PLUGIN_API_DOCUMENT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../error.h"
 #include "../document.h"
 
@@ -40,5 +44,9 @@ zathura_document_get_data(zathura_document_t* document,
 zathura_error_t
 zathura_document_get_password(zathura_document_t* document,
     char** password);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PLUGIN_API_DOCUMENT_H */

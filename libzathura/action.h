@@ -3,6 +3,10 @@
 #ifndef ACTION_H
 #define ACTION_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "error.h"
 
 /**
@@ -85,5 +89,9 @@ typedef struct zathura_destination_s
 #include "actions/action-transition.h"
 #include "actions/action-uri.h"
 #include "actions/internal.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ACTION_H */

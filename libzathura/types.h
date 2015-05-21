@@ -3,6 +3,10 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "list.h"
 #include "node.h"
 
@@ -46,5 +50,9 @@ typedef struct zathura_form_field_mapping_s {
   zathura_rectangle_t position;
   zathura_form_field_t* form_field;
 } zathura_form_field_mapping_t;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* TYPES_H */

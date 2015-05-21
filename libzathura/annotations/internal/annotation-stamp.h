@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ANNOTATION_STAMP_H
 #define INTERNAL_ANNOTATION_STAMP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * A rubber stamp annotation displays text or graphics intended to look as
  * if they were stamped on the page with a rubber stamp. When opened, it
@@ -56,5 +60,9 @@ zathura_error_t zathura_annotation_stamp_init(zathura_annotation_t* annotation);
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_stamp_clear(zathura_annotation_t* annotation);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // INTERNAL_ANNOTATION_STAMP_H

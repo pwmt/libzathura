@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_MOVIE_H
 #define ANNOTATION_MOVIE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "types.h"
 
@@ -126,5 +130,9 @@ zathura_annotation_movie_set_play_if_activated(zathura_annotation_t* annotation,
  */
 zathura_error_t zathura_annotation_movie_play_if_activated(zathura_annotation_t*
     annotation, bool* play_if_activated);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_MOVIE_H

@@ -3,6 +3,10 @@
 #ifndef INTERNAL_ACTION_GOTO_H
 #define INTERNAL_ACTION_GOTO_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../../action.h"
 
 /**
@@ -37,5 +41,9 @@ zathura_error_t zathura_action_goto_init(zathura_action_t* action);
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_action_goto_clear(zathura_action_t* action);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* INTERNAL_ACTION_GOTO_H */

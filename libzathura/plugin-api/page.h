@@ -3,6 +3,10 @@
 #ifndef PLUGIN_API_PAGE_H
 #define PLUGIN_API_PAGE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../error.h"
 #include "../page.h"
 
@@ -92,4 +96,8 @@ zathura_error_t zathura_page_set_transition(zathura_page_t* page, zathura_page_t
 
 zathura_error_t zathura_page_set_duration(zathura_page_t* page, unsigned int duration);
 zathura_error_t zathura_page_set_crop_box(zathura_page_t* page, zathura_rectangle_t crop_box);
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* PLUGIN_API_PAGE_H */

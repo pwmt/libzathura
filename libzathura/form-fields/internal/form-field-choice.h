@@ -3,6 +3,10 @@
 #ifndef INTERNAL_FORM_FIELD_CHOICE_H
 #define INTERNAL_FORM_FIELD_CHOICE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../../list.h"
 
 /**
@@ -59,5 +63,9 @@ struct zathura_form_field_choice_s {
    */
   zathura_list_t* items;
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* INTERNAL_FORM_FIELD_CHOICE_H */

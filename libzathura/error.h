@@ -1,7 +1,11 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef ERROR_H
-#define ERROR_H
+#ifndef LIBZATHURA_ERROR_H
+#define LIBZATHURA_ERROR_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef enum zathura_error_e {
   ZATHURA_ERROR_OK = 0, /**< No error occurred */
@@ -36,4 +40,8 @@ typedef enum zathura_error_e {
                                            requires */
 } zathura_error_t;
 
-#endif /* ERROR_H */
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* LIBZATHURA_ERROR_H */

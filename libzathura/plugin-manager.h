@@ -3,6 +3,10 @@
 #ifndef PLUGIN_MANAGER_H
 #define PLUGIN_MANAGER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "error.h"
 #include "list.h"
 #include "document.h"
@@ -83,5 +87,9 @@ zathura_error_t zathura_plugin_manager_get_plugins(zathura_plugin_manager_t* plu
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_plugin_manager_get_plugin(zathura_plugin_manager_t* plugin_manager, zathura_plugin_t** plugin, const char* mime_type);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* PLUGIN_MANAGER_H */

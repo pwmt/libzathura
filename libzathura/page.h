@@ -1,7 +1,11 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef PAGE_H
-#define PAGE_H
+#ifndef LIBZATHURA_PAGE_H
+#define LIBZATHURA_PAGE_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct zathura_page_s zathura_page_t;
 
@@ -244,4 +248,8 @@ zathura_error_t zathura_page_render_cairo(zathura_page_t* page, cairo_t* cairo,
     double scale, int rotation, int flags);
 #endif
 
-#endif /* PAGE_H */
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* LIBZATHURA_PAGE_H */

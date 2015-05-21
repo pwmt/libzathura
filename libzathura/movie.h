@@ -3,6 +3,10 @@
 #ifndef MOVIE_H
 #define MOVIE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "image.h"
 #include "attachment.h"
 #include "types.h"
@@ -156,5 +160,9 @@ typedef struct zathura_movie_activation_s {
     } position;
   } floating_window;
 } zathura_movie_activation_t;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* MOVIE_H */

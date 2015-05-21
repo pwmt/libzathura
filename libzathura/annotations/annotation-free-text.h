@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_FREE_TEXT_H
 #define ANNOTATION_FREE_TEXT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../types.h"
 #include "types.h"
 
@@ -259,5 +263,9 @@ zathura_error_t zathura_annotation_free_text_set_line_ending(zathura_annotation_
  */
 zathura_error_t zathura_annotation_free_text_get_line_ending(zathura_annotation_t*
     annotation, zathura_annotation_line_ending_t line_ending[2]);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_FREE_TEXT_H

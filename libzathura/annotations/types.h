@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_TYPES_H
 #define ANNOTATION_TYPES_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct zathura_annotation_padding_s {
   unsigned int left;
   unsigned int top;
@@ -212,5 +216,9 @@ typedef enum zathura_annotation_highlighting_mode_e {
 typedef struct zathura_annotation_measure_s {
   char* scale_ratio;
 } zathura_annotation_measure_t;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_TYPES_H

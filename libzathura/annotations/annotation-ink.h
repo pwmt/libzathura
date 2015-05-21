@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_INK_H
 #define ANNOTATION_INK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../annotations.h"
 #include "../list.h"
 #include "border.h"
@@ -68,5 +72,9 @@ zathura_error_t zathura_annotation_ink_set_border(zathura_annotation_t*
  */
 zathura_error_t zathura_annotation_ink_get_border(zathura_annotation_t*
     annotation, zathura_annotation_border_t* border);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_INK_H

@@ -3,6 +3,10 @@
 #ifndef LIBZATHURA_H
 #define LIBZATHURA_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "action.h"
 #include "annotations.h"
 #include "attachment.h"
@@ -23,5 +27,9 @@
 #include "transition.h"
 #include "types.h"
 #include "version.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LIBZATHURA_H */

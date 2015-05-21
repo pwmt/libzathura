@@ -3,6 +3,10 @@
 #ifndef ANNOTATION_FLAGS_H
 #define ANNOTATION_FLAGS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * The value of the annotation flags entry is an unsigned 32-bit integer
  * containing flags specifying various characteristics of the annotation. Bit
@@ -94,5 +98,9 @@ typedef enum zathura_annotation_flag_s {
    */
   ZATHURA_ANNOTATION_FLAG_LOCKED_CONTENTS = 1 << 9,
 } zathura_annotation_flag_t;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANNOTATION_FLAGS_H

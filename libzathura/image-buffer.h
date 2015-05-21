@@ -3,6 +3,10 @@
 #ifndef IMAGE_BUFFER_H
 #define IMAGE_BUFFER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "error.h"
 
 #define ZATHURA_IMAGE_BUFFER_ROWSTRIDE 3
@@ -81,5 +85,9 @@ zathura_error_t zathura_image_buffer_get_width(zathura_image_buffer_t* buffer, u
  *  passed
  */
 zathura_error_t zathura_image_buffer_get_rowstride(zathura_image_buffer_t* buffer, unsigned int* rowstride);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* IMAGE_BUFFER_H */
