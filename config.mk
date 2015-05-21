@@ -57,7 +57,7 @@ INCS = ${GLIB_INC} ${GMODULE_INC}
 LIBS = ${GLIB_LIB} ${GMODULE_LIB} -lm
 
 # flags
-CFLAGS += -std=c99 -pedantic -Wall -Wextra -fPIC $(INCS)
+CFLAGS += -std=c11 -pedantic -Wall -Wextra -fPIC $(INCS)
 
 # linker flags
 LDFLAGS += -fPIC

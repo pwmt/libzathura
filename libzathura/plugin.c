@@ -20,9 +20,9 @@ zathura_plugin_get_name(zathura_plugin_t* plugin, const char** name)
 
   if (*name != NULL) {
     return ZATHURA_ERROR_OK;
-  } else {
-    return ZATHURA_ERROR_UNKNOWN;
   }
+
+  return ZATHURA_ERROR_UNKNOWN;
 }
 
 zathura_error_t
@@ -36,9 +36,9 @@ zathura_plugin_get_path(zathura_plugin_t* plugin, const char** path)
 
   if (*path != NULL) {
     return ZATHURA_ERROR_OK;
-  } else {
-    return ZATHURA_ERROR_UNKNOWN;
   }
+
+  return ZATHURA_ERROR_UNKNOWN;
 }
 
 zathura_error_t

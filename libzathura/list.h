@@ -7,7 +7,7 @@
 
 typedef GList zathura_list_t;
 
-#define ZATHURA_LIST_FOREACH(item, list) for(zathura_list_t *__glist = list; __glist && (item = __glist->data, true); __glist = __glist->next)
+#define ZATHURA_LIST_FOREACH(item, list) for(zathura_list_t *__glist = (list); __glist && ((item) = __glist->data, true); __glist = __glist->next)
 
 #define zathura_list_alloc g_list_alloc
 #define zathura_list_free(list) g_list_free((list))

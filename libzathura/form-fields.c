@@ -246,6 +246,4 @@ zathura_form_field_save(zathura_form_field_t* form_field)
   CHECK_IF_IMPLEMENTED(form_field->page, form_field_save)
 
   return form_field->page->document->plugin->functions.form_field_save(form_field);
-
-  return ZATHURA_ERROR_OK;
 }

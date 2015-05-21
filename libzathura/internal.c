@@ -113,11 +113,13 @@ guess_type_file(const char* path)
   int ret = 0;
   g_spawn_command_line_sync(command->str, &out, NULL, &ret, &error);
   g_string_free(command, TRUE);
+
   if (error != NULL) {
     g_error_free(error);
     g_free(out);
     return NULL;
   }
+
   if (WEXITSTATUS(ret) != 0) {
     g_free(out);
     return NULL;
@@ -136,11 +138,8 @@ guess_type_glib(const char* path)
 
   gboolean uncertain = FALSE;
   char* content_type = g_content_type_guess(path, NULL, 0, &uncertain);
-  if (content_type == NULL) {
-  } else {
-    if (uncertain == FALSE) {
-      return content_type;
-    }
+  if (content_type != NULL && uncertain == FALSE) {
+    return content_type;
   }
 
   FILE* f = fopen(path, "rb");

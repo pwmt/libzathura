@@ -128,10 +128,8 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
 
   bool is_markup_annotation = false;
   if (error == ZATHURA_ERROR_OK &&
-      zathura_annotation_is_markup_annotation(*annotation, &is_markup_annotation) == ZATHURA_ERROR_OK) {
-      if (is_markup_annotation == true) {
-        zathura_annotation_markup_init(*annotation);
-      }
+      zathura_annotation_is_markup_annotation(*annotation, &is_markup_annotation) == ZATHURA_ERROR_OK && is_markup_annotation == true) {
+    zathura_annotation_markup_init(*annotation);
   }
 
   if (error != ZATHURA_ERROR_OK) {
