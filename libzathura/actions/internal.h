@@ -26,8 +26,8 @@ struct zathura_action_s {
   union {
     struct zathura_action_goto_s* goto_dest;
     struct zathura_action_goto_remote_s* goto_remote_dest;
-    struct zathura_action_goto_3d_view_dest_s* goto_3d_view_dest;
-    struct zathura_action_uri_dest_s* uri_dest;
+    struct zathura_action_goto_3d_view_s* goto_3d_view_dest;
+    struct zathura_action_uri_s* uri_dest;
     struct zathura_action_rendition_s* rendition_dest;
     struct zathura_action_movie_s* movie_dest;
     struct zathura_action_sound_s* sound_dest;
