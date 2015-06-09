@@ -35,31 +35,31 @@ START_TEST(test_document_free) {
   fail_unless(zathura_document_free(NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
-START_TEST(test_document_set_data) {
+START_TEST(test_document_set_user_data) {
   void* data = (void*) 0xCAFEBABE;
 
   /* basic invalid arguments */
-  fail_unless(zathura_document_set_data(NULL,     NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_document_set_data(document, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_document_set_data(NULL,     data) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_set_user_data(NULL,     NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_set_user_data(document, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_set_user_data(NULL,     data) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_document_set_data(document, data) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_document_set_user_data(document, data) == ZATHURA_ERROR_OK);
 } END_TEST
 
-START_TEST(test_document_get_data) {
+START_TEST(test_document_get_user_data) {
   void* data;
 
   /* basic invalid arguments */
-  fail_unless(zathura_document_get_data(NULL,     NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_document_get_data(document, NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_document_get_data(NULL,     &data) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_user_data(NULL,     NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_user_data(document, NULL)  == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_document_get_user_data(NULL,     &data) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_document_get_data(document, &data) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_document_get_user_data(document, &data) == ZATHURA_ERROR_OK);
 
-  fail_unless(zathura_document_set_data(document, (void*) 0xCAFEBABE) == ZATHURA_ERROR_OK);
-  fail_unless(zathura_document_get_data(document, &data) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_document_set_user_data(document, (void*) 0xCAFEBABE) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_document_get_user_data(document, &data) == ZATHURA_ERROR_OK);
   fail_unless(data == (void*) 0xCAFEBABE);
 } END_TEST
 
@@ -253,8 +253,8 @@ suite_document(void)
   tcase = tcase_create("basic");
   tcase_add_checked_fixture(tcase, setup_document, teardown_document);
   tcase_add_test(tcase, test_document_free);
-  tcase_add_test(tcase, test_document_set_data);
-  tcase_add_test(tcase, test_document_get_data);
+  tcase_add_test(tcase, test_document_set_user_data);
+  tcase_add_test(tcase, test_document_get_user_data);
   tcase_add_test(tcase, test_document_get_path);
   tcase_add_test(tcase, test_document_get_password);
   tcase_add_test(tcase, test_document_set_number_of_pages);

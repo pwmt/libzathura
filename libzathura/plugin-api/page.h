@@ -11,28 +11,28 @@ extern "C" {
 #include "../page.h"
 
 /**
- * Sets the custom data of the page object
+ * Sets the custom user data of the page object
  *
  * @param[in] page The page object
- * @param[in] data The custom data
+ * @param[in] user data The custom user data
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_page_set_data(zathura_page_t* page, void* data);
+zathura_error_t zathura_page_set_user_data(zathura_page_t* page, void* user_data);
 
 /**
- * Returns the custom data of the page object
+ * Returns the custom user data of the page object
  *
  * @param[in] page The page object
- * @param[out] data The custom data
+ * @param[out] user_data The custom user data
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_page_get_data(zathura_page_t* page, void** data);
+zathura_error_t zathura_page_get_user_data(zathura_page_t* page, void** user_data);
 
 /**
  * Sets the index of the page

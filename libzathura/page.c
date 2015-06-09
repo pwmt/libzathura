@@ -48,27 +48,27 @@ zathura_page_free(zathura_page_t* page)
 }
 
 zathura_error_t
-zathura_page_set_data(zathura_page_t* page,
-    void* data)
+zathura_page_set_user_data(zathura_page_t* page,
+    void* user_data)
 {
-  if (page == NULL || data == NULL) {
+  if (page == NULL || user_data == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  page->data = data;
+  page->user_data = user_data;
 
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_page_get_data(zathura_page_t* page,
-    void** data)
+zathura_page_get_user_data(zathura_page_t* page,
+    void** user_data)
 {
-  if (page == NULL || data == NULL) {
+  if (page == NULL || user_data == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  *data = page->data;
+  *user_data = page->user_data;
 
   return ZATHURA_ERROR_OK;
 }

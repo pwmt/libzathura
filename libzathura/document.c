@@ -58,27 +58,27 @@ zathura_document_free(zathura_document_t* document)
 }
 
 zathura_error_t
-zathura_document_set_data(zathura_document_t* document,
-    void* data)
+zathura_document_set_user_data(zathura_document_t* document,
+    void* user_data)
 {
-  if (document == NULL || data == NULL) {
+  if (document == NULL || user_data == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  document->data = data;
+  document->user_data = user_data;
 
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_document_get_data(zathura_document_t* document,
-    void** data)
+zathura_document_get_user_data(zathura_document_t* document,
+    void** user_data)
 {
-  if (document == NULL || data == NULL) {
+  if (document == NULL || user_data == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  *data = document->data;
+  *user_data = document->user_data;
 
   return ZATHURA_ERROR_OK;
 }

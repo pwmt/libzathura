@@ -34,12 +34,12 @@ zathura_document_set_permissions(zathura_document_t* document,
     zathura_document_permission_t permissions);
 
 zathura_error_t
-zathura_document_set_data(zathura_document_t* document,
-    void* data);
+zathura_document_set_user_data(zathura_document_t* document,
+    void* user_data);
 
 zathura_error_t
-zathura_document_get_data(zathura_document_t* document,
-    void** data);
+zathura_document_get_user_data(zathura_document_t* document,
+    void** user_data);
 
 zathura_error_t
 zathura_document_get_password(zathura_document_t* document,
