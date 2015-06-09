@@ -9,18 +9,21 @@ extern "C" {
 
 #include "../attachment.h"
 #include "../error.h"
+#include "../types.h"
 
 /**
  * Sets the custom data of an attachment object
  *
  * @param[in] attachment The attachment object
- * @param[in] data The custom data
+ * @param[in] user_data The custom data
+ * @param[in] free_function The custom data free function
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_attachment_set_user_data(zathura_attachment_t* attachment, void* data);
+zathura_error_t zathura_attachment_set_user_data(zathura_attachment_t*
+    attachment, void* user_data, zathura_free_function_t free_function);
 
 /**
  * Returns the custom data of an attachment object

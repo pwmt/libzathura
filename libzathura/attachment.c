@@ -53,6 +53,11 @@ struct zathura_attachment_s {
   void* user_data;
 
   /**
+   * Free function of the plugin custom data
+   */
+  zathura_free_function_t user_data_free_function;
+
+  /**
    * Custom save function
    */
   zathura_attachment_save_function_t save_function;
@@ -312,13 +317,18 @@ zathura_attachment_get_checksum(zathura_attachment_t* attachment, const char**
 }
 
 zathura_error_t
-zathura_attachment_set_user_data(zathura_attachment_t* attachment, void* user_data)
+zathura_attachment_set_user_data(zathura_attachment_t* attachment, void* user_data, zathura_free_function_t free_function)
 {
   if (attachment == NULL || user_data == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  if (attachment->user_data != NULL && attachment->user_data_free_function) {
+    attachment->user_data_free_function(attachment->user_data);
+  }
+
   attachment->user_data = user_data;
+  attachment->user_data_free_function = free_function;
 
   return ZATHURA_ERROR_OK;
 }

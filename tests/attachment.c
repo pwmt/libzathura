@@ -254,12 +254,29 @@ START_TEST(test_attachment_set_user_data) {
   void* user_data;
 
   /* invalid arguments */
-  fail_unless(zathura_attachment_set_user_data(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_attachment_set_user_data(attachment, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_attachment_set_user_data(NULL, &user_data)      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_attachment_set_user_data(NULL, NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_attachment_set_user_data(attachment, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_attachment_set_user_data(NULL, &user_data, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_attachment_set_user_data(attachment, &user_data) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_attachment_set_user_data(attachment, &user_data, NULL) == ZATHURA_ERROR_OK);
+} END_TEST
+
+static void attachment_free_function(void* data) {
+  fail_unless(data == (void*) 0xCAFEBABE);
+}
+
+START_TEST(test_attachment_set_user_data_free_function) {
+  void* user_data = (void*) 0xCAFEBABE;
+  zathura_attachment_t* attachment;
+
+  fail_unless(zathura_attachment_new(&attachment) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_attachment_set_user_data(attachment, user_data, attachment_free_function) == ZATHURA_ERROR_OK);
+
+  /* valid arguments */
+  fail_unless(zathura_attachment_set_user_data(attachment, user_data, NULL) == ZATHURA_ERROR_OK);
+
+  fail_unless(zathura_attachment_free(attachment) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_attachment_get_user_data) {
@@ -268,10 +285,10 @@ START_TEST(test_attachment_get_user_data) {
   /* invalid arguments */
   fail_unless(zathura_attachment_get_user_data(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_attachment_get_user_data(attachment, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_attachment_get_user_data(NULL, &user_data)      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_attachment_get_user_data(NULL, &user_data) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_attachment_set_user_data(attachment, user_data)  == ZATHURA_ERROR_OK);
+  fail_unless(zathura_attachment_set_user_data(attachment, user_data, NULL) == ZATHURA_ERROR_OK);
 
   void* user_data2;
   fail_unless(zathura_attachment_get_user_data(attachment, &user_data2) == ZATHURA_ERROR_OK);
@@ -292,6 +309,7 @@ suite_attachment(void)
   tcase = tcase_create("properties");
   tcase_add_checked_fixture(tcase, setup, teardown);
   tcase_add_test(tcase, test_attachment_set_user_data);
+  tcase_add_test(tcase, test_attachment_set_user_data_free_function);
   tcase_add_test(tcase, test_attachment_get_user_data);
   tcase_add_test(tcase, test_attachment_set_name);
   tcase_add_test(tcase, test_attachment_get_name);
