@@ -11,7 +11,8 @@ struct zathura_image_s {
   zathura_rectangle_t position; /**< Position of the image */
   zathura_image_get_buffer_t get_buffer;
   zathura_image_get_cairo_surface_t get_cairo_surface;
-  void* data; /**< Image data */
+  void* user_data; /**< Image data */
+  zathura_free_function_t user_data_free_function; /**< User data free function */
 };
 
 zathura_error_t
@@ -41,31 +42,41 @@ zathura_image_free(zathura_image_t* image)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  if (image->user_data != NULL && image->user_data_free_function) {
+    image->user_data_free_function(image->user_data);
+  }
+
   free(image);
 
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_image_set_user_data(zathura_image_t* image, void* data)
+zathura_image_set_user_data(zathura_image_t* image, void* user_data,
+    zathura_free_function_t free_function)
 {
-  if (image == NULL || data == NULL) {
+  if (image == NULL || user_data == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  image->data = data;
+  if (image->user_data != NULL && image->user_data_free_function) {
+    image->user_data_free_function(image->user_data);
+  }
+
+  image->user_data = user_data;
+  image->user_data_free_function = free_function;
 
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_image_get_user_data(zathura_image_t* image, void** data)
+zathura_image_get_user_data(zathura_image_t* image, void** user_data)
 {
-  if (image == NULL || data == NULL) {
+  if (image == NULL || user_data == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  *data = image->data;
+  *user_data = image->user_data;
 
   return ZATHURA_ERROR_OK;
 }

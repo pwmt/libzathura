@@ -85,8 +85,8 @@ zathura_attachment_free(zathura_attachment_t* attachment)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  if (attachment->data != NULL) {
-    free(attachment->data);
+  if (attachment->user_data != NULL && attachment->user_data_free_function) {
+    attachment->user_data_free_function(attachment->user_data);
   }
 
   free(attachment);
