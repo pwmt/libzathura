@@ -76,6 +76,10 @@ zathura_form_field_free(zathura_form_field_t* form_field)
     g_free(form_field->data.text.text);
   }
 
+  if (form_field->user_data != NULL && form_field->user_data_free_function) {
+    form_field->user_data_free_function(form_field->user_data);
+  }
+
   free(form_field);
 
   return ZATHURA_ERROR_OK;
@@ -206,13 +210,19 @@ zathura_form_field_get_flags(zathura_form_field_t* form_field,
 }
 
 zathura_error_t
-zathura_form_field_set_user_data(zathura_form_field_t* form_field, void* user_data)
+zathura_form_field_set_user_data(zathura_form_field_t*
+    form_field, void* data, zathura_free_function_t free_function)
 {
-  if (form_field == NULL || user_data == NULL) {
+  if (form_field == NULL || data == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  form_field->user_data = user_data;
+  if (form_field->user_data != NULL && form_field->user_data_free_function) {
+    form_field->user_data_free_function(form_field->user_data);
+  }
+
+  form_field->user_data = data;
+  form_field->user_data_free_function = free_function;
 
   return ZATHURA_ERROR_OK;
 }

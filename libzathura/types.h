@@ -51,6 +51,8 @@ typedef struct zathura_form_field_mapping_s {
   zathura_form_field_t* form_field;
 } zathura_form_field_mapping_t;
 
+typedef void (*zathura_free_function_t)(void* data);
+
 #ifdef __cplusplus
 }
 #endif

@@ -92,12 +92,14 @@ zathura_error_t zathura_form_field_set_flags(zathura_form_field_t* form_field,
  *
  * @param[in] form_field The form field object
  * @param[in] data The custom data
+ * @param[in] free_function Free function for the custom data
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_form_field_set_user_data(zathura_form_field_t* form_field, void* data);
+zathura_error_t zathura_form_field_set_user_data(zathura_form_field_t*
+    form_field, void* data, zathura_free_function_t free_function);
 
 /**
  * Returns the custom data of an form field object

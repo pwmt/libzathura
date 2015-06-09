@@ -215,12 +215,29 @@ START_TEST(test_form_field_set_user_data) {
   void* user_data;
 
   /* invalid arguments */
-  fail_unless(zathura_form_field_set_user_data(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_form_field_set_user_data(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_form_field_set_user_data(NULL, &user_data)      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_set_user_data(NULL, NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_set_user_data(form_field, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_set_user_data(NULL, &user_data, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_form_field_set_user_data(form_field, &user_data) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_set_user_data(form_field, &user_data, NULL) == ZATHURA_ERROR_OK);
+} END_TEST
+
+static void form_field_free_function(void* data) {
+  fail_unless(data == (void*) 0xCAFEBABE);
+}
+
+START_TEST(test_form_field_set_user_data_free_function) {
+  void* user_data = (void*) 0xCAFEBABE;
+  zathura_form_field_t* form_field;
+
+  fail_unless(zathura_form_field_new(page, &form_field, ZATHURA_FORM_FIELD_UNKNOWN) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_set_user_data(form_field, user_data, form_field_free_function) == ZATHURA_ERROR_OK);
+
+  /* valid arguments */
+  fail_unless(zathura_form_field_set_user_data(form_field, user_data, NULL) == ZATHURA_ERROR_OK);
+
+  fail_unless(zathura_form_field_free(form_field) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_form_field_get_user_data) {
@@ -229,10 +246,10 @@ START_TEST(test_form_field_get_user_data) {
   /* invalid arguments */
   fail_unless(zathura_form_field_get_user_data(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_form_field_get_user_data(form_field, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_form_field_get_user_data(NULL, &user_data)      == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_form_field_get_user_data(NULL, &user_data) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_form_field_set_user_data(form_field, user_data)  == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_set_user_data(form_field, user_data, NULL) == ZATHURA_ERROR_OK);
 
   void* user_data2;
   fail_unless(zathura_form_field_get_user_data(form_field, &user_data2) == ZATHURA_ERROR_OK);
@@ -278,6 +295,7 @@ suite_form_fields(void)
   tcase_add_test(tcase, test_form_field_set_flags);
   tcase_add_test(tcase, test_form_field_get_flags);
   tcase_add_test(tcase, test_form_field_set_user_data);
+  tcase_add_test(tcase, test_form_field_set_user_data_free_function);
   tcase_add_test(tcase, test_form_field_get_user_data);
   tcase_add_test(tcase, test_form_field_save);
   suite_add_tcase(suite, tcase);

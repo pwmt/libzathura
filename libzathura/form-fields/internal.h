@@ -77,6 +77,11 @@ struct zathura_form_field_s {
    * User data
    */
   void* user_data;
+
+  /**
+   * User data free function
+   */
+  zathura_free_function_t user_data_free_function;
 };
 
 #ifdef __cplusplus
