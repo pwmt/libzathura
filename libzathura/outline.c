@@ -83,5 +83,13 @@ zathura_outline_free(zathura_node_t* outline)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  unsigned int number_of_children = zathura_node_get_number_of_children(outline);
+  for (unsigned int i = 0; i < number_of_children; i++) {
+    zathura_outline_free(zathura_node_get_nth_child(outline, i));
+  }
+
+  zathura_outline_element_t* outline_element = zathura_node_get_data(outline);
+  zathura_outline_element_free(outline_element);
+
   return ZATHURA_ERROR_OK;
 }

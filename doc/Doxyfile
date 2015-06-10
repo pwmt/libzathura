@@ -5,7 +5,7 @@ PROJECT_NAME          = libzathura
 OUTPUT_DIRECTORY      = ./_build/doxygen/
 OUTPUT_LANGUAGE       = English
 TAB_SIZE              = 2
-EXTRACT_ALL           = YES
+EXTRACT_ALL           = NO
 OPTIMIZE_OUTPUT_FOR_C = YES
 DOXYFILE_ENCODING     = UTF-8
 TYPEDEF_HIDES_STRUCT  = YES
@@ -16,8 +16,7 @@ WARNINGS             = YES
 WARN_IF_UNDOCUMENTED = YES
 
 # Input files
-INPUT         = ../
-EXCLUDE       = ./tests ./doc
+INPUT         = ../libzathura
 FILE_PATTERNS = *.h *.c
 RECURSIVE     = YES
 

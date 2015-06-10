@@ -10,7 +10,8 @@ extern "C" {
 /**
  * Creates a new form field choice item
  *
- * @param[in] item The new form field choice item
+ * @param[in] form_field The form field that is associated with the choice item
+ * @param[out] item The new form field choice item
  * @param[in] name The name of the choice item
  *
  * @return ZATHURA_ERROR_OK No error occurred

@@ -14,7 +14,7 @@ extern "C" {
  * Sets the custom user data of the page object
  *
  * @param[in] page The page object
- * @param[in] user data The custom user data
+ * @param[in] user_data The custom user data
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed

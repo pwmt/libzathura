@@ -172,7 +172,8 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
   if (plugin->register_function == NULL || plugin->name == NULL) {
     free(plugin->path);
     free(plugin);
-    return ZATHURA_ERROR_UNKNOWN;
+    error = ZATHURA_ERROR_OUT_OF_MEMORY;
+    goto error_free;
   }
 
   /* register functions */
@@ -184,6 +185,8 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
     error = ZATHURA_ERROR_OUT_OF_MEMORY;
     goto error_free;
   }
+
+  g_module_close(handle);
 
   return ZATHURA_ERROR_OK;
 
