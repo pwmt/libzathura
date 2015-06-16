@@ -96,6 +96,16 @@
 }
 
 {
+  libfiu
+  Memcheck:Leak
+  ...
+  fun:malloc
+  ...
+  fun:fiu_disable
+  ...
+}
+
+{
   g_content_type_guess
   Memcheck:Leak
   ...

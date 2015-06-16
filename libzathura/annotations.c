@@ -48,6 +48,7 @@ zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_typ
       case ZATHURA_ANNOTATION_3D:
       break;
     default:
+      free(*annotation);
       return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 

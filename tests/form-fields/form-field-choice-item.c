@@ -23,8 +23,14 @@ static void setup_form_field_choice_item(void) {
 }
 
 static void teardown_form_field_choice_item(void) {
-  fail_unless(zathura_form_field_choice_item_free(choice_item) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_form_field_free(form_field) == ZATHURA_ERROR_OK);
   choice_item = NULL;
+
+  fail_unless(zathura_document_free(document) == ZATHURA_ERROR_OK);
+  document = NULL;
+
+  fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);
+  plugin_manager = NULL;
 }
 
 START_TEST(test_form_field_choice_item_new) {
@@ -41,7 +47,6 @@ START_TEST(test_form_field_choice_item_new) {
   /* valid arguments */
   fail_unless(zathura_form_field_choice_item_new(form_field, &item, "name") == ZATHURA_ERROR_OK);
   fail_unless(item != NULL);
-  fail_unless(zathura_form_field_choice_item_free(item) == ZATHURA_ERROR_OK);
 
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_form_field_choice_item_new(form_field, &item, "name") == ZATHURA_ERROR_OUT_OF_MEMORY);
