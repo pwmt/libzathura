@@ -1,0 +1,135 @@
+{
+  check
+  Memcheck:Leak
+  ...
+  fun:srunner_create
+  fun:main
+  ...
+}
+
+{
+  check2
+  Memcheck:Leak
+  ...
+  fun:tcase_create
+  ...
+  fun:main
+  ...
+}
+
+{
+  check3
+  Memcheck:Leak
+  ...
+  fun:suite_create
+  ...
+  fun:main
+  ...
+}
+
+{
+  check4
+  Memcheck:Leak
+  ...
+  fun:wtable_get
+  fun:fiu_fail
+  ...
+  fun:main
+  ...
+}
+
+{
+  check5
+  Memcheck:Leak
+  ...
+  obj:*libcheck*
+  obj:*libcheck*
+  obj:*libcheck*
+  ...
+}
+
+{
+  check5
+  Memcheck:Leak
+  ...
+  fun:tcase_add_checked_fixture
+  ...
+  fun:main
+  ...
+}
+
+{
+  check6
+  Memcheck:Leak
+  ...
+  fun:_tcase_add_test
+  ...
+  fun:main
+  ...
+}
+
+{
+  vgpreload
+  Memcheck:Leak
+  ...
+  fun:call_init.part.0
+  ...
+}
+
+{
+  libfiu
+  Memcheck:Leak
+  ...
+  fun:wtable_create
+  fun:fiu_init
+  ...
+}
+
+{
+  libfiu
+  Memcheck:Leak
+  ...
+  fun:malloc
+  ...
+  fun:fiu_fail
+  ...
+}
+
+{
+  g_content_type_guess
+  Memcheck:Leak
+  ...
+  fun:g_content_type_guess
+  fun:guess_type_glib
+  ...
+}
+
+{
+  guess_type_magic
+  Memcheck:Leak
+  ...
+  fun:malloc
+  ...
+  fun:guess_type_magic
+  ...
+}
+
+{
+  g_module_open
+  Memcheck:Leak
+  ...
+  fun:malloc
+  ...
+  fun:g_module_open
+  ...
+}
+
+{
+  g_module_open
+  Memcheck:Leak
+  ...
+  fun:calloc
+  ...
+  fun:g_module_open
+  ...
+}

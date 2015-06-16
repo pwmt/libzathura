@@ -69,7 +69,7 @@ zathura_plugin_manager_free(zathura_plugin_manager_t* plugin_manager)
 
   /* free plugins */
   if (plugin_manager->plugins != NULL) {
-    zathura_list_free_full(plugin_manager->plugins, (GDestroyNotify) zathura_plugin_free);
+    zathura_list_free_full(plugin_manager->plugins, (zathura_free_function_t) zathura_plugin_free);
   }
 
   /* free plugin manager */
