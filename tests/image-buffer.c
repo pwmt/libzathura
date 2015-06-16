@@ -5,6 +5,7 @@
 #include <fiu-control.h>
 
 #include "image-buffer.h"
+#include "plugin-api/image-buffer.h"
 #include "macros.h"
 
 static int cb_test_image_buffer_new_calloc(const char* UNUSED(name), int *UNUSED(failnum),
