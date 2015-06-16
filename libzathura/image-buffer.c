@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 #include "image-buffer.h"
+#include "plugin-api/image-buffer.h"
 
 typedef struct zathura_image_buffer_s {
   unsigned char* data; /**< The image buffers data */

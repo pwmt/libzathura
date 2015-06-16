@@ -99,6 +99,26 @@ START_TEST(test_image_buffer_get_height) {
   fail_unless(zathura_image_buffer_free(buffer) == ZATHURA_ERROR_OK);
 } END_TEST
 
+START_TEST(test_image_buffer_set_rowstride) {
+  zathura_image_buffer_t* buffer;
+  unsigned int rowstride = ZATHURA_IMAGE_BUFFER_ROWSTRIDE;
+
+  /* invalid arguments  */
+  fail_unless(zathura_image_buffer_set_rowstride(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_image_buffer_set_rowstride(NULL, rowstride) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* setup */
+  fail_unless(zathura_image_buffer_new(&buffer, 1, 1) == ZATHURA_ERROR_OK);
+
+  /* valid arguments  */
+  fail_unless(zathura_image_buffer_set_rowstride(buffer, rowstride) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_image_buffer_get_rowstride(buffer, &rowstride) == ZATHURA_ERROR_OK);
+  fail_unless(rowstride == ZATHURA_IMAGE_BUFFER_ROWSTRIDE);
+
+  /* clean-up */
+  fail_unless(zathura_image_buffer_free(buffer) == ZATHURA_ERROR_OK);
+} END_TEST
+
 START_TEST(test_image_buffer_get_rowstride) {
   zathura_image_buffer_t* buffer;
   unsigned int rowstride;
@@ -128,6 +148,7 @@ suite_image_buffer(void)
   tcase_add_test(tcase, test_image_buffer_get_data);
   tcase_add_test(tcase, test_image_buffer_get_width);
   tcase_add_test(tcase, test_image_buffer_get_height);
+  tcase_add_test(tcase, test_image_buffer_set_rowstride);
   tcase_add_test(tcase, test_image_buffer_get_rowstride);
   suite_add_tcase(suite, tcase);
 
