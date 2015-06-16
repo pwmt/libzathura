@@ -89,6 +89,22 @@ zathura_attachment_free(zathura_attachment_t* attachment)
     attachment->user_data_free_function(attachment->user_data);
   }
 
+  if (attachment->name != NULL) {
+    free(attachment->name);
+  }
+
+  if (attachment->description != NULL) {
+    free(attachment->description);
+  }
+
+  if (attachment->data != NULL) {
+    free(attachment->data);
+  }
+
+  if (attachment->checksum != NULL) {
+    free(attachment->checksum);
+  }
+
   free(attachment);
 
   return ZATHURA_ERROR_OK;
@@ -130,6 +146,7 @@ zathura_attachment_set_data(zathura_attachment_t* attachment, const char* data, 
     }
 
     if (memcpy(attachment->data, data, size) != attachment->data) {
+      free(attachment->data);
       return ZATHURA_ERROR_UNKNOWN;
     }
   }

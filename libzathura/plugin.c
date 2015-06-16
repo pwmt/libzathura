@@ -64,6 +64,8 @@ zathura_plugin_get_functions(zathura_plugin_t* plugin,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  *functions = &(plugin->functions);
+
   return ZATHURA_ERROR_OK;
 }
 

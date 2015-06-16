@@ -138,8 +138,13 @@ guess_type_glib(const char* path)
 
   gboolean uncertain = FALSE;
   char* content_type = g_content_type_guess(path, NULL, 0, &uncertain);
-  if (content_type != NULL && uncertain == FALSE) {
-    return content_type;
+  if (content_type != NULL) {
+    if (uncertain == FALSE) {
+      return content_type;
+    } else {
+      g_free(content_type);
+      content_type = NULL;
+    }
   }
 
   FILE* f = fopen(path, "rb");
@@ -152,7 +157,7 @@ guess_type_glib(const char* path)
   size_t length = 0u;
   ssize_t bytes_read = -1;
   while (uncertain == TRUE && length < GT_MAX_READ && bytes_read != 0) {
-    g_free((void*)content_type);
+    g_free(content_type);
     content_type = NULL;
 
     guchar* temp_content = g_try_realloc(content, length + BUFSIZ);
@@ -176,7 +181,8 @@ guess_type_glib(const char* path)
     return content_type;
   }
 
-  g_free((void*)content_type);
+  g_free(content_type);
+
   return NULL;
 }
 

@@ -51,8 +51,13 @@ zathura_annotation_printer_mark_clear(zathura_annotation_t* annotation)
 
   ANNOTATION_PRINTER_MARK_CHECK_TYPE()
 
-  free(annotation->data.printer_mark);
-  annotation->data.printer_mark = NULL;
+  if (annotation->data.printer_mark != NULL) {
+    g_free(annotation->data.printer_mark->name);
+    g_free(annotation->data.printer_mark->mark_style);
+
+    free(annotation->data.printer_mark);
+    annotation->data.printer_mark = NULL;
+  }
 
   return ZATHURA_ERROR_OK;
 }

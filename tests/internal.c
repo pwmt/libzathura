@@ -56,7 +56,9 @@ START_TEST(test_zathura_guess_type_glib) {
   fail_unless(guess_type_glib("a")  == NULL);
 
   /* valid arguments */
-  fail_unless(strcmp(guess_type_glib("files/empty.pdf"), "application/pdf") == 0);
+  char* content_type = guess_type_glib("files/empty.pdf");
+  fail_unless(strcmp(content_type, "application/pdf") == 0);
+  g_free(content_type);
 } END_TEST
 
 START_TEST(test_zathura_guess_type_file) {
@@ -65,7 +67,9 @@ START_TEST(test_zathura_guess_type_file) {
   fail_unless(guess_type_file("")   == NULL);
 
   /* valid arguments */
-  fail_unless(strcmp(guess_type_file("files/empty.pdf"), "application/pdf") == 0);
+  char* content_type = guess_type_glib("files/empty.pdf");
+  fail_unless(strcmp(content_type, "application/pdf") == 0);
+  g_free(content_type);
 } END_TEST
 
 #ifdef WITH_MAGIC
@@ -75,7 +79,9 @@ START_TEST(test_zathura_guess_type_magic) {
   fail_unless(guess_type_magic("")   == NULL);
 
   /* valid arguments */
-  fail_unless(strcmp(guess_type_magic("files/empty.pdf"), "application/pdf") == 0);
+  char* content_type = guess_type_magic("files/empty.pdf");
+  fail_unless(strcmp(content_type, "application/pdf") == 0);
+  g_free(content_type);
 } END_TEST
 #endif
 

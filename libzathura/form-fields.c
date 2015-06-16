@@ -72,12 +72,41 @@ zathura_form_field_free(zathura_form_field_t* form_field)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  if (form_field->data.text.text != NULL) {
-    g_free(form_field->data.text.text);
+  if (form_field->name != NULL) {
+    g_free(form_field->name);
+  }
+
+  if (form_field->partial_name != NULL) {
+    g_free(form_field->partial_name);
+  }
+
+  if (form_field->mapping_name != NULL) {
+    g_free(form_field->mapping_name);
   }
 
   if (form_field->user_data != NULL && form_field->user_data_free_function) {
     form_field->user_data_free_function(form_field->user_data);
+  }
+
+  switch (form_field->type) {
+    case ZATHURA_FORM_FIELD_UNKNOWN:
+      break;
+    case ZATHURA_FORM_FIELD_BUTTON:
+      break;
+    case ZATHURA_FORM_FIELD_TEXT:
+      if (form_field->data.text.text != NULL) {
+        g_free(form_field->data.text.text);
+      }
+      break;
+    case ZATHURA_FORM_FIELD_CHOICE:
+      if (form_field->data.choice.items != NULL) {
+        zathura_list_free_full(form_field->data.choice.items, (zathura_free_function_t) zathura_form_field_choice_item_free);
+        form_field->data.choice.items = NULL;
+      }
+      break;
+    case ZATHURA_FORM_FIELD_SIGNATURE:
+      /* (*form_field)->data.signature.signature = NULL; */
+      break;
   }
 
   free(form_field);

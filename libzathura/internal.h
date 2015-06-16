@@ -1,11 +1,12 @@
 /* See LICENSE file for license and copyright information */
-
 #ifndef INTERNAL_H
 #define INTERNAL_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <gmodule.h>
 
 #include "document.h"
 #include "plugin-api.h"
@@ -17,6 +18,7 @@ struct zathura_plugin_manager_s {
 };
 
 struct zathura_plugin_s {
+  GModule* handle;
   zathura_plugin_register_function_t register_function;
   zathura_plugin_functions_t functions;
   zathura_plugin_version_t version;

@@ -64,6 +64,9 @@ zathura_annotation_free_text_clear(zathura_annotation_t* annotation)
     free(annotation->data.free_text->rich_text);
     annotation->data.free_text->rich_text = NULL;
 
+    free(annotation->data.free_text->style_string);
+    annotation->data.free_text->style_string = NULL;
+
     free(annotation->data.free_text);
     annotation->data.free_text = NULL;
   }

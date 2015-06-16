@@ -23,11 +23,15 @@ static void
 zathura_plugin_free(zathura_plugin_t* plugin)
 {
   if (plugin == NULL) {
-    return ;
+    return;
   }
 
   if (plugin->mimetypes != NULL) {
     zathura_list_free_full(plugin->mimetypes, g_free);
+  }
+
+  if (plugin->handle != NULL) {
+    g_module_close(plugin->handle);
   }
 
   free(plugin->path);
@@ -162,6 +166,7 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
   }
 
   /* setup plugin */
+  plugin->handle        = handle;
   plugin->path          = real_path;
   plugin->version.major = major_version();
   plugin->version.minor = minor_version();
@@ -171,7 +176,6 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
 
   if (plugin->register_function == NULL || plugin->name == NULL) {
     free(plugin->path);
-    free(plugin);
     error = ZATHURA_ERROR_OUT_OF_MEMORY;
     goto error_free;
   }
@@ -185,8 +189,6 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
     error = ZATHURA_ERROR_OUT_OF_MEMORY;
     goto error_free;
   }
-
-  g_module_close(handle);
 
   return ZATHURA_ERROR_OK;
 

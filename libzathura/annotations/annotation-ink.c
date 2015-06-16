@@ -65,11 +65,15 @@ zathura_error_t
 zathura_annotation_ink_set_paths(zathura_annotation_t* annotation,
     zathura_list_t* paths)
 {
-  if (annotation == NULL || paths == NULL) {
+  if (annotation == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  ANNOTATION_INK_CHECK_TYPE_AND_DATA()
+  ANNOTATION_INK_CHECK_TYPE()
+
+  if (annotation->data.ink->paths != NULL) {
+    zathura_list_free(annotation->data.ink->paths);
+  }
 
   annotation->data.ink->paths = paths;
 

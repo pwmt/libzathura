@@ -42,6 +42,10 @@ zathura_page_free(zathura_page_t* page)
     page->document->plugin->functions.page_clear(page);
   }
 
+  if (page->label != NULL) {
+    free(page->label);
+  }
+
   free(page);
 
   return ZATHURA_ERROR_OK;

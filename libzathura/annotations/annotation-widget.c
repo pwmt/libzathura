@@ -51,8 +51,14 @@ zathura_annotation_widget_clear(zathura_annotation_t* annotation)
 
   ANNOTATION_WIDGET_CHECK_TYPE()
 
-  free(annotation->data.widget);
-  annotation->data.widget = NULL;
+  if (annotation->data.widget != NULL) {
+    g_free(annotation->data.widget->caption);
+    g_free(annotation->data.widget->rollover_caption);
+    g_free(annotation->data.widget->alternate_caption);
+
+    free(annotation->data.widget);
+    annotation->data.widget = NULL;
+  }
 
   return ZATHURA_ERROR_OK;
 }

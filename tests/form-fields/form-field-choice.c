@@ -165,6 +165,4 @@ START_TEST(test_form_field_choice_get_items) {
   fail_unless(zathura_form_field_choice_get_items(form_field, &list) == ZATHURA_ERROR_OK);
   fail_unless(list != NULL);
   fail_unless(zathura_list_length(list) == 1);
-
-  zathura_list_free(list);
 } END_TEST

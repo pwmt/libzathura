@@ -229,6 +229,14 @@ zathura_annotation_free(zathura_annotation_t* annotation)
       }
   }
 
+  if (annotation->name != NULL) {
+    free(annotation->name);
+  }
+
+  if (annotation->content != NULL) {
+    free(annotation->content);
+  }
+
   free(annotation);
 
   if (error != ZATHURA_ERROR_OK) {

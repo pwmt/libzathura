@@ -111,6 +111,9 @@ zathura_annotation_markup_clear(zathura_annotation_t* annotation)
   ANNOTATION_MARKUP_CHECK_TYPE()
 
   if (annotation->markup != NULL) {
+    g_free(annotation->markup->label);
+    g_free(annotation->markup->text);
+
     free(annotation->markup);
     annotation->markup = NULL;
   }

@@ -56,8 +56,13 @@ zathura_annotation_movie_clear(zathura_annotation_t* annotation)
 
   ANNOTATION_MOVIE_CHECK_TYPE()
 
-  free(annotation->data.movie);
-  annotation->data.movie = NULL;
+  if (annotation->data.movie != NULL) {
+    free(annotation->data.movie->title);
+    annotation->data.movie->title = NULL;
+
+    free(annotation->data.movie);
+    annotation->data.movie = NULL;
+  }
 
   return ZATHURA_ERROR_OK;
 }

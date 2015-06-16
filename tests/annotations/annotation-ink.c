@@ -46,12 +46,11 @@ START_TEST(test_annotation_ink_set_paths) {
 
   /* invalid arguments */
   fail_unless(zathura_annotation_ink_set_paths(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_annotation_ink_set_paths(annotation, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_annotation_ink_set_paths(NULL, paths) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
   fail_unless(zathura_annotation_ink_set_paths(annotation, paths) == ZATHURA_ERROR_OK);
-  zathura_list_free(paths);
+  fail_unless(zathura_annotation_ink_set_paths(annotation, NULL) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_annotation_ink_get_paths) {

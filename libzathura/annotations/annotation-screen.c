@@ -51,8 +51,13 @@ zathura_annotation_screen_clear(zathura_annotation_t* annotation)
 
   ANNOTATION_SCREEN_CHECK_TYPE()
 
-  free(annotation->data.screen);
-  annotation->data.screen = NULL;
+  if (annotation->data.screen != NULL) {
+    free(annotation->data.screen->title);
+    annotation->data.screen->title = NULL;
+
+    free(annotation->data.screen);
+    annotation->data.screen = NULL;
+  }
 
   return ZATHURA_ERROR_OK;
 }

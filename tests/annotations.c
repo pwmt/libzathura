@@ -8,7 +8,7 @@
 #include "annotations.h"
 #include "annotations/internal.h"
 
-zathura_annotation_t* annotation;
+static zathura_annotation_t* annotation = NULL;
 
 static void setup(void) {
   fail_unless(zathura_annotation_new(&annotation, ZATHURA_ANNOTATION_CARET) == ZATHURA_ERROR_OK);

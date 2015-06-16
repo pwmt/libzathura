@@ -51,8 +51,12 @@ zathura_annotation_sound_clear(zathura_annotation_t* annotation)
 
   ANNOTATION_SOUND_CHECK_TYPE()
 
-  free(annotation->data.sound);
-  annotation->data.sound = NULL;
+  if (annotation->data.sound != NULL) {
+    g_free(annotation->data.sound->icon_name);
+
+    free(annotation->data.sound);
+    annotation->data.sound = NULL;
+  }
 
   return ZATHURA_ERROR_OK;
 }

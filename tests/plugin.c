@@ -118,7 +118,7 @@ START_TEST(test_plugin_set_register_function) {
 
 
 START_TEST(test_plugin_get_functions) {
-  zathura_plugin_functions_t* functions;
+  zathura_plugin_functions_t* functions = NULL;
 
   /* invalid parameter */
   fail_unless(zathura_plugin_get_functions(NULL,   NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
