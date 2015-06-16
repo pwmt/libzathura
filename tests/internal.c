@@ -67,7 +67,7 @@ START_TEST(test_zathura_guess_type_file) {
   fail_unless(guess_type_file("")   == NULL);
 
   /* valid arguments */
-  char* content_type = guess_type_glib("files/empty.pdf");
+  char* content_type = guess_type_file("files/empty.pdf");
   fail_unless(strcmp(content_type, "application/pdf") == 0);
   g_free(content_type);
 } END_TEST
