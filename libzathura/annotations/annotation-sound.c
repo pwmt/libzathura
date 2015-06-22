@@ -39,6 +39,8 @@ zathura_annotation_sound_init(zathura_annotation_t* annotation)
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
 
+  annotation->data.sound->icon_name = g_strdup("Speaker");
+
   return ZATHURA_ERROR_OK;
 }
 
