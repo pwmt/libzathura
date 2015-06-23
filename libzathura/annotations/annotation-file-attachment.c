@@ -43,7 +43,7 @@ zathura_annotation_file_init(zathura_annotation_t* annotation)
   }
 
   annotation->data.file->file = NULL;
-  annotation->data.file->icon_name = NULL;
+  annotation->data.file->icon_name = g_strdup("PushPin");
 
   return ZATHURA_ERROR_OK;
 }
