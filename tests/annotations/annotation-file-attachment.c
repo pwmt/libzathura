@@ -111,7 +111,8 @@ START_TEST(test_annotation_file_get_icon_name) {
   /* valid arguments */
   fail_unless(zathura_annotation_file_get_icon_name(annotation, &icon_name)
       == ZATHURA_ERROR_OK);
-  fail_unless(icon_name == NULL);
+  fail_unless(icon_name != NULL);
+  fail_unless(strcmp(icon_name, "PushPin") == 0);
   fail_unless(zathura_annotation_file_set_icon_name(annotation, "test")
       == ZATHURA_ERROR_OK);
   fail_unless(zathura_annotation_file_get_icon_name(annotation, &icon_name)
