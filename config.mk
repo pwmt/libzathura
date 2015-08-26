@@ -54,7 +54,7 @@ CAIRO_INC ?= $(shell ${PKG_CONFIG} --cflags cairo)
 CAIRO_LIB ?= $(shell ${PKG_CONFIG} --libs cairo)
 
 FIU_INC ?= $(shell ${PKG_CONFIG} --cflags libfiu)
-FIU_LIB ?= $(shell ${PKG_CONFIG} --libs libfiu)
+FIU_LIB ?= $(shell ${PKG_CONFIG} --libs libfiu) -ldl
 
 INCS = ${GLIB_INC} ${GMODULE_INC}
 LIBS = ${GLIB_LIB} ${GMODULE_LIB} -lm

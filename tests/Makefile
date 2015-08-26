@@ -28,13 +28,23 @@ ifneq (${WITH_LIBFIU},0)
 INCS += ${FIU_INC}
 LIBS += ${FIU_LIB}
 FIU_EXEC += ${FIU_RUN}
+CPPFLAGS += -DFIU_ENABLE
 endif
 
 ifneq ($(wildcard ${VALGRIND_SUPPRESSION_FILE}),)
 VALGRIND_ARGUMENTS += --suppressions=${VALGRIND_SUPPRESSION_FILE}
 endif
 
-all: ${PROJECT}
+all: options ${PROJECT}
+
+options:
+ifeq "$(VERBOSE)" "1"
+	$(ECHO) ${PROJECT} build options:
+	$(ECHO) "CFLAGS  = ${CFLAGS}"
+	$(ECHO) "LDFLAGS = ${LDFLAGS}"
+	$(ECHO) "DFLAGS  = ${DFLAGS}"
+	$(ECHO) "CC      = ${CC}"
+endif
 
 # release
 
@@ -43,7 +53,7 @@ ${PROJECT}: options ${OBJECTS}
 	$(QUIET)${MAKE} -C plugin
 	$(call colorecho,CC,$@)
 	$(QUIET)${CC} ${SFLAGS} ${LDFLAGS} -o $@ \
-		${OBJECTS} ${LIBS} ${LIBZATHURA_RELEASE}
+		${OBJECTS} ${LIBZATHURA_RELEASE} ${LIBS}
 
 ${OBJECTS}: config.mk ../config.mk ../libzathura/version.h
 
@@ -66,7 +76,7 @@ ${PROJECT}-debug: ${OBJECTS_DEBUG}
 	$(QUIET)${MAKE} -C plugin
 	$(call colorecho,CC,$@)
 	$(QUIET)${CC} ${LDFLAGS} -o $@ \
-		${OBJECTS_DEBUG} ${LIBS} ${LIBZATHURA_DEBUG}
+		${OBJECTS_DEBUG} ${LIBZATHURA_DEBUG} ${LIBS}
 
 ${OBJECTS_DEBUG}: config.mk ../config.mk ../libzathura/version.h
 
@@ -89,7 +99,7 @@ ${PROJECT}-gcov: options ${OBJECTS_GCOV}
 	$(QUIET)${MAKE} -C plugin
 	$(call colorecho,CC,$@)
 	$(QUIET)${CC} ${LDFLAGS} ${GCOV_LDFLAGS} -o $@ \
-		${OBJECTS_GCOV} ${LIBS} ${LIBZATHURA_GCOV}
+		${OBJECTS_GCOV} ${LIBZATHURA_GCOV} ${LIBS}
 
 ${OBJECTS_GCOV}: config.mk ../config.mk ../libzathura/version.h
 

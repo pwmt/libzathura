@@ -1,9 +1,9 @@
 /* See LICENSE file for license and copyright information */
 
-#include <check.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <check.h>
 #include <fiu.h>
 #include <fiu-control.h>
 
@@ -45,6 +45,7 @@ START_TEST(test_zathura_guess_type) {
 
   /* valid arguments */
   fail_unless(zathura_guess_type("files/empty.pdf", &type) == ZATHURA_ERROR_OK);
+  fail_unless(type != NULL);
   fail_unless(strcmp(type, "application/pdf") == 0);
   free(type);
 } END_TEST
@@ -57,6 +58,7 @@ START_TEST(test_zathura_guess_type_glib) {
 
   /* valid arguments */
   char* content_type = guess_type_glib("files/empty.pdf");
+  fail_unless(content_type != NULL);
   fail_unless(strcmp(content_type, "application/pdf") == 0);
   g_free(content_type);
 } END_TEST
@@ -68,6 +70,7 @@ START_TEST(test_zathura_guess_type_file) {
 
   /* valid arguments */
   char* content_type = guess_type_file("files/empty.pdf");
+  fail_unless(content_type != NULL);
   fail_unless(strcmp(content_type, "application/pdf") == 0);
   g_free(content_type);
 } END_TEST
@@ -80,6 +83,7 @@ START_TEST(test_zathura_guess_type_magic) {
 
   /* valid arguments */
   char* content_type = guess_type_magic("files/empty.pdf");
+  fail_unless(content_type != NULL);
   fail_unless(strcmp(content_type, "application/pdf") == 0);
   g_free(content_type);
 } END_TEST

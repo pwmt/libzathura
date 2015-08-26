@@ -1,6 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
 #define _DEFAULT_SOURCE
+#define _POSIX_SOURCE
 
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +9,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <gio/gio.h>
+#include <sys/wait.h>
 
 #ifdef WITH_MAGIC
 #include <magic.h>
