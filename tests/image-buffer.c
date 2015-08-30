@@ -105,7 +105,6 @@ START_TEST(test_image_buffer_set_rowstride) {
   unsigned int rowstride = ZATHURA_IMAGE_BUFFER_ROWSTRIDE;
 
   /* invalid arguments  */
-  fail_unless(zathura_image_buffer_set_rowstride(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_image_buffer_set_rowstride(NULL, rowstride) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* setup */
