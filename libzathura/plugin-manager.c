@@ -13,11 +13,6 @@
 #include "internal.h"
 
 typedef void (*zathura_plugin_register_service_t)(zathura_plugin_t*);
-typedef unsigned int (*zathura_plugin_api_version_t)(void);
-typedef unsigned int (*zathura_plugin_abi_version_t)(void);
-typedef unsigned int (*zathura_plugin_major_version_t)(void);
-typedef unsigned int (*zathura_plugin_minor_version_t)(void);
-typedef unsigned int (*zathura_plugin_rev_version_t)(void);
 
 static void
 zathura_plugin_free(zathura_plugin_t* plugin)
@@ -105,55 +100,17 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
     goto error_ret;
   }
 
-  /* resolve symbols and check API and ABI version*/
-  zathura_plugin_api_version_t api_version = NULL;
-  if (g_module_symbol(handle, PLUGIN_API_VERSION_FUNCTION, (gpointer*) &api_version) == FALSE ||
-      api_version == NULL) {
-    error = ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL;
-    goto error_free;
-  }
-
-  if (api_version() != ZATHURA_API_VERSION) {
-    error = ZATHURA_ERROR_PLUGIN_VERSION;
-    goto error_free;
-  }
-
-  zathura_plugin_abi_version_t abi_version = NULL;
-  if (g_module_symbol(handle, PLUGIN_ABI_VERSION_FUNCTION, (gpointer*) &abi_version) == FALSE ||
-      abi_version == NULL) {
-    error = ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL;
-    goto error_free;
-  }
-
-  if (abi_version() != ZATHURA_ABI_VERSION) {
-    error = ZATHURA_ERROR_PLUGIN_VERSION;
-    goto error_free;
-  }
-
-  zathura_plugin_major_version_t major_version = NULL;
-  if (g_module_symbol(handle, PLUGIN_VERSION_MAJOR_FUNCTION, (gpointer*) &major_version) == FALSE ||
-      major_version == NULL) {
-    error = ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL;
-    goto error_free;
-  }
-
-  zathura_plugin_minor_version_t minor_version = NULL;
-  if (g_module_symbol(handle, PLUGIN_VERSION_MINOR_FUNCTION, (gpointer*) &minor_version) == FALSE ||
-      minor_version == NULL) {
-    error = ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL;
-    goto error_free;
-  }
-
-  zathura_plugin_rev_version_t rev_version = NULL;
-  if (g_module_symbol(handle, PLUGIN_VERSION_REVISION_FUNCTION, (gpointer*) &rev_version) == FALSE ||
-      rev_version == NULL) {
-    error = ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL;
-    goto error_free;
-  }
-
+  /* resolve symbols */
   zathura_plugin_register_service_t register_service = NULL;
   if (g_module_symbol(handle, PLUGIN_REGISTER_FUNCTION, (gpointer*)
         &register_service) == FALSE || register_service == NULL) {
+    error = ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL;
+    goto error_free;
+  }
+
+  zathura_plugin_version_t* plugin_version = NULL;
+  if (g_module_symbol(handle, PLUGIN_VERSION_INFO, (gpointer*)
+        &plugin_version) == FALSE || plugin_version == NULL) {
     error = ZATHURA_ERROR_PLUGIN_RESOLVE_SYMBOL;
     goto error_free;
   }
@@ -168,9 +125,9 @@ zathura_plugin_manager_load(zathura_plugin_manager_t* plugin_manager, const char
   /* setup plugin */
   plugin->handle        = handle;
   plugin->path          = real_path;
-  plugin->version.major = major_version();
-  plugin->version.minor = minor_version();
-  plugin->version.rev   = rev_version();
+  plugin->version.major = plugin_version->major;
+  plugin->version.minor = plugin_version->minor;
+  plugin->version.rev   = plugin_version->rev;
 
   register_service(plugin);
 

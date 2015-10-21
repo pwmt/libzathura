@@ -17,22 +17,24 @@ extern "C" {
 #include "types.h"
 #include "libzathura.h"
 
-#define PLUGIN_REGISTER_FUNCTION         "zathura_plugin_register"
-#define PLUGIN_VERSION_MAJOR_FUNCTION    "zathura_plugin_version_major"
-#define PLUGIN_VERSION_MINOR_FUNCTION    "zathura_plugin_version_minor"
-#define PLUGIN_VERSION_REVISION_FUNCTION "zathura_plugin_version_revision"
-#define PLUGIN_API_VERSION_FUNCTION      "zathura_plugin_api_version"
-#define PLUGIN_ABI_VERSION_FUNCTION      "zathura_plugin_abi_version"
+#define PLUGIN_XCONCAT3(x, y, z) x ## _ ## y ## _ ## z
+#define PLUGIN_CONCAT3(x, y, z) PLUGIN_XCONCAT3(x, y, z)
+#define PLUGIN_XSTRINGIZE(x) #x
+#define PLUGIN_STRINGIZE(x) PLUGIN_XSTRINGIZE(x)
+
+#define PLUGIN_REGISTER_FUNCTION_NAME \
+  PLUGIN_CONCAT3(zathura_plugin_register, ZATHURA_API_VERSION, ZATHURA_ABI_VERSION)
+
+#define PLUGIN_REGISTER_FUNCTION  PLUGIN_STRINGIZE(PLUGIN_REGISTER_FUNCTION_NAME)
+#define PLUGIN_VERSION_INFO       "zathura_plugin_version"
 
 /* plugin */
 #define ZATHURA_PLUGIN_REGISTER(plugin_name, major, minor, rev, register_functions, mimetypes) \
-  unsigned int zathura_plugin_version_major(void) { return major; } \
-  unsigned int zathura_plugin_version_minor(void) { return minor; } \
-  unsigned int zathura_plugin_version_revision(void) { return rev; } \
-  unsigned int zathura_plugin_api_version(void) { return ZATHURA_API_VERSION; } \
-  unsigned int zathura_plugin_abi_version(void) { return ZATHURA_ABI_VERSION; } \
+  const zathura_plugin_version_t zathura_plugin_version = { \
+    major, minor, rev \
+  }; \
   \
-  void zathura_plugin_register(zathura_plugin_t* plugin) \
+  void PLUGIN_REGISTER_FUNCTION_NAME (zathura_plugin_t* plugin) \
   { \
     if (plugin == NULL) { \
       return; \
