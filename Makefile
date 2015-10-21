@@ -65,9 +65,9 @@ ${OBJECTS}:  config.mk ${PROJECT}/version.h
 
 ${BUILDDIR_RELEASE}/%.o: %.c
 	$(call colorecho,CC,$<)
-	@mkdir -p ${DEPENDDIR}/$(dir $(abspath $@))
+	@mkdir -p ${DEPENDDIR}/$(dir $@)
 	@mkdir -p $(dir $(abspath $@))
-	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} -o $@ $< -MMD -MF ${DEPENDDIR}/$(abspath $@).dep
+	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} -o $@ $< -MMD -MF ${DEPENDDIR}/$@.dep
 
 ${PROJECT}: ${PROJECT}/version.h static shared
 
@@ -91,10 +91,10 @@ ${OBJECTS_DEBUG}: config.mk ${PROJECT}/version.h
 
 ${BUILDDIR_DEBUG}/%.o: %.c
 	$(call colorecho,CC,$<)
-	@mkdir -p ${DEPENDDIR}/$(dir $(abspath $@))
+	@mkdir -p ${DEPENDDIR}/$(dir $@)
 	@mkdir -p $(dir $(abspath $@))
 	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} ${DFLAGS} \
-		-o $@ $< -MMD -MF ${DEPENDDIR}/$(abspath $@).dep
+		-o $@ $< -MMD -MF ${DEPENDDIR}/$@.dep
 
 ${PROJECT}-debug: ${PROJECT}/version.h static-debug shared-debug
 
@@ -118,10 +118,10 @@ ${OBJECTS_GCOV}: config.mk ${PROJECT}/version.h
 
 ${BUILDDIR_GCOV}/%.o: %.c
 	$(call colorecho,CC,$<)
-	@mkdir -p ${DEPENDDIR}/$(dir $(abspath $@))
+	@mkdir -p ${DEPENDDIR}/$(dir $@)
 	@mkdir -p $(dir $(abspath $@))
 	$(QUIET)${CC} -c ${CPPFLAGS} ${CFLAGS} ${GCOV_CFLAGS} ${DFLAGS} \
-		-o $@ $< -MMD -MF ${DEPENDDIR}/$(abspath $@).dep
+		-o $@ $< -MMD -MF ${DEPENDDIR}/$@.dep
 
 ${PROJECT}-gcov: ${PROJECT}/version.h static-gcov shared-gcov
 
@@ -224,6 +224,5 @@ uninstall-headers:
 	uninstall ninstall-headers ${PROJECT} ${PROJECT}-debug static shared \
 	install-static install-shared
 
-${DEPENDDIR}S = ${OBJECTS:.o=.o.dep}
-DEPENDS = ${${DEPENDDIR}S:^=${DEPENDDIR}/}
--include $${DEPENDDIR}S}
+DEPENDS = ${DEPENDDIRS:^=${DEPENDDIR}/}$(addprefix ${DEPENDDIR}/,${OBJECTS:.o=.o.dep})
+-include ${DEPENDS}
