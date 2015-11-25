@@ -17,6 +17,7 @@
 
 #include "internal.h"
 #include "fiu-local.h"
+#include "macros.h"
 
 static const size_t GT_MAX_READ = 1 << 16;
 
@@ -52,7 +53,7 @@ zathura_realpath(const char* path, char** real_path)
 }
 
 #ifdef WITH_MAGIC
-char*
+HIDDEN char*
 guess_type_magic(const char* path) {
   if (path == NULL || strlen(path) == 0) {
     return NULL;
@@ -97,7 +98,7 @@ cleanup:
 }
 #endif
 
-char*
+HIDDEN char*
 guess_type_file(const char* path)
 {
   if (path == NULL || strlen(path) == 0) {
@@ -131,7 +132,7 @@ guess_type_file(const char* path)
   return out;
 }
 
-char*
+HIDDEN char*
 guess_type_glib(const char* path)
 {
   if (path == NULL || strlen(path) == 0) {
