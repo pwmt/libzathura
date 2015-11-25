@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef ANNOTATION_BORDER_H
-#define ANNOTATION_BORDER_H
+#ifndef LIBZATHURA_ANNOTATION_BORDER_H
+#define LIBZATHURA_ANNOTATION_BORDER_H
 
 #ifdef __cplusplus
 extern "C" {

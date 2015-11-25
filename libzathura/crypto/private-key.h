@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef CRYPTO_PRIVATE_KEY_H
-#define CRYPTO_PRIVATE_KEY_H
+#ifndef LIBZATHURA_CRYPTO_PRIVATE_KEY_H
+#define LIBZATHURA_CRYPTO_PRIVATE_KEY_H
 
 #ifdef __cplusplus
 extern "C" {

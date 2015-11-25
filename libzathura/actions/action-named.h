@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef ACTION_NAMED_H
-#define ACTION_NAMED_H
+#ifndef LIBZATHURA_ACTION_NAMED_H
+#define LIBZATHURA_ACTION_NAMED_H
 
 #ifdef __cplusplus
 extern "C" {

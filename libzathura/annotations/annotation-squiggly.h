@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef ANNOTATION_SQUIGGLY_H
-#define ANNOTATION_SQUIGGLY_H
+#ifndef LIBZATHURA_ANNOTATION_SQUIGGLY_H
+#define LIBZATHURA_ANNOTATION_SQUIGGLY_H
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef NODE_H
-#define NODE_H
+#ifndef LIBZATHURA_NODE_H
+#define LIBZATHURA_NODE_H
 
 #ifdef __cplusplus
 extern "C" {

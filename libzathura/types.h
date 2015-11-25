@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef LIBZATHURA_TYPES_H
+#define LIBZATHURA_TYPES_H
 
 #ifdef __cplusplus
 extern "C" {

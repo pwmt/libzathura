@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef PLUGIN_API_FORM_FIELD_TEXT_H
-#define PLUGIN_API_FORM_FIELD_TEXT_H
+#ifndef LIBZATHURA_PLUGIN_API_FORM_FIELD_TEXT_H
+#define LIBZATHURA_PLUGIN_API_FORM_FIELD_TEXT_H
 
 #ifdef __cplusplus
 extern "C" {

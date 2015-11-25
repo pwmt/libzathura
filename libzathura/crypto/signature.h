@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef CRYPTO_SIGNATURE_H
-#define CRYPTO_SIGNATURE_H
+#ifndef LIBZATHURA_CRYPTO_SIGNATURE_H
+#define LIBZATHURA_CRYPTO_SIGNATURE_H
 
 #ifdef __cplusplus
 extern "C" {

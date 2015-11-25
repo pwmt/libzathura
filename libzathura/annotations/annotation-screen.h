@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef ANNOTATION_SCREEN_H
-#define ANNOTATION_SCREEN_H
+#ifndef LIBZATHURA_ANNOTATION_SCREEN_H
+#define LIBZATHURA_ANNOTATION_SCREEN_H
 
 #ifdef __cplusplus
 extern "C" {

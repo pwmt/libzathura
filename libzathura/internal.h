@@ -1,6 +1,6 @@
 /* See LICENSE file for license and copyright information */
-#ifndef INTERNAL_H
-#define INTERNAL_H
+#ifndef LIBZATHURA_INTERNAL_H
+#define LIBZATHURA_INTERNAL_H
 
 #ifdef __cplusplus
 extern "C" {

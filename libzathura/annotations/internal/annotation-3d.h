@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef INTERNAL_ANNOTATION_3D_H
-#define INTERNAL_ANNOTATION_3D_H
+#ifndef LIBZATHURA_INTERNAL_ANNOTATION_3D_H
+#define LIBZATHURA_INTERNAL_ANNOTATION_3D_H
 
 #ifdef __cplusplus
 extern "C" {

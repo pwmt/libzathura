@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef METADATA_H
-#define METADATA_H
+#ifndef LIBZATHURA_METADATA_H
+#define LIBZATHURA_METADATA_H
 
 #ifdef __cplusplus
 extern "C" {

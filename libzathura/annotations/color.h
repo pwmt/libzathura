@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef ANNOTATION_COLOR_SPACE_H
-#define ANNOTATION_COLOR_SPACE_H
+#ifndef LIBZATHURA_ANNOTATION_COLOR_SPACE_H
+#define LIBZATHURA_ANNOTATION_COLOR_SPACE_H
 
 #ifdef __cplusplus
 extern "C" {

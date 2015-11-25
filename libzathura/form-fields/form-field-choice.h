@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef FORM_FIELD_CHOICE_H
-#define FORM_FIELD_CHOICE_H
+#ifndef LIBZATHURA_FORM_FIELD_CHOICE_H
+#define LIBZATHURA_FORM_FIELD_CHOICE_H
 
 #ifdef __cplusplus
 extern "C" {

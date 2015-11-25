@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef PLUGIN_H
-#define PLUGIN_H
+#ifndef LIBZATHURA_PLUGIN_H
+#define LIBZATHURA_PLUGIN_H
 
 #ifdef __cplusplus
 extern "C" {

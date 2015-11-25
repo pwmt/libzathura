@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef OUTLINE_H
-#define OUTLINE_H
+#ifndef LIBZATHURA_OUTLINE_H
+#define LIBZATHURA_OUTLINE_H
 
 #ifdef __cplusplus
 extern "C" {

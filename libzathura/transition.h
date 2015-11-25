@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef TRANSITION_H
-#define TRANSITION_H
+#ifndef LIBZATHURA_TRANSITION_H
+#define LIBZATHURA_TRANSITION_H
 
 #ifdef __cplusplus
 extern "C" {

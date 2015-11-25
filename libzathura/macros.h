@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef MACROS_H
-#define MACROS_H
+#ifndef LIBZATHURA_MACROS_H
+#define LIBZATHURA_MACROS_H
 
 #ifdef __cplusplus
 extern "C" {

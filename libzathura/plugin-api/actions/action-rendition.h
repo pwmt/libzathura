@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef PLUGIN_API_ACTION_RENDITION_H
-#define PLUGIN_API_ACTION_RENDITION_H
+#ifndef LIBZATHURA_PLUGIN_API_ACTION_RENDITION_H
+#define LIBZATHURA_PLUGIN_API_ACTION_RENDITION_H
 
 #ifdef __cplusplus
 extern "C" {

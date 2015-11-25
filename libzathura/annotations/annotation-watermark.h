@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef ANNOTATION_WATERMARK_H
-#define ANNOTATION_WATERMARK_H
+#ifndef LIBZATHURA_ANNOTATION_WATERMARK_H
+#define LIBZATHURA_ANNOTATION_WATERMARK_H
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef ANNOTATION_FILE_H
-#define ANNOTATION_FILE_H
+#ifndef LIBZATHURA_ANNOTATION_FILE_H
+#define LIBZATHURA_ANNOTATION_FILE_H
 
 #ifdef __cplusplus
 extern "C" {

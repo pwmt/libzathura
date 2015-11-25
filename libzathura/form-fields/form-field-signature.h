@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef FORM_FIELD_SIGNATURE_H
-#define FORM_FIELD_SIGNATURE_H
+#ifndef LIBZATHURA_FORM_FIELD_SIGNATURE_H
+#define LIBZATHURA_FORM_FIELD_SIGNATURE_H
 
 #ifdef __cplusplus
 extern "C" {

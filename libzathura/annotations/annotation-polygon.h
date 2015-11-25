@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef ANNOTATION_POLYGON_H
-#define ANNOTATION_POLYGON_H
+#ifndef LIBZATHURA_ANNOTATION_POLYGON_H
+#define LIBZATHURA_ANNOTATION_POLYGON_H
 
 #ifdef __cplusplus
 extern "C" {

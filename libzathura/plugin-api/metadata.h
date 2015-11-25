@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef PLUGIN_API_METADATA_H
-#define PLUGIN_API_METADATA_H
+#ifndef LIBZATHURA_PLUGIN_API_METADATA_H
+#define LIBZATHURA_PLUGIN_API_METADATA_H
 
 #ifdef __cplusplus
 extern "C" {

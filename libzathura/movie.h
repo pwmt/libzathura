@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef MOVIE_H
-#define MOVIE_H
+#ifndef LIBZATHURA_MOVIE_H
+#define LIBZATHURA_MOVIE_H
 
 #ifdef __cplusplus
 extern "C" {

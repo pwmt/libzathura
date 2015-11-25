@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef FIU_H
-#define FIU_H
+#ifndef LIBZATHURA_FIU_H
+#define LIBZATHURA_FIU_H
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef ACTION_GOTO_EMBEDDED_H
-#define ACTION_GOTO_EMBEDDED_H
+#ifndef LIBZATHURA_ACTION_GOTO_EMBEDDED_H
+#define LIBZATHURA_ACTION_GOTO_EMBEDDED_H
 
 #ifdef __cplusplus
 extern "C" {

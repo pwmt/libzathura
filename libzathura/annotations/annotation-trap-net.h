@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef ANNOTATION_TRAP_NET_H
-#define ANNOTATION_TRAP_NET_H
+#ifndef LIBZATHURA_ANNOTATION_TRAP_NET_H
+#define LIBZATHURA_ANNOTATION_TRAP_NET_H
 
 #ifdef __cplusplus
 extern "C" {

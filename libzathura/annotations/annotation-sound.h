@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
-#ifndef ANNOTATION_SOUND_H
-#define ANNOTATION_SOUND_H
+#ifndef LIBZATHURA_ANNOTATION_SOUND_H
+#define LIBZATHURA_ANNOTATION_SOUND_H
 
 #ifdef __cplusplus
 extern "C" {
