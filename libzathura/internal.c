@@ -79,13 +79,13 @@ guess_type_magic(const char* path) {
   }
 
   /* get the mime type */
-  mime_type = (char*) magic_file(magic, path);
-  if (mime_type == NULL) {
+  const char* cmime_type = magic_file(magic, path);
+  if (cmime_type == NULL) {
     goto cleanup;
   }
 
   /* dup so we own the memory */
-  mime_type = g_strdup(mime_type);
+  mime_type = g_strdup(cmime_type);
 
 cleanup:
 
