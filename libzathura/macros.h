@@ -17,6 +17,16 @@ extern "C" {
 # endif
 #endif
 
+#ifndef HIDDEN
+# if (defined(__GNUC__) && (__GNUC__ >= 4)) || defined(__clang__)
+#  define HIDDEN __attribute__((visibility("hidden")))
+# elif defined(__SUNPRO_C)
+#  define HIDDEN __hidden
+# else
+#  define HIDDEN
+# endif
+#endif
+
 #ifdef __cplusplus
 }
 #endif
