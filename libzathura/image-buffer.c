@@ -5,6 +5,7 @@
 
 #include "image-buffer.h"
 #include "plugin-api/image-buffer.h"
+#include "checked-integer-arithmetic.h"
 
 typedef struct zathura_image_buffer_s {
   unsigned char* data; /**< The image buffers data */
@@ -22,8 +23,9 @@ zathura_image_buffer_new(zathura_image_buffer_t** buffer, unsigned int width,
   }
 
   /* Check for malicious input */
-  uint64_t q = (uint64_t) width * (uint64_t) height;
-  if (q > (uint32_t) 0xFFFFFFFFUL) {
+  unsigned int size = 0;
+  if (checked_umul(width, height, &size) == true ||
+      checked_umul(size, ZATHURA_IMAGE_BUFFER_ROWSTRIDE, &size) == true) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
@@ -31,8 +33,7 @@ zathura_image_buffer_new(zathura_image_buffer_t** buffer, unsigned int width,
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
 
-  if (((*buffer)->data = calloc(width * height *
-          ZATHURA_IMAGE_BUFFER_ROWSTRIDE, sizeof(unsigned char))) == NULL) {
+  if (((*buffer)->data = calloc(size, sizeof(unsigned char))) == NULL) {
     free(*buffer);
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
