@@ -16,6 +16,8 @@ Suite* suite_transition(void);
 Suite* suite_form_fields(void);
 Suite* suite_annotations(void);
 Suite* suite_metadata(void);
+Suite* suite_checked_integer_arithmetic(void);
+
 
 int main(void)
 {
@@ -41,6 +43,7 @@ int main(void)
   srunner_add_suite(suite_runner, suite_annotations());
   srunner_add_suite(suite_runner, suite_actions());
   srunner_add_suite(suite_runner, suite_metadata());
+  srunner_add_suite(suite_runner, suite_checked_integer_arithmetic());
 
   int number_failed = 0;
   srunner_run_all(suite_runner, CK_ENV);
