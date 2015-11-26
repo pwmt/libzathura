@@ -25,6 +25,15 @@ Debian 8:
   except:
     - tags
 
+Debian 9:
+  image: pwmt-debian-stretch
+  script:
+    - make COLOR=0
+    - make -C tests COLOR=0
+    - make -C tests COLOR=0 run
+  except:
+    - tags
+
 Ubuntu 14.04:
   image: pwmt-ubuntu-trusty
   script:
