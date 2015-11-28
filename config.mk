@@ -59,7 +59,10 @@ FIU_LIB ?= $(shell ${PKG_CONFIG} --libs libfiu) -ldl
 INCS = ${GLIB_INC} ${GMODULE_INC}
 LIBS = ${GLIB_LIB} ${GMODULE_LIB} -lm
 
-# flags
+# pre-processor flags
+CPPFLAGS += -D_FILE_OFFSET_BITS=64
+
+# compiler flags
 CFLAGS += -std=c11 -pedantic -Wall -Wextra -fPIC $(INCS)
 
 # linker flags
