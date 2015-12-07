@@ -38,6 +38,14 @@ typedef enum zathura_error_e {
   ZATHURA_ERROR_ACTION_INVALID_TYPE, /**< The given action does not
                                            match the type that this function
                                            requires */
+
+  ZATHURA_ERROR_OPTIONS_ALREADY_EXISTS, /**< Option of the given name already
+                                             exists */
+  ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST, /**< Option of the given name does not
+                                             exist */
+  ZATHURA_ERROR_OPTIONS_INVALID_TYPE,   /**< Types do not match */
+  ZATHURA_ERROR_OPTIONS_READONLY,       /**< Option is read-only */
+  ZATHURA_ERROR_OPTIONS_NOT_SET,        /**< Option is not set */
 } zathura_error_t;
 
 #ifdef __cplusplus
