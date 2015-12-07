@@ -11,3 +11,4 @@ API
     annotations
     actions
     form-fields
+    error
