@@ -12,3 +12,4 @@ API
     actions
     form-fields
     error
+    options
