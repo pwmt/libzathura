@@ -1,7 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
 #define _DEFAULT_SOURCE
-#define _POSIX_SOURCE
+#define _XOPEN_SOUCE 500
 
 #include <stdlib.h>
 #include <string.h>
