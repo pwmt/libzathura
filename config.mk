@@ -61,6 +61,7 @@ LIBS = ${GLIB_LIB} ${GMODULE_LIB} -lm
 
 # pre-processor flags
 CPPFLAGS += -D_FILE_OFFSET_BITS=64
+CPPFLAGS += -Werror=implicit-function-declaration
 
 # compiler flags
 CFLAGS += -std=c11 -pedantic -Wall -Wextra -fPIC $(INCS)
