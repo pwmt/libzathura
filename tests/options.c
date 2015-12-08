@@ -58,6 +58,7 @@ START_TEST(test_options_free)
 START_TEST(test_options_add_invalid)
 {
   fail_unless(zathura_options_add(options, NULL, ZATHURA_OPTION_INT) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_options_add(options, "", ZATHURA_OPTION_INT) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
 START_TEST(test_options_add)

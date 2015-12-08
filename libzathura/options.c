@@ -125,7 +125,7 @@ zathura_error_t
 zathura_options_add(zathura_options_t* options, const char* name,
     zathura_option_type_t type)
 {
-  if (options == NULL || name == NULL) {
+  if (options == NULL || name == NULL || *name == '\0') {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
