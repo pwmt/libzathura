@@ -3,11 +3,11 @@
 #ifndef LIBZATHURA_LIST_H
 #define LIBZATHURA_LIST_H
 
+#include <glib.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <glib.h>
 
 typedef GList zathura_list_t;
 
@@ -24,9 +24,11 @@ typedef GList zathura_list_t;
 #define zathura_list_copy(list) g_list_copy((list))
 #define zathura_list_reverse(list) g_list_reverse((list))
 #define zathura_list_foreach(list, func, user_data) g_list_foreach((list), (func), (user_data))
+#define zathura_list_find(list, data) g_list_find((list), (data))
+#define zathura_list_remove(list, data) g_list_remove((list), (data))
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* LIST_H */
+#endif /* LIBZATHURA_LIST_H */
