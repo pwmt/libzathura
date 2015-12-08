@@ -250,6 +250,52 @@ START_TEST(test_options_get_invalid_type)
   fail_unless(zathura_options_get_value_int(options, "test uint", &i) == ZATHURA_ERROR_OPTIONS_INVALID_TYPE);
 } END_TEST
 
+START_TEST(test_options_callback_register_invalid)
+{
+  fail_unless(zathura_options_register_callback(NULL, NULL, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_options_register_callback(options, NULL, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_options_unregister_callback(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_options_unregister_callback(options, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+} END_TEST
+
+static unsigned int callback_called = 0;
+
+static void
+test_callback(zathura_options_t* options, const char* name,
+    const zathura_options_value_t* value, void* data)
+{
+  fail_unless(options != NULL);
+  fail_unless(name != NULL);
+  fail_unless(value != NULL);
+  fail_unless(data == NULL);
+
+  ++callback_called;
+}
+
+START_TEST(test_options_callback_register_unregister)
+{
+  callback_called = 0;
+
+  void* handle = NULL;
+  fail_unless(zathura_options_register_callback(options, test_callback, NULL, &handle) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_options_unregister_callback(options, handle) == ZATHURA_ERROR_OK);
+
+  fail_unless(callback_called == 0);
+} END_TEST
+
+START_TEST(test_options_callback)
+{
+  callback_called = 0;
+  fail_unless(zathura_options_register_callback(options, test_callback, NULL, NULL) == ZATHURA_ERROR_OK);
+
+  fail_unless(zathura_options_add(options, "test int", ZATHURA_OPTION_INT) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_options_add(options, "test uint", ZATHURA_OPTION_UINT) == ZATHURA_ERROR_OK);
+
+  fail_unless(zathura_options_set_value_int(options, "test int", 1) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_options_set_value_uint(options, "test uint", 1) == ZATHURA_ERROR_OK);
+
+  fail_unless(callback_called == 2);
+} END_TEST
 
 Suite*
 suite_options(void)
@@ -285,6 +331,12 @@ suite_options(void)
   tcase_add_test(tcase, test_options_set_invalid_type);
   tcase_add_test(tcase, test_options_get_invalid_type);
   suite_add_tcase(suite, tcase);
+
+  tcase = tcase_create("callbacks");
+  tcase_add_checked_fixture(tcase, setup_options, teardown_options);
+  tcase_add_test(tcase, test_options_callback_register_invalid);
+  tcase_add_test(tcase, test_options_callback_register_unregister);
+  tcase_add_test(tcase, test_options_callback);
 
   return suite;
 }

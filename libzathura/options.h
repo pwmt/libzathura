@@ -10,7 +10,28 @@
 extern "C" {
 #endif
 
+/**
+ * Opaque options struct
+ */
 typedef struct zathura_options_s zathura_options_t;
+
+/**
+ * Repressentation of a value
+ */
+typedef union zathura_options_value_u {
+    unsigned int u_int;
+    signed int s_int;
+    float f;
+    bool b;
+    char* string;
+    void* pointer;
+} zathura_options_value_t;
+
+/**
+ * Callback when value of an option changed.
+ */
+typedef void (*zathura_options_callback_t)(zathura_options_t* options,
+    const char* name, const zathura_options_value_t* value, void* data);
 
 /**
  * Possible types for an option.
@@ -373,6 +394,36 @@ zathura_error_t zathura_options_set_value_string(zathura_options_t* options,
  */
 zathura_error_t zathura_options_get_value_string(zathura_options_t* options,
     const char* name, const char** value);
+
+/**
+ * Register callback for changed options.
+ *
+ * @param[in] options The options.
+ * @param[in] callback The callback function.
+ * @param[in] data User supplied data passed to the callback function.
+ * @param[out] callback_handle Handle used to unregister callback.
+ *
+ * @return @ref ZATHURA_ERROR_OK No error occurred
+ * @return @ref ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been
+ *  passed
+ * @return @ref ZATHURA_ERROR_OUT_OF_MEMORY Out of memory
+ */
+zathura_error_t zathura_options_register_callback(zathura_options_t* options,
+    zathura_options_callback_t callback, void* data, void** callback_handle);
+
+/**
+ * Unregister callback previously registered with @ref
+ * zathura_options_register_callback.
+ *
+ * @param[in] options The options.
+ * @param[in] callback_handle Handle used to unregister callback.
+ *
+ * @return @ref ZATHURA_ERROR_OK No error occurred
+ * @return @ref ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been
+ *  passed
+ */
+zathura_error_t zathura_options_unregister_callback(zathura_options_t* options,
+    void* callback_handle);
 
 #ifdef __cplusplus
 }

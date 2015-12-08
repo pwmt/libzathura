@@ -7,38 +7,40 @@
 #include <glib.h>
 
 #include "options.h"
+#include "list.h"
 
 struct zathura_options_s
 {
-  GHashTable* options;
+  GHashTable* options; /*< hash table of all options */
+  zathura_list_t* callbacks; /*< callbacks */
 };
 
-struct zathura_option_s
+struct option_s
 {
-  char* description;
-  union {
-    unsigned int u_int;
-    signed int s_int;
-    float f;
-    bool b;
-    char* string;
-    void* pointer;
-  } value;
-  zathura_option_type_t value_type;
-  bool is_set   : 1;
-  bool readonly : 1;
+  char* description; /*< optional description of an option */
+  zathura_options_value_t value;
+  zathura_option_type_t value_type; /*< value type of the option */
+  bool is_set   : 1; /* option has been set once */
+  bool readonly : 1; /* option is read only */
 };
 
-typedef struct zathura_option_s zathura_option_t;
+struct callback_s
+{
+  zathura_options_callback_t callback; /*< The callback */
+  void* data; /*< User supplied data */
+};
+
+typedef struct option_s option_t;
+typedef struct callback_s callback_t;
 
 static zathura_error_t
-option_new(zathura_option_t** option, zathura_option_type_t type)
+option_new(option_t** option, zathura_option_type_t type)
 {
   if (option == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* new_option = calloc(1, sizeof(**option));
+  option_t* new_option = calloc(1, sizeof(**option));
   if (new_option == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
@@ -59,7 +61,7 @@ option_free(void* data)
     return;
   }
 
-  zathura_option_t* option = data;
+  option_t* option = data;
   free(option->description);
   if (option->value_type == ZATHURA_OPTION_STRING) {
     free(option->value.string);
@@ -67,7 +69,7 @@ option_free(void* data)
   free(option);
 }
 
-static zathura_option_t*
+static option_t*
 options_find(zathura_options_t* options, const char* name)
 {
   if (options->options == NULL) {
@@ -111,6 +113,9 @@ zathura_options_free(zathura_options_t* options)
   if (options->options) {
     g_hash_table_unref(options->options);
   }
+  if (options->callbacks) {
+    zathura_list_free_full(options->callbacks, free);
+  }
   free(options);
 
   return ZATHURA_ERROR_OK;
@@ -124,7 +129,7 @@ zathura_options_add(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option != NULL) {
     return ZATHURA_ERROR_OPTIONS_ALREADY_EXISTS;
   }
@@ -153,7 +158,7 @@ zathura_options_get_type(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   }
@@ -171,7 +176,7 @@ zathura_options_set_description(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   }
@@ -195,7 +200,7 @@ zathura_options_get_description(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   }
@@ -213,7 +218,7 @@ zathura_options_is_set(zathura_options_t* options,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   }
@@ -230,7 +235,7 @@ zathura_options_set_readonly(zathura_options_t* options, const char* name)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   }
@@ -238,6 +243,19 @@ zathura_options_set_readonly(zathura_options_t* options, const char* name)
   option->readonly = true;
 
   return ZATHURA_ERROR_OK;
+}
+
+static void
+call_callbacks(zathura_options_t* options, const char* name, option_t* option)
+{
+  if (options->callbacks == NULL) {
+    return;
+  }
+
+  callback_t* callback_info = NULL;
+  ZATHURA_LIST_FOREACH(callback_info, options->callbacks) {
+    callback_info->callback(options, name, &option->value, callback_info->data);
+  }
 }
 
 zathura_error_t
@@ -248,7 +266,7 @@ zathura_options_set_value_int(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_INT) {
@@ -259,6 +277,8 @@ zathura_options_set_value_int(zathura_options_t* options, const char* name,
 
   option->value.s_int = value;
   option->is_set      = true;
+
+  call_callbacks(options, name, option);
 
   return ZATHURA_ERROR_OK;
 }
@@ -271,7 +291,7 @@ zathura_options_get_value_int(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_INT) {
@@ -293,7 +313,7 @@ zathura_options_set_value_uint(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_UINT) {
@@ -304,6 +324,8 @@ zathura_options_set_value_uint(zathura_options_t* options, const char* name,
 
   option->value.u_int = value;
   option->is_set      = true;
+
+  call_callbacks(options, name, option);
 
   return ZATHURA_ERROR_OK;
 }
@@ -316,7 +338,7 @@ zathura_options_get_value_uint(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_UINT) {
@@ -338,7 +360,7 @@ zathura_options_set_value_float(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_FLOAT) {
@@ -349,6 +371,8 @@ zathura_options_set_value_float(zathura_options_t* options, const char* name,
 
   option->value.f = value;
   option->is_set  = true;
+
+  call_callbacks(options, name, option);
 
   return ZATHURA_ERROR_OK;
 }
@@ -361,7 +385,7 @@ zathura_options_get_value_float(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_FLOAT) {
@@ -383,7 +407,7 @@ zathura_options_set_value_bool(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_BOOL) {
@@ -394,6 +418,8 @@ zathura_options_set_value_bool(zathura_options_t* options, const char* name,
 
   option->value.b = value;
   option->is_set  = true;
+
+  call_callbacks(options, name, option);
 
   return ZATHURA_ERROR_OK;
 }
@@ -406,7 +432,7 @@ zathura_options_get_value_bool(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_BOOL) {
@@ -428,7 +454,7 @@ zathura_options_set_value_pointer(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_POINTER) {
@@ -439,6 +465,8 @@ zathura_options_set_value_pointer(zathura_options_t* options, const char* name,
 
   option->value.pointer = value;
   option->is_set        = true;
+
+  call_callbacks(options, name, option);
 
   return ZATHURA_ERROR_OK;
 }
@@ -451,7 +479,7 @@ zathura_options_get_value_pointer(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_POINTER) {
@@ -473,7 +501,7 @@ zathura_options_set_value_string(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_STRING) {
@@ -491,6 +519,8 @@ zathura_options_set_value_string(zathura_options_t* options, const char* name,
   option->value.string = new_value;
   option->is_set       = true;
 
+  call_callbacks(options, name, option);
+
   return ZATHURA_ERROR_OK;
 }
 
@@ -502,7 +532,7 @@ zathura_options_get_value_string(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  zathura_option_t* option = options_find(options, name);
+  option_t* option = options_find(options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_STRING) {
@@ -512,6 +542,52 @@ zathura_options_get_value_string(zathura_options_t* options, const char* name,
   }
 
   *value = option->value.string;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_options_register_callback(zathura_options_t* options,
+    zathura_options_callback_t callback, void* data, void** callback_handle)
+{
+  if (options == NULL || callback == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  callback_t* callback_info = calloc(1, sizeof(callback_t));
+  if (callback_info == NULL) {
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
+
+  callback_info->callback = callback;
+  callback_info->data     = data;
+
+  options->callbacks = zathura_list_append(options->callbacks, callback_info);
+  if (options->callbacks == NULL) {
+    free(callback_info);
+    return ZATHURA_ERROR_OUT_OF_MEMORY;
+  }
+
+  if (callback_handle != NULL) {
+    *callback_handle = callback_info;
+  }
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_options_unregister_callback(zathura_options_t* options,
+    void* callback_handle)
+{
+  if (options == NULL || callback_handle == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  if (zathura_list_find(options->callbacks, callback_handle) != NULL) {
+    options->callbacks = zathura_list_remove(options->callbacks,
+        callback_handle);
+    free(callback_handle);
+  }
 
   return ZATHURA_ERROR_OK;
 }
