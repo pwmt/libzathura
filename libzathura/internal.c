@@ -17,7 +17,6 @@
 
 #include "internal.h"
 #include "fiu-local.h"
-#include "macros.h"
 
 static const size_t GT_MAX_READ = 1 << 16;
 

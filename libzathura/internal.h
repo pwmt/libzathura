@@ -2,19 +2,20 @@
 #ifndef LIBZATHURA_INTERNAL_H
 #define LIBZATHURA_INTERNAL_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include <gmodule.h>
 
 #include "document.h"
 #include "plugin-api.h"
 #include "error.h"
 #include "transition.h"
+#include "macros.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 struct zathura_plugin_manager_s {
-  zathura_list_t* plugins; /**< List of pluins */
+  zathura_list_t* plugins; /**< List of plugins */
 };
 
 struct zathura_plugin_s {
@@ -75,8 +76,8 @@ zathura_error_t zathura_page_new(zathura_page_t** page);
 zathura_error_t zathura_page_free(zathura_page_t* page);
 zathura_error_t zathura_page_set_document(zathura_page_t* page, zathura_document_t* document);
 
-zathura_error_t zathura_realpath(const char* path, char** realpath);
-zathura_error_t zathura_guess_type(const char* path, char** type);
+HIDDEN zathura_error_t zathura_realpath(const char* path, char** realpath);
+HIDDEN zathura_error_t zathura_guess_type(const char* path, char** type);
 
 #ifdef __cplusplus
 }
