@@ -3,6 +3,8 @@
 #ifndef LIBZATHURA_ANNOTATION_COLOR_SPACE_H
 #define LIBZATHURA_ANNOTATION_COLOR_SPACE_H
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -45,7 +47,7 @@ typedef struct zathura_annotation_color_s {
   /**
    * Values that depend on the used colorspace
    */
-  char values[4];
+  uint16_t values[4];
 } zathura_annotation_color_t;
 
 #ifdef __cplusplus
