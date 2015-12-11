@@ -24,6 +24,11 @@ struct zathura_annotation_s {
   zathura_rectangle_t position;
 
   /**
+   * The associated page object
+   */
+  zathura_page_t* page;
+
+  /**
    * Text to be displayed for the annotation or, if this type of annotation does
    * not display text, an alternate description of the annotation’s contents in
    * human-readable form. In either case, this text is useful when extracting
@@ -164,6 +169,16 @@ struct zathura_annotation_s {
      */
     struct zathura_annotation_widget_s* widget;
   } data;
+
+  /**
+   * User data
+   */
+  void* user_data;
+
+  /**
+   * User data free function
+   */
+  zathura_free_function_t user_data_free_function;
 };
 
 #include "internal/annotation-3d.h"

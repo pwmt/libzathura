@@ -7,18 +7,35 @@
 
 #include "annotations.h"
 #include "annotations/internal.h"
+#include "plugin-api.h"
+#include "utils.h"
 
 static zathura_annotation_t* annotation = NULL;
+zathura_page_t* page;
+zathura_document_t* document;
+zathura_plugin_manager_t* plugin_manager;
 
 static void setup(void) {
-  fail_unless(zathura_annotation_new(&annotation, ZATHURA_ANNOTATION_CARET) == ZATHURA_ERROR_OK);
+  setup_document_plugin(&plugin_manager, &document);
+
+  fail_unless(zathura_document_get_page(document, 0, &page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
+  fail_unless(zathura_annotation_new(page, &annotation, ZATHURA_ANNOTATION_CARET) == ZATHURA_ERROR_OK);
   fail_unless(annotation != NULL);
 }
 
 static void teardown(void) {
   if (annotation != NULL) {
     fail_unless(zathura_annotation_free(annotation) == ZATHURA_ERROR_OK);
+    annotation = NULL;
   }
+
+  fail_unless(zathura_document_free(document) == ZATHURA_ERROR_OK);
+  document = NULL;
+
+  fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);
+  plugin_manager = NULL;
 }
 
 START_TEST(test_annotation_free) {
@@ -35,17 +52,19 @@ START_TEST(test_annotation_new) {
   zathura_annotation_t* test_annotation;
 
   /* invalid arguments */
-  fail_unless(zathura_annotation_new(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_annotation_new(&test_annotation, INT_MAX) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_new(NULL, NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_new(NULL, &test_annotation, INT_MAX) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_new(page, NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_new(page, &test_annotation, INT_MAX) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_annotation_new(&test_annotation,
+  fail_unless(zathura_annotation_new(page, &test_annotation,
         ZATHURA_ANNOTATION_UNKNOWN) == ZATHURA_ERROR_OK);
   fail_unless(zathura_annotation_free(test_annotation) == ZATHURA_ERROR_OK);
 
   /* fault injection */
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
-  fail_unless(zathura_annotation_new(&test_annotation, ZATHURA_PAGE_TRANSITION_SPLIT) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_annotation_new(page, &test_annotation, ZATHURA_PAGE_TRANSITION_SPLIT) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
 } END_TEST
 
@@ -222,6 +241,90 @@ START_TEST(test_annotation_get_color) {
   fail_unless(zathura_annotation_get_color(annotation, &color) == ZATHURA_ERROR_OK);
 } END_TEST
 
+START_TEST(test_annotation_get_page) {
+  zathura_page_t* ppage;
+
+  /* invalid arguments */
+  fail_unless(zathura_annotation_get_page(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_get_page(annotation, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_get_page(NULL, &ppage) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_get_page(annotation, &ppage) == ZATHURA_ERROR_OK);
+  fail_unless(page == ppage);
+} END_TEST
+
+START_TEST(test_annotation_render) {
+  zathura_image_buffer_t* buffer;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_annotation_render(NULL, NULL, 0)           == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_render(annotation, NULL, 0)     == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_render(annotation, &buffer, -1) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_render(annotation, &buffer, 1.0) == ZATHURA_ERROR_OK);
+} END_TEST
+
+#ifdef HAVE_CAIRO
+START_TEST(test_annotation_render_cairo) {
+  cairo_t* cairo = (cairo_t*) 0xCAFEBABE;
+
+  /* basic invalid arguments */
+  fail_unless(zathura_annotation_render_cairo(NULL, NULL, 0)         == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_render_cairo(annotation, NULL, 0)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_render_cairo(annotation, cairo, -1) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_render_cairo(annotation, cairo, 1.0) == ZATHURA_ERROR_OK);
+} END_TEST
+#endif
+
+START_TEST(test_annotation_set_user_data) {
+  void* user_data;
+
+  /* invalid arguments */
+  fail_unless(zathura_annotation_set_user_data(NULL, NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_set_user_data(annotation, NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_set_user_data(NULL, &user_data, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_set_user_data(annotation, &user_data, NULL) == ZATHURA_ERROR_OK);
+} END_TEST
+
+static void annotation_free_function(void* data) {
+  fail_unless(data == (void*) 0xCAFEBABE);
+}
+
+START_TEST(test_annotation_set_user_data_free_function) {
+  void* user_data = (void*) 0xCAFEBABE;
+  zathura_annotation_t* annotation;
+
+  fail_unless(zathura_annotation_new(page, &annotation, ZATHURA_ANNOTATION_UNKNOWN) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_set_user_data(annotation, user_data, annotation_free_function) == ZATHURA_ERROR_OK);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_set_user_data(annotation, user_data, NULL) == ZATHURA_ERROR_OK);
+
+  fail_unless(zathura_annotation_free(annotation) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_annotation_get_user_data) {
+  void* user_data = (void*) 0xCAFEBABE;
+
+  /* invalid arguments */
+  fail_unless(zathura_annotation_get_user_data(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_get_user_data(annotation, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_get_user_data(NULL, &user_data) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_set_user_data(annotation, user_data, NULL) == ZATHURA_ERROR_OK);
+
+  void* user_data2;
+  fail_unless(zathura_annotation_get_user_data(annotation, &user_data2) == ZATHURA_ERROR_OK);
+  fail_unless(user_data == user_data2);
+} END_TEST
+
 #include "annotations/annotation-3d.c"
 #include "annotations/annotation-caret.c"
 #include "annotations/annotation-circle.c"
@@ -273,6 +376,12 @@ suite_annotations(void)
   tcase_add_test(tcase, test_annotation_get_flags);
   tcase_add_test(tcase, test_annotation_set_color);
   tcase_add_test(tcase, test_annotation_get_color);
+  tcase_add_test(tcase, test_annotation_get_page);
+  tcase_add_test(tcase, test_annotation_render);
+  tcase_add_test(tcase, test_annotation_render_cairo);
+  tcase_add_test(tcase, test_annotation_set_user_data);
+  tcase_add_test(tcase, test_annotation_set_user_data_free_function);
+  tcase_add_test(tcase, test_annotation_get_user_data);
   suite_add_tcase(suite, tcase);
 
   tcase = tcase_create("text");

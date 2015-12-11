@@ -7,7 +7,12 @@
 #include "annotations/internal.h"
 
 static void setup_annotation_markup(void) {
-  fail_unless(zathura_annotation_new(&annotation, ZATHURA_ANNOTATION_TEXT) == ZATHURA_ERROR_OK);
+  setup_document_plugin(&plugin_manager, &document);
+
+  fail_unless(zathura_document_get_page(document, 0, &page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
+  fail_unless(zathura_annotation_new(page, &annotation, ZATHURA_ANNOTATION_TEXT) == ZATHURA_ERROR_OK);
   fail_unless(annotation != NULL);
 }
 
@@ -41,7 +46,7 @@ START_TEST(test_annotation_is_markup_annotation) {
   bool is_markup_annotation;
 
   /* setup */
-  fail_unless(zathura_annotation_new(&markup_annotation, ZATHURA_ANNOTATION_TEXT)
+  fail_unless(zathura_annotation_new(page, &markup_annotation, ZATHURA_ANNOTATION_TEXT)
       == ZATHURA_ERROR_OK);
 
   /* invalid arguments */
@@ -62,7 +67,7 @@ START_TEST(test_annotation_is_markup_annotation) {
 
   /* valid arguments */
 #define TEST_IS_MARKUP_ANNOTATION(type, result) \
-  fail_unless(zathura_annotation_new(&markup_annotation, (type)) \
+  fail_unless(zathura_annotation_new(page, &markup_annotation, (type)) \
       == ZATHURA_ERROR_OK); \
   fail_unless(markup_annotation != NULL); \
   fail_unless(zathura_annotation_is_markup_annotation(markup_annotation, &is_markup_annotation) \

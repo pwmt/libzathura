@@ -181,6 +181,7 @@ typedef enum zathura_annotation_type_s {
 /**
  * Creates a new annotation of the specified type
  *
+ * @param[in] page The page that is associated with this annotation
  * @param[out] annotation The annotation
  * @param[in] type The type of the annotation
  *
@@ -189,7 +190,7 @@ typedef enum zathura_annotation_type_s {
  * @return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE Mismatching type of annotation passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_new(zathura_annotation_t** annotation,
+zathura_error_t zathura_annotation_new(zathura_page_t* page, zathura_annotation_t** annotation,
     zathura_annotation_type_t type);
 
 /**
@@ -385,7 +386,7 @@ zathura_error_t zathura_annotation_set_color(zathura_annotation_t* annotation,
  *  - The border of a link annotation
  *
  * @param[in] annotation The annotation
- * @param[in] color The color
+ * @param[out] color The color
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
@@ -393,6 +394,49 @@ zathura_error_t zathura_annotation_set_color(zathura_annotation_t* annotation,
  */
 zathura_error_t zathura_annotation_get_color(zathura_annotation_t* annotation,
     zathura_annotation_color_t* color);
+
+/**
+ * Returns the page associated with this annotation
+ *
+ * @param[in] annotation The annotation
+ * @param[out] page The associated page
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_get_page(zathura_annotation_t* annotation,
+    zathura_page_t** page);
+
+/**
+ * Renders the annotation to a @a ::zathura_image_buffer_t image buffer
+ *
+ * @param[in] annotation The used annotation object
+ * @param[out] buffer The image buffer
+ * @param[in] scale Scale level
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_render(zathura_annotation_t* annotation,
+    zathura_image_buffer_t** buffer, double scale);
+
+#ifdef HAVE_CAIRO
+/**
+ * Renders the annotation to a cairo object
+ *
+ * @param[in] annotation The used annotation object
+ * @param[out] cairo The cairo object
+ * @param[in] scale Scale level
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_render_cairo(zathura_annotation_t* annotation, cairo_t* cairo,
+    double scale);
+#endif
 
 #include "annotations/annotation-3d.h"
 #include "annotations/annotation-caret.h"

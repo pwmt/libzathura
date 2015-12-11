@@ -71,7 +71,13 @@ typedef zathura_error_t (*zathura_plugin_page_render_t)(zathura_page_t* page, za
 #ifdef HAVE_CAIRO
 typedef zathura_error_t (*zathura_plugin_page_render_cairo_t)(zathura_page_t* page, cairo_t* cairo, double scale, int rotation, int flags);
 #endif
+
 typedef zathura_error_t (*zathura_plugin_form_field_save_t)(zathura_form_field_t* form_field);
+
+typedef zathura_error_t (*zathura_plugin_annotation_render_t)(zathura_annotation_t* annotation, zathura_image_buffer_t** buffer, double scale);
+#ifdef HAVE_CAIRO
+typedef zathura_error_t (*zathura_plugin_annotation_render_cairo_t)(zathura_annotation_t* annotation, cairo_t* cairo, double scale);
+#endif
 
 struct zathura_plugin_functions_s {
   zathura_plugin_document_open_t document_open;
@@ -96,12 +102,18 @@ struct zathura_plugin_functions_s {
 #endif
 
   zathura_plugin_form_field_save_t form_field_save;
+
+  zathura_plugin_annotation_render_t annotation_render;
+#ifdef HAVE_CAIRO
+  zathura_plugin_annotation_render_cairo_t annotation_render_cairo;
+#endif
 };
 
 zathura_error_t zathura_plugin_set_name(zathura_plugin_t* plugin, const char* name);
 zathura_error_t zathura_plugin_set_register_function(zathura_plugin_t* plugin, zathura_plugin_register_function_t function);
 zathura_error_t zathura_plugin_add_mimetype(zathura_plugin_t* plugin, const char* mime_type);
 
+#include "plugin-api/annotations.h"
 #include "plugin-api/attachment.h"
 #include "plugin-api/document.h"
 #include "plugin-api/form-fields.h"

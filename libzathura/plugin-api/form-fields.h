@@ -9,6 +9,7 @@ extern "C" {
 
 #include "../error.h"
 #include "../form-fields.h"
+#include "../page.h"
 
 /**
  * Creates a new form field of the given type.

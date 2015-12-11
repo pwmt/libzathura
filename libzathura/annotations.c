@@ -6,19 +6,33 @@
 
 #include "annotations.h"
 #include "annotations/internal.h"
+#include "internal.h"
+
+#define CHECK_IF_IMPLEMENTED(annotation, function) \
+  if ((annotation)->page == NULL || \
+      (annotation)->page->document == NULL || \
+      (annotation)->page->document->plugin == NULL || \
+      (annotation)->page->document->plugin->functions.function == NULL) { \
+    return ZATHURA_ERROR_PLUGIN_NOT_IMPLEMENTED; \
+  }
 
 zathura_error_t
-zathura_annotation_new(zathura_annotation_t** annotation, zathura_annotation_type_t type)
+zathura_annotation_new(zathura_page_t* page, zathura_annotation_t** annotation, zathura_annotation_type_t type)
 {
-  if (annotation == NULL) {
+  if (page == NULL || annotation == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
+  /* Create annotation */
   *annotation = calloc(1, sizeof(**annotation));
   if (*annotation == NULL) {
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
 
+  /* Save page */
+  (*annotation)->page = page;
+
+  /* Set type */
   switch (type) {
       case ZATHURA_ANNOTATION_UNKNOWN:
       case ZATHURA_ANNOTATION_TEXT:
@@ -421,4 +435,73 @@ zathura_annotation_get_color(zathura_annotation_t* annotation,
   *color = annotation->color;
 
   return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_get_page(zathura_annotation_t* annotation,
+    zathura_page_t** page)
+{
+  if (annotation == NULL || page == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *page = annotation->page;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_set_user_data(zathura_annotation_t*
+    annotation, void* data, zathura_free_function_t free_function)
+{
+  if (annotation == NULL || data == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  if (annotation->user_data != NULL && annotation->user_data_free_function) {
+    annotation->user_data_free_function(annotation->user_data);
+  }
+
+  annotation->user_data = data;
+  annotation->user_data_free_function = free_function;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_get_user_data(zathura_annotation_t* annotation, void** user_data)
+{
+  if (annotation == NULL || user_data == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *user_data = annotation->user_data;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_render(zathura_annotation_t* annotation,
+    zathura_image_buffer_t** buffer, double scale)
+{
+  if (annotation == NULL || buffer == NULL || scale <= 0.0) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_IF_IMPLEMENTED(annotation, annotation_render)
+
+  return annotation->page->document->plugin->functions.annotation_render(annotation, buffer, scale);
+}
+
+zathura_error_t
+zathura_annotation_render_cairo(zathura_annotation_t* annotation, cairo_t*
+    cairo, double scale)
+{
+  if (annotation == NULL || cairo == NULL || scale <= 0.0) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_IF_IMPLEMENTED(annotation, annotation_render_cairo)
+
+  return annotation->page->document->plugin->functions.annotation_render_cairo(annotation, cairo, scale);
 }

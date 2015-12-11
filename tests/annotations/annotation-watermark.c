@@ -5,7 +5,12 @@
 #include "annotations.h"
 
 static void setup_annotation_watermark(void) {
-  fail_unless(zathura_annotation_new(&annotation, ZATHURA_ANNOTATION_WATERMARK) == ZATHURA_ERROR_OK);
+  setup_document_plugin(&plugin_manager, &document);
+
+  fail_unless(zathura_document_get_page(document, 0, &page) == ZATHURA_ERROR_OK);
+  fail_unless(page != NULL);
+
+  fail_unless(zathura_annotation_new(page, &annotation, ZATHURA_ANNOTATION_WATERMARK) == ZATHURA_ERROR_OK);
   fail_unless(annotation != NULL);
 }
 
