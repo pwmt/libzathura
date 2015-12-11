@@ -69,16 +69,6 @@ option_free(void* data)
   free(option);
 }
 
-static option_t*
-options_find(zathura_options_t* options, const char* name)
-{
-  if (options->options == NULL) {
-    return NULL;
-  }
-
-  return g_hash_table_lookup(options->options, name);
-}
-
 zathura_error_t
 zathura_options_new(zathura_options_t** options)
 {
@@ -129,7 +119,7 @@ zathura_options_add(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option != NULL) {
     return ZATHURA_ERROR_OPTIONS_ALREADY_EXISTS;
   }
@@ -158,7 +148,7 @@ zathura_options_get_type(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   }
@@ -176,7 +166,7 @@ zathura_options_set_description(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   }
@@ -200,7 +190,7 @@ zathura_options_get_description(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   }
@@ -218,7 +208,7 @@ zathura_options_is_set(zathura_options_t* options,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   }
@@ -235,7 +225,7 @@ zathura_options_set_readonly(zathura_options_t* options, const char* name)
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   }
@@ -266,7 +256,7 @@ zathura_options_set_value_int(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_INT) {
@@ -291,7 +281,7 @@ zathura_options_get_value_int(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_INT) {
@@ -313,7 +303,7 @@ zathura_options_set_value_uint(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_UINT) {
@@ -338,7 +328,7 @@ zathura_options_get_value_uint(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_UINT) {
@@ -360,7 +350,7 @@ zathura_options_set_value_float(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_FLOAT) {
@@ -385,7 +375,7 @@ zathura_options_get_value_float(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_FLOAT) {
@@ -407,7 +397,7 @@ zathura_options_set_value_bool(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_BOOL) {
@@ -432,7 +422,7 @@ zathura_options_get_value_bool(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_BOOL) {
@@ -454,7 +444,7 @@ zathura_options_set_value_pointer(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_POINTER) {
@@ -479,7 +469,7 @@ zathura_options_get_value_pointer(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_POINTER) {
@@ -501,7 +491,7 @@ zathura_options_set_value_string(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_STRING) {
@@ -532,7 +522,7 @@ zathura_options_get_value_string(zathura_options_t* options, const char* name,
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
-  option_t* option = options_find(options, name);
+  option_t* option = g_hash_table_lookup(options->options, name);
   if (option == NULL) {
     return ZATHURA_ERROR_OPTIONS_DOES_NOT_EXIST;
   } else if (option->value_type != ZATHURA_OPTION_STRING) {
