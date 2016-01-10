@@ -19,7 +19,7 @@ LIBZATHURA_VERSION_ABI = 1
 # * If a function has been removed or the paramaters of a function have changed
 #   bump SOMAJOR and set SOMINOR to 0.
 # * If any of the exported datastructures have changed in a incompatible way
-# 	bump SOMAJOR and set SOMINOR to 0.
+#   bump SOMAJOR and set SOMINOR to 0.
 # * If a function has been added bump SOMINOR.
 
 SOMAJOR = 1
