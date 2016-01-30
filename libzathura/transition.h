@@ -22,7 +22,7 @@ typedef enum zathura_page_transition_style_e {
   ZATHURA_PAGE_TRANSITION_SPLIT,
 
   /**
-   * Multiple lines, that are evenly spaced accross the screen, synchronously
+   * Multiple lines, that are evenly spaced across the screen, synchronously
    * sweep in the same.motion to reveal the new page. The lines may either be
    * horizontal or vertical, as specified by the @a
    * ::zathura_page_transition_get_dimension entry. Horizontal lines move

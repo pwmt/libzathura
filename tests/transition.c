@@ -141,7 +141,7 @@ START_TEST(test_transition_get_style) {
 } END_TEST
 
 START_TEST(test_transition_set_duration) {
-  /* invalid paramters */
+  /* invalid parameter */
   fail_unless(zathura_page_transition_set_duration(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid parameters */
@@ -155,7 +155,7 @@ START_TEST(test_transition_get_duration) {
   zathura_page_transition_t* transition;
   fail_unless(zathura_page_transition_new(&transition, ZATHURA_PAGE_TRANSITION_SPLIT) == ZATHURA_ERROR_OK);
 
-  /* invalid paramters */
+  /* invalid parameter */
   fail_unless(zathura_page_transition_get_duration(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_transition_get_duration(transition, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
@@ -170,7 +170,7 @@ START_TEST(test_transition_get_duration) {
 } END_TEST
 
 START_TEST(test_transition_set_dimension) {
-  /* invalid paramters */
+  /* invalid parameter */
   fail_unless(zathura_page_transition_set_dimension(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
@@ -178,7 +178,7 @@ START_TEST(test_transition_get_dimension) {
   zathura_page_transition_t* transition;
   fail_unless(zathura_page_transition_new(&transition, ZATHURA_PAGE_TRANSITION_SPLIT) == ZATHURA_ERROR_OK);
 
-  /* invalid paramters */
+  /* invalid parameter */
   fail_unless(zathura_page_transition_get_dimension(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_transition_get_dimension(transition, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
@@ -187,7 +187,7 @@ START_TEST(test_transition_get_dimension) {
 } END_TEST
 
 START_TEST(test_transition_set_motion) {
-  /* invalid paramters */
+  /* invalid parameter */
   fail_unless(zathura_page_transition_set_motion(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
@@ -195,7 +195,7 @@ START_TEST(test_transition_get_motion) {
   zathura_page_transition_t* transition;
   fail_unless(zathura_page_transition_new(&transition, ZATHURA_PAGE_TRANSITION_SPLIT) == ZATHURA_ERROR_OK);
 
-  /* invalid paramters */
+  /* invalid parameter */
   fail_unless(zathura_page_transition_get_motion(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_transition_get_motion(transition, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
@@ -207,7 +207,7 @@ START_TEST(test_transition_set_angle) {
   zathura_page_transition_t* transition;
   fail_unless(zathura_page_transition_new(&transition, ZATHURA_PAGE_TRANSITION_WIPE) == ZATHURA_ERROR_OK);
 
-  /* invalid paramters */
+  /* invalid parameter */
   fail_unless(zathura_page_transition_set_angle(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_transition_set_angle(transition, 2) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
@@ -221,7 +221,7 @@ START_TEST(test_transition_get_angle) {
   zathura_page_transition_t* transition;
   fail_unless(zathura_page_transition_new(&transition, ZATHURA_PAGE_TRANSITION_SPLIT) == ZATHURA_ERROR_OK);
 
-  /* invalid paramters */
+  /* invalid parameter */
   fail_unless(zathura_page_transition_get_angle(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_transition_get_angle(transition, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
@@ -230,7 +230,7 @@ START_TEST(test_transition_get_angle) {
 } END_TEST
 
 START_TEST(test_transition_set_scale) {
-  /* invalid paramters */
+  /* invalid parameter */
   fail_unless(zathura_page_transition_set_scale(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
@@ -238,7 +238,7 @@ START_TEST(test_transition_get_scale) {
   zathura_page_transition_t* transition;
   fail_unless(zathura_page_transition_new(&transition, ZATHURA_PAGE_TRANSITION_SPLIT) == ZATHURA_ERROR_OK);
 
-  /* invalid paramters */
+  /* invalid parameter */
   fail_unless(zathura_page_transition_get_scale(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_transition_get_scale(transition, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
@@ -247,7 +247,7 @@ START_TEST(test_transition_get_scale) {
 } END_TEST
 
 START_TEST(test_transition_set_rectangular) {
-  /* invalid paramters */
+  /* invalid parameter */
   fail_unless(zathura_page_transition_set_rectangular(NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 } END_TEST
 
@@ -255,7 +255,7 @@ START_TEST(test_transition_is_rectangular) {
   zathura_page_transition_t* transition;
   fail_unless(zathura_page_transition_new(&transition, ZATHURA_PAGE_TRANSITION_SPLIT) == ZATHURA_ERROR_OK);
 
-  /* invalid paramters */
+  /* invalid parameter */
   fail_unless(zathura_page_transition_is_rectangular(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS);
   fail_unless(zathura_page_transition_is_rectangular(transition, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
