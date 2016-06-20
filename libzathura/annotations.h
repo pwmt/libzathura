@@ -409,6 +409,19 @@ zathura_error_t zathura_annotation_get_page(zathura_annotation_t* annotation,
     zathura_page_t** page);
 
 /**
+ * Checks if the annotation has an appearance stream
+ *
+ * @param[in] annotation The used annotation object
+ * @param[out] has_appearance_stream If the object has an appearance stream
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_has_appearance_stream(zathura_annotation_t* annotation,
+    bool* has_appearance_stream);
+
+/**
  * Renders the annotation to a @a ::zathura_image_buffer_t image buffer
  *
  * @param[in] annotation The used annotation object

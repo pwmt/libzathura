@@ -32,6 +32,9 @@ zathura_annotation_new(zathura_page_t* page, zathura_annotation_t** annotation, 
   /* Save page */
   (*annotation)->page = page;
 
+  /* Initialize defaults */
+  (*annotation)->has_appearance_stream = false;
+
   /* Set type */
   switch (type) {
       case ZATHURA_ANNOTATION_UNKNOWN:
@@ -446,6 +449,31 @@ zathura_annotation_get_page(zathura_annotation_t* annotation,
   }
 
   *page = annotation->page;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_has_appearance_stream(zathura_annotation_t* annotation,
+    bool* has_appearance_stream)
+{
+  if (annotation == NULL || has_appearance_stream == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *has_appearance_stream = annotation->has_appearance_stream;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t zathura_annotation_set_appearance_stream(zathura_annotation_t*
+    annotation, bool has_appearance_stream)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  annotation->has_appearance_stream = has_appearance_stream;
 
   return ZATHURA_ERROR_OK;
 }

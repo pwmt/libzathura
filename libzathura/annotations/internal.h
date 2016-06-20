@@ -64,6 +64,11 @@ struct zathura_annotation_s {
    zathura_annotation_color_t color;
 
   /**
+   * Set by the plugin if the annotation has an appearance stream
+   */
+  bool has_appearance_stream;
+
+  /**
    * Describes if the annotation is a markup annotation
    */
   bool is_markup;

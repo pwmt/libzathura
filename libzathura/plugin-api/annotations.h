@@ -34,7 +34,21 @@ zathura_error_t zathura_annotation_set_user_data(zathura_annotation_t*
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_get_user_data(zathura_annotation_t* annotation, void** data);
+zathura_error_t zathura_annotation_get_user_data(zathura_annotation_t*
+    annotation, void** data);
+
+/**
+ * Sets if the annotation has an appearance stream
+ *
+ * @param[in] annotation The annotation object
+ * @param[out] has_appearance_stream If the annotation has an appearance stream
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_set_appearance_stream(zathura_annotation_t*
+    annotation, bool has_appearance_stream);
 
 #ifdef __cplusplus
 }
