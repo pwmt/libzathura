@@ -34,6 +34,8 @@ zathura_annotation_new(zathura_page_t* page, zathura_annotation_t** annotation, 
 
   /* Initialize defaults */
   (*annotation)->has_appearance_stream = false;
+  (*annotation)->blend_mode = ZATHURA_BLEND_MODE_NORMAL;
+  (*annotation)->opacity = 1.0;
 
   /* Set type */
   switch (type) {
@@ -436,6 +438,58 @@ zathura_annotation_get_color(zathura_annotation_t* annotation,
   }
 
   *color = annotation->color;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_set_blend_mode(zathura_annotation_t* annotation,
+    zathura_blend_mode_t blend_mode)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  annotation->blend_mode = blend_mode;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_get_blend_mode(zathura_annotation_t* annotation,
+    zathura_blend_mode_t* blend_mode)
+{
+  if (annotation == NULL || blend_mode == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *blend_mode = annotation->blend_mode;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_set_opacity(zathura_annotation_t* annotation,
+    float opacity)
+{
+  if (annotation == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  annotation->opacity = opacity;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_annotation_get_opacity(zathura_annotation_t* annotation,
+    float* opacity)
+{
+  if (annotation == NULL || opacity == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *opacity = annotation->opacity;
 
   return ZATHURA_ERROR_OK;
 }

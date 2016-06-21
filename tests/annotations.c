@@ -241,6 +241,58 @@ START_TEST(test_annotation_get_color) {
   fail_unless(zathura_annotation_get_color(annotation, &color) == ZATHURA_ERROR_OK);
 } END_TEST
 
+START_TEST(test_annotation_set_blend_mode) {
+  zathura_blend_mode_t blend_mode = ZATHURA_BLEND_MODE_NORMAL;
+
+  /* invalid arguments */
+  fail_unless(zathura_annotation_set_blend_mode(NULL, blend_mode) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_set_blend_mode(annotation, blend_mode) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_annotation_get_blend_mode) {
+  zathura_blend_mode_t blend_mode = ZATHURA_BLEND_MODE_NORMAL;
+  zathura_blend_mode_t blend_mode_input = ZATHURA_BLEND_MODE_DARKEN;
+
+  /* invalid arguments */
+  fail_unless(zathura_annotation_get_blend_mode(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_get_blend_mode(annotation, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_get_blend_mode(NULL, &blend_mode) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_get_blend_mode(annotation, &blend_mode) == ZATHURA_ERROR_OK);
+
+  fail_unless(zathura_annotation_set_blend_mode(annotation, blend_mode_input) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_get_blend_mode(annotation, &blend_mode) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_annotation_set_opacity) {
+  float opacity = 1.0;
+
+  /* invalid arguments */
+  fail_unless(zathura_annotation_set_opacity(NULL, opacity) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_set_opacity(annotation, opacity) == ZATHURA_ERROR_OK);
+} END_TEST
+
+START_TEST(test_annotation_get_opacity) {
+  float opacity = 1.0;
+  float opacity_input = 2.0;
+
+  /* invalid arguments */
+  fail_unless(zathura_annotation_get_opacity(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_get_opacity(annotation, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_get_opacity(NULL, &opacity) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+
+  /* valid arguments */
+  fail_unless(zathura_annotation_get_opacity(annotation, &opacity) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_set_opacity(annotation, opacity_input) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_get_opacity(annotation, &opacity) == ZATHURA_ERROR_OK);
+  fail_unless(opacity == opacity_input);
+} END_TEST
+
 START_TEST(test_annotation_get_page) {
   zathura_page_t* ppage;
 
@@ -376,6 +428,10 @@ suite_annotations(void)
   tcase_add_test(tcase, test_annotation_get_flags);
   tcase_add_test(tcase, test_annotation_set_color);
   tcase_add_test(tcase, test_annotation_get_color);
+  tcase_add_test(tcase, test_annotation_set_blend_mode);
+  tcase_add_test(tcase, test_annotation_get_blend_mode);
+  tcase_add_test(tcase, test_annotation_set_opacity);
+  tcase_add_test(tcase, test_annotation_get_opacity);
   tcase_add_test(tcase, test_annotation_get_page);
   tcase_add_test(tcase, test_annotation_render);
   tcase_add_test(tcase, test_annotation_render_cairo);

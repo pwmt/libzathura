@@ -74,6 +74,16 @@ struct zathura_annotation_s {
   bool is_markup;
 
   /**
+   * Blend mode of the annotation
+   */
+  zathura_blend_mode_t blend_mode;
+
+  /**
+   * Opacity of the annotation
+   */
+  float opacity;
+
+  /**
     * A markup annotation
     */
   struct zathura_annotation_markup_s* markup;

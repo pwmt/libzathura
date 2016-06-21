@@ -21,6 +21,10 @@ START_TEST(test_annotation_highlight_get_type) {
   zathura_annotation_type_t type;
   fail_unless(zathura_annotation_get_type(annotation, &type) == ZATHURA_ERROR_OK);
   fail_unless(type == ZATHURA_ANNOTATION_HIGHLIGHT);
+
+  zathura_blend_mode_t blend_mode;
+  fail_unless(zathura_annotation_get_blend_mode(annotation, &blend_mode) == ZATHURA_ERROR_OK);
+  fail_unless(blend_mode == ZATHURA_BLEND_MODE_MULTIPLY);
 } END_TEST
 
 START_TEST(test_annotation_highlight_set_quad_points) {

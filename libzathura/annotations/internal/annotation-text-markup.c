@@ -43,6 +43,10 @@ zathura_annotation_text_markup_init(zathura_annotation_t* annotation)
     return ZATHURA_ERROR_OUT_OF_MEMORY;
   }
 
+  if (annotation->type == ZATHURA_ANNOTATION_HIGHLIGHT) {
+    annotation->blend_mode = ZATHURA_BLEND_MODE_MULTIPLY;
+  }
+
   return ZATHURA_ERROR_OK;
 }
 

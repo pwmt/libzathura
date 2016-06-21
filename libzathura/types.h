@@ -53,6 +53,21 @@ typedef struct zathura_form_field_mapping_s {
 
 typedef void (*zathura_free_function_t)(void* data);
 
+typedef enum zathura_blend_mode_e {
+  ZATHURA_BLEND_MODE_NORMAL,
+  ZATHURA_BLEND_MODE_MULTIPLY,
+  ZATHURA_BLEND_MODE_SCREEN,
+  ZATHURA_BLEND_MODE_OVERLAY,
+  ZATHURA_BLEND_MODE_DARKEN,
+  ZATHURA_BLEND_MODE_LIGHTEN,
+  ZATHURA_BLEND_MODE_COLOR_DODGE,
+  ZATHURA_BLEND_MODE_COLOR_BURN,
+  ZATHURA_BLEND_MODE_HARD_LIGHT,
+  ZATHURA_BLEND_MODE_SOFT_LIGHT,
+  ZATHURA_BLEND_MODE_DIFFERENCE,
+  ZATHURA_BLEND_MODE_EXCLUSION
+} zathura_blend_mode_t;
+
 #ifdef __cplusplus
 }
 #endif

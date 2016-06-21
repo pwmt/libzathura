@@ -396,6 +396,58 @@ zathura_error_t zathura_annotation_get_color(zathura_annotation_t* annotation,
     zathura_annotation_color_t* color);
 
 /**
+ * Sets the blend mode of the annotation
+ *
+ * @param[in] annotation The annotation
+ * @param[in] blend_mode The blend mode
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_set_blend_mode(zathura_annotation_t* annotation,
+    zathura_blend_mode_t blend_mode);
+
+/**
+ * Returns the blend mode of the annotation
+ *
+ * @param[in] annotation The annotation
+ * @param[out] blend_mode The blend mode
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_get_blend_mode(zathura_annotation_t* annotation,
+    zathura_blend_mode_t* blend_mode);
+
+/**
+ * Sets the opacity of the annotation
+ *
+ * @param[in] annotation The annotation
+ * @param[in] opacity The opacity
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_set_opacity(zathura_annotation_t* annotation,
+    float opacity);
+
+/**
+ * Returns the opacity of the annotation
+ *
+ * @param[in] annotation The annotation
+ * @param[out] opacity The opacity
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_annotation_get_opacity(zathura_annotation_t* annotation,
+    float* opacity);
+
+/**
  * Returns the page associated with this annotation
  *
  * @param[in] annotation The annotation
