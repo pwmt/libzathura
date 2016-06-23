@@ -8,6 +8,7 @@ extern "C" {
 #endif
 
 #include "../list.h"
+#include "../error.h"
 
 /**
  * The border style.
@@ -106,6 +107,9 @@ typedef struct zathura_annotation_border_s {
   zathura_annotation_border_effect_t effect;
   float intensity;
 } zathura_annotation_border_t;
+
+zathura_error_t zathura_annotation_border_init(zathura_annotation_border_t* annotation_border);
+zathura_error_t zathura_annotation_border_clear(zathura_annotation_border_t* annotation_border);
 
 #ifdef __cplusplus
 }
