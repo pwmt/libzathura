@@ -585,8 +585,8 @@ suite_annotations(void)
   tcase_add_test(tcase, test_annotation_polygon_clear);
   tcase_add_test(tcase, test_annotation_polygon_set_vertices);
   tcase_add_test(tcase, test_annotation_polygon_get_vertices);
-  tcase_add_test(tcase, test_annotation_polygon_set_borders);
-  tcase_add_test(tcase, test_annotation_polygon_get_borders);
+  tcase_add_test(tcase, test_annotation_polygon_set_border);
+  tcase_add_test(tcase, test_annotation_polygon_get_border);
   tcase_add_test(tcase, test_annotation_polygon_set_interior_color);
   tcase_add_test(tcase, test_annotation_polygon_get_interior_color);
   tcase_add_test(tcase, test_annotation_polygon_set_intent);
@@ -605,8 +605,8 @@ suite_annotations(void)
   tcase_add_test(tcase, test_annotation_poly_line_get_vertices);
   tcase_add_test(tcase, test_annotation_poly_line_set_line_ending);
   tcase_add_test(tcase, test_annotation_poly_line_get_line_ending);
-  tcase_add_test(tcase, test_annotation_poly_line_set_borders);
-  tcase_add_test(tcase, test_annotation_poly_line_get_borders);
+  tcase_add_test(tcase, test_annotation_poly_line_set_border);
+  tcase_add_test(tcase, test_annotation_poly_line_get_border);
   tcase_add_test(tcase, test_annotation_poly_line_set_interior_color);
   tcase_add_test(tcase, test_annotation_poly_line_get_interior_color);
   tcase_add_test(tcase, test_annotation_poly_line_set_intent);

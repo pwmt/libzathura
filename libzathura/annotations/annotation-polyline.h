@@ -68,32 +68,32 @@ zathura_error_t zathura_annotation_poly_line_get_line_ending(zathura_annotation_
     annotation, zathura_annotation_line_ending_t line_ending[2]);
 
 /**
- * Sets a list of zathura_border_t borders specifying the width and dash pattern
- * to be used in drawing the line.
+ * Sets a zathura_border_t borders specifying the width and dash pattern to be
+ * used in drawing the line.
  *
  * @param[in] annotation The annotation
- * @param[in] borders The list of borders
+ * @param[in] border The border
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE Mismatching type of annotation passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_poly_line_set_borders(zathura_annotation_t* annotation, zathura_list_t* borders);
+zathura_error_t zathura_annotation_poly_line_set_border(zathura_annotation_t* annotation, zathura_annotation_border_t border);
 
 /**
- * Returns a list of zathura_border_t borders specifying the width and dash pattern
- * to be used in drawing the line.
+ * Returns the zathura_border_t border specifying the width and dash pattern to
+ * be used in drawing the line.
  *
  * @param[in] annotation The annotation
- * @param[out] borders The list of borders
+ * @param[out] border The border
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_ANNOTATION_INVALID_TYPE Mismatching type of annotation passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_poly_line_get_borders(zathura_annotation_t* annotation, zathura_list_t** borders);
+zathura_error_t zathura_annotation_poly_line_get_border(zathura_annotation_t* annotation, zathura_annotation_border_t* border);
 
 /**
  * Sets the interior color of the poly-line annotation with which to fill the

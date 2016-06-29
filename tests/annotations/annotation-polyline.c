@@ -95,30 +95,26 @@ START_TEST(test_annotation_poly_line_get_line_ending) {
   fail_unless(line_ending[1] == ZATHURA_ANNOTATION_LINE_ENDING_CIRCLE);
 } END_TEST
 
-START_TEST(test_annotation_poly_line_set_borders) {
-  zathura_list_t* borders = zathura_list_alloc();
-  fail_unless(borders != NULL);
+START_TEST(test_annotation_poly_line_set_border) {
+  zathura_annotation_border_t border;
 
   /* invalid arguments */
-  fail_unless(zathura_annotation_poly_line_set_borders(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_annotation_poly_line_set_borders(annotation, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_annotation_poly_line_set_borders(NULL, borders) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_poly_line_set_border(NULL, border) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_annotation_poly_line_set_borders(annotation, borders) == ZATHURA_ERROR_OK);
-  zathura_list_free(borders);
+  fail_unless(zathura_annotation_poly_line_set_border(annotation, border) == ZATHURA_ERROR_OK);
 } END_TEST
 
-START_TEST(test_annotation_poly_line_get_borders) {
-  zathura_list_t* borders;
+START_TEST(test_annotation_poly_line_get_border) {
+  zathura_annotation_border_t border;
 
   /* invalid arguments */
-  fail_unless(zathura_annotation_poly_line_get_borders(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_annotation_poly_line_get_borders(annotation, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_annotation_poly_line_get_borders(NULL, &borders) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_poly_line_get_border(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_poly_line_get_border(annotation, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_poly_line_get_border(NULL, &border) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_annotation_poly_line_get_borders(annotation, &borders) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_poly_line_get_border(annotation, &border) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_annotation_poly_line_set_interior_color) {

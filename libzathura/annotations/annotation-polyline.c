@@ -123,31 +123,31 @@ zathura_annotation_poly_line_get_line_ending(zathura_annotation_t*
 }
 
 zathura_error_t
-zathura_annotation_poly_line_set_borders(zathura_annotation_t* annotation,
-    zathura_list_t* borders)
+zathura_annotation_poly_line_set_border(zathura_annotation_t* annotation,
+    zathura_annotation_border_t border)
 {
-  if (annotation == NULL || borders == NULL) {
+  if (annotation == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
   ANNOTATION_POLY_LINE_CHECK_TYPE_AND_DATA()
 
-  annotation->data.poly_line->borders = borders;
+  annotation->data.poly_line->border = border;
 
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_annotation_poly_line_get_borders(zathura_annotation_t* annotation,
-    zathura_list_t** borders)
+zathura_annotation_poly_line_get_border(zathura_annotation_t* annotation,
+    zathura_annotation_border_t* border)
 {
-  if (annotation == NULL || borders == NULL) {
+  if (annotation == NULL || border == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
   ANNOTATION_POLY_LINE_CHECK_TYPE_AND_DATA()
 
-  *borders = annotation->data.poly_line->borders;
+  *border = annotation->data.poly_line->border;
 
   return ZATHURA_ERROR_OK;
 }

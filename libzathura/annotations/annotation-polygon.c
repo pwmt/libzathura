@@ -91,31 +91,31 @@ zathura_annotation_polygon_get_vertices(zathura_annotation_t* annotation,
 }
 
 zathura_error_t
-zathura_annotation_polygon_set_borders(zathura_annotation_t* annotation,
-    zathura_list_t* borders)
+zathura_annotation_polygon_set_border(zathura_annotation_t* annotation,
+    zathura_annotation_border_t border)
 {
-  if (annotation == NULL || borders == NULL) {
+  if (annotation == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
   ANNOTATION_POLYGON_CHECK_TYPE_AND_DATA()
 
-  annotation->data.polygon->borders = borders;
+  annotation->data.polygon->border = border;
 
   return ZATHURA_ERROR_OK;
 }
 
 zathura_error_t
-zathura_annotation_polygon_get_borders(zathura_annotation_t* annotation,
-    zathura_list_t** borders)
+zathura_annotation_polygon_get_border(zathura_annotation_t* annotation,
+    zathura_annotation_border_t* border)
 {
-  if (annotation == NULL || borders == NULL) {
+  if (annotation == NULL || border == NULL) {
     return ZATHURA_ERROR_INVALID_ARGUMENTS;
   }
 
   ANNOTATION_POLYGON_CHECK_TYPE_AND_DATA()
 
-  *borders = annotation->data.polygon->borders;
+  *border = annotation->data.polygon->border;
 
   return ZATHURA_ERROR_OK;
 }

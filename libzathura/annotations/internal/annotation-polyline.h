@@ -34,7 +34,7 @@ typedef struct zathura_annotation_poly_line_s {
    * A border style dictionary specifying the width and dash pattern to be used
    * in drawing the line.
    */
-  zathura_list_t* borders;
+  zathura_annotation_border_t border;
 
   /**
    * An array of numbers in the range 0.0 to 1.0 specifying the interior color

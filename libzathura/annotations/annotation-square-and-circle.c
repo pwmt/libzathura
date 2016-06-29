@@ -194,4 +194,3 @@ zathura_annotation_square_get_border(zathura_annotation_t*
 {
   return zathura_annotation_circle_get_border(annotation, border);
 }
-
