@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "form-field-text.h"
+#include "../plugin-api/form-fields/form-field-text.h"
 #include "internal.h"
 
 zathura_error_t

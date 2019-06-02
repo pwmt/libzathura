@@ -1,5 +1,4 @@
 Error codes
 ===========
 
-.. doxygenfile:: libzathura/error.h
-  :project: libzathura
+.. c:autodoc:: libzathura/error.h

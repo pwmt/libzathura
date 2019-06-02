@@ -1,5 +1,5 @@
 Sound Annotations
 =================
 
-.. doxygenfile:: libzathura/annotations/annotation-sound.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-sound.h
+  

@@ -5,10 +5,12 @@
 #include <fiu.h>
 #include <fiu-control.h>
 
-#include "annotations.h"
-#include "annotations/internal.h"
-#include "plugin-api.h"
+#include <libzathura/annotations.h>
+#include <libzathura/annotations/internal.h>
+#include <libzathura/plugin-api.h>
+
 #include "utils.h"
+#include "tests.h"
 
 static zathura_annotation_t* annotation = NULL;
 zathura_page_t* page;
@@ -63,9 +65,11 @@ START_TEST(test_annotation_new) {
   fail_unless(zathura_annotation_free(test_annotation) == ZATHURA_ERROR_OK);
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_annotation_new(page, &test_annotation, ZATHURA_PAGE_TRANSITION_SPLIT) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 
 START_TEST(test_annotation_get_type) {
@@ -406,7 +410,7 @@ START_TEST(test_annotation_get_user_data) {
 #include "annotations/annotation-widget.c"
 
 Suite*
-suite_annotations(void)
+create_suite(void)
 {
   TCase* tcase = NULL;
   Suite* suite = suite_create("annotations");

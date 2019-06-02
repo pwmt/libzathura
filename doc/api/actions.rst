@@ -31,5 +31,4 @@ Action Types
 Common action
 -------------
 
-.. doxygenfile:: libzathura/action.h
-  :project: libzathura
+.. c:autodoc:: libzathura/action.h

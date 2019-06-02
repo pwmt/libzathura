@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "transition.h"
+#include "plugin-api/transition.h"
 
 /**
  * Describes the transition object of the page which is used

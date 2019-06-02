@@ -2,9 +2,12 @@
 
 #include <check.h>
 
-#include "document.h"
-#include "plugin-manager.h"
-#include "plugin-api.h"
+#include <libzathura/document.h>
+#include <libzathura/plugin-manager.h>
+#include <libzathura/plugin-api.h>
+
+#include "tests.h"
+#include "utils.h"
 
 zathura_document_t* document;
 zathura_plugin_manager_t* plugin_manager;
@@ -12,13 +15,13 @@ zathura_plugin_manager_t* plugin_manager;
 static void setup_document(void) {
   fail_unless(zathura_plugin_manager_new(&plugin_manager) == ZATHURA_ERROR_OK);
   fail_unless(plugin_manager != NULL);
-  fail_unless(zathura_plugin_manager_load(plugin_manager, "./plugin/plugin.so") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_plugin_manager_load(plugin_manager, get_plugin_path()) == ZATHURA_ERROR_OK);
 
   zathura_plugin_t* plugin = NULL;
   fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, &plugin, "libzathura/test-plugin") == ZATHURA_ERROR_OK);
   fail_unless(plugin != NULL);
 
-  fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_plugin_open_document(plugin, &document, TEST_FILE_PATH, NULL) == ZATHURA_ERROR_OK);
   fail_unless(document != NULL);
 }
 
@@ -245,7 +248,7 @@ START_TEST(test_document_get_permissions) {
 } END_TEST
 
 Suite*
-suite_document(void)
+create_suite(void)
 {
   TCase* tcase = NULL;
   Suite* suite = suite_create("document");

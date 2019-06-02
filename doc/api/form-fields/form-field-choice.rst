@@ -11,5 +11,5 @@ forms:
     editable text box in which the user can type a value other than the
     predefined choices
 
-.. doxygenfile:: libzathura/form-fields/form-field-choice.h
-  :project: libzathura
+.. c:autodoc:: libzathura/form-fields/form-field-choice.h
+  

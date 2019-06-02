@@ -4,8 +4,10 @@
 #include <fiu.h>
 #include <fiu-control.h>
 
-#include "image.h"
-#include "plugin-api.h"
+#include <libzathura/image.h>
+#include <libzathura/plugin-api.h>
+
+#include "tests.h"
 
 zathura_image_t* image;
 
@@ -31,9 +33,11 @@ START_TEST(test_image_new) {
   fail_unless(zathura_image_free(image) == ZATHURA_ERROR_OK);
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_image_new(&image, position) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 
 START_TEST(test_image_free) {
@@ -172,7 +176,7 @@ START_TEST(test_image_get_cairo_surface) {
 #endif
 
 Suite*
-suite_image(void)
+create_suite(void)
 {
   TCase* tcase = NULL;
   Suite* suite = suite_create("image");

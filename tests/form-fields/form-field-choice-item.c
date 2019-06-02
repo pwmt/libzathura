@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <fiu.h>
 
-#include "form-fields.h"
-#include "list.h"
+#include <libzathura/form-fields.h>
+#include <libzathura/list.h>
 
 zathura_form_field_t* form_field;
 zathura_form_field_choice_item_t* choice_item;
@@ -48,9 +48,11 @@ START_TEST(test_form_field_choice_item_new) {
   fail_unless(zathura_form_field_choice_item_new(form_field, &item, "name") == ZATHURA_ERROR_OK);
   fail_unless(item != NULL);
 
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_form_field_choice_item_new(form_field, &item, "name") == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 
 START_TEST(test_form_field_choice_item_free) {

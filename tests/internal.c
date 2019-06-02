@@ -7,7 +7,9 @@
 #include <fiu.h>
 #include <fiu-control.h>
 
-#include "internal.h"
+#include <libzathura/internal.h>
+
+#include "tests.h"
 
 /* forward declarations */
 char* guess_type_magic(const char* path);
@@ -29,9 +31,11 @@ START_TEST(test_zathura_realpath) {
   free(real_path);
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_realpath("./plugin", &real_path) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 
 START_TEST(test_zathura_guess_type) {
@@ -90,7 +94,7 @@ START_TEST(test_zathura_guess_type_magic) {
 #endif
 
 Suite*
-suite_internal(void)
+create_suite(void)
 {
   TCase* tcase = NULL;
   Suite* suite = suite_create("internal");

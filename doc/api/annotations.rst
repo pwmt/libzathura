@@ -43,5 +43,4 @@ Annotation Types
 Common Annotation
 -----------------
 
-.. doxygenfile:: libzathura/annotations.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations.h

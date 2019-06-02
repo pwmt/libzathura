@@ -1,5 +1,4 @@
 Plugin Manager
 ==============
 
-.. doxygenfile:: libzathura/plugin-manager.h
-    :project: libzathura
+.. c:autodoc:: libzathura/plugin-manager.h

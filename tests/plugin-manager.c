@@ -2,10 +2,14 @@
 
 #include <check.h>
 #include <fiu.h>
+#include <stdio.h>
 #include <fiu-control.h>
 
-#include "plugin-manager.h"
-#include "internal.h"
+#include <libzathura/plugin-manager.h>
+#include <libzathura/internal.h>
+
+#include "tests.h"
+#include "utils.h"
 
 START_TEST(test_plugin_manager_new) {
   zathura_plugin_manager_t* plugin_manager = NULL;
@@ -19,9 +23,11 @@ START_TEST(test_plugin_manager_new) {
   fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_plugin_manager_new(&plugin_manager) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 
 START_TEST(test_plugin_manager_free) {
@@ -39,7 +45,7 @@ START_TEST(test_plugin_manager_load) {
   fail_unless(zathura_plugin_manager_load(plugin_manager, "")   == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid parameter */
-  fail_unless(zathura_plugin_manager_load(plugin_manager, "./plugin/plugin.so") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_plugin_manager_load(plugin_manager, get_plugin_path()) == ZATHURA_ERROR_OK);
 
   fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);
 } END_TEST
@@ -55,7 +61,7 @@ START_TEST(test_plugin_manager_load_dir) {
   fail_unless(zathura_plugin_manager_load_dir(plugin_manager, "")   == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid parameter */
-  fail_unless(zathura_plugin_manager_load_dir(plugin_manager, "./plugin/") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_plugin_manager_load_dir(plugin_manager, get_plugin_dir_path()) == ZATHURA_ERROR_OK);
 
   fail_unless(zathura_plugin_manager_free(plugin_manager) == ZATHURA_ERROR_OK);
 } END_TEST
@@ -75,7 +81,7 @@ START_TEST(test_plugin_manager_get_plugins) {
   fail_unless(list == NULL);
 
   /* load plugins */
-  fail_unless(zathura_plugin_manager_load_dir(plugin_manager, "./plugin/") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_plugin_manager_load_dir(plugin_manager, get_plugin_dir_path()) == ZATHURA_ERROR_OK);
   fail_unless(zathura_plugin_manager_get_plugins(plugin_manager, &list) == ZATHURA_ERROR_OK);
   fail_unless(list != NULL);
   fail_unless(zathura_list_length(list) == 1);
@@ -96,7 +102,7 @@ START_TEST(test_plugin_manager_get_plugin) {
   fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, NULL, "") == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* load plugins */
-  fail_unless(zathura_plugin_manager_load_dir(plugin_manager, "./plugin/") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_plugin_manager_load_dir(plugin_manager, get_plugin_dir_path()) == ZATHURA_ERROR_OK);
   fail_unless(zathura_plugin_manager_get_plugin(plugin_manager, &plugin, "libzathura/test-plugin") == ZATHURA_ERROR_OK);
   fail_unless(plugin != NULL);
 
@@ -114,7 +120,7 @@ START_TEST(test_plugin_manager_get_plugin) {
 } END_TEST
 
 Suite*
-suite_plugin_manager(void)
+create_suite(void)
 {
   TCase* tcase = NULL;
   Suite* suite = suite_create("plugin-manager");

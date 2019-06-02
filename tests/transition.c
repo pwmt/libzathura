@@ -6,8 +6,10 @@
 #include <stdio.h>
 #include <limits.h>
 
-#include "transition.h"
-#include "plugin-api.h"
+#include <libzathura/transition.h>
+#include <libzathura/plugin-api.h>
+
+#include "tests.h"
 
 zathura_page_transition_t* transition;
 
@@ -66,9 +68,11 @@ START_TEST(test_transition_new) {
   fail_unless(zathura_page_transition_free(transition) == ZATHURA_ERROR_OK);
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_page_transition_new(&transition, ZATHURA_PAGE_TRANSITION_SPLIT) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 
 START_TEST(test_transition_get_style) {
@@ -891,7 +895,7 @@ START_TEST(test_fade_transition_is_rectangular) {
 } END_TEST
 
 Suite*
-suite_transition(void)
+create_suite(void)
 {
   TCase* tcase = NULL;
   Suite* suite = suite_create("transition");

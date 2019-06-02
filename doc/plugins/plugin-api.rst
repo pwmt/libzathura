@@ -1,5 +1,4 @@
 Plugin-API
 ==========
 
-.. doxygenfile:: libzathura/plugin-api.h
-    :project: libzathura
+.. c:autodoc:: libzathura/plugin-api.h

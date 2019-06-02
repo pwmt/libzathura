@@ -1,5 +1,5 @@
 Screen Annotations
 ==================
 
-.. doxygenfile:: libzathura/annotations/annotation-screen.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-screen.h
+  

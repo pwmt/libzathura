@@ -1,5 +1,4 @@
 Caret Annotations
 =================
 
-.. doxygenfile:: libzathura/annotations/annotation-caret.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-caret.h

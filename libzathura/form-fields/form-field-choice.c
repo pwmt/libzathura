@@ -5,6 +5,8 @@
 #include <string.h>
 
 #include "form-field-choice.h"
+#include "../plugin-api/form-fields/form-field-choice.h"
+#include "../plugin-api/form-fields/form-field-choice-item.h"
 #include "internal.h"
 
 zathura_error_t

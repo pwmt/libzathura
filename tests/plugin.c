@@ -6,12 +6,15 @@
 #include <fiu.h>
 #include <fiu-control.h>
 
-#include "error.h"
-#include "macros.h"
-#include "plugin.h"
-#include "plugin-api.h"
-#include "plugin-manager.h"
-#include "internal.h"
+#include <libzathura/error.h>
+#include <libzathura/macros.h>
+#include <libzathura/plugin.h>
+#include <libzathura/plugin-api.h>
+#include <libzathura/plugin-manager.h>
+#include <libzathura/internal.h>
+
+#include "tests.h"
+#include "utils.h"
 
 zathura_plugin_manager_t* plugin_manager;
 zathura_plugin_t* plugin;
@@ -22,7 +25,7 @@ static void setup(void) {
   /* setup plugin manager */
   fail_unless(zathura_plugin_manager_new(&plugin_manager) == ZATHURA_ERROR_OK);
   fail_unless(plugin_manager != NULL);
-  fail_unless(zathura_plugin_manager_load(plugin_manager, "./plugin/plugin.so") == ZATHURA_ERROR_OK);
+  fail_unless(zathura_plugin_manager_load(plugin_manager, get_plugin_path()) == ZATHURA_ERROR_OK);
 
   /* get example plugin */
   fail_unless(zathura_plugin_manager_get_plugins(plugin_manager, &list) == ZATHURA_ERROR_OK);
@@ -167,26 +170,30 @@ START_TEST(test_plugin_open_document) {
 
   /* valid parameter */
   fail_unless(zathura_plugin_open_document(plugin, &document, "DoesNotExist", NULL) == ZATHURA_ERROR_DOCUMENT_DOES_NOT_EXIST);
-  fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_plugin_open_document(plugin, &document, TEST_FILE_PATH, NULL) == ZATHURA_ERROR_OK);
   fail_unless(zathura_document_free(document) == ZATHURA_ERROR_OK);
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable_external("libc/mm/calloc", 1, NULL, 0, cb_test_plugin_document_open_calloc);
-  fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_plugin_open_document(plugin, &document, TEST_FILE_PATH, NULL) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 
+#ifdef WITH_LIBFIU
   fiu_enable_external("libc/mm/calloc", 2, NULL, 0, cb_test_plugin_document_open_calloc);
-  fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_plugin_open_document(plugin, &document, TEST_FILE_PATH, NULL) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 
   /* unset document_open function */
   plugin->functions.document_open = NULL;
-  fail_unless(zathura_plugin_open_document(plugin, &document, "Makefile", NULL) == ZATHURA_ERROR_PLUGIN_NOT_IMPLEMENTED);
+  fail_unless(zathura_plugin_open_document(plugin, &document, TEST_FILE_PATH, NULL) == ZATHURA_ERROR_PLUGIN_NOT_IMPLEMENTED);
 } END_TEST
 
 
 Suite*
-suite_plugin(void)
+create_suite(void)
 {
   TCase* tcase = NULL;
   Suite* suite = suite_create("plugin");

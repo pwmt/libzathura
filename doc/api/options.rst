@@ -1,5 +1,4 @@
 Options
 =======
 
-.. doxygenfile:: libzathura/options.h
-  :project: libzathura
+.. c:autodoc:: libzathura/options.h

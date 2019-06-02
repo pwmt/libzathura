@@ -2,7 +2,7 @@
 
 #include <check.h>
 
-#include "form-fields.h"
+#include <libzathura/form-fields.h>
 
 static void setup_form_field_button(void) {
   setup_document_plugin(&plugin_manager, &document);

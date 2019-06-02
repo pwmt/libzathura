@@ -11,7 +11,7 @@ templates_path = ['_templates']
 # -- Project configuration ------------------------------------------------
 
 project   = 'libzathura'
-copyright = '2014, pwmt.org'
+copyright = '2014-2019, pwmt.org'
 version   = '0.0.1'
 release   = '0.0.1'
 

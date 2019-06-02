@@ -21,5 +21,4 @@ Field Types
 Common field
 ------------
 
-.. doxygenfile:: libzathura/form-fields.h
-  :project: libzathura
+.. c:autodoc:: libzathura/form-fields.h

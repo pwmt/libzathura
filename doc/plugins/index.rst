@@ -7,7 +7,7 @@ The structure of libzathura's plugin system is quite simple: A plugin-manager is
 capable of loading plugins from a directory or directly from a file and then use
 them to load a supported document from a given path. Each loaded plugin
 registers itself by a name, its version, a special function as well as the
-mimetypes it supports. 
+mimetypes it supports.
 
 Each plugin has to implement a basic set of functionality so that it can be used
 in a meaningful way with libzathura. For instance if a plugin is capable of

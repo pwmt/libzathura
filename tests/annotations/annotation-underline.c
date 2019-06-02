@@ -2,7 +2,7 @@
 
 #include <check.h>
 
-#include "annotations.h"
+#include <libzathura/annotations.h>
 
 static void setup_annotation_underline(void) {
   setup_document_plugin(&plugin_manager, &document);

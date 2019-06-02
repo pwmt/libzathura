@@ -9,5 +9,4 @@ exists after completion of the previous action and display it using a transition
 specified in the action dictionary. Once this transition completes, drawing
 should be suspended again.
 
-.. doxygenfile:: libzathura/actions/action-transition.h
-  :project: libzathura
+.. c:autodoc:: libzathura/actions/action-transition.h

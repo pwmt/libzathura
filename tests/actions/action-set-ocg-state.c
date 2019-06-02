@@ -2,7 +2,7 @@
 
 #include <check.h>
 
-#include "action.h"
+#include <libzathura/action.h>
 
 static void setup_action_set_ocg_state(void) {
   fail_unless(zathura_action_new(&action, ZATHURA_ACTION_SET_OCG_STATE) == ZATHURA_ERROR_OK);
@@ -34,10 +34,12 @@ START_TEST(test_action_set_ocg_state_init) {
       == ZATHURA_ERROR_OK); // double initialization
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_action_set_ocg_state_init(action)
       == ZATHURA_ERROR_OUT_OF_MEMORY); // double initialization
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 
 START_TEST(test_action_set_ocg_state_clear) {

@@ -1,5 +1,5 @@
 Ink Annotations
 ===============
 
-.. doxygenfile:: libzathura/annotations/annotation-ink.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-ink.h
+  

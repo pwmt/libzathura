@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "form-field-signature.h"
+#include "../plugin-api/form-fields/form-field-signature.h"
 #include "internal.h"
 
 zathura_error_t

@@ -4,9 +4,11 @@
 #include <fiu.h>
 #include <fiu-control.h>
 
-#include "image-buffer.h"
-#include "plugin-api/image-buffer.h"
-#include "macros.h"
+#include <libzathura/image-buffer.h>
+#include <libzathura/plugin-api/image-buffer.h>
+#include <libzathura/macros.h>
+
+#include "tests.h"
 
 static int cb_test_image_buffer_new_calloc(const char* UNUSED(name), int *UNUSED(failnum),
     void** UNUSED(failinfo), unsigned int* UNUSED(flags))
@@ -39,10 +41,12 @@ START_TEST(test_image_buffer_new) {
   fail_unless(zathura_image_buffer_free(buffer) == ZATHURA_ERROR_OK);
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable_external("libc/mm/calloc", 1, NULL, 0, cb_test_image_buffer_new_calloc);
   fail_unless(zathura_image_buffer_new(&buffer, 1, 1) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fail_unless(zathura_image_buffer_new(&buffer, 1, 1) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 
 START_TEST(test_image_buffer_free) {
@@ -137,7 +141,7 @@ START_TEST(test_image_buffer_get_rowstride) {
 } END_TEST
 
 Suite*
-suite_image_buffer(void)
+create_suite(void)
 {
   TCase* tcase = NULL;
   Suite* suite = suite_create("image-buffer");

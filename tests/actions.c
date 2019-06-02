@@ -2,12 +2,17 @@
 
 #include <check.h>
 #include <limits.h>
+
+#ifdef WITH_LIBFIU
 #include <fiu.h>
 #include <fiu-control.h>
+#endif
 
-#include "action.h"
-#include "plugin-api.h"
-#include "plugin-api/action.h"
+#include <libzathura/action.h>
+#include <libzathura/plugin-api.h>
+#include <libzathura/plugin-api/action.h>
+
+#include "tests.h"
 
 zathura_action_t* action;
 
@@ -38,9 +43,13 @@ START_TEST(test_action_new) {
   fail_unless(zathura_action_free(action) == ZATHURA_ERROR_OK);
 
   /* fault injection */
+#ifdef WITH_LIBFIU
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_action_new(&action, ZATHURA_ACTION_UNKNOWN) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
+#endif
 } END_TEST
 
 START_TEST(test_action_get_type) {
@@ -72,7 +81,7 @@ START_TEST(test_action_get_type) {
 #include "actions/action-uri.c"
 
 Suite*
-suite_actions(void)
+create_suite(void)
 {
   TCase* tcase = NULL;
   Suite* suite = suite_create("actions");

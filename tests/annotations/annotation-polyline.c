@@ -2,7 +2,7 @@
 
 #include <check.h>
 
-#include "annotations.h"
+#include <libzathura/annotations.h>
 
 static void setup_annotation_poly_line(void) {
   setup_document_plugin(&plugin_manager, &document);
@@ -27,10 +27,12 @@ START_TEST(test_annotation_poly_line_init) {
       == ZATHURA_ERROR_OK); // double initialization
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_annotation_poly_line_init(annotation)
       == ZATHURA_ERROR_OUT_OF_MEMORY); // double initialization
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 
 START_TEST(test_annotation_poly_line_clear) {

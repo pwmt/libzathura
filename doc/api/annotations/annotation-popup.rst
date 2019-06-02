@@ -1,5 +1,5 @@
 Pop-up Annotations
 ==================
 
-.. doxygenfile:: libzathura/annotations/annotation-popup.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-popup.h
+  

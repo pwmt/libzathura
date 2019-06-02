@@ -4,23 +4,23 @@ Text Markup Annotations
 Highlight Annotations
 ---------------------
 
-.. doxygenfile:: libzathura/annotations/annotation-highlight.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-highlight.h
+  
 
 Underline Annotations
 ---------------------
 
-.. doxygenfile:: libzathura/annotations/annotation-underline.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-underline.h
+  
 
 Strike-Out Annotations
 ----------------------
 
-.. doxygenfile:: libzathura/annotations/annotation-strike-out.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-strike-out.h
+  
 
 Squiggly Annotations
 --------------------
 
-.. doxygenfile:: libzathura/annotations/annotation-squiggly.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-squiggly.h
+  

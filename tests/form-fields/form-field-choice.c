@@ -3,8 +3,8 @@
 #include <check.h>
 #include <stdio.h>
 
-#include "form-fields.h"
-#include "list.h"
+#include <libzathura/form-fields.h>
+#include <libzathura/list.h>
 
 static void setup_form_field_choice(void) {
   setup_document_plugin(&plugin_manager, &document);

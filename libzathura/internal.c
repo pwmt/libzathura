@@ -1,6 +1,5 @@
 /* See LICENSE file for license and copyright information */
 
-#define _DEFAULT_SOURCE
 #define _XOPEN_SOURCE 500
 
 #include <stdlib.h>

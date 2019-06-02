@@ -1,7 +1,13 @@
 /* See LICENSE file for license and copyright information */
 
-#include "form-fields.h"
-#include "plugin-api.h"
+#include <libzathura/plugin-api.h>
+
+#define _STR(x) #x
+#define STR(x) _STR(x)
+#define TEST_PLUGIN_DIR_PATH STR(_TEST_PLUGIN_DIR_PATH)
+#define TEST_PLUGIN_FILE_PATH STR(_TEST_PLUGIN_FILE_PATH)
+#define TEST_FILE_PATH STR(_TEST_FILE_PATH)
 
 const char* get_plugin_path(void);
+const char* get_plugin_dir_path(void);
 void setup_document_plugin(zathura_plugin_manager_t** plugin_manager, zathura_document_t** document);

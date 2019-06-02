@@ -4,8 +4,10 @@
 #include <fiu.h>
 #include <fiu-control.h>
 
-#include "metadata.h"
-#include "plugin-api.h"
+#include <libzathura/metadata.h>
+#include <libzathura/plugin-api.h>
+
+#include "tests.h"
 
 zathura_document_meta_entry_t* document_meta_entry;
 
@@ -34,9 +36,11 @@ START_TEST(test_document_meta_entry_new) {
   fail_unless(zathura_document_meta_entry_free(document_meta_entry) == ZATHURA_ERROR_OK);
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_document_meta_entry_new(&document_meta_entry, type, value) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 
 START_TEST(test_document_meta_entry_free) {
@@ -69,7 +73,7 @@ START_TEST(test_document_meta_entry_get_value) {
 } END_TEST
 
 Suite*
-suite_metadata(void)
+create_suite(void)
 {
   TCase* tcase = NULL;
   Suite* suite = suite_create("document-meta-entry");

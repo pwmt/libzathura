@@ -1,5 +1,5 @@
 Movie Annotations
 =================
 
-.. doxygenfile:: libzathura/annotations/annotation-movie.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-movie.h
+  

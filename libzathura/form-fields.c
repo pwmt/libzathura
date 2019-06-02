@@ -65,6 +65,11 @@ zathura_form_field_new(zathura_page_t* page, zathura_form_field_t** form_field, 
   return ZATHURA_ERROR_OK;
 }
 
+static void
+zathura_form_field_choice_item_free_noret_wrapper(zathura_form_field_choice_item_t* item) {
+  zathura_form_field_choice_item_free(item);
+}
+
 zathura_error_t
 zathura_form_field_free(zathura_form_field_t* form_field)
 {
@@ -100,7 +105,7 @@ zathura_form_field_free(zathura_form_field_t* form_field)
       break;
     case ZATHURA_FORM_FIELD_CHOICE:
       if (form_field->data.choice.items != NULL) {
-        zathura_list_free_full(form_field->data.choice.items, (zathura_free_function_t) zathura_form_field_choice_item_free);
+        zathura_list_free_full(form_field->data.choice.items, (zathura_free_function_t) zathura_form_field_choice_item_free_noret_wrapper);
         form_field->data.choice.items = NULL;
       }
       break;

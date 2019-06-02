@@ -1,5 +1,4 @@
 Plugin
 ======
 
-.. doxygenfile:: libzathura/plugin.h
-    :project: libzathura
+.. c:autodoc:: libzathura/plugin.h

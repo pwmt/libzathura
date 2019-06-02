@@ -1,5 +1,5 @@
 Markup annotations
 ==================
 
-.. doxygenfile:: libzathura/annotations/annotation-markup.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-markup.h
+  

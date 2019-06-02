@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-#ifndef FIU_ENABLE
+#ifndef WITH_LIBFIU
 #define fiu_do_on(name, action)
 #define fiu_exit_on(name)
 #define fiu_fail(name)

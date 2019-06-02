@@ -2,7 +2,7 @@
 
 #include <check.h>
 
-#include "action.h"
+#include <libzathura/action.h>
 
 static void setup_action_goto(void) {
   fail_unless(zathura_action_new(&action, ZATHURA_ACTION_GOTO) == ZATHURA_ERROR_OK);
@@ -34,10 +34,12 @@ START_TEST(test_action_goto_init) {
       == ZATHURA_ERROR_OK); // double initialization
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_action_goto_init(action)
       == ZATHURA_ERROR_OUT_OF_MEMORY); // double initialization
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 
 START_TEST(test_action_goto_clear) {

@@ -4,11 +4,11 @@ Polygon and Polyline Annotations
 Polygon Annotations
 -------------------
 
-.. doxygenfile:: libzathura/annotations/annotation-polygon.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-polygon.h
+  
 
 Polyline Annotations
 --------------------
 
-.. doxygenfile:: libzathura/annotations/annotation-polyline.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-polyline.h
+  

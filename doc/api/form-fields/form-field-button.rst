@@ -14,5 +14,5 @@ manipulate with the mouse. There are three types of button fields:
     time, and selecting any one of the buttons automatically deselects all the
     others. 
 
-.. doxygenfile:: libzathura/form-fields/form-field-button.h
-  :project: libzathura
+.. c:autodoc:: libzathura/form-fields/form-field-button.h
+  

@@ -6,7 +6,9 @@
 #include <fiu-control.h>
 #endif
 
-#include "options.h"
+#include <libzathura/options.h>
+
+#include "tests.h"
 
 zathura_options_t* options = NULL;
 
@@ -43,9 +45,11 @@ START_TEST(test_options_new)
 START_TEST(test_options_new_fault)
 {
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_options_new(&options) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 #endif
 
@@ -75,9 +79,11 @@ START_TEST(test_options_add_twice)
 #ifdef FIU_ENABLE
 START_TEST(test_options_add_fault)
 {
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_options_add(options, "test", ZATHURA_OPTION_INT) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 #endif
 
@@ -299,7 +305,7 @@ START_TEST(test_options_callback)
 } END_TEST
 
 Suite*
-suite_options(void)
+create_suite(void)
 {
   TCase* tcase = NULL;
   Suite* suite = suite_create("options");

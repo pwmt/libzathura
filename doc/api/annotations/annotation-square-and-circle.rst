@@ -4,11 +4,11 @@ Square and Circle Annotations
 Square Annotation
 -----------------
 
-.. doxygenfile:: libzathura/annotations/annotation-square.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-square.h
+  
 
 Circle Annotation
 -----------------
 
-.. doxygenfile:: libzathura/annotations/annotation-circle.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-circle.h
+  

@@ -4,7 +4,9 @@
 #include <stdint.h>
 #include <limits.h>
 
-#include "checked-integer-arithmetic.h"
+#include <libzathura/checked-integer-arithmetic.h>
+
+#include "tests.h"
 
 START_TEST(test_checked_integer_arithmetic_umul) {
   unsigned int res = 0;
@@ -15,7 +17,7 @@ START_TEST(test_checked_integer_arithmetic_umul) {
 } END_TEST
 
 Suite*
-suite_checked_integer_arithmetic(void)
+create_suite(void)
 {
   TCase* tcase = NULL;
   Suite* suite = suite_create("checked-integer-arithmetic");

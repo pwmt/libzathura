@@ -8,5 +8,4 @@ Action specified by a name that should be supported:
   * FirstPage - Go to the first page of the document.
   * LastPage - Go to the last page of the document.
 
-.. doxygenfile:: libzathura/actions/action-named.h
-  :project: libzathura
+.. c:autodoc:: libzathura/actions/action-named.h

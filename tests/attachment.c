@@ -5,8 +5,10 @@
 #include <fiu-control.h>
 #include <stdio.h>
 
-#include "attachment.h"
-#include "plugin-api.h"
+#include <libzathura/attachment.h>
+#include <libzathura/plugin-api.h>
+
+#include "tests.h"
 
 #define CHECKSUM "ABCDABCDABCDABCD"
 #define DESCRIPTION "description"
@@ -38,9 +40,11 @@ START_TEST(test_attachment_new) {
   fail_unless(zathura_attachment_free(tmp) == ZATHURA_ERROR_OK);
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_attachment_new(&tmp) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 
 START_TEST(test_attachment_set_name) {
@@ -53,9 +57,11 @@ START_TEST(test_attachment_set_name) {
   fail_unless(zathura_attachment_set_name(attachment, NAME) == ZATHURA_ERROR_OK);
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/str/strdup", 1, NULL, 0);
   fail_unless(zathura_attachment_set_name(attachment, NAME) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/str/strdup");
+#endif
 } END_TEST
 
 START_TEST(test_attachment_get_name) {
@@ -119,9 +125,11 @@ START_TEST(test_attachment_set_data) {
   fail_unless(zathura_attachment_set_data(attachment, data, strlen(data)) == ZATHURA_ERROR_OK);
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
   fail_unless(zathura_attachment_set_data(attachment, data, strlen(data)) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
+#endif
 } END_TEST
 
 START_TEST(test_attachment_get_data) {
@@ -217,9 +225,11 @@ START_TEST(test_attachment_set_checksum) {
   fail_unless(zathura_attachment_set_checksum(attachment, CHECKSUM) == ZATHURA_ERROR_OK);
 
   /* fault injection */
+#ifdef WITH_LIBFIU
   fiu_enable("libc/str/strdup", 1, NULL, 0);
   fail_unless(zathura_attachment_set_checksum(attachment, CHECKSUM) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/str/strdup");
+#endif
 } END_TEST
 
 START_TEST(test_attachment_get_checksum) {
@@ -296,7 +306,7 @@ START_TEST(test_attachment_get_user_data) {
 } END_TEST
 
 Suite*
-suite_attachment(void)
+create_suite(void)
 {
   TCase* tcase = NULL;
   Suite* suite = suite_create("attachment");

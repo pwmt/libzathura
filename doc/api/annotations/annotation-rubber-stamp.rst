@@ -1,5 +1,5 @@
 Rubber Stamp Annotations
 ========================
 
-.. doxygenfile:: libzathura/annotations/annotation-stamp.h
-  :project: libzathura
+.. c:autodoc:: libzathura/annotations/annotation-stamp.h
+  
