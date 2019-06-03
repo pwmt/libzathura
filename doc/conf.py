@@ -8,7 +8,7 @@ import os
 
 # -- General configuration ------------------------------------------------
 
-extensions     = [
+extensions = [
     'sphinx.ext.todo',
     'hawkmoth'
 ]
@@ -40,4 +40,4 @@ htmlhelp_basename = 'libzathuradoc'
 
 cautodoc_root = os.path.abspath('../')
 cautodoc_compat = 'javadoc-basic'
-
+cautodoc_clang = "-DWITH_CAIRO"

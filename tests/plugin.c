@@ -6,6 +6,10 @@
 #include <fiu.h>
 #include <fiu-control.h>
 
+#if HAVE_CAIRO
+#include <cairo.h>
+#endif
+
 #include <libzathura/error.h>
 #include <libzathura/macros.h>
 #include <libzathura/plugin.h>
