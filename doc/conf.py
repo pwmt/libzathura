@@ -23,7 +23,7 @@ pygments_style = 'sphinx'
 # -- Project configuration ------------------------------------------------
 
 project   = 'libzathura'
-copyright = '2014-2019, pwmt.org'
+copyright = '2014-2020, pwmt.org'
 version   = '0.0.0'
 release   = '0.0.0'
 

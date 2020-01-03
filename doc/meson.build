@@ -1,6 +1,11 @@
 sphinx = find_program('sphinx-build')
+pymod = import('python')
+python = pymod.find_installation()
 
-if sphinx.found()
+hawkmoth = python.dependency('hawkmoth')
+message(hawkmoth.found())
+
+if sphinx.found() and hawkmoth.found()
   doc_sources = [
     'index.rst',
     'installation.rst',
