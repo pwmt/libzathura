@@ -1,62 +1,27 @@
-Archlinux:
-  image: pwmt-archlinux
+stages:
+  - build
+  - test
+
+# Debian 10 (Buster)
+build:debian-buster
+  stage: build
+  image: registry.pwmt.org/pwmt/gitlab-runner-images/debian:buster
   script:
-    - make COLOR=0
-    - make -C tests COLOR=0
-    - make -C tests COLOR=0 run
+    - mkdir -p build && cd build
+    - meson ..
+    - ninja
+  artifacts:
+    - build
   except:
     - tags
 
-Debian 7:
-  image: pwmt-debian-wheezy
+test:debian-buster
+  stage: test
+  image: registry.pwmt.org/pwmt/gitlab-runner-images/debian:buster
   script:
-    - make COLOR=0
-    - make -C tests COLOR=0
-    - make -C tests COLOR=0 run
-  except:
-    - tags
-
-Debian 8:
-  image: pwmt-debian-jessie
-  script:
-    - make COLOR=0
-    - make -C tests COLOR=0
-    - make -C tests COLOR=0 run
-  except:
-    - tags
-
-Debian 9:
-  image: pwmt-debian-stretch
-  script:
-    - make COLOR=0
-    - make -C tests COLOR=0
-    - make -C tests COLOR=0 run
-  except:
-    - tags
-
-Ubuntu 14.04:
-  image: pwmt-ubuntu-trusty
-  script:
-    - make COLOR=0
-    - make -C tests COLOR=0
-    - make -C tests COLOR=0 run
-  except:
-    - tags
-
-Ubuntu 15.04:
-  image: pwmt-ubuntu-vivid
-  script:
-    - make COLOR=0
-    - make -C tests COLOR=0
-    - make -C tests COLOR=0 run
-  except:
-    - tags
-
-Ubuntu 15.10:
-  image: pwmt-ubuntu-wily
-  script:
-    - make COLOR=0
-    - make -C tests COLOR=0
-    - make -C tests COLOR=0 run
+    - cd build
+    - ninja test
+  dependencies:
+    - build:debian-buster
   except:
     - tags
