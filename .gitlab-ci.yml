@@ -4,6 +4,7 @@ stages:
 
 # Debian 10 (Buster)
 build:debian-buster:
+  tags: pwmt
   stage: build
   image: registry.pwmt.org/pwmt/gitlab-runner-images/debian:buster
   script:
@@ -18,6 +19,7 @@ build:debian-buster:
     - tags
 
 test:debian-buster:
+  tags: pwmt
   stage: test
   image: registry.pwmt.org/pwmt/gitlab-runner-images/debian:buster
   script:
