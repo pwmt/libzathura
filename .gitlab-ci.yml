@@ -11,7 +11,9 @@ build:debian-buster:
     - meson ..
     - ninja
   artifacts:
-    - build
+    expire_in: 1 day
+    paths:
+      - build
   except:
     - tags
 
