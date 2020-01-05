@@ -2,6 +2,36 @@ stages:
   - build
   - test
 
+# Archlinux
+build:archlinux:
+  tags:
+    - pwmt
+  stage: build
+  image: registry.pwmt.org/pwmt/gitlab-runner-images/archlinux:latest
+  script:
+    - mkdir -p build && cd build
+    - meson ..
+    - ninja
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - build
+  except:
+    - tags
+
+test:archlinux:
+  tags:
+    - pwmt
+  stage: test
+  image: registry.pwmt.org/pwmt/gitlab-runner-images/archlinux:latest
+  script:
+    - cd build
+    - ninja test
+  dependencies:
+    - build:archlinux
+  except:
+    - tags
+
 # Debian 10 (Buster)
 build:debian-buster:
   tags:
