@@ -23,18 +23,22 @@ typedef enum zathura_action_type_e
   ZATHURA_ACTION_NONE, /**< No action */
   ZATHURA_ACTION_GOTO, /**< actions to a page */
   ZATHURA_ACTION_GOTO_REMOTE, /**< actions to a page */
-  ZATHURA_ACTION_GOTO_EMBEDDED, /**< actions to an embedded file */
+  ZATHURA_ACTION_GOTO_EMBEDDED, /**< actions to an embedded file (PDF 1.6) */
   ZATHURA_ACTION_LAUNCH, /**< actions to an external source */
   ZATHURA_ACTION_THREAD, /**< Begin reading an article */
   ZATHURA_ACTION_URI, /**< actions to an external source */
-  ZATHURA_ACTION_SOUND, /**< Play a sound */
-  ZATHURA_ACTION_MOVIE, /*<< Play a movie */
-  ZATHURA_ACTION_HIDE_ANNOTATIONS, /**< Set an annotation's hidden flag */
-  ZATHURA_ACTION_NAMED, /**< actions to an external source */
-  ZATHURA_ACTION_SET_OCG_STATE, /**< Sets the states of optional content groups */
-  ZATHURA_ACTION_RENDITION, /**< Controls the playing of multimedia content. */
-  ZATHURA_ACTION_TRANSITION, /**< Updates the display of a document, using a transition diary */
-  ZATHURA_ACTION_GOTO_3D_VIEW /**< Set the current view of a 3d annotation */
+  ZATHURA_ACTION_SOUND, /**< Play a sound (PDF 1.2) */
+  ZATHURA_ACTION_MOVIE, /*<< Play a movie (PDF 1.2) */
+  ZATHURA_ACTION_HIDE_ANNOTATIONS, /**< Set an annotation's hidden flag (PDF 1.2) */
+  ZATHURA_ACTION_NAMED, /**< actions to an external source (PDF 1.2) */
+  ZATHURA_ACTION_SUBMIT_FORM, /**< Send data to a uniform resource locator (PDF 1.2) */
+  ZATHURA_ACTION_RESET_FORM, /**< Set fields to their default values (PDF 1.2) */
+  ZATHURA_ACTION_IMPORT_DATA, /**< Import field values from a file (PDF 1.2) */
+  ZATHURA_ACTION_JAVASCRIPT, /**< Execute a JavaScript scrip (PDF 1.3)t */
+  ZATHURA_ACTION_SET_OCG_STATE, /**< Sets the states of optional content groups (PDF 1.5) */
+  ZATHURA_ACTION_RENDITION, /**< Controls the playing of multimedia content. (PDF 1.5) */
+  ZATHURA_ACTION_TRANSITION, /**< Updates the display of a document, using a transition diary (PDF 1.5) */
+  ZATHURA_ACTION_GOTO_3D_VIEW /**< Set the current view of a 3d annotation (PDF 1.6) */
 } zathura_action_type_t;
 
 typedef enum zathura_destination_type_e
