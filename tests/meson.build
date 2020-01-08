@@ -1,6 +1,6 @@
 subdir('plugin')
 
-check = dependency('check', required: get_option('tests'))
+check = dependency('check', version: '>=0.9.8', required: get_option('tests'))
 if check.found()
   test_dependencies = [
     declare_dependency(link_with: libzathura),

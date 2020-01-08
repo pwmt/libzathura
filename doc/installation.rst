@@ -13,6 +13,8 @@ a full list of the dependencies here:
 * `libfiu <http://blitiri.com.ar/p/libfiu>`_ >= 0.91
 * `python-docutils <http://docutils.sourceforge.net>`_
 * `python-sphinx <http://sphinx-doc.org>`_
+* `meson <http://mesonbuild.com>`_ >= 0.48
+* `ninja <http://ninja-build.com>`_
 
 Stable version
 --------------
@@ -23,28 +25,30 @@ Stable version
 
 Since libzathura packages are available for many distributions it is recommended
 to use them by installing them with your prefered package manager. Otherwise you
-can grab the latest version of the source code from our website and build it by
-hand:
+can get the latest version of the source code from our website and build it by
+manually:
 
 .. code-block:: sh
 
   tar xfv libzathura-<version>.tar.gz
   cd libzathura-<version>
-  make
-  make install
+  mkdir -p build && cd build
+  meson ..
+  ninja install
 
 Developer version
 -----------------
 
 If you are interested in testing the very latest versions with all its new
-features, that we are working on, type in the following commands:
+features that we are working on, type in the following commands:
 
 .. code-block:: sh
 
   git clone git://pwmt.org/libzathura.git
   cd libzathura
   git checkout --track -b develop origin/develop
-  make
-  make install
+  mkdir -p build && cd build
+  meson ..
+  ninja install
 
 For the installation of a file type plugin check the :ref:`plugins` section.

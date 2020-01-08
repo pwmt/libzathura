@@ -12,7 +12,6 @@ manipulate with the mouse. There are three types of button fields:
   * Radio button fields contain a set of related buttons that can each be on or
     off. Typically, at most one radio button in a set may be on at any given
     time, and selecting any one of the buttons automatically deselects all the
-    others. 
+    others.
 
 .. c:autodoc:: libzathura/form-fields/form-field-button.h
-  

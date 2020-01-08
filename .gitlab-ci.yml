@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - doc
 
 # Archlinux
 build:archlinux:
@@ -31,6 +32,22 @@ test:archlinux:
     - build:archlinux
   except:
     - tags
+
+# Documentation
+doc:archlinux:
+  tags:
+    - pwmt
+  stage: doc
+  image: registry.pwmt.org/pwmt/gitlab-runner-images/archlinux:latest
+  script:
+    - cd build
+    - ninja doc/html
+    - mv doc/html ../public/
+  dependencies:
+    - build:archlinux
+  artifacts:
+    paths:
+      - public
 
 # Debian 10 (Buster)
 build:debian-buster:

@@ -65,7 +65,7 @@ flags = cc.get_supported_arguments(flags)
 # optional dependencies
 cairo = dependency('cairo', required: get_option('enable-cairo'))
 magic = cc.find_library('magic', required: get_option('enable-magic')) #fixme
-libfiu = dependency('libfiu', required: get_option('enable-libfiu'))
+libfiu = dependency('libfiu', version: '>=0.91', required: get_option('enable-libfiu'))
 
 if magic.found()
   build_dependencies += magic
