@@ -108,7 +108,9 @@ START_TEST(test_document_set_number_of_pages) {
   fail_unless(zathura_document_set_number_of_pages(NULL, 1) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_document_set_number_of_pages(document, 1) == ZATHURA_ERROR_OK);
+  size_t number_of_pages;
+  fail_unless(zathura_document_get_number_of_pages(document, &number_of_pages) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_document_set_number_of_pages(document, number_of_pages) == ZATHURA_ERROR_OK);
 } END_TEST
 
 START_TEST(test_document_get_number_of_pages) {
