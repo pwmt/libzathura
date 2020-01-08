@@ -15,12 +15,6 @@ option('tests',
 )
 option('enable-libfiu',
   type: 'boolean',
-  value: false,
-  description: 'Enable libfiu fault injection support for testing if available.'
-)
-
-option('use-libfiu',
-  type: 'boolean',
-  value: false,
+  value: true,
   description: 'Enable libfiu fault injection support for testing if available.'
 )

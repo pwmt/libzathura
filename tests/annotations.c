@@ -62,7 +62,7 @@ START_TEST(test_annotation_new) {
   /* fault injection */
 #ifdef WITH_LIBFIU
   fiu_enable("libc/mm/calloc", 1, NULL, 0);
-  fail_unless(zathura_annotation_new(page, &test_annotation, ZATHURA_PAGE_TRANSITION_SPLIT) == ZATHURA_ERROR_OUT_OF_MEMORY);
+  fail_unless(zathura_annotation_new(page, &test_annotation, ZATHURA_ANNOTATION_HIGHLIGHT) == ZATHURA_ERROR_OUT_OF_MEMORY);
   fiu_disable("libc/mm/calloc");
 #endif
 } END_TEST
