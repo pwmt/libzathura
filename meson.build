@@ -58,7 +58,8 @@ flags = [
   '-pedantic',
   '-Wmissing-declarations',
   '-Werror=implicit-function-declaration',
-  '-Werror=vla'
+  '-Werror=vla',
+  '-Wno-unused-command-line-argument'
 ]
 flags = cc.get_supported_arguments(flags)
 
