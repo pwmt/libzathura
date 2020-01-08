@@ -59,8 +59,12 @@ flags = [
   '-Wmissing-declarations',
   '-Werror=implicit-function-declaration',
   '-Werror=vla',
-  '-Wno-unused-command-line-argument'
 ]
+
+if cc.get_id() == 'clang'
+  flags += '-Wno-unused-command-line-argument'
+endif
+
 flags = cc.get_supported_arguments(flags)
 
 # optional dependencies
