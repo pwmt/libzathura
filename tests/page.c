@@ -310,7 +310,7 @@ START_TEST(test_page_set_crop_box) {
   fail_unless(zathura_page_new(&page) == ZATHURA_ERROR_OK);
   fail_unless(page != NULL);
 
-  zathura_rectangle_t crop_box;
+  zathura_rectangle_t crop_box = { 0 };
 
   /* basic invalid arguments */
   fail_unless(zathura_page_set_crop_box(NULL, crop_box) == ZATHURA_ERROR_INVALID_ARGUMENTS);
