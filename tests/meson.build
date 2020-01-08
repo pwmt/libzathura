@@ -48,7 +48,7 @@ if check.found()
     c_args: defines + flags
     )
 
-    if fiu_run.found() and libfiu.found()
+    if get_option('enable-libfiu') and fiu_run.found() and libfiu.found()
       test(name, fiu_run,
         args: ['-x', exec],
         timeout: default_timeout
