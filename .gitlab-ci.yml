@@ -34,7 +34,7 @@ test:archlinux:
     - tags
 
 # Documentation
-doc:archlinux:
+pages:
   tags:
     - pwmt
   stage: doc
