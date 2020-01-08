@@ -74,7 +74,7 @@ START_TEST(test_annotation_polygon_get_vertices) {
 } END_TEST
 
 START_TEST(test_annotation_polygon_set_border) {
-  zathura_annotation_border_t border;
+  zathura_annotation_border_t border = { 0 };
 
   /* invalid arguments */
   fail_unless(zathura_annotation_polygon_set_border(NULL, border) == ZATHURA_ERROR_INVALID_ARGUMENTS);
@@ -84,7 +84,7 @@ START_TEST(test_annotation_polygon_set_border) {
 } END_TEST
 
 START_TEST(test_annotation_polygon_get_border) {
-  zathura_annotation_border_t border;
+  zathura_annotation_border_t border = { 0 };
 
   /* invalid arguments */
   fail_unless(zathura_annotation_polygon_get_border(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);

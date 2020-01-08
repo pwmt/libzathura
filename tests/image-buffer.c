@@ -10,6 +10,7 @@
 
 #include "tests.h"
 
+#ifdef WITH_LIBFIU
 static int cb_test_image_buffer_new_calloc(const char* UNUSED(name), int *UNUSED(failnum),
     void** UNUSED(failinfo), unsigned int* UNUSED(flags))
 {
@@ -23,6 +24,7 @@ static int cb_test_image_buffer_new_calloc(const char* UNUSED(name), int *UNUSED
 
   return 0;
 }
+#endif
 
 START_TEST(test_image_buffer_new) {
   zathura_image_buffer_t* buffer;

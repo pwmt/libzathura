@@ -149,6 +149,7 @@ START_TEST(test_plugin_add_mime_type) {
   fail_unless(zathura_plugin_add_mimetype(plugin, "application/pdf") == ZATHURA_ERROR_OK);
 } END_TEST
 
+#ifdef WITH_LIBFIU
 static int cb_test_plugin_document_open_calloc(const char* UNUSED(name), int *UNUSED(failnum),
     void** UNUSED(failinfo), unsigned int* UNUSED(flags))
 {
@@ -162,6 +163,7 @@ static int cb_test_plugin_document_open_calloc(const char* UNUSED(name), int *UN
 
   return 0;
 }
+#endif
 
 START_TEST(test_plugin_open_document) {
   zathura_document_t* document;
