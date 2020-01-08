@@ -43,11 +43,6 @@ static void teardown(void) {
 START_TEST(test_annotation_free) {
   /* invalid arguments */
   fail_unless(zathura_annotation_free(NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-
-  /* invalid data */
-  annotation->type = -1;
-  fail_unless(zathura_annotation_free(annotation) == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  annotation = NULL;
 } END_TEST
 
 START_TEST(test_annotation_new) {
