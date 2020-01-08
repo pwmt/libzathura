@@ -1,9 +1,10 @@
 API
-***
+===
 
 .. module:: libzathura
 .. toctree::
     :maxdepth: 1
+    :numbered:
 
     overview
     plugin-manager
