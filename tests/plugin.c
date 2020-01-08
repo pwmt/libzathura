@@ -92,7 +92,8 @@ START_TEST(test_plugin_get_path) {
 
   /* corrupt plugin */
   plugin->path = NULL;
-  fail_unless(zathura_plugin_get_path(plugin, &path)  == ZATHURA_ERROR_UNKNOWN);
+  const char* null_path;
+  fail_unless(zathura_plugin_get_path(plugin, &null_path)  == ZATHURA_ERROR_UNKNOWN);
   plugin->path = (char*) path;
 } END_TEST
 
