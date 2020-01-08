@@ -50,14 +50,14 @@ START_TEST(test_form_field_choice_set_type) {
 } END_TEST
 
 #define TEST_FORM_FIELD_CHOICE_BOOLEAN(test_set_function, set_function, test_get_function, get_function) \
-  START_TEST((test_set_function)) { \
+  START_TEST(test_set_function) { \
     fail_unless((set_function)(NULL, true) == ZATHURA_ERROR_INVALID_ARGUMENTS); \
     \
     fail_unless((set_function)(form_field, true)  == ZATHURA_ERROR_OK); \
     fail_unless((set_function)(form_field, false) == ZATHURA_ERROR_OK); \
   } END_TEST \
   \
-  START_TEST((test_get_function)) { \
+  START_TEST(test_get_function) { \
     bool value; \
     \
     fail_unless((get_function)(NULL, NULL)       == ZATHURA_ERROR_INVALID_ARGUMENTS); \
