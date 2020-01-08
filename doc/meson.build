@@ -77,7 +77,7 @@ if sphinx.found() and hawkmoth.found()
     input: [
       'conf.py',
     ] + doc_sources,
-    build_by_default: true,
+    build_by_default: false,
     install: false,
   )
 
@@ -95,7 +95,7 @@ if sphinx.found() and hawkmoth.found()
       'man/conf.py',
       'man/libzathura.3.rst',
     ],
-    build_by_default: true,
+    build_by_default: false,
     install: true,
     install_dir: [
       join_paths(get_option('mandir'), 'man3'),
