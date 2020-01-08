@@ -344,6 +344,7 @@ create_suite(void)
   tcase_add_test(tcase, test_options_callback_register_invalid);
   tcase_add_test(tcase, test_options_callback_register_unregister);
   tcase_add_test(tcase, test_options_callback);
+  suite_add_tcase(suite, tcase);
 
   return suite;
 }
