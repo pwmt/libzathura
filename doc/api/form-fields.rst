@@ -11,7 +11,6 @@ Field Types
 
 .. toctree::
   :maxdepth: 2
-  :numbered:
 
   form-fields/form-field-button.rst
   form-fields/form-field-text.rst

@@ -11,7 +11,6 @@ Action Types
 
 .. toctree::
   :maxdepth: 2
-  :numbered:
 
   actions/action-goto.rst
   actions/action-goto-remote.rst

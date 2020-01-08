@@ -17,7 +17,6 @@ Annotation Types
 
 .. toctree::
   :maxdepth: 2
-  :numbered:
 
   annotations/annotation-markup.rst
   annotations/annotation-text.rst

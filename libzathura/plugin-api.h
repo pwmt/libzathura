@@ -28,7 +28,30 @@ extern "C" {
 #define PLUGIN_REGISTER_FUNCTION  PLUGIN_STRINGIZE(PLUGIN_REGISTER_FUNCTION_NAME)
 #define PLUGIN_VERSION_INFO       "zathura_plugin_version"
 
-/* plugin */
+/**
+  * Macro to register a plugin
+  *
+  * :param plugin_name: The name of the plugin
+  * :param major: The major version of the plugin
+  * :param minor: The minor version of the plugin
+  * :param minor: The revision of the plugin
+  * :param register_functions: Function that registers plugin functions
+  * :param mimetypes: Supported mimetypes
+  *
+  * Example code:
+  * ::
+  *
+  *       ZATHURA_PLUGIN_REGISTER(
+  *         "my-plugin",
+  *         1,
+  *         0,
+  *         1,
+  *         register_functions,
+  *         ZATHURA_PLUGIN_MIMETYPES({
+  *           "libzathura/test-plugin",
+  *         })
+  *       )
+  */
 #define ZATHURA_PLUGIN_REGISTER(plugin_name, major, minor, rev, register_functions, mimetypes) \
   const zathura_plugin_version_t zathura_plugin_version = { \
     major, minor, rev \
@@ -79,32 +102,71 @@ typedef zathura_error_t (*zathura_plugin_annotation_render_t)(zathura_annotation
 typedef zathura_error_t (*zathura_plugin_annotation_render_cairo_t)(zathura_annotation_t* annotation, cairo_t* cairo, double scale);
 #endif
 
+/**
+ * Struct to store functions exposed by the plugin
+ */
 struct zathura_plugin_functions_s {
+  /** Function to open document */
   zathura_plugin_document_open_t document_open;
+
+  /** Function to free document */
   zathura_plugin_document_free_t document_free;
+
+  /** Function to save document */
   zathura_plugin_document_save_as_t document_save_as;
+
+  /** Function to get document outline */
   zathura_plugin_document_get_outline_t document_get_outline;
+
+  /** Function to get document attachments */
   zathura_plugin_document_get_attachments_t document_get_attachments;
+
+  /** Function to get document metadata */
   zathura_plugin_document_get_metadata_t document_get_metadata;
 
+  /** Function to initialize a page */
   zathura_plugin_page_init_t page_init;
+
+  /** Function to clear a page */
   zathura_plugin_page_clear_t page_clear;
+
+  /** Function to search in a page */
   zathura_plugin_page_search_text_t page_search_text;
+
+  /** Function to get the text of a page */
   zathura_plugin_page_get_text_t page_get_text;
+
+  /** Function to get selected text of a page */
   zathura_plugin_page_get_selected_text_t page_get_selected_text;
+
+  /** Function to get links on a page */
   zathura_plugin_page_get_links_t page_get_links;
+
+  /** Function to get form fields of a page */
   zathura_plugin_page_get_form_fields_t page_get_form_fields;
+
+  /** Function to get images on a page */
   zathura_plugin_page_get_images_t page_get_images;
+
+  /** Function to annotations of a page */
   zathura_plugin_page_get_annotations_t page_get_annotations;
+
+  /** Function to render a page */
   zathura_plugin_page_render_t page_render;
+
 #ifdef HAVE_CAIRO
+  /** Function to render a page to a cairo surface */
   zathura_plugin_page_render_cairo_t page_render_cairo;
 #endif
 
+  /** Function to save a form field */
   zathura_plugin_form_field_save_t form_field_save;
 
+  /** Function to render an annotation */
   zathura_plugin_annotation_render_t annotation_render;
+
 #ifdef HAVE_CAIRO
+  /** Function to render an annotation to a cairo surface */
   zathura_plugin_annotation_render_cairo_t annotation_render_cairo;
 #endif
 };
