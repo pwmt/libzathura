@@ -42,7 +42,7 @@ gio = dependency('gio-unix-2.0', required: host_machine.system() != 'windows')
 gmodule = dependency('gmodule-no-export-2.0', version: '>=2.50')
 
 build_dependencies = [libm, glib, gio, gmodule]
-pc_requires = ['glib-2.0']
+pc_requires = ['glib-2.0', 'gtk+-3.0']
 
 # defines
 defines = [
