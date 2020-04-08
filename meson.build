@@ -56,8 +56,9 @@ flags = [
   '-Wall',
   '-Wextra',
   '-pedantic',
-  '-Wmissing-declarations',
   '-Werror=implicit-function-declaration',
+  '-Wno-unused-variable',
+  '-Wno-unused-parameter',
   '-Werror=vla',
 ]
 
