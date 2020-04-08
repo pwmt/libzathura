@@ -160,6 +160,8 @@ zathura_action_free(zathura_action_t* action)
     case ZATHURA_ACTION_TRANSITION:
       error = zathura_action_transition_clear(action);
       break;
+    default: // FIXME: Support missing action types
+      break;
   }
 
   free(action);
