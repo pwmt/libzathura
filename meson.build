@@ -358,11 +358,11 @@ endforeach
 # pkg-config file
 pkg = import('pkgconfig')
 pkg.generate(
+  libzathura,
   name: meson.project_name(),
   description: project_description,
   url: project_url,
   version: version,
-  libraries: libzathura,
   requires: pc_requires
 )
 
