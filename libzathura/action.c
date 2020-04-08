@@ -91,6 +91,8 @@ zathura_error_t zathura_action_new(zathura_action_t** action, zathura_action_typ
     case ZATHURA_ACTION_TRANSITION:
       error = zathura_action_transition_init(*action);
       break;
+    default: // FIXME: Support missing action types
+      break;
   }
 
   if (error != ZATHURA_ERROR_OK) {
