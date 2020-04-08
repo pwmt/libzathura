@@ -1,6 +1,6 @@
 sphinx = find_program('sphinx-build')
 pymod = import('python')
-python = pymod.find_installation('python')
+python = pymod.find_installation('python3')
 python_required_modules = ['sphinx_rtd_theme', 'hawkmoth']
 
 if sphinx.found()
