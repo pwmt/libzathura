@@ -22,14 +22,6 @@ so_major = 1
 so_minor = 1
 so_version = '@0@.@1@'.format(so_major, so_minor)
 
-conf_data = configuration_data()
-conf_data.set('ZVMAJOR', version_array[0])
-conf_data.set('ZVMINOR', version_array[1])
-conf_data.set('ZVREV',   version_array[2])
-conf_data.set('ZVAPI',   so_major)
-conf_data.set('ZVABI',   so_minor)
-conf_data.set('version',  version)
-
 cc = meson.get_compiler('c')
 
 prefix = get_option('prefix')
@@ -43,6 +35,8 @@ gmodule = dependency('gmodule-no-export-2.0', version: '>=2.50')
 
 build_dependencies = [libm, glib, gio, gmodule]
 pc_requires = ['glib-2.0', 'gtk+-3.0']
+
+subdir('libzathura')
 
 # defines
 defines = [
@@ -87,13 +81,6 @@ if get_option('enable-libfiu') and libfiu.found()
   build_dependencies += libfiu
   defines += '-DWITH_LIBFIU'
 endif
-
-# generate version header file
-version_header = configure_file(
-  input: 'libzathura/version.h.in',
-  output: 'version.h',
-  configuration: conf_data
-)
 
 include_directories = [
   include_directories('.')
@@ -349,9 +336,11 @@ libzathura = library(
   # gnu_symbol_visibility: 'hidden'
 )
 
-libzathura_dependency = declare_dependency(link_with: libzathura, include_directories: include_directories)
+libzathura_dependency = declare_dependency(
+  link_with: libzathura,
+  include_directories: include_directories,
+)
 
-install_headers(version_header, subdir: 'libzathura')
 foreach path, header_files: headers
   install_headers(header_files, subdir: path)
 endforeach
