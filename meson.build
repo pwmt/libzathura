@@ -83,7 +83,8 @@ if get_option('enable-libfiu') and libfiu.found()
 endif
 
 include_directories = [
-  include_directories('.')
+  include_directories('.'),
+  version_header_include
 ]
 
 # source files

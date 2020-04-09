@@ -14,5 +14,7 @@ version_header = configure_file(
   configuration: conf_data
 )
 
+version_header_include = include_directories('.')
+
 # Install version header
 install_headers(version_header, subdir: 'libzathura')
