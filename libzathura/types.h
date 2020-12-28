@@ -46,6 +46,8 @@ typedef struct zathura_link_mapping_s {
 
 #include "form-fields.h"
 
+typedef struct zathura_form_field_s zathura_form_field_t;
+
 typedef struct zathura_form_field_mapping_s {
   zathura_rectangle_t position;
   zathura_form_field_t* form_field;

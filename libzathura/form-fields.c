@@ -133,6 +133,45 @@ zathura_form_field_get_type(zathura_form_field_t* form_field,
 }
 
 zathura_error_t
+zathura_form_field_set_position(zathura_form_field_t* form_field,
+    zathura_rectangle_t position)
+{
+  if (form_field == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  form_field->position = position;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_form_field_get_position(zathura_form_field_t* form_field,
+    zathura_rectangle_t* position)
+{
+  if (form_field == NULL || position == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *position = form_field->position;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
+zathura_form_field_get_page(zathura_form_field_t* form_field,
+    zathura_page_t** page)
+{
+  if (form_field == NULL || page == NULL) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  *page = form_field->page;
+
+  return ZATHURA_ERROR_OK;
+}
+
+zathura_error_t
 zathura_form_field_set_name(zathura_form_field_t* form_field, const char* name)
 {
   if (form_field == NULL || name == NULL) {
@@ -291,3 +330,31 @@ zathura_form_field_save(zathura_form_field_t* form_field)
 
   return form_field->page->document->plugin->functions.form_field_save(form_field);
 }
+
+zathura_error_t
+zathura_form_field_render(zathura_form_field_t* form_field,
+    zathura_image_buffer_t** buffer, double scale)
+{
+  if (form_field == NULL || buffer == NULL || scale <= 0.0) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_IF_IMPLEMENTED(form_field->page, form_field_render)
+
+  return form_field->page->document->plugin->functions.form_field_render(form_field, buffer, scale);
+}
+
+#ifdef HAVE_CAIRO
+zathura_error_t
+zathura_form_field_render_cairo(zathura_form_field_t*
+    form_field, cairo_t* cairo, double scale)
+{
+  if (form_field == NULL || cairo == NULL || scale <= 0.0) {
+    return ZATHURA_ERROR_INVALID_ARGUMENTS;
+  }
+
+  CHECK_IF_IMPLEMENTED(form_field->page, form_field_render_cairo)
+
+  return form_field->page->document->plugin->functions.form_field_render_cairo(form_field, cairo, scale);
+}
+#endif

@@ -34,6 +34,12 @@ struct zathura_form_field_s {
   zathura_form_field_type_t type;
 
   /**
+   * The form field rectangle, defining the location of the form field on
+   * the page in default user space units.
+   */
+  zathura_rectangle_t position;
+
+  /**
    * An alternate field name to be used in place of the actual field name
    * wherever the field must be identified in the user interface (such as in
    * error or status messages referring to the field). This text is also useful

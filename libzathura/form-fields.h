@@ -9,7 +9,16 @@ extern "C" {
 
 #include <stdbool.h>
 
+#ifdef HAVE_CAIRO
+#include <cairo.h>
+#endif
+
+#include "image-buffer.h"
+#include "page.h"
 #include "error.h"
+
+/* Forward declaration */
+typedef struct zathura_rectangle_s zathura_rectangle_t;
 
 /**
  * An interactive form is a collection of fields for gathering information
@@ -73,6 +82,49 @@ zathura_error_t zathura_form_field_get_type(zathura_form_field_t* form_field,
     zathura_form_field_type_t* type);
 
 /**
+ * Sets the position of the form field defining the location of the form field
+ * on the page in default user space units.
+ *
+ * @param[in] annotation The annotation
+ * @param[in] position The position defining the location of the form field on
+ *  the page in default user space units
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_set_position(zathura_form_field_t* form_field,
+    zathura_rectangle_t position);
+
+/**
+ * Returns the position of the form field defining the location of the form field
+ * on the page in default user space units.
+ *
+ * @param[in] form_field The form field
+ * @param[out] position The position defining the location of the form field on
+ *  the page in default user space units
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_get_position(zathura_form_field_t* form_field,
+    zathura_rectangle_t* position);
+
+/**
+ * Returns the page associated with this form field
+ *
+ * @param[in] annotation The form field
+ * @param[out] page The associated page
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_get_page(zathura_form_field_t* form_field,
+    zathura_page_t** page);
+
+/**
  * Returns the name of the form field
  *
  * @param[in] form_field
@@ -130,6 +182,36 @@ zathura_error_t zathura_form_field_get_flags(zathura_form_field_t* form_field, z
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_form_field_save(zathura_form_field_t* form_field);
+
+/**
+ * Renders the form field to a @a ::zathura_image_buffer_t image buffer
+ *
+ * @param[in] annotation The form field
+ * @param[out] buffer The image buffer
+ * @param[in] scale Scale level
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_render(zathura_form_field_t* form_field,
+    zathura_image_buffer_t** buffer, double scale);
+
+#ifdef HAVE_CAIRO
+/**
+ * Renders the form field to a cairo object
+ *
+ * @param[in] annotation The used form field object
+ * @param[out] cairo The cairo object
+ * @param[in] scale Scale level
+ *
+ * @return ZATHURA_ERROR_OK No error occurred
+ * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
+ * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
+ */
+zathura_error_t zathura_form_field_render_cairo(zathura_form_field_t*
+    form_field, cairo_t* cairo, double scale);
+#endif
 
 #include "form-fields/form-field-button.h"
 #include "form-fields/form-field-text.h"

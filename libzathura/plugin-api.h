@@ -95,6 +95,10 @@ typedef zathura_error_t (*zathura_plugin_page_render_t)(zathura_page_t* page, za
 typedef zathura_error_t (*zathura_plugin_page_render_cairo_t)(zathura_page_t* page, cairo_t* cairo, double scale, int rotation, int flags);
 #endif
 
+typedef zathura_error_t (*zathura_plugin_form_field_render_t)(zathura_form_field_t* form_field, zathura_image_buffer_t** buffer, double scale);
+#ifdef HAVE_CAIRO
+typedef zathura_error_t (*zathura_plugin_form_field_render_cairo_t)(zathura_form_field_t* form_field, cairo_t* cairo, double scale);
+#endif
 typedef zathura_error_t (*zathura_plugin_form_field_save_t)(zathura_form_field_t* form_field);
 
 typedef zathura_error_t (*zathura_plugin_annotation_render_t)(zathura_annotation_t* annotation, zathura_image_buffer_t** buffer, double scale);
@@ -161,6 +165,14 @@ struct zathura_plugin_functions_s {
 
   /** Function to save a form field */
   zathura_plugin_form_field_save_t form_field_save;
+
+  /** Function to render a form field */
+  zathura_plugin_form_field_render_t form_field_render;
+
+#ifdef HAVE_CAIRO
+  /** Function to render a form field to a cairo surface */
+  zathura_plugin_form_field_render_cairo_t form_field_render_cairo;
+#endif
 
   /** Function to render an annotation */
   zathura_plugin_annotation_render_t annotation_render;
