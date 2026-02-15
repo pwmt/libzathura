@@ -487,12 +487,11 @@ START_TEST(test_page_render_cairo) {
   cairo_t* cairo = (cairo_t*) 0xCAFEBABE;
 
   /* basic invalid arguments */
-  fail_unless(zathura_page_render_cairo(NULL, NULL, 0, 0, 0)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_render_cairo(page, NULL, 0, 0, 0)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_page_render_cairo(page, cairo, -1, 0, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_render_cairo(NULL, NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_page_render_cairo(page, NULL, 0) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_page_render_cairo(page, cairo, 1.0, 0, 0) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_page_render_cairo(page, cairo, 0) == ZATHURA_ERROR_OK);
 } END_TEST
 #endif
 

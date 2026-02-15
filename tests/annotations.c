@@ -322,12 +322,11 @@ START_TEST(test_annotation_render_cairo) {
   cairo_t* cairo = (cairo_t*) 0xCAFEBABE;
 
   /* basic invalid arguments */
-  fail_unless(zathura_annotation_render_cairo(NULL, NULL, 0)         == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_annotation_render_cairo(annotation, NULL, 0)   == ZATHURA_ERROR_INVALID_ARGUMENTS);
-  fail_unless(zathura_annotation_render_cairo(annotation, cairo, -1) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_render_cairo(NULL, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
+  fail_unless(zathura_annotation_render_cairo(annotation, NULL) == ZATHURA_ERROR_INVALID_ARGUMENTS);
 
   /* valid arguments */
-  fail_unless(zathura_annotation_render_cairo(annotation, cairo, 1.0) == ZATHURA_ERROR_OK);
+  fail_unless(zathura_annotation_render_cairo(annotation, cairo) == ZATHURA_ERROR_OK);
 } END_TEST
 #endif
 

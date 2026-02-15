@@ -191,7 +191,7 @@ typedef enum zathura_annotation_type_s {
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_annotation_new(zathura_page_t* page, zathura_annotation_t** annotation,
-    zathura_annotation_type_t type);
+                                       zathura_annotation_type_t type);
 
 /**
  * Frees the passed annotation
@@ -214,8 +214,7 @@ zathura_error_t zathura_annotation_free(zathura_annotation_t* annotation);
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_get_type(zathura_annotation_t* annotation,
-    zathura_annotation_type_t* type);
+zathura_error_t zathura_annotation_get_type(zathura_annotation_t* annotation, zathura_annotation_type_t* type);
 
 /**
  * Sets the position of the annotation defining the location of the annotation
@@ -229,8 +228,7 @@ zathura_error_t zathura_annotation_get_type(zathura_annotation_t* annotation,
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_set_position(zathura_annotation_t* annotation,
-    zathura_rectangle_t position);
+zathura_error_t zathura_annotation_set_position(zathura_annotation_t* annotation, zathura_rectangle_t position);
 
 /**
  * Returns the position of the annotation defining the location of the annotation
@@ -244,8 +242,7 @@ zathura_error_t zathura_annotation_set_position(zathura_annotation_t* annotation
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_get_position(zathura_annotation_t* annotation,
-    zathura_rectangle_t* position);
+zathura_error_t zathura_annotation_get_position(zathura_annotation_t* annotation, zathura_rectangle_t* position);
 
 /**
  * Sets the text to be displayed for the annotation or, if this type of
@@ -261,8 +258,7 @@ zathura_error_t zathura_annotation_get_position(zathura_annotation_t* annotation
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_set_content(zathura_annotation_t* annotation,
-    const char* content);
+zathura_error_t zathura_annotation_set_content(zathura_annotation_t* annotation, const char* content);
 
 /**
  * Sets the text to be displayed for the annotation or, if this type of
@@ -278,8 +274,7 @@ zathura_error_t zathura_annotation_set_content(zathura_annotation_t* annotation,
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_get_content(zathura_annotation_t* annotation,
-    char** content);
+zathura_error_t zathura_annotation_get_content(zathura_annotation_t* annotation, char** content);
 
 /**
  * Sets the annotation name, a text string uniquely identifying it among all the
@@ -292,8 +287,7 @@ zathura_error_t zathura_annotation_get_content(zathura_annotation_t* annotation,
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_set_name(zathura_annotation_t* annotation,
-    const char* name);
+zathura_error_t zathura_annotation_set_name(zathura_annotation_t* annotation, const char* name);
 
 /**
  * Returns the annotation name, a text string uniquely identifying it among all the
@@ -306,8 +300,7 @@ zathura_error_t zathura_annotation_set_name(zathura_annotation_t* annotation,
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_get_name(zathura_annotation_t* annotation,
-    char** name);
+zathura_error_t zathura_annotation_get_name(zathura_annotation_t* annotation, char** name);
 
 /**
  * Sets the date and time when the annotation was most recently modified.
@@ -319,8 +312,7 @@ zathura_error_t zathura_annotation_get_name(zathura_annotation_t* annotation,
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_set_modification_date(zathura_annotation_t*
-    annotation, time_t modification_date);
+zathura_error_t zathura_annotation_set_modification_date(zathura_annotation_t* annotation, time_t modification_date);
 
 /**
  * Returns the date and time when the annotation was most recently modified.
@@ -332,8 +324,7 @@ zathura_error_t zathura_annotation_set_modification_date(zathura_annotation_t*
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_get_modification_date(zathura_annotation_t*
-    annotation, time_t* modification_date);
+zathura_error_t zathura_annotation_get_modification_date(zathura_annotation_t* annotation, time_t* modification_date);
 
 /**
  * Sets a set of flags specifying various characteristics of the annotation.
@@ -345,8 +336,7 @@ zathura_error_t zathura_annotation_get_modification_date(zathura_annotation_t*
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_set_flags(zathura_annotation_t* annotation,
-    zathura_annotation_flag_t flags);
+zathura_error_t zathura_annotation_set_flags(zathura_annotation_t* annotation, zathura_annotation_flag_t flags);
 
 /**
  * Returns a set of flags specifying various characteristics of the annotation.
@@ -358,8 +348,7 @@ zathura_error_t zathura_annotation_set_flags(zathura_annotation_t* annotation,
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_get_flags(zathura_annotation_t* annotation,
-    zathura_annotation_flag_t* flags);
+zathura_error_t zathura_annotation_get_flags(zathura_annotation_t* annotation, zathura_annotation_flag_t* flags);
 
 /**
  * Sets a color used for the following purpose:
@@ -375,8 +364,7 @@ zathura_error_t zathura_annotation_get_flags(zathura_annotation_t* annotation,
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_set_color(zathura_annotation_t* annotation,
-    zathura_annotation_color_t color);
+zathura_error_t zathura_annotation_set_color(zathura_annotation_t* annotation, zathura_annotation_color_t color);
 
 /**
  * Returns the color used for the following purpose:
@@ -392,8 +380,7 @@ zathura_error_t zathura_annotation_set_color(zathura_annotation_t* annotation,
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_get_color(zathura_annotation_t* annotation,
-    zathura_annotation_color_t* color);
+zathura_error_t zathura_annotation_get_color(zathura_annotation_t* annotation, zathura_annotation_color_t* color);
 
 /**
  * Sets the blend mode of the annotation
@@ -405,8 +392,7 @@ zathura_error_t zathura_annotation_get_color(zathura_annotation_t* annotation,
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_set_blend_mode(zathura_annotation_t* annotation,
-    zathura_blend_mode_t blend_mode);
+zathura_error_t zathura_annotation_set_blend_mode(zathura_annotation_t* annotation, zathura_blend_mode_t blend_mode);
 
 /**
  * Returns the blend mode of the annotation
@@ -418,8 +404,7 @@ zathura_error_t zathura_annotation_set_blend_mode(zathura_annotation_t* annotati
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_get_blend_mode(zathura_annotation_t* annotation,
-    zathura_blend_mode_t* blend_mode);
+zathura_error_t zathura_annotation_get_blend_mode(zathura_annotation_t* annotation, zathura_blend_mode_t* blend_mode);
 
 /**
  * Sets the opacity of the annotation
@@ -431,8 +416,7 @@ zathura_error_t zathura_annotation_get_blend_mode(zathura_annotation_t* annotati
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_set_opacity(zathura_annotation_t* annotation,
-    float opacity);
+zathura_error_t zathura_annotation_set_opacity(zathura_annotation_t* annotation, float opacity);
 
 /**
  * Returns the opacity of the annotation
@@ -444,8 +428,7 @@ zathura_error_t zathura_annotation_set_opacity(zathura_annotation_t* annotation,
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_get_opacity(zathura_annotation_t* annotation,
-    float* opacity);
+zathura_error_t zathura_annotation_get_opacity(zathura_annotation_t* annotation, float* opacity);
 
 /**
  * Returns the page associated with this annotation
@@ -457,8 +440,7 @@ zathura_error_t zathura_annotation_get_opacity(zathura_annotation_t* annotation,
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_get_page(zathura_annotation_t* annotation,
-    zathura_page_t** page);
+zathura_error_t zathura_annotation_get_page(zathura_annotation_t* annotation, zathura_page_t** page);
 
 /**
  * Checks if the annotation has an appearance stream
@@ -470,8 +452,7 @@ zathura_error_t zathura_annotation_get_page(zathura_annotation_t* annotation,
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_has_appearance_stream(zathura_annotation_t* annotation,
-    bool* has_appearance_stream);
+zathura_error_t zathura_annotation_has_appearance_stream(zathura_annotation_t* annotation, bool* has_appearance_stream);
 
 /**
  * Renders the annotation to a @a ::zathura_image_buffer_t image buffer
@@ -484,8 +465,8 @@ zathura_error_t zathura_annotation_has_appearance_stream(zathura_annotation_t* a
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_render(zathura_annotation_t* annotation,
-    zathura_image_buffer_t** buffer, double scale);
+zathura_error_t zathura_annotation_render(zathura_annotation_t* annotation, zathura_image_buffer_t** buffer,
+                                          double scale);
 
 #ifdef HAVE_CAIRO
 /**
@@ -493,14 +474,12 @@ zathura_error_t zathura_annotation_render(zathura_annotation_t* annotation,
  *
  * @param[in] annotation The used annotation object
  * @param[out] cairo The cairo object
- * @param[in] scale Scale level
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_annotation_render_cairo(zathura_annotation_t* annotation, cairo_t* cairo,
-    double scale);
+zathura_error_t zathura_annotation_render_cairo(zathura_annotation_t* annotation, cairo_t* cairo);
 #endif
 
 #include "annotations/annotation-3d.h"

@@ -120,8 +120,8 @@ zathura_error_t zathura_page_get_duration(zathura_page_t* page, unsigned int* du
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_page_search_text(zathura_page_t* page, const char* text,
-    zathura_search_flag_t flags, zathura_list_t** results);
+zathura_error_t zathura_page_search_text(zathura_page_t* page, const char* text, zathura_search_flag_t flags,
+                                         zathura_list_t** results);
 
 /**
  * Returns the text of the @a page.
@@ -146,8 +146,7 @@ zathura_error_t zathura_page_get_text(zathura_page_t* page, char** text);
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_page_get_selected_text(zathura_page_t* page, char** text,
-    zathura_rectangle_t rectangle);
+zathura_error_t zathura_page_get_selected_text(zathura_page_t* page, char** text, zathura_rectangle_t rectangle);
 
 /**
  * Returns a list of the links of the page.
@@ -227,8 +226,8 @@ zathura_error_t zathura_page_get_crop_box(zathura_page_t* page, zathura_rectangl
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_page_render(zathura_page_t* page,
-    zathura_image_buffer_t** buffer, double scale, int rotation, int flags);
+zathura_error_t zathura_page_render(zathura_page_t* page, zathura_image_buffer_t** buffer, double scale, int rotation,
+                                    int flags);
 
 #ifdef HAVE_CAIRO
 /**
@@ -236,16 +235,13 @@ zathura_error_t zathura_page_render(zathura_page_t* page,
  *
  * @param[in] page The used page object
  * @param[out] cairo The cairo object
- * @param[in] scale Scale level
- * @param[in] rotation Rotation angle
  * @param[in] flags Additional flags for rendering FIXME
  *
  * @return ZATHURA_ERROR_OK No error occurred
  * @return ZATHURA_ERROR_INVALID_ARGUMENTS Invalid arguments have been passed
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
-zathura_error_t zathura_page_render_cairo(zathura_page_t* page, cairo_t* cairo,
-    double scale, int rotation, int flags);
+zathura_error_t zathura_page_render_cairo(zathura_page_t* page, cairo_t* cairo, int flags);
 #endif
 
 #ifdef __cplusplus

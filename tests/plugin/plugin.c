@@ -28,12 +28,12 @@ zathura_error_t page_get_images(zathura_page_t* page, zathura_list_t** images);
 zathura_error_t page_get_annotations(zathura_page_t* page, zathura_list_t** annotations);
 zathura_error_t page_render(zathura_page_t* page, zathura_image_buffer_t** buffer, double scale, int rotation, int flags);
 #ifdef HAVE_CAIRO
-zathura_error_t page_render_cairo(zathura_page_t* page, cairo_t* cairo, double scale, int rotation, int flags);
+zathura_error_t page_render_cairo(zathura_page_t* page, cairo_t* cairo, int flags);
 #endif
 zathura_error_t form_field_save(zathura_form_field_t* form_field);
 zathura_error_t annotation_render(zathura_annotation_t* annotation, zathura_image_buffer_t** buffer, double scale);
 #ifdef HAVE_CAIRO
-zathura_error_t annotation_render_cairo(zathura_annotation_t* annotation, cairo_t* cairo, double scale);
+zathura_error_t annotation_render_cairo(zathura_annotation_t* annotation, cairo_t* cairo);
 #endif
 
 /* register plugin */
@@ -230,8 +230,7 @@ page_render(zathura_page_t* UNUSED(page), zathura_image_buffer_t** UNUSED(buffer
 
 #ifdef HAVE_CAIRO
 zathura_error_t
-page_render_cairo(zathura_page_t* UNUSED(page), cairo_t* UNUSED(cairo), double
-    UNUSED(scale), int UNUSED(rotation), int UNUSED(flags))
+page_render_cairo(zathura_page_t* UNUSED(page), cairo_t* UNUSED(cairo), int UNUSED(flags))
 {
   return ZATHURA_ERROR_OK;
 }
@@ -252,8 +251,7 @@ annotation_render(zathura_annotation_t* UNUSED(annotation), zathura_image_buffer
 
 #ifdef HAVE_CAIRO
 zathura_error_t
-annotation_render_cairo(zathura_annotation_t* UNUSED(annotation), cairo_t* UNUSED(cairo), double
-    UNUSED(scale))
+annotation_render_cairo(zathura_annotation_t* UNUSED(annotation), cairo_t* UNUSED(cairo))
 {
   return ZATHURA_ERROR_OK;
 }

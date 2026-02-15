@@ -210,7 +210,7 @@ zathura_error_t zathura_form_field_render(zathura_form_field_t* form_field,
  * @return ZATHURA_ERROR_UNKNOWN An unspecified error occurred
  */
 zathura_error_t zathura_form_field_render_cairo(zathura_form_field_t*
-    form_field, cairo_t* cairo, double scale);
+    form_field, cairo_t* cairo);
 #endif
 
 #include "form-fields/form-field-button.h"
