@@ -1,6 +1,6 @@
 project('libzathura', 'c',
   version: '0.0.1',
-  meson_version: '>=0.56',
+  meson_version: '>=0.58',
   default_options: 'c_std=c11',
   license: 'zlib'
 )
